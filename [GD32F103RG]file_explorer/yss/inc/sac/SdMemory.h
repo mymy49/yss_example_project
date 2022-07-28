@@ -81,24 +81,26 @@ class SdMemory : public MassStorage
 		unsigned int cardPowerUpStatus : 1;			// 31
 	};
 
-	drv::Gpio::Pin mDetectPin;
+	Gpio::Pin mDetectPin;
 
 	bool mAbleFlag, mHcsFlag;
 	float mVcc;
+	void (*mCallbackConnected)(bool);
 
 	error sendAcmd(unsigned char cmd, unsigned int arg, unsigned char responseType);
 	CardStatus getCardStatus(void);
 	error select(bool en);
 	ElapsedTime mLastWriteTime, mLastReadTime;
+	void setCallbackConnected(void (*callback)(bool));
 
   protected:
-	unsigned int mRca, mAuSize, mMaxBlockAddr, mReadBlockLen;
+	unsigned int mRca, mMaxBlockAddr, mReadBlockLen;
 	unsigned char mLastResponseCmd;
 	
 	virtual error sendCmd(unsigned char cmd, unsigned int arg, unsigned char responseType) = 0;
 	virtual unsigned int getShortResponse(void) = 0;
 	virtual void getLongResponse(void *des) = 0;
-	virtual void setSdioClockBypass(bool en) = 0;
+	virtual void setClockFrequency(int frequency) = 0;
 	virtual void setSdioClockEn(bool en) = 0;
 	virtual void setPower(bool en) = 0;
 	virtual void readyRead(void *des, unsigned short length) = 0;
@@ -149,8 +151,8 @@ class SdMemory : public MassStorage
 	SdMemory(void);
 	
 	void start(void);
-	bool connect(void);
-	void setDetectPin(drv::Gpio::Pin pin);
+	error connect(void);
+	void setDetectPin(Gpio::Pin pin);
 	void setVcc(float vcc);
 	void isrDetection(void);
 	bool isConnected(void);

@@ -43,8 +43,6 @@ typedef SDIO_TypeDef	YSS_SDMMC_Peri;
 #include <drv/Dma.h>
 #include <yss/error.h>
 
-namespace drv
-{
 class Sdmmc : public Drv, public sac::SdMemory
 {
 	YSS_SDMMC_Peri *mPeri;
@@ -59,6 +57,7 @@ class Sdmmc : public Drv, public sac::SdMemory
 	void getLongResponse(void *des);
 	void setSdioClockBypass(bool en);
 	void setSdioClockEn(bool en);
+	void setClockFrequency(int frequency);
 	void setPower(bool en);
 	void readyRead(void *des, unsigned short length);
 	void readyWrite(void *des, unsigned short length);
@@ -87,7 +86,6 @@ class Sdmmc : public Drv, public sac::SdMemory
 	void unlock(void);
 
 };
-}
 
 #endif
 

@@ -23,8 +23,6 @@
 #include <drv/Gpio.h>
 #include <drv/gpio/register_gpio_gd32f1.h>
 
-namespace drv
-{
 inline void setGpioConfig(GPIO_TypeDef *port, unsigned char pin, unsigned char val)
 {
 	unsigned int *reg = (unsigned int *)port;
@@ -50,8 +48,9 @@ Gpio::Gpio(GPIO_TypeDef *peri, void (*clockFunc)(bool en), void (*resetFunc)(voi
 void Gpio::setExti(unsigned char pin)
 {
 	unsigned char index = pin / 4;
+	volatile unsigned int *essr = &AFIO->AFIO_ESSR1;
 	pin %= 4;
-//	setFieldData(AFIO->EXTICR[index], 0xfUL, exti, pin * 4);
+	setFieldData(essr[index], 0xfUL, mExti, pin * 4);
 }
 
 void Gpio::setPackageAsAltFunc(AltFunc *altport, unsigned char numOfPort, unsigned char ospeed, unsigned char otype)
@@ -192,5 +191,5 @@ void Gpio::setPullUpDown(unsigned char pin, unsigned char pupd)
 	else
 		mPeri->BCR = 0x0001 << pin;
 }
-}
 #endif
+

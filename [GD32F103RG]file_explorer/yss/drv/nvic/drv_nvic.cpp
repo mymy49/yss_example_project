@@ -20,8 +20,6 @@
 
 #ifndef YSS_DRV_NVIC_NOT_SUPPORT
 
-namespace drv
-{
 inline void setNvicIntEn(unsigned char num, bool en)
 {
 	NVIC->ISER[num >> 5] = 1 << (num & 0x1f);
@@ -665,7 +663,7 @@ void Nvic::setAdc3En(bool en)
 #if defined(EXTI) || defined(EIC)
 void Nvic::setExtiEn(bool en)
 {
-#if defined(STM32F4) || defined(STM32F7) || defined(STM32F1) || defined(STM32G4)
+#if defined(STM32F4) || defined(STM32F7) || defined(STM32F1) || defined(STM32G4) || defined(GD32F1)
 	setNvicIntEn(EXTI0_IRQn, en);
 	setNvicIntEn(EXTI1_IRQn, en);
 	setNvicIntEn(EXTI2_IRQn, en);
@@ -790,7 +788,6 @@ void Nvic::setSpi2En(bool en)
 #endif
 }
 #endif
-}
 
 #endif
 

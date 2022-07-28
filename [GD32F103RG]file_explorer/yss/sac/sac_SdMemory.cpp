@@ -49,9 +49,9 @@ SdMemory::SdMemory(void)
 	mRca = 0x00000000;
 	mDetectPin.port = 0;
 	mDetectPin.pin = 0;
-	mAuSize = 0;
 	mLastResponseCmd = 0;
 	mMaxBlockAddr = 0;
+	mCallbackConnected = 0;
 }
 
 void SdMemory::setVcc(float vcc)
@@ -164,7 +164,7 @@ inline int extractReadBlockLength(void *src)
 	}
 }
 
-bool SdMemory::connect(void)
+error SdMemory::connect(void)
 {
 	unsigned int ocr, capacity, temp, mult;
 	CardStatus sts;
@@ -175,15 +175,13 @@ bool SdMemory::connect(void)
 	memset(cbuf, 0, 64);
 	
 	setBusWidth(BUS_WIDTH_1BIT);
-	setSdioClockBypass(false);
+	setClockFrequency(400000);
 	setSdioClockEn(true);
 
 	mRca = 0x00000000;
 
 	// CMD0 (SD메모리 리셋)
 	result = sendCmd(0, 0, RESPONSE_NONE);
-	if (result != Error::NO_RESPONSE_CMD)
-		goto error;
 
 	// CMD8 (SD메모리가 SD ver 2.0을 지원하는지 확인)
 	result = sendCmd(8, 0x000001AA, RESPONSE_SHORT);
@@ -200,7 +198,7 @@ bool SdMemory::connect(void)
 	result = sendAcmd(41, ocr | HCS, RESPONSE_SHORT);
 	if (result != Error::CMD_CRC_FAIL)
 	{
-		// 실패시 현제 장치는 MMC
+		// 실패시 현재 장치는 MMC
 		goto error;
 	}
 
@@ -255,19 +253,10 @@ bool SdMemory::connect(void)
 	
 	mMaxBlockAddr = extractMaxBlockLength(cbuf);
 	mReadBlockLen = extractReadBlockLength(cbuf);
-
-	if(select(true) != ERROR_NONE)
-		goto error;
 	
-	// SD Status 레지스터 읽어오기
-	setDataBlockSize(BLOCK_64_BYTES);
-	readyRead(cbuf, 64);
-	sendAcmd(13, 0, RESPONSE_SHORT);
-
-	waitUntilReadComplete();
-
-	// SD Status에서 정보 수집
-	mAuSize = extractAuSize(cbuf);
+	result = select(true);
+	if(result != ERROR_NONE)
+		goto error;
 
 	temp = mReadBlockLen;
 	for(capacity=0; temp != 1; capacity++)
@@ -276,18 +265,17 @@ bool SdMemory::connect(void)
 	}
 	setDataBlockSize(capacity);
 
-	setSdioClockBypass(true);
+	setClockFrequency(50000000);
 
 	delete cbuf;
-	return true;
+	return Error::NONE;
 
 error:
 	setSdioClockEn(false);
 	mRca = 0;
-	mAuSize = 0;
 	mMaxBlockAddr = 0;
 	delete cbuf;
-	return false;
+	return result;
 }
 
 error SdMemory::sendAcmd(unsigned char cmd, unsigned int arg, unsigned char responseType)
@@ -311,7 +299,7 @@ error SdMemory::sendAcmd(unsigned char cmd, unsigned int arg, unsigned char resp
 	return result;
 }
 
-void SdMemory::setDetectPin(drv::Gpio::Pin pin)
+void SdMemory::setDetectPin(Gpio::Pin pin)
 {
 	mDetectPin = pin;
 }
@@ -319,6 +307,11 @@ void SdMemory::setDetectPin(drv::Gpio::Pin pin)
 bool SdMemory::isConnected(void)
 {
 	return mAbleFlag;
+}
+
+void SdMemory::setCallbackConnected(void (*callback)(bool))
+{
+	mCallbackConnected = callback;
 }
 
 error SdMemory::select(bool en)
@@ -334,11 +327,9 @@ error SdMemory::select(bool en)
 
 void SdMemory::start(void)
 {
-	isrDetection();
-
 	if(mDetectPin.port)
 	{
-		int threadId = trigger::add(trigger_handleSdmmcDetection, this, 1024);
+		int threadId = trigger::add(trigger_handleSdmmcDetection, this, 512);
 		exti.add(*mDetectPin.port, mDetectPin.pin, define::exti::mode::FALLING | define::exti::mode::RISING, threadId);
 		trigger::run(threadId);
 	}
@@ -365,13 +356,19 @@ unsigned int SdMemory::getNumOfBlock(void)
 void SdMemory::isrDetection(void)
 {
 	sdmmc.lock();
+
+	thread::delay(1000);
+
 	if (mDetectPin.port->getData(mDetectPin.pin) == false && mAbleFlag == false)
 	{
 		setPower(true);
-		if(sdmmc.connect())
+		if(sdmmc.connect() == Error::NONE)
 		{
 			mAbleFlag = true;
 			sdmmc.unlock();
+
+			if(mCallbackConnected)
+				mCallbackConnected(true);
 		}
 		else
 		{
@@ -385,6 +382,9 @@ void SdMemory::isrDetection(void)
 		mAbleFlag = false;
 		setPower(false);
 		sdmmc.unlock();
+
+		if(mCallbackConnected)
+			mCallbackConnected(false);
 	}
 }
 

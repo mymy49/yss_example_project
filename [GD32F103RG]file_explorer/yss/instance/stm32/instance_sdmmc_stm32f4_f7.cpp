@@ -24,24 +24,25 @@ static void setClockEn(bool en)
 	clock.peripheral.setSdmmcEn(en);
 }
 
-static void setInterruptEn(bool en)
-{
-//	nvic.setSd(en);
-}
-
 static void reset(void)
 {
 	clock.peripheral.resetSdmmc();
 }
 
+static int getClockFrequency(void)
+{
+	return clock.getSdmmcClockFrequency();
+}
+
 static const Drv::Config gDrvConfig
 {
-	setClockEn,		//void (*clockFunc)(bool en);
-	setInterruptEn,	//void (*nvicFunc)(bool en);
-	reset			//void (*resetFunc)(void);
+	setClockEn,			// void (*clockFunc)(bool en);
+	0,					// void (*nvicFunc)(bool en);
+	reset,				// void (*resetFunc)(void);
+	getClockFrequency	// int (*mGetClockFunc)(void);
 };
 
-static const drv::Dma::DmaInfo gRxDmaInfo = 
+static const Dma::DmaInfo gRxDmaInfo = 
 {
 	(define::dma2::stream3::SDIO_DMA << DMA_SxCR_CHSEL_Pos) |	// unsigned int controlRegister1
 	(define::dma::burst::INCR4 << DMA_SxCR_MBURST_Pos) | 
@@ -61,7 +62,7 @@ static const drv::Dma::DmaInfo gRxDmaInfo =
 	(void*)&SDMMC1->FIFO,										//void *dataRegister;
 };
 
-static const drv::Dma::DmaInfo gTxDmaInfo = 
+static const Dma::DmaInfo gTxDmaInfo = 
 {
 	(define::dma2::stream3::SDIO_DMA << DMA_SxCR_CHSEL_Pos) |	// unsigned int controlRegister1
 	(define::dma::burst::INCR4 << DMA_SxCR_MBURST_Pos) | 
@@ -81,7 +82,7 @@ static const drv::Dma::DmaInfo gTxDmaInfo =
 	(void*)&SDMMC1->FIFO,										//void *dataRegister;
 };
 
-static const drv::Sdmmc::Config gConfig
+static const Sdmmc::Config gConfig
 {
 	SDMMC1,			//YSS_SDMMC_Peri *peri;
 	dmaChannel12,	//Dma &txDma;
@@ -90,5 +91,5 @@ static const drv::Sdmmc::Config gConfig
 	gRxDmaInfo		//Dma::DmaInfo rxDmaInfo;
 };
 
-drv::Sdmmc sdmmc(gDrvConfig, gConfig);
+Sdmmc sdmmc(gDrvConfig, gConfig);
 #endif

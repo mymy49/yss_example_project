@@ -27,6 +27,8 @@ namespace task
 namespace display
 {
 	error displayLogo(FunctionQueue *obj);
+	error displayFileList(FunctionQueue *obj);
+	error fadeoutBackLight(FunctionQueue *obj);
 }
 }
 

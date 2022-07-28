@@ -28,4 +28,5 @@ void setBackLight(float ratio);
 extern MSP4021 lcd;
 extern CAT24C256 eeprom;
 extern Bmp888Brush gBrush;
+
 #endif

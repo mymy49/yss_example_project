@@ -78,18 +78,21 @@ void initBoard(void)
 	
 	// SDIO 설정
 	using namespace define::gpio;
-	gpioC.setAsAltFunc(8, altfunc::PC8_SDIO_D0, ospeed::FAST);
-	gpioC.setAsAltFunc(9, altfunc::PC9_SDIO_D1, ospeed::FAST);
-	gpioC.setAsAltFunc(10, altfunc::PC10_SDIO_D2, ospeed::FAST);
-	gpioC.setAsAltFunc(11, altfunc::PC11_SDIO_D3, ospeed::FAST);
-	gpioC.setAsAltFunc(12, altfunc::PC12_SDIO_CK, ospeed::FAST);
-	gpioD.setAsAltFunc(2, altfunc::PD2_SDIO_CMD, ospeed::FAST);
+	gpioC.setAsAltFunc(8, altfunc::PC8_SDIO_D0, ospeed::MID);
+	gpioC.setAsAltFunc(9, altfunc::PC9_SDIO_D1, ospeed::MID);
+	gpioC.setAsAltFunc(10, altfunc::PC10_SDIO_D2, ospeed::MID);
+	gpioC.setAsAltFunc(11, altfunc::PC11_SDIO_D3, ospeed::MID);
+	gpioC.setAsAltFunc(12, altfunc::PC12_SDIO_CK, ospeed::MID);
+	gpioD.setAsAltFunc(2, altfunc::PD2_SDIO_CMD, ospeed::MID);
 	
 	gpioA.setAsInput(8);
 
 	sdmmc.setClockEn(true);
 	sdmmc.init();
+	sdmmc.setVcc(3.3);
+	sdmmc.setDetectPin({&gpioA, 8});
 	sdmmc.setInterruptEn(true);
+	sdmmc.start();
 
 	// LCD 설정
 	using namespace define::gpio;
@@ -133,6 +136,8 @@ void initSystem(void)
 	clock.enableHse(HSE_CLOCK_FREQ, true);
 
 	using namespace define::clock;
+
+	RCC->GCFGR |= 3 << 22;
 
 	clock.enableMainPll(
 		pll::src::HSE,	// unsigned char src;

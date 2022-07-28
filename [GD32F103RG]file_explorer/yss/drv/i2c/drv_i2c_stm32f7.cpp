@@ -27,8 +27,6 @@
 #include <util/time.h>
 #include <yss/thread.h>
 
-namespace drv
-{
 I2c::I2c(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
 	mPeri = config.peri;
@@ -133,7 +131,7 @@ bool I2c::send(unsigned char addr, void *src, unsigned int size, unsigned int ti
 		thread::yield();
 	} while ((isr & I2C_ISR_TXIS) == false);
 
-	rt = mTxDma->send(mTxDmaInfo, src, size, timeout);
+	rt = mTxDma->send(mTxDmaInfo, src, size);
 
 	waitUntilComplete(mPeri);
 
@@ -171,7 +169,7 @@ bool I2c::receive(unsigned char addr, void *des, unsigned int size, unsigned int
 		thread::yield();
 	} while ((isr & I2C_ISR_RXNE) == false);
 
-	rt = mRxDma->receive(mRxDmaInfo, des, size, timeout);
+	rt = mRxDma->receive(mRxDmaInfo, des, size);
 	waitUntilComplete(mPeri);
 	
 error :
@@ -184,5 +182,5 @@ void I2c::stop(void)
 	setI2cStop(mPeri);
 }
 
-}
 #endif
+

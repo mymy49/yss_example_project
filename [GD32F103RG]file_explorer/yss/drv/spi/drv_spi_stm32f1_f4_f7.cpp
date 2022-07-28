@@ -27,8 +27,6 @@
 #include <drv/spi/register_spi_stm32f1_f4_f7.h>
 #include <yss/thread.h>
 
-namespace drv
-{
 Spi::Spi(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
 	mPeri = config.peri;
@@ -91,7 +89,7 @@ bool Spi::setSpecification(const Specification &spec)
 	reg |= spec.mode << SPI_CR1_CPHA_Pos | div << SPI_CR1_BR_Pos | buf << SPI_CR1_DFF_Pos;
 	mPeri->CR1 = reg;
 #elif defined(STM32F7)
-	switch(config.bit)
+	switch(spec.bit)
 	{
 	case bit::BIT4 :
 		buf = 3;
@@ -143,7 +141,7 @@ bool Spi::setSpecification(const Specification &spec)
 
 	reg = mPeri->CR1;
 	reg &= ~(SPI_CR1_BR_Msk | SPI_CR1_CPHA_Msk | SPI_CR1_CPOL_Msk);
-	reg |= config.mode << SPI_CR1_CPHA_Pos | div << SPI_CR1_BR_Pos;
+	reg |= spec.mode << SPI_CR1_CPHA_Pos | div << SPI_CR1_BR_Pos;
 	mPeri->CR1 = reg;
 #endif
 
@@ -258,6 +256,5 @@ void Spi::send(char data)
 		thread::yield();
 }
 
-}
-
 #endif
+

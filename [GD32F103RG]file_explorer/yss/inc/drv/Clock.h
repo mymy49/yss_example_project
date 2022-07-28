@@ -50,20 +50,18 @@
 
 #include "clock/drv_clock_peripherals.h"
 
-namespace drv
-{
 class Clock
 {
 #if defined(STM32F1) || defined(GD32F1)
-	static unsigned int mHseFreq;
-	static unsigned int mPllFreq;
-	static unsigned int mLseFreq;
+	static int mHseFreq;
+	static int mPllFreq;
+	static int mLseFreq;
 #elif defined(STM32F4) || defined(STM32F7) || defined(GD32F4)
-	static unsigned int mHseFreq;
-	static unsigned int mPllFreq;
-	static unsigned int mSaiPllFreq;
-	static unsigned int mUsbPllFreq;
-	static unsigned int mLcdPllFreq;
+	static int mHseFreq;
+	static int mPllFreq;
+	static int mSaiPllFreq;
+	static int mMainPllUsbFreq;
+	static int mLcdPllFreq;
 #endif
 
   public:
@@ -72,34 +70,38 @@ class Clock
 #elif defined(STM32F4) || defined(STM32F7) || defined(GD32F4)
 	bool enableMainPll(unsigned char src, unsigned char m, unsigned short n, unsigned char pDiv, unsigned char qDiv, unsigned char rDiv);
 	bool enableSaiPll(unsigned short n, unsigned char pDiv, unsigned char qDiv, unsigned char rDiv);
+	int getSdmmcClockFrequency(void);
 #elif defined(STM32G4)
 	bool enable(unsigned char src, unsigned int vcoMhz, unsigned char pDiv, unsigned char qDiv, unsigned char rDiv);
 	void setPEn(bool en);
 	void setQEn(bool en);
 	void setREn(bool en);
 #endif
-	Peripheral peripheral;
+	PeripheralClock peripheral;
 	
 	bool enableHse(unsigned int hseHz = 0, bool useBypass = false);
 	bool enableLsi(bool useBypass = false);
 	bool enableLse(bool en);
-	bool setUsbClkSrc(unsigned char src);
+	bool setUsbClockSource(unsigned char src);
 	bool setSysclk(unsigned char sysclkSrc, unsigned char ahb, unsigned char apb1, unsigned char apb2, unsigned char vcc = 33);
 	void setLatency(unsigned int freq, unsigned char vcc = 33);
 
-	unsigned int getSysClkFreq(void);
-	unsigned int getApb1ClkFreq(void);
-	unsigned int getApb2ClkFreq(void);
-	unsigned int getTimerApb1ClkFreq(void);
-	unsigned int getTimerApb2ClkFreq(void);
+	int getSysClkFreq(void);
+	int getApb1ClkFreq(void);
+	int getApb2ClkFreq(void);
+	int getTimerApb1ClkFreq(void);
+	int getTimerApb2ClkFreq(void);
 
 	bool setVoltageScale(unsigned char range);
-	unsigned char getVoltageScale(void);
-	unsigned char getAhbPrescale(void);
+	char getVoltageScale(void);
+	char getAhbPrescale(void);
 	void setAhbPrescale(unsigned char ahb);
 
 };
-}
+
+int getApb1ClockFrequency(void);
+int getApb2ClockFrequency(void);
+int getAhbClockFrequency(void);
 
 #endif
 

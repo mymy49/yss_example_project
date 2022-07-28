@@ -21,9 +21,7 @@
 
 #include <drv/peripheral.h>
 
-namespace drv
-{
-class Peripheral
+class PeripheralClock
 {
   public:
 	unsigned int getTimerApb1ClkFreq(void);
@@ -431,11 +429,6 @@ class Peripheral
 	void resetAdc3(void);
 #endif
 
-#if defined(SDIO)
-	void setSdioEn(bool en);
-	void resetSdio(void);
-#endif
-
 #if defined(SYSCFG)
 	void setSyscfgEn(bool en);
 	void resetSyscfg(void);
@@ -467,6 +460,5 @@ class Peripheral
 	void resetUsb1(void);
 #endif
 };
-}
 
 #endif

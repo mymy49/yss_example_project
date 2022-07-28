@@ -25,13 +25,11 @@
 #include <yss/thread.h>
 #include <yss/reg.h>
 
-namespace drv
-{
 Exti::Exti(void (*clockFunc)(bool en), void (*nvicFunc)(bool en)) : Drv(clockFunc, nvicFunc)
 {
 }
 
-bool Exti::add(drv::Gpio &gpio, unsigned char pin, unsigned char mode, void (*func)(void))
+bool Exti::add(Gpio &gpio, unsigned char pin, unsigned char mode, void (*func)(void))
 {
 	if (pin > 15)
 		return false;
@@ -47,7 +45,7 @@ bool Exti::add(drv::Gpio &gpio, unsigned char pin, unsigned char mode, void (*fu
 	return true;
 }
 
-bool Exti::add(drv::Gpio &gpio, unsigned char pin, unsigned char mode, int trigger)
+bool Exti::add(Gpio &gpio, unsigned char pin, unsigned char mode, int trigger)
 {
 	if (pin > 15)
 		return false;
@@ -55,9 +53,17 @@ bool Exti::add(drv::Gpio &gpio, unsigned char pin, unsigned char mode, int trigg
 	mTriggerFlag[pin] = true;
 	mTriggerNum[pin] = trigger;
 	gpio.setExti(pin);
+	
+	if(define::exti::mode::RISING & mode)
+		setBitData(EXTI->RTE, true, pin);
+	else
+		setBitData(EXTI->RTE, false, pin);
+	
+	if(define::exti::mode::FALLING & mode)
+		setBitData(EXTI->FTE, true, pin);
+	else
+		setBitData(EXTI->FTE, false, pin);
 
-	setBitData(EXTI->RTE, define::exti::mode::RISING & mode == define::exti::mode::RISING, pin);
-	setBitData(EXTI->FTE, define::exti::mode::FALLING & mode == define::exti::mode::FALLING, pin);
 	setBitData(EXTI->IER, true, pin);
 
 	return true;
@@ -75,6 +81,6 @@ void Exti::isr(int num)
 		mIsr[num]();
 #endif
 }
-}
 
 #endif
+

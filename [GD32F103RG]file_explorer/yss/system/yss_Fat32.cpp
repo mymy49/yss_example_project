@@ -36,18 +36,30 @@ Fat32::Fat32(sac::MassStorage &storage) : FileSystem(storage)
 	mFileOpen = false;
 	mCluster = new Fat32Cluster();
 	mDirectoryEntry = new Fat32DirectoryEntry();
+	mDirectoryEntry->init(*mCluster, getSectorBuffer());
 }
 
 Fat32::~Fat32(void)
 {
-	delete mDirectoryEntry;
-	delete mCluster;
+	if(mCluster)
+		delete mCluster;
+
+	if(mDirectoryEntry)
+		delete mDirectoryEntry;
 }
 
 error Fat32::init(void)
 {
 	int result;
 	unsigned int fatStartSector, fatBackupStartSector;
+	
+	mStorage->lock();
+	if(mStorage->isConnected() == false)
+	{
+		mStorage->unlock();
+		return Error::SDCARD_NOT_ABLE;
+	}
+	mStorage->unlock();
 
 	result = checkMbr();
 	if(result != Error::NONE)
@@ -127,14 +139,14 @@ unsigned int Fat32::getCount(unsigned char *type, unsigned char typeCount)
 	}
 }
 
-unsigned int Fat32::getDirectoryCount(void)
+int Fat32::getDirectoryCount(void)
 {
 	const unsigned char type[1] = {DIRECTORY};
 
 	return getCount((unsigned char*)type, 1);
 }
 
-unsigned int Fat32::getFileCount(void)
+int Fat32::getFileCount(void)
 {
 	const unsigned char type[4] = {READ_ONLY, HIDDEN_FILE, SYSEM_FILE, ARCHIVE};
 
@@ -305,7 +317,10 @@ bool Fat32::isFile(void)
 
 bool Fat32::isHaveNextCluster(void)
 {
-	mCluster;
+	if(mCluster)
+		return true;
+	else
+		return false;
 }
 
 error Fat32::open(void)
