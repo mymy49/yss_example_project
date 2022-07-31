@@ -38,6 +38,7 @@ namespace display
 	void fadeinBackLight(void);
 	void fadeoutBackLight(void);
 	void drawAlarmBackground(void);
+	void drawAlarmTitle(const char * title);
 
 	error displayLogo(FunctionQueue *obj)
 	{
@@ -48,6 +49,15 @@ namespace display
 		lcd.lock();
 		lcd.setBackgroundColor(0x00, 0xFF, 0x00);
 		lcd.clear();
+
+		gBrush.setSize(280, 35);
+		gBrush.setFont(Font_Abyssinica_SIL_32_B);
+		gBrush.setFontColor(0x00, 0x00, 0x00);
+		gBrush.setBackgroundColor(0x00, 0xFF, 0x00);
+
+		gBrush.clear();
+		gBrush.drawString(Pos{0, 0}, "LOGO Output");
+		lcd.drawBmp(Pos{100, 142}, gBrush.getBmp888());
 		//lcd.drawBmp(Pos{40, 113}, &logo);
 		lcd.unlock();
 
@@ -60,24 +70,54 @@ namespace display
 
 	void thread_displayFileList(void)
 	{
+		lcd.lock();
 		drawBackground();
 		fadeinBackLight();
+		lcd.unlock();
 
 		while(1)
 		{
-
+			thread::yield();
 		}
 	}
 
 	void thread_displayNoSdmmc(void)
 	{
+		lcd.lock();
 		drawBackground();
 		drawAlarmBackground();
+		drawAlarmTitle("Notice");
 		fadeinBackLight();
+		lcd.unlock();
 
 		while(1)
 		{
+			lcd.lock();
+			gBrush.setSize(300, 30);
+			gBrush.setFont(Font_Abyssinica_SIL_32_B);
+			gBrush.setFontColor(0xFF, 0x00, 0x00);
+			gBrush.setBackgroundColor(0xFF, 0xFF, 0xFF);
 
+			gBrush.clear();
+			gBrush.drawString(Pos{0, 0}, "삽입된 SD메모리가");
+			lcd.drawBmp(Pos{70, 110}, gBrush.getBmp888());
+
+			gBrush.clear();
+			gBrush.drawString(Pos{0, 0}, "없습니다.");
+			lcd.drawBmp(Pos{70, 150}, gBrush.getBmp888());
+			lcd.unlock();
+
+			thread::delay(500);
+
+			lcd.lock();
+			gBrush.setSize(300, 30);
+			gBrush.setBackgroundColor(0xFF, 0xFF, 0xFF);
+			gBrush.clear();
+			lcd.drawBmp(Pos{70, 110}, gBrush.getBmp888());
+			lcd.drawBmp(Pos{70, 150}, gBrush.getBmp888());
+			lcd.unlock();
+
+			thread::delay(500);
 		}
 	}
 
@@ -117,27 +157,38 @@ namespace display
 
 	error fadeoutBackLight(FunctionQueue *obj)
 	{
+		lcd.lock();
 		fadeoutBackLight();
+		lcd.unlock();
 
 		return Error::NONE;
 	}
 
 	void drawBackground(void)
 	{
-		lcd.lock();
 		lcd.setBackgroundColor(0x30, 0x30, 0x00);
 		lcd.clear();
 		lcd.setBrushColor(0x30, 0x30, 0x30);
 		lcd.fillRect(Pos{15, 15}, Size{479-30, 319-30});
-		lcd.unlock();
 	}
 
 	void drawAlarmBackground(void)
 	{
-		lcd.lock();
 		lcd.setBrushColor(0x00, 0x00, 0x00);
 		lcd.fillRect(Pos{60, 60}, Size{479-120, 319-120});
-		lcd.unlock();
+		lcd.setBrushColor(0xFF, 0xFF, 0xFF);
+		lcd.fillRect(Pos{65, 100}, Size{479-130, 319-165});
+	}
+
+	void drawAlarmTitle(const char * title)
+	{
+		gBrush.setSize(300, 30);
+		gBrush.setFont(Font_Abyssinica_SIL_32_B);
+		gBrush.setFontColor(0xFF, 0xFF, 0xFF);
+		gBrush.setBackgroundColor(0x00, 0x00, 0x00);
+		gBrush.clear();
+		gBrush.drawString(Pos{0, 0}, title);
+		lcd.drawBmp(Pos{65, 65}, gBrush.getBmp888());
 	}
 
 	void fadeinBackLight(void)
