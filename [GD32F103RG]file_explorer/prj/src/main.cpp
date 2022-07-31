@@ -27,25 +27,12 @@
 #include <memory.h>
 #include <status.h>
 #include <string.h>
-#include <yss/Directory.h>
-#include <yss/Fat32.h>
 
 int main(void)
 {
 	yss::init();
 	initBoard();
 	Memory::init();
-
-	//while(sdmmc.isConnected() == false)
-	//	thread::yield();
-	
-	//Fat32 fat32(sdmmc);
-	//Directory directory(fat32);
-	//directory.init();
-	//directory.enterDirectory((unsigned int)0);
-
-	//debug_printf("%d\n", directory.getDirectoryCount());
-
 
 	gFq.start();
 	gFq.add(task::display::displayLogo);
