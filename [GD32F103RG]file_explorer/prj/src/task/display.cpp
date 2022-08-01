@@ -34,6 +34,8 @@
 #include "../font/Abyssinica_SIL_32_B.h"
 #include "../font/Abyssinica_SIL_16.h"
 
+#define MAX_ITEM	12
+
 namespace task
 {
 namespace display
@@ -81,7 +83,7 @@ namespace display
 
 	void thread_displayFileList(void)
 	{
-		int index = 0, scroll = 0;
+		int index = 0, scroll = 0, lastIndex = 0;
 		bool upKeyFlag = false, downKeyFlag = false, enterKeyFlag = false, cancelKeyFlag = false;
 
 		gDirectory.init();
@@ -110,12 +112,24 @@ namespace display
 				if(index < 0)
 				{
 					if(totalCnt > 0)
+					{
 						index = totalCnt - 1;
+						scroll = index - MAX_ITEM + 1;
+					}
 					else
+					{
 						index = 0;
+						scroll = 0;
+					}
+				}
+
+				if(index < scroll)
+				{
+					scroll = index;
 				}
 
 				drawFileList(index, scroll, dirCnt, fileCnt);
+				lastIndex = index;
 			}
 
 			if(downKeyFlag)
@@ -125,9 +139,16 @@ namespace display
 				if(index >= totalCnt)
 				{
 					index = 0;
+					scroll = 0;
+				}
+
+				if(index - scroll >= MAX_ITEM && index > lastIndex)
+				{
+					scroll = index - MAX_ITEM + 1;
 				}
 
 				drawFileList(index, scroll, dirCnt, fileCnt);
+				lastIndex = index;
 			}
 
 			if(enterKeyFlag)
@@ -205,6 +226,8 @@ namespace display
 
 	void thread_checkSdmmc(void)
 	{
+		thread::delay(500);
+
 		bool lastSdCardFlag = sdmmc.isConnected();
 
 		while(1)
@@ -218,6 +241,8 @@ namespace display
 				while(1)
 					thread::yield();
 			}
+
+			thread::yield();
 		}
 	}
 
@@ -299,11 +324,11 @@ namespace display
 		gBrush.setSize(429, 19);
 		gBrush.setFont(Font_Abyssinica_SIL_16);
 		
-		for(int i=0;i<dirCnt;i++)
+		for(int i=0;i<dirCnt-scroll;i++)
 		{
-			gDirectory.getDirectoryName(i, name, 256);
+			gDirectory.getDirectoryName(i+scroll, name, 256);
 
-			if(index == count)
+			if(index - scroll == count)
 			{
 				gBrush.setFontColor(0x00, 0x00, 0x00);
 				gBrush.setBackgroundColor(0xFF, 0xFF, 0x00);
@@ -320,10 +345,37 @@ namespace display
 			pos.y += 19;
 
 			count++;
-			if(count >= 12)
+			if(count >= MAX_ITEM)
 				goto complete;
 		}
 		
+		for(int i=0;i<fileCnt;i++)
+		{
+			if(scroll < dirCnt)
+				gDirectory.getFileName(i, name, 256);
+			else
+				gDirectory.getFileName(i+scroll-dirCnt, name, 256);
+
+			if(index - scroll == count)
+			{
+				gBrush.setFontColor(0x00, 0x00, 0x00);
+				gBrush.setBackgroundColor(0xFF, 0xFF, 0xFF);
+			}
+			else
+			{
+				gBrush.setFontColor(0xFF, 0xFF, 0xFF);
+				gBrush.setBackgroundColor(0x00, 0x00, 0x00);
+			}
+
+			gBrush.clear();
+			gBrush.drawString(Pos{5, 1}, name);
+			lcd.drawBmp(pos, gBrush.getBmp888());
+			pos.y += 19;
+
+			count++;
+			if(count >= MAX_ITEM)
+				goto complete;
+		}
 
 complete :
 		delete name;
