@@ -20,6 +20,7 @@
 #include <yss/yss.h>
 #include <bsp.h>
 #include <dev/led.h>
+#include <task/program.h>
 
 void callback_linkup(bool linkup);
 
@@ -34,9 +35,9 @@ void initBoard(void)
 	Led::init();
 
 	// SPI2 초기화
-	gpioB.setAsAltFunc(13, altfunc::PB13_SPI2_SCK, ospeed::FAST);
-	gpioB.setAsAltFunc(14, altfunc::PB14_SPI2_MISO, ospeed::FAST);
-	gpioB.setAsAltFunc(15, altfunc::PB15_SPI2_MOSI, ospeed::FAST);
+	gpioB.setAsAltFunc(13, altfunc::PB13_SPI2_SCK, ospeed::MID);
+	gpioB.setAsAltFunc(14, altfunc::PB14_SPI2_MISO, ospeed::MID);
+	gpioB.setAsAltFunc(15, altfunc::PB15_SPI2_MOSI, ospeed::MID);
 
 	spi2.setClockEn(true);
 	spi2.init();
@@ -72,7 +73,7 @@ void initBoard(void)
 	};
 	
 	w5100s.lock();
-	w5100s.setCallbackLinkup(callback_linkup, 512);
+	w5100s.setCallbackLinkup(task::program::callback_linkup, 512);
 
 	if(w5100s.init(w5100sConfig))
 	{
@@ -96,14 +97,9 @@ void initBoard(void)
 	w5100s.unlock();
 	
 	// 소켓 초기화
+	socket0.lock();
 	socket0.init(w5100s, 0);
-}
-
-void callback_linkup(bool linkup)
-{
-	if(linkup)
-	{
-	}
+	socket0.unlock();
 }
 
 void initSystem(void)

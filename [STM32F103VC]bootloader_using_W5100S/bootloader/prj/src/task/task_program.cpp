@@ -22,11 +22,39 @@
 #include <util/Period.h>
 #include <bsp.h>
 #include <__cross_studio_io.h>
+#include <string.h>
 
 namespace task
 {
 namespace program
 {
+void callback_linkup(bool linkup)
+{
+	gMutex.lock();
+	clear();
+	gMutex.unlock();
+	
+	Led::setRgb(0, 0, 0);
+
+	if(linkup)
+	{
+		gFq.lock();
+		gFq.stop();
+		gFq.clear();
+		gFq.add(task::program::connectingToServer);
+		gFq.add(task::program::checkFirmwareFromServer);
+		gFq.start();
+		gFq.unlock();
+	}
+	else
+	{
+		gFq.lock();
+		gFq.stop();
+		gFq.clear();
+		gFq.unlock();
+	}
+}
+
 void thread_blinkConnectingToServerLed(void)
 {
 	Period period(25000);
@@ -62,20 +90,64 @@ error connectingToServer(FunctionQueue *obj)
 	const WiznetSocket::Host host =
 	{
 		{192, 168, 0, 17},	//unsigned char ip[4];
-		1023				//unsigned short port;
+		8080				//unsigned short port;
 	};
 
 repeat :
 	do
 	{
+		socket0.lock();
 		result = socket0.connectToHost(host);
+		socket0.unlock();
 		if(result != Error::NONE)
 			thread::delay(3000);
 	}while(result != Error::NONE);
-
+	
+	socket0.lock();
 	result = socket0.waitUntilConnect();
+	socket0.unlock();
+
 	if(result != Error::NONE)
 		goto repeat;
+
+	return Error::NONE;
+}
+
+void thread_blinkCheckFirmwareFromServerLed(void)
+{
+	Period period(25000);
+
+	while(1)
+	{
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(i, i, 0);
+		}
+		
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(255-i, 255-i, 0);
+		}
+	}
+}
+
+error checkFirmwareFromServer(FunctionQueue *obj)
+{
+	char sendBuf[512];
+
+	error result;
+
+	gMutex.lock();
+	clear();
+	gThreadId[0] = thread::add(thread_blinkCheckFirmwareFromServerLed, 512);
+	gMutex.unlock();
+	
+	memset(sendBuf, 0xAA, sizeof(sendBuf));
+	//socket0.lock();
+	//socket0.sendData(sendBuf, sizeof(sendBuf));
+	//socket0.unlock();
 
 	return Error::NONE;
 }

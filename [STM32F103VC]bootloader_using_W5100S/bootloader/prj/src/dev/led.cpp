@@ -37,6 +37,8 @@ void init(void)
 	pwm3Ch3.initChannel();
 	pwm3Ch4.initChannel();
 	pwm3Ch1.start();
+
+	Led::setRgb(0, 0, 0);
 }
 
 void setRgb(unsigned char r, unsigned char g, unsigned char b)

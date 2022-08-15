@@ -28,14 +28,14 @@ int main(void)
 	yss::init();
 	initBoard();
 	
-	gFq.lock();
-	gFq.add(task::program::connectingToServer);
 	gFq.start();
-	gFq.unlock();
 
 	while (1)
 	{
-		thread::yield();
+		//socket0.lock();
+		//debug_printf("0x%02X\n", socket0.getStatus());
+		//socket0.unlock();
+		thread::delay(100);
 	}
 	return 0;
 }
