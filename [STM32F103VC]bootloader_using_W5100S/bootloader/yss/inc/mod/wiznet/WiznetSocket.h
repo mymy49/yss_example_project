@@ -26,9 +26,9 @@ class iEthernet;
 
 class WiznetSocket : public Mutex
 {
-	bool mInitFlag;
 	iEthernet *mPeri;
-	unsigned char mSocketNumber, mInterruptFlag;
+	unsigned char mSocketNumber, mInterruptFlag, mStatusFlag;
+
   protected:
 
   public:
@@ -45,9 +45,14 @@ class WiznetSocket : public Mutex
 		TCP_SOCKET_OPEN_OK = 0x01,
 		SOCKET_CONNECT_REQUEST_SENT = 0x02,
 		SOCKET_ESTABLISHED = 0x03,
+		SOCKET_DISCONNECTED = 0x04,
 
 		// Interrupt
 		SOCKET_INT_CON = 0x01,
+
+		// Status Flag
+		INITIALIZATION = 0x01,
+		CONNECTION = 0x02,
 	};
 
 	struct Host

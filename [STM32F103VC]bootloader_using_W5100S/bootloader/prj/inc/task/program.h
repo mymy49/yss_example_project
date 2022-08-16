@@ -29,6 +29,7 @@ namespace program
 	void callback_linkup(bool linkup);
 	error connectingToServer(FunctionQueue *obj);
 	error checkFirmwareFromServer(FunctionQueue *obj);
+	error finish(FunctionQueue *obj);
 }
 }
 

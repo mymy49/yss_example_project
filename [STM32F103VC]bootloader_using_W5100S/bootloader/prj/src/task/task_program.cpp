@@ -20,6 +20,7 @@
 #include <task/program.h>
 #include <task/task.h>
 #include <util/Period.h>
+#include <util/ElapsedTime.h>
 #include <bsp.h>
 #include <__cross_studio_io.h>
 #include <string.h>
@@ -43,6 +44,7 @@ void callback_linkup(bool linkup)
 		gFq.clear();
 		gFq.add(task::program::connectingToServer);
 		gFq.add(task::program::checkFirmwareFromServer);
+		gFq.add(task::program::finish);
 		gFq.start();
 		gFq.unlock();
 	}
@@ -133,24 +135,50 @@ void thread_blinkCheckFirmwareFromServerLed(void)
 	}
 }
 
+char gSendBuf[1024 * 20];
+
 error checkFirmwareFromServer(FunctionQueue *obj)
 {
-	char sendBuf[512];
 
 	error result;
+	ElapsedTime time;
+	int testSize = 10 * 1024 * 1024;
+	int loop = testSize / sizeof(gSendBuf), endTime;
 
 	gMutex.lock();
 	clear();
 	gThreadId[0] = thread::add(thread_blinkCheckFirmwareFromServerLed, 512);
 	gMutex.unlock();
 	
-	memset(sendBuf, 0xAA, sizeof(sendBuf));
-	//socket0.lock();
-	//socket0.sendData(sendBuf, sizeof(sendBuf));
-	//socket0.unlock();
+	memset(gSendBuf, 0xAA, sizeof(gSendBuf));
+
+	time.reset();
+
+	socket0.lock();
+	for(int i=0;i<loop;i++)
+	{
+		gSendBuf[0] = i;
+		socket0.sendData(gSendBuf, sizeof(gSendBuf));
+	}
+	socket0.unlock();
+	endTime = time.getMsec();
+	testSize /= 1024 * 1024;
+	debug_printf("%d MB Transmission Time = %d [ms]\n", testSize, endTime);
+	debug_printf("%d MB Transmission Speed = %.3f [Mbps]\n", testSize, (float)(testSize*8000)/(float)endTime);
 
 	return Error::NONE;
 }
 
+error finish(FunctionQueue *obj)
+{
+	error result;
+
+	gMutex.lock();
+	clear();
+	Led::setRgb(0, 0, 0);
+	gMutex.unlock();
+	
+	return Error::NONE;
+}
 }
 }

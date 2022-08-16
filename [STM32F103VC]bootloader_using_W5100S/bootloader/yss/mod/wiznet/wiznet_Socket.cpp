@@ -26,7 +26,7 @@
 
 WiznetSocket::WiznetSocket(void)
 {
-	mInitFlag = false;
+	mStatusFlag = 0;
 }
 
 error WiznetSocket::init(iEthernet &obj, unsigned char socketNumber)
@@ -36,26 +36,30 @@ error WiznetSocket::init(iEthernet &obj, unsigned char socketNumber)
 
 	mPeri = &obj;
 	mPeri->lock();
-	mInitFlag = mPeri->isWorking();
+	if(mPeri->isWorking())
+		mStatusFlag |= INITIALIZATION;
 	mSocketNumber = socketNumber;
 	mPeri->setSocket(socketNumber, *this);
 	mPeri->unlock();
 
-	if(mInitFlag)
+	if(mStatusFlag & INITIALIZATION)
 	{
 		mPeri->lock();
 		mPeri->setSocketInterruptEnable(socketNumber, true);
 		mPeri->unlock();
 		return Error::NONE;
 	}
-	
-	return Error::NOT_INITIALIZED;
+	else
+		return Error::NOT_INITIALIZED;
 }
 
 error WiznetSocket::connectToHost(const Host &host)
 {
+	if(~mStatusFlag & INITIALIZATION)
+		return Error::NOT_INITIALIZED;
+
 	unsigned char status;
-	
+
 	thread::yield();
 
 	mPeri->lock();
@@ -106,6 +110,9 @@ error WiznetSocket::connectToHost(const Host &host)
 
 error WiznetSocket::waitUntilConnect(unsigned int timeout)
 {
+	if(~mStatusFlag & INITIALIZATION)
+		return Error::NOT_INITIALIZED;
+
 	Timeout tout(timeout);
 	unsigned char status;
 
@@ -128,6 +135,11 @@ error WiznetSocket::waitUntilConnect(unsigned int timeout)
 
 error WiznetSocket::sendData(void *src, unsigned int count)
 {
+	if(~mStatusFlag & INITIALIZATION)
+		return Error::NOT_INITIALIZED;
+	else if(~mStatusFlag & CONNECTION)
+		return Error::NOT_CONNECTED;
+
 	unsigned int freeBufferSize;
 	char *csrc = (char*)src;
 
@@ -137,7 +149,8 @@ error WiznetSocket::sendData(void *src, unsigned int count)
 		freeBufferSize = mPeri->getTxFreeBufferSize(mSocketNumber);
 		if(freeBufferSize > count)
 			freeBufferSize = count;
-		mPeri->sendSocketData(mSocketNumber, csrc, freeBufferSize);
+		if(freeBufferSize > 0)
+			mPeri->sendSocketData(mSocketNumber, csrc, freeBufferSize);
 		mPeri->unlock();
 
 		csrc += freeBufferSize;
@@ -162,8 +175,11 @@ unsigned char WiznetSocket::getStatus(void)
 
 void WiznetSocket::isr(unsigned char interrupt)
 {
-	mInterruptFlag |= interrupt;
-	debug_printf("interrupt 0x%02X\n", interrupt);
+	if(interrupt & 0x01)
+		mStatusFlag |= CONNECTION;
+	
+	if(interrupt & 0x02)
+		mStatusFlag &= ~CONNECTION;
 }
 
 #endif

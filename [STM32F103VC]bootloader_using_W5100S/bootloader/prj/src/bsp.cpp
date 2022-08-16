@@ -59,10 +59,10 @@ void initBoard(void)
 		5000,						//unsigned short retransmissionTime;
 		8,							//unsigned char retransmissionCount;
 		{							//unsigned int txSocketBufferSize[4];
-			W5100S::BUF_SIZE_2KB, 
-			W5100S::BUF_SIZE_2KB, 
-			W5100S::BUF_SIZE_2KB, 
-			W5100S::BUF_SIZE_2KB
+			W5100S::BUF_SIZE_8KB, 
+			W5100S::BUF_SIZE_0KB, 
+			W5100S::BUF_SIZE_0KB, 
+			W5100S::BUF_SIZE_0KB
 		},	
 		{							//unsigned int rxSocketBufferSize[4];
 			W5100S::BUF_SIZE_2KB, 
