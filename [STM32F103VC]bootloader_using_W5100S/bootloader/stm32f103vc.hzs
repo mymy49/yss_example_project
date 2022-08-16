@@ -1,7 +1,7 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints;V7M Exceptions" active_group="Breakpoints">
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints">
   <BreakpointListItem trigger="" line="53" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../../yss/drv/nvic/drv_nvic_not_support.cpp" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
@@ -67,18 +67,6 @@
   <ProjectSessionItem path="bootloader;bootloader;Source Files;prj;src"/>
   <ProjectSessionItem path="bootloader;bootloader;Source Files;prj;src;dev"/>
   <ProjectSessionItem path="bootloader;bootloader;Source Files;prj;src;task"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;drv"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;drv;spi"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;inc"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;inc;mod"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;inc;mod;wiznet"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;mod"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;mod;glcd"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;mod;wiznet"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;mod;wiznet;iEthernet"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;scheduler"/>
-  <ProjectSessionItem path="bootloader;bootloader;Source Files;yss;util"/>
   <ProjectSessionItem path="bootloader;bootloader;System Files"/>
  </Project>
  <Register1>
@@ -137,8 +125,9 @@
   <Trace enabled="Yes"/>
  </TraceWindow>
  <Watch1>
-  <Watches active="1" update="Twice a Second">
-   <Watchpoint expression="cnt" name="cnt" radix="-1" linenumber="0" filename="../STM32F429_DISC_EX7"/>
+  <Watches active="1" update="Never">
+   <Watchpoint expression="socket0" name="socket0" radix="-1" linenumber="0" filename="../STM32F429_DISC_EX7"/>
+   <Watchpoint expression="gYieldCount" name="gYieldCount" radix="-1" linenumber="0" filename=""/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -151,17 +140,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="18" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="19" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="115" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/mod/wiznet/iEthernet/wiznet_iEthernet_W5100S.cpp" selected="0" top="106" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="162" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/task/task_program.cpp" selected="0" top="106" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="320" useTextEdit="1" openedFrom="/home/mymy49/library/yss/yss/mod/wiznet/wiznet_Socket.cpp" useBinaryEdit="0" left="0" path="../../../library/yss/yss/mod/wiznet/iEthernet/wiznet_iEthernet_W5100.cpp" selected="0" top="286" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/inc/mod/wiznet/W5100.h" selected="0" top="0" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="67" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/inc/mod/wiznet/W5100S.h" selected="0" top="48" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="514" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/scheduler/yss_scheduler.cpp" selected="0" top="503" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="24" y="29" useTextEdit="1" openedFrom="/home/mymy49/yss_example_project/[STM32F103VC]bootloader_using_W5100S/bootloader/prj/src/task/task_program.cpp" useBinaryEdit="0" left="0" path="../../../library/yss/yss/mod/wiznet/wiznet_Socket.cpp" selected="0" top="18" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="53" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/scheduler/yss_Mutex.cpp" selected="0" top="25" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="956" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h" selected="0" top="952" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="20" y="54" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../library/yss/yss/inc/mod/wiznet/WiznetSocket.h" selected="1" top="28" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="12" codecName="UTF-8"/>
  </Files>
  <ARMCrossStudioWindow activeProject="bootloader" fileDialogDefaultFilter="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.hxx" autoConnectTarget="ST-LINK/V2" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="266111"/>
 </session>

@@ -20,7 +20,7 @@
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
       arm_target_trace_interface_type="None"
-      c_user_include_directories="$(TargetsDir)/STM32/include;$(HomeDir)/library/yss/yss/inc;$(ProjectDir)/prj/inc"
+      c_user_include_directories="$(TargetsDir)/STM32/include;$(ProjectDir)/yss/inc;$(ProjectDir)/prj/inc"
       debug_register_definition_file="$(TargetsDir)/STM32/STM32F103_Peripherals.xml"
       gcc_cplusplus_language_standard="gnu++11"
       linker_memory_map_file="$(TargetsDir)/STM32/STM32F103RE_MemoryMap.xml"
@@ -52,12 +52,7 @@
         filter="*.c;*.cpp;*.h;*.s"
         path="prj"
         recurse="Yes" />
-      <folder
-        Name="yss"
-        exclude=""
-        filter=""
-        path="../../../library/yss/yss"
-        recurse="Yes" />
+      <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
     </folder>
     <folder Name="System Files">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
