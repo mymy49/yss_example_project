@@ -21,7 +21,7 @@
       arm_target_interface_type="SWD"
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
-      c_user_include_directories="$(DeviceIncludePath);$(TargetsDir)/GD32F1xx/CMSIS/Device/Include;$(HomeDir)/library/yss/yss/inc;$(ProjectDir)/prj/inc"
+      c_user_include_directories="$(DeviceIncludePath);$(TargetsDir)/GD32F1xx/CMSIS/Device/Include;$(ProjectDir)/yss/inc;$(ProjectDir)/prj/inc"
       debug_register_definition_file="$(DeviceRegisterDefinitionFile)"
       gcc_cplusplus_language_standard="gnu++11"
       gcc_entry_point="Reset_Handler"
@@ -51,12 +51,7 @@
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <folder Name="prj" exclude="" filter="" path="prj" recurse="Yes" />
-      <folder
-        Name="yss"
-        exclude=""
-        filter=""
-        path="../../library/yss/yss"
-        recurse="Yes" />
+      <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
       <folder
         Name="common"
         exclude=""
