@@ -35,9 +35,9 @@ void initBoard(void)
 	Led::init();
 
 	// SPI2 초기화
-	gpioB.setAsAltFunc(13, altfunc::PB13_SPI2_SCK, ospeed::MID);
-	gpioB.setAsAltFunc(14, altfunc::PB14_SPI2_MISO, ospeed::MID);
-	gpioB.setAsAltFunc(15, altfunc::PB15_SPI2_MOSI, ospeed::MID);
+	gpioB.setAsAltFunc(13, altfunc::PB13_SPI2_SCK, ospeed::FAST);
+	gpioB.setAsAltFunc(14, altfunc::PB14_SPI2_MISO, ospeed::FAST);
+	gpioB.setAsAltFunc(15, altfunc::PB15_SPI2_MOSI, ospeed::FAST);
 
 	spi2.setClockEn(true);
 	spi2.init();
@@ -59,10 +59,10 @@ void initBoard(void)
 		5000,						//unsigned short retransmissionTime;
 		8,							//unsigned char retransmissionCount;
 		{							//unsigned int txSocketBufferSize[4];
-			W5100S::BUF_SIZE_8KB, 
-			W5100S::BUF_SIZE_0KB, 
-			W5100S::BUF_SIZE_0KB, 
-			W5100S::BUF_SIZE_0KB
+			W5100S::BUF_SIZE_2KB, 
+			W5100S::BUF_SIZE_2KB, 
+			W5100S::BUF_SIZE_2KB, 
+			W5100S::BUF_SIZE_2KB
 		},	
 		{							//unsigned int rxSocketBufferSize[4];
 			W5100S::BUF_SIZE_2KB, 
@@ -98,7 +98,7 @@ void initBoard(void)
 	
 	// 소켓 초기화
 	socket0.lock();
-	socket0.init(w5100s, 0);
+	socket0.init(w5100s, 0, 4096);
 	socket0.unlock();
 }
 

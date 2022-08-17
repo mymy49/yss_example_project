@@ -135,15 +135,11 @@ void thread_blinkCheckFirmwareFromServerLed(void)
 	}
 }
 
-char gSendBuf[1024 * 20];
+char gSendBuf[512];
 
 error checkFirmwareFromServer(FunctionQueue *obj)
 {
-
 	error result;
-	ElapsedTime time;
-	int testSize = 10 * 1024 * 1024;
-	int loop = testSize / sizeof(gSendBuf), endTime;
 
 	gMutex.lock();
 	clear();
@@ -152,19 +148,9 @@ error checkFirmwareFromServer(FunctionQueue *obj)
 	
 	memset(gSendBuf, 0xAA, sizeof(gSendBuf));
 
-	time.reset();
-
 	socket0.lock();
-	for(int i=0;i<loop;i++)
-	{
-		gSendBuf[0] = i;
-		socket0.sendData(gSendBuf, sizeof(gSendBuf));
-	}
+	socket0.sendData(gSendBuf, sizeof(gSendBuf));
 	socket0.unlock();
-	endTime = time.getMsec();
-	testSize /= 1024 * 1024;
-	debug_printf("%d MB Transmission Time = %d [ms]\n", testSize, endTime);
-	debug_printf("%d MB Transmission Speed = %.3f [Mbps]\n", testSize, (float)(testSize*8000)/(float)endTime);
 
 	return Error::NONE;
 }

@@ -25,6 +25,9 @@
 
 int main(void)
 {
+	unsigned short rxSize, count = 0;
+	unsigned char data;
+
 	yss::init();
 	initBoard();
 	
@@ -32,10 +35,15 @@ int main(void)
 
 	while (1)
 	{
-		//socket0.lock();
-		//debug_printf("0x%02X\n", socket0.getStatus());
-		//socket0.unlock();
-		thread::delay(100);
+		rxSize = socket0.getReceivedDataSize();
+		while(rxSize)
+		{
+			data = socket0.getReceivedByte();
+			rxSize--;
+			debug_printf("[%d]0x%02X\n", count, data);
+			count++;
+		}
+		thread::yield();
 	}
 	return 0;
 }
