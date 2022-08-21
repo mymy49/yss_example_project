@@ -19,6 +19,7 @@
 #ifndef BSP__H_
 #define BSP__H_
 
+#include <yss/instance.h>
 #include <mod/wiznet/W5100S.h>
 #include <mod/wiznet/WiznetSocket.h>
 

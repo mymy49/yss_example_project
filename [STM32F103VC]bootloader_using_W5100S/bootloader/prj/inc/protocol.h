@@ -16,26 +16,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <__cross_studio_io.h>
-#include <string.h>
-#include <yss/yss.h>
-#include <dev/led.h>
-#include <bsp.h>
-#include <task/program.h>
+#ifndef PROTOCOL__H_
+#define PROTOCOL__H_
 
-int main(void)
-{
-	unsigned short rxSize, count = 0;
-	unsigned char data;
+// 서버 연결 확인 메시지
 
-	yss::init();
-	initBoard();
-	
-	gFq.start();
-
-	while (1)
-	{
-	}
-	return 0;
-}
-
+#endif

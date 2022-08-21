@@ -18,6 +18,7 @@
 
 #include <task/task.h>
 #include <yss/Mutex.h>
+#include <bsp.h>
 
 FunctionQueue gFq(16);
 
@@ -25,6 +26,7 @@ namespace task
 {
 	int gThreadId[THREAD_COUNT];
 	Mutex gMutex;
+	Protocol gProtocol(socket0);
 
 	void clear(void)
 	{

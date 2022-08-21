@@ -20,6 +20,7 @@
 #define TASK__H_
 
 #include <util/FunctionQueue.h>
+#include <Interpreter.h>
 
 extern FunctionQueue gFq;
 
@@ -32,6 +33,7 @@ namespace task
 
 	extern int gThreadId[THREAD_COUNT];
 	extern Mutex gMutex;
+	extern Protocol gProtocol;
 
 	void clear(void);
 }

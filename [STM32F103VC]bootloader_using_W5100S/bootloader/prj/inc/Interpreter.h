@@ -16,26 +16,60 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <__cross_studio_io.h>
-#include <string.h>
-#include <yss/yss.h>
-#include <dev/led.h>
-#include <bsp.h>
-#include <task/program.h>
+#ifndef INTERPRETER__H_
+#define INTERPRETER__H_
 
-int main(void)
+#include <yss/error.h>
+#include <yss/Mutex.h>
+#include <util/Timeout.h>
+
+class WiznetSocket;
+
+class Protocol
 {
-	unsigned short rxSize, count = 0;
-	unsigned char data;
-
-	yss::init();
-	initBoard();
-	
-	gFq.start();
-
-	while (1)
+	struct ProtocolHeader
 	{
-	}
-	return 0;
-}
+		unsigned char stx = 0x02;
+		unsigned char message;
+		unsigned short size;
+		unsigned short index;
+		unsigned char echo = 0x0E;
+	}__attribute__((packed));
 
+	struct ProtocolTail
+	{
+		unsigned char etx = 0x03;
+		unsigned char chksum;
+	}__attribute__((packed));
+
+	unsigned char mCommand, mSize[2], mData[512];
+	unsigned short mIndex;
+	bool mTimeoutFlag, mCompleteFlag;
+	error mError;
+	WiznetSocket *mSocket;
+	Mutex mMutex;
+	Timeout mTimeout;
+	ProtocolHeader mSendHeader;
+	ProtocolTail mSendTail;
+	int mTriggerId, mThreadId;
+	
+	error waitUntilReceivedAndGetReceivedByte(unsigned char &data);
+
+public:
+	enum
+	{
+		MSG_HOW_ARE_YOU = 0,
+		MSG_I_AM_FINE = 1,
+	};
+
+	Protocol(WiznetSocket &socket);
+
+	void interpret(void);
+	void flush(void);
+	void sendMessage(unsigned char message, unsigned char *data, unsigned short size);
+	unsigned char getReceivedFunction(void);
+	error waitUntilComplete(void);
+};
+
+
+#endif

@@ -21,9 +21,12 @@
 #include <task/task.h>
 #include <util/Period.h>
 #include <util/ElapsedTime.h>
+#include <util/Timeout.h>
 #include <bsp.h>
 #include <__cross_studio_io.h>
 #include <string.h>
+#include <protocol.h>
+
 
 namespace task
 {
@@ -57,6 +60,7 @@ void callback_linkup(bool linkup)
 	}
 }
 
+// 빨간색 점멸
 void thread_blinkConnectingToServerLed(void)
 {
 	Period period(25000);
@@ -115,6 +119,7 @@ repeat :
 	return Error::NONE;
 }
 
+// 노란색 점멸
 void thread_blinkCheckFirmwareFromServerLed(void)
 {
 	Period period(25000);
@@ -135,8 +140,6 @@ void thread_blinkCheckFirmwareFromServerLed(void)
 	}
 }
 
-char gSendBuf[512];
-
 error checkFirmwareFromServer(FunctionQueue *obj)
 {
 	error result;
@@ -145,13 +148,14 @@ error checkFirmwareFromServer(FunctionQueue *obj)
 	clear();
 	gThreadId[0] = thread::add(thread_blinkCheckFirmwareFromServerLed, 512);
 	gMutex.unlock();
+
+start:
+
+	gProtocol.sendMessage(Protocol::MSG_HOW_ARE_YOU, 0, 0);
+	if(gProtocol.waitUntilComplete() != Error::NONE)
+		goto start;
 	
-	memset(gSendBuf, 0xAA, sizeof(gSendBuf));
-
-	socket0.lock();
-	socket0.sendData(gSendBuf, sizeof(gSendBuf));
-	socket0.unlock();
-
+	debug_printf("Firmware Server handshake OK!!\n");
 	return Error::NONE;
 }
 
