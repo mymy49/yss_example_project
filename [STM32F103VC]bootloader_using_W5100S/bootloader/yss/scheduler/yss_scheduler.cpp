@@ -42,7 +42,6 @@ struct Task
 	void *var;
 };
 
-void thread_cleanupTask(void);
 void terminateThread(void);
 
 inline void lockContextSwitch(void)
@@ -65,63 +64,12 @@ static short gPreoccupyThread[MAX_THREAD];
 static short gNumOfThread = 1;
 static int gCurrentThreadNum;
 static Mutex gMutex;
-static bool gInitFlag = false;
-static bool gCleanupFlag = false;
 static short gPreoccupyThreadHead, gPreoccupyThreadTail;
 
 void initScheduler(void)
 {
 	gYssThreadList[0].able = true;
 	gYssThreadList[0].mallocated = true;
-	thread::add(thread_cleanupTask, 512);
-	gInitFlag = true;
-}
-
-void thread_cleanupTask(void)
-{
-	int i;
-
-	while (1)
-	{
-		while (!gCleanupFlag)
-			thread::yield();
-
-		__disable_irq();
-		gCleanupFlag = false;
-		__enable_irq();
-
-		gMutex.lock();
-
-		for (i = 0; i < MAX_THREAD; i++)
-		{
-			if (!gYssThreadList[i].able && !gYssThreadList[i].trigger && gYssThreadList[i].mallocated)
-			{
-				delete gYssThreadList[i].malloc;
-				gYssThreadList[i].mallocated = false;
-				gNumOfThread--;
-			}
-
-			if (gYssThreadList[i].trigger && !gYssThreadList[i].able && !gYssThreadList[i].ready)
-			{
-				trigger::activeTriggerThread(i);
-				if (gYssThreadList[i].pending)
-				{
-					gYssThreadList[i].pending = false;
-					trigger::run(i);
-				}
-			}
-		}
-		gMutex.unlock();
-
-		// 타이머 인터럽트 지연으로 인한 시간 오류 발생 보완용
-#ifndef YSS_DRV_TIMER_UNSUPPORTED
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
-		time::getRunningUsec();
-#else
-		time::getRunningMsec();
-#endif
-#endif
-	}
 }
 
 namespace thread
@@ -362,8 +310,12 @@ void unprotect(short num)
 
 void terminateThread(void)
 {
+	lockHmalloc();
+	hfree(gYssThreadList[gCurrentThreadNum].malloc);
 	gYssThreadList[gCurrentThreadNum].able = false;
-	gCleanupFlag = true;
+	gYssThreadList[gCurrentThreadNum].mallocated = false;
+	gNumOfThread--;
+	unlockHmalloc();
 	thread::yield();
 }
 
@@ -564,7 +516,6 @@ void disable(void)
 	__disable_irq();
 	gYssThreadList[gCurrentThreadNum].ready = false;
 	gYssThreadList[gCurrentThreadNum].able = false;
-	gCleanupFlag = true;
 	__enable_irq();
 	thread::yield();
 }
@@ -607,6 +558,16 @@ extern "C"
 	{
 		int i = 0;
 		gYssThreadList[gCurrentThreadNum].sp = sp;
+
+		if (gYssThreadList[gCurrentThreadNum].trigger && !gYssThreadList[gCurrentThreadNum].able && !gYssThreadList[gCurrentThreadNum].ready)
+		{
+			trigger::activeTriggerThread(gCurrentThreadNum);
+			if (gYssThreadList[gCurrentThreadNum].pending)
+			{
+				gYssThreadList[gCurrentThreadNum].pending = false;
+				trigger::run(gCurrentThreadNum);
+			}
+		}
 
 		__disable_irq();
 repeat:
