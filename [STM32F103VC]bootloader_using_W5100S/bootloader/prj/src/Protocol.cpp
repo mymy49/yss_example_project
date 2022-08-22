@@ -16,10 +16,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <Interpreter.h>
+#include <Protocol.h>
 #include <yss/thread.h>
 #include <mod/wiznet/WiznetSocket.h>
 #include <util/Timeout.h>
+#include <__cross_studio_io.h>
 
 #define STX		0x02
 #define ECHO	0x0E
@@ -33,7 +34,6 @@ static void trigger_interpret(void *obj)
 Protocol::Protocol(WiznetSocket &socket)
 {
 	mSocket = &socket;
-	mTimeoutFlag = false;
 	mIndex = 0;
 	mTriggerId = trigger::add(trigger_interpret, this, 512);
 }
@@ -81,10 +81,10 @@ start:
 			goto start;
 		checksum = STX;
 		
-		// 명령 수신
-		if(waitUntilReceivedAndGetReceivedByte(mCommand) != Error::NONE)
+		// 메시지 수신
+		if(waitUntilReceivedAndGetReceivedByte(mMessage) != Error::NONE)
 			goto timeout_handler;
-		checksum ^= mCommand;
+		checksum ^= mMessage;
 		
 		// 사이즈 수신
 		if(waitUntilReceivedAndGetReceivedByte(mSize[0]) != Error::NONE)
@@ -103,7 +103,7 @@ start:
 		if(waitUntilReceivedAndGetReceivedByte(index[1]) != Error::NONE)
 			goto timeout_handler;
 		checksum ^= index[1];
-		
+
 		// 0x0E 체크
 		if(waitUntilReceivedAndGetReceivedByte(data) != Error::NONE)
 			goto timeout_handler;
@@ -116,6 +116,7 @@ start:
 		{
 			if(waitUntilReceivedAndGetReceivedByte(mData[i]) != Error::NONE)
 				goto timeout_handler;
+			checksum ^= mData[i];
 		}
 
 		// ETX 체크
@@ -148,7 +149,7 @@ timeout_handler :
 	}
 }
 
-void Protocol::sendMessage(unsigned char message, unsigned char *data, unsigned short size)
+error Protocol::sendMessage(unsigned char message, unsigned char *data, unsigned short size)
 {
 	unsigned char chksum = 0, *buf;
 	mSendHeader.message = message;
@@ -166,7 +167,7 @@ void Protocol::sendMessage(unsigned char message, unsigned char *data, unsigned 
 	mSendTail.chksum = chksum;
 
 	mCompleteFlag = false;
-	mTimeoutFlag = false;
+	mError = Error::NONE;
 
 	mSocket->lock();
 	mSocket->sendData(&mSendHeader, sizeof(mSendHeader));
@@ -175,7 +176,13 @@ void Protocol::sendMessage(unsigned char message, unsigned char *data, unsigned 
 	mSocket->sendData(&mSendTail, sizeof(mSendTail));
 	mSocket->unlock();
 
+	mThreadId = thread::getCurrentThreadNum();
 	trigger::run(mTriggerId);
+
+	while(!mCompleteFlag)
+		thread::yield();
+	
+	return mError;
 }
 
 void Protocol::flush(void)
@@ -189,15 +196,18 @@ void Protocol::flush(void)
 	mMutex.unlock();
 }
 
-error Protocol::waitUntilComplete(void)
+unsigned char Protocol::getReceivedMessage(void)
 {
-	mThreadId = thread::getCurrentThreadNum();
-
-	while(!mCompleteFlag && !mTimeoutFlag)
-		thread::yield();
-	
-	if(mTimeoutFlag)
-		return Error::TIMEOUT;
-	else
-		return Error::NONE;
+	return mMessage;
 }
+
+unsigned short Protocol::getReceivedDataSize(void)
+{
+	return *(unsigned short*)mSize;
+}
+
+unsigned char *Protocol::getReceivedData(void)
+{
+	return mData;
+}
+

@@ -25,7 +25,7 @@
 #include <bsp.h>
 #include <__cross_studio_io.h>
 #include <string.h>
-#include <protocol.h>
+#include <Protocol.h>
 
 
 namespace task
@@ -47,6 +47,7 @@ void callback_linkup(bool linkup)
 		gFq.clear();
 		gFq.add(task::program::connectingToServer);
 		gFq.add(task::program::checkFirmwareFromServer);
+		gFq.add(task::program::programNewFirmware);
 		gFq.add(task::program::finish);
 		gFq.start();
 		gFq.unlock();
@@ -61,7 +62,7 @@ void callback_linkup(bool linkup)
 }
 
 // 빨간색 점멸
-void thread_blinkConnectingToServerLed(void)
+void thread_blinkLedConnectingToServer(void)
 {
 	Period period(25000);
 
@@ -86,14 +87,11 @@ error connectingToServer(FunctionQueue *obj)
 	error result;
 
 	gMutex.lock();
-	clear();
-	gThreadId[0] = thread::add(thread_blinkConnectingToServerLed, 512);
+	clear();	// 기존에 등록된 쓰레드 제거
+	gThreadId[0] = thread::add(thread_blinkLedConnectingToServer, 512);
 	gMutex.unlock();
 
-	while(!w5100s.isLinkup())
-		thread::yield();
-
-	const WiznetSocket::Host host =
+	const WiznetSocket::Host host =	// 호스트 주소 설정
 	{
 		{192, 168, 0, 17},	//unsigned char ip[4];
 		8080				//unsigned short port;
@@ -103,24 +101,25 @@ repeat :
 	do
 	{
 		socket0.lock();
-		result = socket0.connectToHost(host);
+		result = socket0.connectToHost(host);	// 호스트에 연결 시도
 		socket0.unlock();
 		if(result != Error::NONE)
 			thread::delay(3000);
 	}while(result != Error::NONE);
 	
 	socket0.lock();
-	result = socket0.waitUntilConnect();
+	result = socket0.waitUntilConnect();	// 소켓이 연결 될 때까지 대기
 	socket0.unlock();
-
-	if(result != Error::NONE)
+	
+	// 연결 대기에서 연결에 실패하면 repeat로 돌아가 다시 시도
+	if(result != Error::NONE)	
 		goto repeat;
 
 	return Error::NONE;
 }
 
 // 노란색 점멸
-void thread_blinkCheckFirmwareFromServerLed(void)
+void thread_blinkLedCheckFirmwareFromServer(void)
 {
 	Period period(25000);
 
@@ -146,16 +145,104 @@ error checkFirmwareFromServer(FunctionQueue *obj)
 
 	gMutex.lock();
 	clear();
-	gThreadId[0] = thread::add(thread_blinkCheckFirmwareFromServerLed, 512);
+	gThreadId[0] = thread::add(thread_blinkLedCheckFirmwareFromServer, 512);
 	gMutex.unlock();
 
 start:
-
-	gProtocol.sendMessage(Protocol::MSG_HOW_ARE_YOU, 0, 0);
-	if(gProtocol.waitUntilComplete() != Error::NONE)
+	// 서버와 연결 상태 확인
+	if(gProtocol.sendMessage(Protocol::MSG_HOW_ARE_YOU, 0, 0) != Error::NONE)
 		goto start;
 	
-	debug_printf("Firmware Server handshake OK!!\n");
+	if(gProtocol.getReceivedMessage() != Protocol::MSG_I_AM_FINE)
+	{
+		thread::delay(1000);
+		goto start;
+	}
+	
+	// 새 펌웨어가 있는지 확인 
+	if(gProtocol.sendMessage(Protocol::MSG_HAVE_YOU_NEW_FIRMWARE, 0, 0) != Error::NONE)
+		goto start;
+	
+	switch(gProtocol.getReceivedMessage())
+	{
+	// 새 펌웨어가 없으면 1초후 다시 문의
+	case Protocol::MSG_NO_I_HAVE_NOT :
+	default :
+		thread::delay(1000);
+		goto start;
+		break;
+	
+	// 새 펌웨어가 있으면 리턴해서 다음 단계 진행
+	case Protocol::MSG_YES_I_HAVE :
+		break;
+	}
+	
+	return Error::NONE;
+}
+
+// 초록색 점멸
+void thread_blinkLedProgramNewFirmware(void)
+{
+	Period period(25000);
+
+	while(1)
+	{
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(0, i, 0);
+		}
+		
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(0, 255-i, 0);
+		}
+	}
+}
+
+error programNewFirmware(FunctionQueue *obj)
+{
+	error result;
+	unsigned short size;
+	unsigned char *data;
+	unsigned int packetCount;
+	bool completeFlag;
+
+	gMutex.lock();
+	clear();
+	gThreadId[0] = thread::add(thread_blinkLedProgramNewFirmware, 512);
+	gMutex.unlock();
+
+start:
+	// 전체 펌웨어 패킷의 수를 요청 (1 패킷에 256 바이트)
+	if(gProtocol.sendMessage(Protocol::MSG_GIVE_ME_TOTAL_PACKET, 0, 0) != Error::NONE)
+		goto start;
+	
+	if(gProtocol.getReceivedMessage() != Protocol::MSG_IT_IS_TOTAL_PACKET)
+	{
+		thread::delay(1000);
+		goto start;
+	}
+
+	size = gProtocol.getReceivedDataSize();
+	data = gProtocol.getReceivedData();
+
+	if(size == 4)
+	{
+		packetCount = *(unsigned int*)&data[0];
+	}
+
+	for(int i=0;i<packetCount;i++)
+	{
+		while(1)
+		{
+			
+		}
+	}
+
+	thread::yield();
+
 	return Error::NONE;
 }
 

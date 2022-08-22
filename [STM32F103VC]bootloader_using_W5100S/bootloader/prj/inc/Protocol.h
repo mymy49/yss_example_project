@@ -16,8 +16,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INTERPRETER__H_
-#define INTERPRETER__H_
+#ifndef PROTOCOL__H_
+#define PROTOCOL__H_
 
 #include <yss/error.h>
 #include <yss/Mutex.h>
@@ -42,9 +42,9 @@ class Protocol
 		unsigned char chksum;
 	}__attribute__((packed));
 
-	unsigned char mCommand, mSize[2], mData[512];
+	unsigned char mMessage, mSize[2], mData[512];
 	unsigned short mIndex;
-	bool mTimeoutFlag, mCompleteFlag;
+	bool mCompleteFlag;
 	error mError;
 	WiznetSocket *mSocket;
 	Mutex mMutex;
@@ -60,15 +60,24 @@ public:
 	{
 		MSG_HOW_ARE_YOU = 0,
 		MSG_I_AM_FINE = 1,
+		MSG_HAVE_YOU_NEW_FIRMWARE = 2,
+		MSG_NO_I_HAVE_NOT = 3,
+		MSG_YES_I_HAVE = 4,
+		MSG_I_DON_T_KNOW = 5,
+		MSG_GIVE_ME_TOTAL_PACKET = 6,
+		MSG_IT_IS_TOTAL_PACKET = 7,
+		MSG_GIVE_ME_FIRMWARE_PACKET = 8,
+		MSG_IT_IS_FIRMWARE_PACKET = 9,
 	};
 
 	Protocol(WiznetSocket &socket);
 
 	void interpret(void);
 	void flush(void);
-	void sendMessage(unsigned char message, unsigned char *data, unsigned short size);
-	unsigned char getReceivedFunction(void);
-	error waitUntilComplete(void);
+	error sendMessage(unsigned char message, unsigned char *data, unsigned short size);
+	unsigned char getReceivedMessage(void);
+	unsigned short getReceivedDataSize(void);
+	unsigned char *getReceivedData(void);
 };
 
 

@@ -23,6 +23,11 @@
 #include <bsp.h>
 #include <task/program.h>
 
+void thread_test(void)
+{
+	thread::delay(5000);
+}
+
 int main(void)
 {
 	unsigned short rxSize, count = 0;
@@ -30,6 +35,8 @@ int main(void)
 
 	yss::init();
 	initBoard();
+
+	thread::add(thread_test, 512);
 	
 	gFq.start();
 

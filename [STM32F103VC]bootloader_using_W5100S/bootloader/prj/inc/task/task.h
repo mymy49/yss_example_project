@@ -20,7 +20,7 @@
 #define TASK__H_
 
 #include <util/FunctionQueue.h>
-#include <Interpreter.h>
+#include <Protocol.h>
 
 extern FunctionQueue gFq;
 
