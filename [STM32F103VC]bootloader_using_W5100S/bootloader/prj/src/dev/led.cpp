@@ -43,6 +43,8 @@ void init(void)
 
 void setRgb(unsigned char r, unsigned char g, unsigned char b)
 {
+	g = (int)g * 100 / 256;
+	
 	pwm3Ch1.setCounter(256-r);
 	pwm3Ch3.setCounter(256-g);
 	pwm3Ch4.setCounter(256-b);

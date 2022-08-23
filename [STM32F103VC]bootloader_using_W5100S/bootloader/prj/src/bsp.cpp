@@ -77,8 +77,6 @@ void initBoard(void)
 
 	if(w5100s.init(w5100sConfig))
 	{
-		debug_printf("W5100S initialization Ok!!\n");
-		
 		const W5100S::IpConfig ipconfig = 
 		{
 			{0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC},	//unsigned char macAddress[6];
@@ -91,7 +89,6 @@ void initBoard(void)
 	}
 	else
 	{
-		debug_printf("W5100S initialization Failed!!\n");
 		while(1);
 	}
 	w5100s.unlock();
@@ -104,7 +101,7 @@ void initBoard(void)
 
 void initSystem(void)
 {
-	void (*application)(void) = (void (*)(void))(0x08010000);
+	void (*application)(void) = *(void (**)(void))(0x08010004);
 
 	clock.peripheral.setGpioAEn(true);
 	clock.peripheral.setGpioBEn(true);
@@ -112,11 +109,10 @@ void initSystem(void)
 	clock.peripheral.setGpioDEn(true);
 	clock.peripheral.setAfioEn(true);
 
-	// 부트로더가 완성될 때까지는 주석 처리
-	//if(GPIOB->IDR & GPIO_IDR_IDR1_Msk)
-	//{
-	//	application();
-	//}
+	if(GPIOB->IDR & GPIO_IDR_IDR1_Msk)
+	{
+		application();
+	}
 
 	clock.peripheral.setPwrEn(true);
 	clock.enableHse(HSE_CLOCK_FREQ);

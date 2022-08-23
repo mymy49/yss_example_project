@@ -205,8 +205,8 @@ error programNewFirmware(FunctionQueue *obj)
 {
 	error result;
 	unsigned short size;
-	unsigned char *data;
-	unsigned int packetCount;
+	unsigned char *data, *des = (unsigned char*)0x08010000;
+	unsigned int packetCount, thisPacket;
 	bool completeFlag;
 
 	gMutex.lock();
@@ -232,12 +232,27 @@ start:
 	{
 		packetCount = *(unsigned int*)&data[0];
 	}
-
+	
 	for(int i=0;i<packetCount;i++)
 	{
+		if(i % 8 == 0)
+			flash.erase(32+i/8);
+
 		while(1)
 		{
+			while(gProtocol.sendMessage(Protocol::MSG_GIVE_ME_FIRMWARE_PACKET, (unsigned char*)&i, 4) != Error::NONE)
+				thread::delay(1000);
 			
+			size = gProtocol.getReceivedDataSize();
+			data = gProtocol.getReceivedData();
+			thisPacket = *(unsigned int*)&data[0];
+			
+			if(thisPacket != i)
+				continue;
+			
+			flash.program(des, &data[4], size-4);
+			des += size-4;
+			break;
 		}
 	}
 
@@ -246,13 +261,34 @@ start:
 	return Error::NONE;
 }
 
+// 파란색 점멸
+void thread_blinkLedFinish(void)
+{
+	Period period(25000);
+
+	while(1)
+	{
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(0, 0, i);
+		}
+		
+		for(int i=0;i<256;i+=16)
+		{
+			period.wait();
+			Led::setRgb(0, 0, 255-i);
+		}
+	}
+}
+
 error finish(FunctionQueue *obj)
 {
 	error result;
 
 	gMutex.lock();
 	clear();
-	Led::setRgb(0, 0, 0);
+	gThreadId[0] = thread::add(thread_blinkLedFinish, 512);
 	gMutex.unlock();
 	
 	return Error::NONE;
