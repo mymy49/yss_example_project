@@ -20,17 +20,24 @@
 #include <yss.h>
 #include <bsp.h>
 #include <util/time.h>
+#include <cli_led.h>
 
 int32_t main(void)
 {
 	initYss();
 	initBoard();
+	
+	Cli::Led::setNumOfLed(1);
+	Cli::Led::setLedFunction(0, led::setOn);
+	Cli::Led::registerCli(cli);
+
+	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F103RB board.\n\n\r");
+	cli.start();
 
 	while(1)
 	{
-		debug_printf("%d\n", time::getRunningMsec());
-		uart2.send("hello world!!\n", sizeof("hello world!!\n"));
-		thread::delay(1000);
+//		debug_printf("%d\r", time::getRunningMsec());
+		thread::yield();
 	}
 
 	return 0;

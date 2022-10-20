@@ -19,6 +19,13 @@
 #ifndef BSP__H_
 #define BSP__H_
 
+#include <util/CommandLineInterface.h>
+#include <util/FunctionQueue.h>
+#include <dev/led.h>
+
 void initBoard(void);
+
+extern FunctionQueue functionQueue;
+extern CommandLineInterface cli;
 
 #endif

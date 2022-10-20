@@ -16,25 +16,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <yss/debug.h>
+#include <dev/led.h>
 #include <yss.h>
 #include <bsp.h>
 
-FunctionQueue functionQueue(16);
-CommandLineInterface cli(uart2, functionQueue);
-
-void initBoard(void)
+namespace led
 {
-	// USART2 초기화
-	using namespace define::gpio;
-	gpioA.setAsAltFunc(2, altfunc::PA2_USART2_TX);
-//	gpioA.setAsAltFunc(3, altfunc::PA3_USART2_RX);
-	
-	uart2.enableClock();
-	uart2.init(9600, 256);
-	uart2.enableInterrupt();
+	void init(void)
+	{
+		gpioA.setAsOutput(5);
+		setOn(false);
+	}
 
-	// LED 초기화
-	led::init();
+	void setOn(bool en)
+	{
+		gpioA.setOutput(5, en);
+	}
 }
 
