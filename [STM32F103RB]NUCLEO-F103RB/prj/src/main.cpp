@@ -21,22 +21,32 @@
 #include <bsp.h>
 #include <util/time.h>
 #include <cli_led.h>
+#include <cli_dump.h>
+
+extern float gTest;
 
 int32_t main(void)
 {
 	initYss();
 	initBoard();
 	
+	uint32_t time;
+	gTest;
+	
 	Cli::Led::setNumOfLed(1);
 	Cli::Led::setLedFunction(0, led::setOn);
 	Cli::Led::registerCli(cli);
+
+	Cli::Dump::registerCli(cli);
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F103RB board.\n\n\r");
 	cli.start();
 
 	while(1)
 	{
-//		debug_printf("%d\r", time::getRunningMsec());
+		time = time::getRunningMsec();
+		gTest = (float)time / 1000.f;
+		debug_printf("%d\r", time);
 		thread::yield();
 	}
 

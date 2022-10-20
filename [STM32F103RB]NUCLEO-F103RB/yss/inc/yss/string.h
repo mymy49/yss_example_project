@@ -16,15 +16,17 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_STDLIB__H_
-#define YSS_STDLIB__H_
+#ifndef YSS_STRING__H_
+#define YSS_STRING__H_
 
-#include <stdlib.h>
-#include <stdint.h>
+#include <string.h>
 
 extern "C"
 {
-	uint32_t atox(const char *src);
+	void *memcpy(void *__s1, const void *__s2, uint32_t __n);
+	void *memset(void *__s, int32_t  __c, uint32_t __n);
+	void *memsethw(void *__s, int32_t  __c, uint32_t __n);
+	void *memsetw(void *__s, int32_t  __c, uint32_t __n);
 }
 
 #endif

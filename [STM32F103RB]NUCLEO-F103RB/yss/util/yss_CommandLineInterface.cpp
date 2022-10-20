@@ -22,7 +22,7 @@
 #include <yss/thread.h>
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <yss/stdlib.h>
 
 #include <yss/debug.h>
 
@@ -31,7 +31,7 @@ static void thread_processCli(void *var)
 	((CommandLineInterface*)var)->process();
 }
 
-CommandLineInterface::CommandLineInterface(Uart &peri, FunctionQueue &fq, uint32_t stackSize, uint32_t maxCommandCount)
+CommandLineInterface::CommandLineInterface(Uart &peri, uint32_t stackSize, uint32_t maxCommandCount)
 {
 	mThreadId = 0;
 	mCommandSetCount = 0;
@@ -39,7 +39,6 @@ CommandLineInterface::CommandLineInterface(Uart &peri, FunctionQueue &fq, uint32
 	mGreetings = 0;
 	mCommandSet = new CommandSet[maxCommandCount];
 	mPeri = &peri;
-	mFq = &fq;
 	memset(mCommandLineBuffer, ' ', MAX_COMMAND_LINE_COUNT-1);
 	mCommandLineBuffer[MAX_COMMAND_LINE_COUNT-1] = 0;
 }
@@ -157,7 +156,7 @@ void CommandLineInterface::process(void)
 					copyOneItem(&userInput, str, index);
 					switch(*varType)
 					{
-					case INT :
+					case INTEGER :
 						if(!checkStringAsInteger(str))
 							goto enterKey_error_handler;
 						*(uint32_t*)variable = atoi(str);
@@ -179,11 +178,32 @@ void CommandLineInterface::process(void)
 						*(float*)variable = atof(str);
 						variable += sizeof(float);
 						break;
+
+					case HEXADECIMAL :
+						if(!checkStringAsHexadecimal(str))
+							goto enterKey_error_handler;
+						if(str[0] == '0' && (str[1] == 'x' || str[1] == 'X'))
+							*(uint32_t*)variable = atox(&str[2]);
+						else
+							*(uint32_t*)variable = atox(&str[0]);
+						variable += sizeof(uint32_t);
+						break;
 					}
 					varType++;
 				}
 				
-				mCommandSet[cmd].callback(mPeri, mVariableBuffer);
+				if(mCommandSet[cmd].callback(mPeri, mVariableBuffer) == Error::NONE)
+				{
+					mPeri->lock();
+					mPeri->send("\r\nDone!!\n\r", 10);
+					mPeri->unlock();
+				}
+				else
+				{
+					mPeri->lock();
+					mPeri->send("\r\nFailed!!\n\r", 12);
+					mPeri->unlock();
+				}
 
 enterKey_error_handler :
 				clearBuffer();
@@ -395,4 +415,18 @@ bool CommandLineInterface::checkStringAsFloat(char *src)
 
 	return true;
 }
+
+bool CommandLineInterface::checkStringAsHexadecimal(char *src)
+{
+	while(*src)
+	{
+		if(!(('0' <= *src && *src <= '9') || *src == 'x' || *src == 'X' || ('a' <= *src && *src <= 'f') || ('A' <= *src && *src <= 'F')))
+			return false;
+
+		src++;
+	}
+
+	return true;
+}
+
 

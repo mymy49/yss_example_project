@@ -21,7 +21,7 @@
 #include <bsp.h>
 
 FunctionQueue functionQueue(16);
-CommandLineInterface cli(uart2, functionQueue);
+CommandLineInterface cli(uart2);
 
 void initBoard(void)
 {
