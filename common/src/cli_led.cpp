@@ -62,13 +62,9 @@ namespace Led
 			goto error_handler;
 		}
 		
-		if(!strcmp(cvar, "ON"))
+		if(!strcasecmp(cvar, "ON"))
 			setLedOn[num](true);
-		else if(!strcmp(cvar, "on"))
-			setLedOn[num](true);
-		else if(!strcmp(cvar, "OFF"))
-			setLedOn[num](false);
-		else if(!strcmp(cvar, "off"))
+		else if(!strcasecmp(cvar, "OFF"))
 			setLedOn[num](false);
 		else
 		{
@@ -82,11 +78,11 @@ error_handler :
 		switch(result)
 		{
 		case Error::INDEX_OVER :
-			sprintf(str, "\n\rError!! : LED number %d is not valid.\n\r", num);
+			sprintf(str, "\n\rError!! : The LED number %d is not valid.", num);
 			break;
 
 		case Error::UNKNOWN :
-			sprintf(str, "\n\rError!! : \"%s\" is not valid string.\n\r", cvar);
+			sprintf(str, "\n\rError!! : The \"%s\" is not valid string.", cvar);
 			break;
 		}
 
@@ -99,8 +95,8 @@ error_handler :
 
 	void registerCli(CommandLineInterface &cli)
 	{
-		static const uint8_t ledVarType[3] = {CommandLineInterface::INT, CommandLineInterface::STRING, CommandLineInterface::TERMINATE};
-		cli.addCommand("led", ledVarType, callback_setLed, "This function turns the LED on/off. ex)led 0 ON / led 1 OFF");
+		static const uint8_t ledVarType[3] = {CommandLineInterface::INTEGER, CommandLineInterface::STRING, CommandLineInterface::TERMINATE};
+		cli.addCommand("led", ledVarType, callback_setLed, "It turns the LED on/off. ex)led 0 ON / led 1 OFF");
 	}
 }
 }

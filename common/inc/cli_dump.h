@@ -16,38 +16,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMMON_LED__H_
-#define COMMON_LED__H_
+#ifndef COMMON_DUMP__H_
+#define COMMON_DUMP__H_
 
 #include <util/CommandLineInterface.h>
-#include <drv/Gpio.h>
 #include <yss/error.h>
 
-// LED를 ON/OFF 하는 CLI를 명령을 생성한다.
+// 메모리의 내용을 출력하는 CLI를 명령을 생성한다.
 // 사용 순서는 아래와 같다.
-// 1. setNumOfLed() 함수를 사용해 전체 LED 수를 설정한다.
-// 2. setLedFunction() 함수를 사용해 각 LED를 ON/OFF 하는 함수를 LED마다 등록한다.
-// 3. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
+// 1. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
 namespace Cli
 {
-namespace Led
+namespace Dump
 {
-	// 제어할 LED의 전체 개수를 설정하는 함수이다.
-	// 
-	// uint8_t num
-	//		LED의 전체 개수를 설정한다.
-	void setNumOfLed(uint8_t num);
-
-	// LED를 ON/OFF 하는 함수를 설정하는 함수이다.
-	//
-	// uint8_t num
-	//		설정할 LED의 인덱스를 설정한다.
-	// void (*func)(bool)
-	//		num에서 설정된 LED를 켜고 끄는 함수의 포인터를 설정한다.
-	// 반환
-	//		발생한 error를 반환한다.
-	error setLedFunction(uint8_t num, void (*func)(bool));
-
 	// CommandLineInterface class의 instance에 명령어와 관련 함수등을 등록한다.
 	// 
 	// CommandLineInterface &cli
