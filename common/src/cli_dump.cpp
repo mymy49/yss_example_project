@@ -21,7 +21,7 @@
 #include <string.h>
 #include <stdio.h>
 
-float gTest = 1.2345;
+#if !defined(YSS_DRV_UART_UNSUPPORTED)
 
 namespace Cli
 {
@@ -216,3 +216,6 @@ error_handler :
 	}
 }
 }
+
+#endif
+

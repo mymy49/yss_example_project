@@ -22,6 +22,8 @@
 #include <util/CommandLineInterface.h>
 #include <yss/error.h>
 
+#ifndef YSS_DRV_UART_UNSUPPORTED
+
 // 메모리의 내용을 출력하는 CLI를 명령을 생성한다.
 // 사용 순서는 아래와 같다.
 // 1. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
@@ -38,3 +40,6 @@ namespace Dump
 }
 
 #endif
+
+#endif
+

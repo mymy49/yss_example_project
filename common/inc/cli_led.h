@@ -23,6 +23,8 @@
 #include <drv/Gpio.h>
 #include <yss/error.h>
 
+#ifndef YSS_DRV_UART_UNSUPPORTED
+
 // LED를 ON/OFF 하는 CLI를 명령을 생성한다.
 // 사용 순서는 아래와 같다.
 // 1. setNumOfLed() 함수를 사용해 전체 LED 수를 설정한다.
@@ -57,3 +59,6 @@ namespace Led
 }
 
 #endif
+
+#endif
+

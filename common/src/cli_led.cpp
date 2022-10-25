@@ -21,6 +21,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#if !defined(YSS_DRV_UART_UNSUPPORTED)
+
 namespace Cli
 {
 namespace Led
@@ -100,3 +102,6 @@ error_handler :
 	}
 }
 }
+
+#endif
+
