@@ -22,7 +22,6 @@
 #include <util/time.h>
 #include <cli_led.h>
 #include <cli_dump.h>
-#include <stm32f4xx.h>
 
 float gTest;
 
