@@ -212,7 +212,7 @@ error_handler :
 	void registerCli(CommandLineInterface &cli)
 	{
 		static const uint8_t varType[5] = {CommandLineInterface::HEXADECIMAL, CommandLineInterface::INTEGER, CommandLineInterface::INTEGER, CommandLineInterface::STRING, CommandLineInterface::TERMINATE};
-		cli.addCommand("dump", varType, callback_displayMemoryData, "It displays value stored in memory. ex)dump 0x20000000 4 1 float / dump 20000000 1 4 hex");
+		cli.addCommand("dump", varType, callback_displayMemoryData, "It displays values stored in memory. ex)dump 0x20000000 4 1 float / dump 20000000 1 4 hex");
 	}
 }
 }
