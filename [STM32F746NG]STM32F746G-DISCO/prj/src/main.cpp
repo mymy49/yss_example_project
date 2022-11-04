@@ -39,14 +39,13 @@ int main(void)
 
 	Cli::Dump::registerCli(cli);
 
-	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F411RE board.\n\n\r");
+	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for STM32F756G-DISCO board.\n\n\r");
 	cli.start();
 
 	while(1)
 	{
 		time = time::getRunningMsec();
 		gTest = (float)time / 1000.f;
-		debug_printf("%d\r", time);
 		thread::yield();
 	}
 
