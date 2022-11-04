@@ -23,6 +23,28 @@
 
 #define YSS_USE_DEFAULT_MSP true
 
+// ####################### lmalloc 설정 #######################
+
+// SDRAM을 이용한 동적할당 메모리의 사용 여부(true, false)
+#define YSS_L_HEAP_USE true
+
+#if YSS_L_HEAP_USE == true
+// SDRAM의 시작 주소 설정
+// STM32F7 (Bank1 - 0x60000000, Bank2 - 0x70000000)
+// STM32F4 (Bank1 - 0xC0000000, Bank2 - 0xD0000000)
+#define YSS_SDRAM_ADDR 0x60000000
+
+// SDRAM의 총 메모리 용량 설정
+#define YSS_L_HEAP_SIZE (8 * 1024 * 1024)
+
+// lmalloc의	기본 할당 단위
+#define YSS_L_HEAP_CLUSTER_SIZE (256)
+
+// lmalloc의	최대 할당 개수
+#define YSS_L_MAX_NUM_OF_MALLOC 1024
+
+#endif
+
 // ####################### 스케줄러 설정 #######################
 
 // 내부 ms 를 만들 시계의 타이머 설정 (timer1 ~ timer14)
@@ -36,7 +58,7 @@
 
 // ####################### GUI 설정 #######################
 // GUI library Enable (true, false)
-#define USE_GUI			true
+#define USE_GUI			false
 
 // Touch Event Enable (true, false)
 #define USE_EVENT		false
@@ -115,7 +137,7 @@
 //#define SDMMC_ENABLE
 
 // SDRAM 활성화
-//#define SDRAM_ENABLE
+#define SDRAM_ENABLE
 
 // LTDC 활성화
 //#define LTDC_ENABLE
