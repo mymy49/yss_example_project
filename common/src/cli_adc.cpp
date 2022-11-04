@@ -67,7 +67,7 @@ namespace Analog
 			goto error_handler;
 		}
 		
-		sprintf(str, "ADC[%d] : %5d", num, gConfig[num].adc->get(gConfig[num].channel));
+		sprintf(str, "\n\rADC[%d] : %5d", num, gConfig[num].adc->get(gConfig[num].channel));
 		len = strlen(str);
 		peripheral->lock();
 		peripheral->send(str, len);
