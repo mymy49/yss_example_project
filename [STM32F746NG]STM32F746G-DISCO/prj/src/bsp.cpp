@@ -35,6 +35,21 @@ void initBoard(void)
 	uart1.init(9600, 256);
 	uart1.enableInterrupt();
 
+	// ADC 초기화
+	gpioA.setAsAnalog(0);
+	gpioF.setAsAnalog(10);
+	gpioF.setAsAnalog(9);
+
+	adc1.enableClock();
+	adc1.init();
+	
+	using namespace define::adc;
+	adc1.add(0, lpfLv::LV10, bit::BIT16);
+	adc1.add(8, lpfLv::LV10, bit::BIT16);
+	adc1.add(7, lpfLv::LV10, bit::BIT16);
+
+	adc1.enableInterrupt();
+
 	// LED 초기화
 	led::init();
 }

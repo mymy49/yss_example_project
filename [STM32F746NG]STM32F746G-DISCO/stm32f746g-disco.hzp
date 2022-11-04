@@ -20,7 +20,7 @@
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
       arm_target_trace_interface_type="None"
-      c_user_include_directories="$(TargetsDir)/STM32/include;$(ProjectDir)/prj/inc;$(ProjectDir)/yss/inc;$(ProjectDir)/../common/inc"
+      c_user_include_directories="$(TargetsDir)/STM32/include;$(ProjectDir)/prj/inc;$(HomeDir)/library/yss/inc;$(ProjectDir)/yss/inc;$(ProjectDir)/../common/inc"
       debug_register_definition_file="$(TargetsDir)/STM32/STM32F746_Peripherals.xml"
       gcc_cplusplus_language_standard="gnu++11"
       linker_memory_map_file="$(TargetsDir)/STM32/STM32F746NG_MemoryMap.xml"
@@ -49,7 +49,12 @@
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <folder Name="prj" exclude="" filter="" path="prj" recurse="Yes" />
-      <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
+      <folder
+        Name="yss"
+        exclude=""
+        filter=""
+        path="../../yss"
+        recurse="Yes" />
       <folder
         Name="common"
         exclude=""

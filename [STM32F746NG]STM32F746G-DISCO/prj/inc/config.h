@@ -156,7 +156,7 @@
 
 // ADC 활성화
 #define ADC1_ENABLE
-#define ADC2_ENABLE
+//#define ADC2_ENABLE
 //#define ADC3_ENABLE
 
 // DAC 활성화
