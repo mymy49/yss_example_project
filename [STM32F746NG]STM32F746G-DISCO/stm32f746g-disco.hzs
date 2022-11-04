@@ -69,24 +69,8 @@
   <ProjectSessionItem path="stm32f746g-disco"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;common"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;common;inc"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;common;src"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj;inc"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj;src"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj;src;dev"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;inc"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;inc;cmsis"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;inc;cmsis;mcu"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;inc;cmsis;mcu;st"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;inc;drv"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;target"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;target;stm32_gd32"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;target;stm32_gd32;driver"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;target;stm32_gd32;driver;stm32_common"/>
-  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;target;stm32_gd32;instance"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;System Files"/>
  </Project>
  <Register1>
@@ -167,15 +151,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="29" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="48" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/bsp.cpp" selected="0" top="33" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/inc/cli_adc.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="91" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/cli_adc.cpp" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/common/inc/cli_adc.h" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Adc.h" selected="0" top="3" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="57" y="100" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/cli_led.cpp" selected="0" top="75" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="153" y="214" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/cli_dump.cpp" selected="0" top="186" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="156" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/inc/config.h" selected="0" top="141" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="19" y="177" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/cmsis/mcu/st/stm32f746xx.h" selected="1" top="153" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="31" y="46" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="29" codecName="UTF-8"/>
  </Files>
  <ARMCrossStudioWindow activeProject="stm32f746g-disco" fileDialogDefaultFilter="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.hxx" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

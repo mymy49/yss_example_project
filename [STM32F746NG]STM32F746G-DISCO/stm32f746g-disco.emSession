@@ -32,6 +32,8 @@
   <ProjectSessionItem path="stm32f746g-disco"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj;src"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;System Files"/>
  </Project>
  <Register1>
@@ -73,9 +75,8 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="58" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="15" y="33" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="28" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="54" y="168" useTextEdit="1" path="yss/inc/cmsis/mcu/st/stm32f746xx.h" left="0" top="149" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="159" useTextEdit="1" path="yss/target/stm32_gd32/instance/instance_adc_stm32_gd32f1.cpp" left="0" top="143" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="stm32f746g-disco" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
+ <EMStudioWindow activeProject="stm32f746g-disco" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>
