@@ -24,11 +24,10 @@
 #if defined(STM32F1)
 
 #include <cmsis/mcu/st/stm32f1xx.h>
-#include <cmsis/mcu/common/stm32_gd32_f1xx.h>
 
 #elif defined(STM32F4)
 
-#include <stm32f4xx.h>
+#include <cmsis/mcu/st/stm32f4xx.h>
 
 #elif defined(STM32F7)
 
@@ -41,7 +40,6 @@
 #elif defined(GD32F1)
 
 #include <cmsis/mcu/gigadevice/gd32f10x.h>
-#include <cmsis/mcu/common/stm32_gd32_f1xx.h>
 
 #elif defined(GD32F4)
 
@@ -55,7 +53,7 @@
 
 inline void __disable_irq(void) {}
 inline void __enable_irq(void) {}
-inline void NVIC_SetPriority(uint8_t val1, uint8_t val2) {}
+//inline void NVIC_SetPriority(uint8_t val1, uint8_t val2) {}
 
 #define PendSV_IRQn 0
 #define SysTick_CTRL_CLKSOURCE_Pos 0

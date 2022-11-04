@@ -28,15 +28,10 @@
   <ProjectSessionItem path="nucleo-f103rb"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common;inc"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common;src"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;inc"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;src"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;yss"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;yss;instance"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;yss;instance;stm32_gd32_common"/>
+  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;src;dev"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;System Files"/>
  </Project>
  <Register1>
@@ -74,14 +69,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="42" useTextEdit="1" path="prj/inc/config.h" left="0" top="15" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="20" y="22" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="12" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="570" useTextEdit="1" path="../../yss/scheduler/yss_scheduler.cpp" left="0" top="543" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="104" useTextEdit="1" path="../../yss/util/yss_time.cpp" left="0" top="90" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="112" useTextEdit="1" path="../../yss/drv/stm32_gd32_common/drv_timer_stm32_gd32f1.cpp" left="0" top="84" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="24" useTextEdit="1" path="../../yss/debug/yss_debug.cpp" left="0" top="11" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="44" y="199" useTextEdit="1" path="STM32F1xx/Source/STM32F103xx_Vectors.s" left="0" top="188" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="596" useTextEdit="1" path="yss/instance/stm32_gd32_common/instance_dma_stm32_gd32f1.cpp" left="0" top="489" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="51" y="11" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="0" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="nucleo-f103rb" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
+ <EMStudioWindow activeProject="nucleo-f103rb" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

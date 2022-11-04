@@ -22,27 +22,11 @@
 #include <drv/mcu.h>
 #include <yss/error.h>
 
-#if defined(STM32F4)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7)
 
-#include "uart/define_uart_stm32f1_f4.h"
-
-typedef USART_TypeDef		YSS_USART_Peri;
-
-#elif defined(STM32F7)
-
-#include "uart/define_uart_stm32f7.h"
-
-typedef USART_TypeDef		YSS_USART_Peri;
-
-#elif defined(GD32F1) || defined (GD32F450) || defined(STM32F1)
-
-#include "uart/define_uart_gd32f1_f4.h"
-
-typedef uint32_t		YSS_USART_Peri;
+typedef volatile uint32_t	YSS_USART_Peri;
 
 #elif defined(NRF52840_XXAA)
-
-#include "uart/define_uart_gd32f1_f4.h"
 
 typedef NRF_UART_Type		YSS_USART_Peri;
 

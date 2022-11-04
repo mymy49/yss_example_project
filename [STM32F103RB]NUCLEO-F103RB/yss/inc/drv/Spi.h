@@ -21,7 +21,7 @@
 
 #include "mcu.h"
 
-#if defined(GD32F1) || defined(GD32F4) || defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
+#if defined(GD32F1) || defined(GD32F4) || defined(STM32F1) || defined(STM32F4)
 
 typedef volatile uint32_t	YSS_SPI_Peri;
 
@@ -73,7 +73,7 @@ class Spi : public Drv
 	Dma::DmaInfo mTxDmaInfo, mRxDmaInfo;
 	const Specification *mLastSpec;
 	uint8_t mRxData;
-	int32_t  mThreadId, mDelayTime;
+	int32_t  mThreadId;
 	bool mCompleteFlag;
 };
 

@@ -21,26 +21,23 @@
 
 #include "peripheral.h"
 
-#if defined(STM32F4) || defined(STM32F7) || defined(STM32F1) || defined(STM32G4) || \
+#if defined(STM32F4) || defined(STM32F7) || defined(STM32F1) || defined(STM32G4) || defined(GD32F4) || \
 	defined(STM32L4) || defined(STM32L0) || defined(STM32F0) || \
 	defined(__SAM_L_FAMILY) || \
 	defined(GD32F1) || \
 	defined(NRF52840_XXAA)
-#elif defined(GD32F4)
-
-#include <drv/dma/define_dma_gd32f4.h>
-
 #else
 #define YSS_DRV_NVIC_NOT_SUPPORT
 #endif
 
+#ifndef YSS_DRV_NVIC_NOT_SUPPORT
 #include <drv/Drv.h>
 
 class Nvic : public Drv
 {
   public:
 	Nvic(void (*clockFunc)(bool en), void (*nvicFunc)(bool en));
-	void enableInterrupt(IRQn_Type position, bool en);
+	void enableInterrupt(IRQn_Type position, bool en = true);
 
 #if defined(DMA1_Stream0) || defined(DMA1_Channel1) || defined(DMA1_CHANNEL1)
 #define YSS_NVIC_DMA_CHANNEL_1
@@ -258,3 +255,6 @@ void setUsbd1En(bool en);
 };
 
 #endif
+
+#endif
+

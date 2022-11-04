@@ -16,6 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <drv/mcu.h>
 #include <util/CommandLineInterface.h>
 #include <util/FunctionQueue.h>
 #include <util/ElapsedTime.h>
@@ -25,6 +26,8 @@
 #include <yss/stdlib.h>
 
 #include <yss/debug.h>
+
+#if !defined(YSS_DRV_UART_UNSUPPORTED)
 
 static void thread_processCli(void *var)
 {
@@ -429,4 +432,5 @@ bool CommandLineInterface::checkStringAsHexadecimal(char *src)
 	return true;
 }
 
+#endif
 

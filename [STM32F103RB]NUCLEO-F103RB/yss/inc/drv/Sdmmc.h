@@ -21,11 +21,11 @@
 
 #include <drv/mcu.h>
 
-#if defined(STM32F7)
+#if false
 
 typedef SDMMC_TypeDef	YSS_SDMMC_Peri;
 
-#elif defined(GD32F1) || defined(STM32F4) || defined(GD32F4)
+#elif defined(GD32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F1)
 
 typedef volatile uint32_t	YSS_SDMMC_Peri;
 

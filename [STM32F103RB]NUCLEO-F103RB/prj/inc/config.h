@@ -87,20 +87,20 @@
 //#define PWM14_ENABLE
 
 // TIMER 활성화
-//#define TIM1_ENABLE
-//#define TIM2_ENABLE
-//#define TIM3_ENABLE
+#define TIM1_ENABLE
+#define TIM2_ENABLE
+#define TIM3_ENABLE
 #define TIM4_ENABLE
-//#define TIM5_ENABLE
-//#define TIM6_ENABLE
-//#define TIM7_ENABLE
-//#define TIM8_ENABLE
-//#define TIM9_ENABLE
-//#define TIM10_ENABLE
-//#define TIM11_ENABLE
-//#define TIM12_ENABLE
-//#define TIM13_ENABLE
-//#define TIM14_ENABLE
+#define TIM5_ENABLE
+#define TIM6_ENABLE
+#define TIM7_ENABLE
+#define TIM8_ENABLE
+#define TIM9_ENABLE
+#define TIM10_ENABLE
+#define TIM11_ENABLE
+#define TIM12_ENABLE
+#define TIM13_ENABLE
+#define TIM14_ENABLE
 
 // I2C 활성화
 //#define I2C1_ENABLE
@@ -121,20 +121,20 @@
 //#define LTDC_ENABLE
 
 // SPI 활성화
-//#define SPI1_ENABLE
-//#define SPI2_ENABLE
-//#define SPI3_ENABLE
-//#define SPI4_ENABLE
-//#define SPI5_ENABLE
-//#define SPI6_ENABLE
+#define SPI1_ENABLE
+#define SPI2_ENABLE
+#define SPI3_ENABLE
+#define SPI4_ENABLE
+#define SPI5_ENABLE
+#define SPI6_ENABLE
 
 // CAN 활성화
-//#define CAN1_ENABLE
-//#define CAN2_ENABLE
+#define CAN1_ENABLE
+#define CAN2_ENABLE
 
 // ADC 활성화
-//#define ADC1_ENABLE
-//#define ADC2_ENABLE
+#define ADC1_ENABLE
+#define ADC2_ENABLE
 //#define ADC3_ENABLE
 
 // DAC 활성화

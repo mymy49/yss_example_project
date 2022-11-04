@@ -19,7 +19,7 @@
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="STM32F429I-DISCO_EX1" radix="16" sizeText="512" addressText="0xD0000000"/>
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="Executable_1" radix="16" sizeText="" addressText=""/>
   <MemoryWindow addressSpace="" dataSize="4" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f103rg" radix="16" sizeText="" addressText="0x20000014"/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f103rb" radix="16" sizeText="3" addressText="0x20003f44"/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f103rb" radix="16" sizeText="16" addressText="0x08000000"/>
  </Memory1>
  <Memory2>
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="yss" radix="16" sizeText="" addressText=""/>
@@ -32,7 +32,7 @@
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="STM32F429I-DISCO_EX1" radix="16" sizeText="" addressText=""/>
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="Executable_1" radix="16" sizeText="" addressText=""/>
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f103rg" radix="16" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f103rb" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f103rb" radix="16" sizeText="8" addressText="0x20002b54"/>
  </Memory2>
  <Memory3>
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="yss" radix="16" sizeText="" addressText=""/>
@@ -64,15 +64,6 @@
   <ProjectSessionItem path="nucleo-f103rb"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common;inc"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;common;src"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;inc"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;inc;dev"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;src"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;prj;src;dev"/>
-  <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;Source Files;yss"/>
   <ProjectSessionItem path="nucleo-f103rb;nucleo-f103rb;System Files"/>
  </Project>
  <Register1>
@@ -86,7 +77,7 @@
   <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;DMA2D/CR;DMA2D/ISR;DMA2D/IFCR;DMA2D/FGMAR;DMA2D/FGOR;DMA2D/BGMAR;DMA2D/BGOR;DMA2D/FGPFCCR;DMA2D/FGCOLR;DMA2D/BGPFCCR;DMA2D/BGCOLR;DMA2D/FGCMAR;DMA2D/BGCMAR;DMA2D/OPFCCR;DMA2D/OCOLR;DMA2D/OMAR;DMA2D/OOR;DMA2D/NLR;DMA2D/LWR;DMA2D/AMTCR;DMA2D/FGCLUT;DMA2D/BGCLUT;LTDC/SSCR;LTDC/BPCR;LTDC/AWCR;LTDC/TWCR;LTDC/GCR;LTDC/SRCR;LTDC/BCCR;LTDC/IER;LTDC/ISR;LTDC/ICR;LTDC/LIPCR;LTDC/CPSR;LTDC/CDSR;LTDC/L1CR;LTDC/L1WHPCR;LTDC/L1WVPCR;LTDC/L1CKCR;LTDC/L1PFCR;LTDC/L1CACR;LTDC/L1DCCR;LTDC/L1BFCR;LTDC/L1CFBAR;LTDC/L1CFBLR;LTDC/L1CFBLNR;LTDC/L1CLUTWR;LTDC/L2CR;LTDC/L2WHPCR;LTDC/L2WVPCR;LTDC/L2CKCR;LTDC/L2PFCR;LTDC/L2CACR;LTDC/L2DCCR;LTDC/L2BFCR;LTDC/L2CFBAR;LTDC/L2CFBLR;LTDC/L2CFBLNR;LTDC/L2CLUTWR;RCC/CR;RCC/PLLCFGR;RCC/CFGR;RCC/CIR;RCC/AHB1RSTR;RCC/AHB2RSTR;RCC/AHB3RSTR;RCC/APB1RSTR;RCC/APB2RSTR;RCC/AHB1ENR;RCC/AHB2ENR;RCC/AHB3ENR;RCC/APB1ENR;RCC/APB2ENR;RCC/AHB1LPENR;RCC/AHB2LPENR;RCC/AHB3LPENR;RCC/APB1LPENR;RCC/APB2LPENR;RCC/BDCR;RCC/CSR;RCC/SSCGR;RCC/PLLI2SCFGR;RCC/DCKCFGR;RCC/PLLSAICFGR;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context;LTDC;RCC;RCC/APB1ENR;RCC/APB2ENR;CPU" name="STM32F429I-DISCO_EX1" decimalNodes="" octalNodes="" unsignedNodes=""/>
   <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="Executable_1" decimalNodes="" octalNodes="" unsignedNodes=""/>
   <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal;TIMER1/CTLR1;TIMER1/CTLR2;TIMER1/SMC;TIMER1/DIE;TIMER1/STR;TIMER1/EVR;TIMER1/CHCTLR1_Output;TIMER1/CHCTLR1_Input;TIMER1/CHCTLR2_Output;TIMER1/CHCTLR2_Input;TIMER1/CHE;TIMER1/CNT;TIMER1/PSC;TIMER1/CARL;TIMER1/CHCC1;TIMER1/CHCC2;TIMER1/CHCC3;TIMER1/CHCC4;TIMER1/DCTLR;TIMER1/DTRSF;TIMER1/CREP;TIMER1/BKDT" binaryNodes="" asciiNodes="" openNodes="TIMER1" name="gd32f103rg" decimalNodes="CPU - Current Context/r0;CPU - Current Context/r2" octalNodes="" unsignedNodes=""/>
-  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="nucleo-f103rb" decimalNodes="" octalNodes="" unsignedNodes=""/>
+  <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal;DMA1/ISR;DMA1/IFCR;DMA1/CCR1;DMA1/CNDTR1;DMA1/CPAR1;DMA1/CMAR1;DMA1/CCR2;DMA1/CNDTR2;DMA1/CPAR2;DMA1/CMAR2;DMA1/CCR3;DMA1/CNDTR3;DMA1/CPAR3;DMA1/CMAR3;DMA1/CCR4;DMA1/CNDTR4;DMA1/CPAR4;DMA1/CMAR4;DMA1/CCR5;DMA1/CNDTR5;DMA1/CPAR5;DMA1/CMAR5;DMA1/CCR6;DMA1/CNDTR6;DMA1/CPAR6;DMA1/CMAR6;DMA1/CCR7;DMA1/CNDTR7;DMA1/CPAR7;DMA1/CMAR7" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context;DMA1" name="nucleo-f103rb" decimalNodes="CPU - Current Context/r0;CPU - Current Context/r3" octalNodes="" unsignedNodes=""/>
  </Register1>
  <Register2>
   <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/msp;CPU/psp;CPU/cfbp;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="yss" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -136,7 +127,7 @@
  </TraceWindow>
  <Watch1>
   <Watches active="1" update="Twice a Second">
-   <Watchpoint expression="cli" name="cli" radix="-1" linenumber="0" filename="../[STM32F103RB]NUCLEO-F103RB"/>
+   <Watchpoint expression="gTest" name="gTest" radix="-1" linenumber="0" filename="../[STM32F103RB]NUCLEO-F103RB"/>
   </Watches>
  </Watch1>
  <Watch2>
@@ -149,7 +140,22 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="27" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="12" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="7" y="33" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="106" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/util/yss_CommandLineInterface.cpp" selected="0" top="87" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="83" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/scheduler/yss_context_switching.s" selected="0" top="66" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="28" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/target/stm32_gd32/msp/msp_stm32f1xx.cpp" selected="0" top="39" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="92" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/inc/config.h" selected="0" top="78" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="11" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/STM32/STM32F103xB.vec" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="61" y="24" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="14" path="../../yss/target/stm32_gd32/driver/drv_capture_stm32_gd32f1.cpp" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/target/stm32_gd32/driver/drv_exti_stm32_gd32f1.cpp" selected="0" top="11" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="42" y="25" useTextEdit="1" openedFrom="/home/mymy49/library/yss/target/stm32_gd32/driver/drv_exti_stm32_gd32f1.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Exti.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="59" y="24" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="12" path="../../yss/target/stm32_gd32/driver/drv_pwm_stm32_gd32f1.cpp" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="89" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/cli_led.cpp" selected="0" top="72" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="82" y="214" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="41" path="../common/src/cli_dump.cpp" selected="0" top="189" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="45" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/bsp.cpp" selected="0" top="21" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="10" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/target/stm32_gd32/driver/drv_adc_stm32f7.cpp" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/target/stm32_gd32/driver/drv_adc_stm32_gd32f1.cpp" selected="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="53" y="21" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/cmsis/mcu/st_gigadevice/adc_stm32f7.h" selected="0" top="9" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nucleo-f103rb" fileDialogDefaultFilter="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.hxx" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

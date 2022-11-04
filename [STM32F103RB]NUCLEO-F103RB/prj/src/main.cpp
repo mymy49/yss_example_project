@@ -23,7 +23,7 @@
 #include <cli_led.h>
 #include <cli_dump.h>
 
-extern float gTest;
+float gTest;
 
 int32_t main(void)
 {
@@ -39,14 +39,13 @@ int32_t main(void)
 
 	Cli::Dump::registerCli(cli);
 
-	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F103RB board.\n\n\r");
+	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for NUCLEO-F103RB board.\n\n\r");
 	cli.start();
 
 	while(1)
 	{
 		time = time::getRunningMsec();
 		gTest = (float)time / 1000.f;
-		debug_printf("%d\r", time);
 		thread::yield();
 	}
 
