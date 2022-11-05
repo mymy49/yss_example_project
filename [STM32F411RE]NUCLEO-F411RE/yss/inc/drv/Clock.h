@@ -56,7 +56,7 @@ class Clock : public Mutex
 #if defined(STM32F1) || defined(GD32F1)
 	static int32_t  mHseFreq;
 	static int32_t  mLseFreq;
-#elif defined(STM32F4) || defined(STM32F7)
+#elif defined(STM32F4) || defined(STM32F7) || defined(GD32F4)
 	static int32_t  mHseFreq;
 #endif
 
@@ -65,9 +65,15 @@ class Clock : public Mutex
 	bool enableMainPll(uint8_t src, uint8_t xtpre, uint8_t mul);
 	uint32_t getMainPllFrequency(void);
 
+#elif defined(GD32F4)
+	bool enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint8_t qDiv);
+	uint32_t getMainPllFrequency(void);
+
 #elif defined(STM32F4) || defined(STM32F7)
 	bool enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint8_t qDiv);
 	uint32_t getMainPllFrequency(void);
+
+	void enableSdram(bool en = true);
 
 	bool enableSaiPll(uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
 	int32_t  getSdmmcClockFrequency(void);
