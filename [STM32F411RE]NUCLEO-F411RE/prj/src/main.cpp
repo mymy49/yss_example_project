@@ -22,6 +22,7 @@
 #include <util/time.h>
 #include <cli_led.h>
 #include <cli_dump.h>
+#include <cli_adc.h>
 
 float gTest;
 
@@ -39,6 +40,12 @@ int32_t main(void)
 
 	Cli::Dump::registerCli(cli);
 
+	Cli::Analog::setNumOfAdc(3);
+	Cli::Analog::setAdcChannel(0, 0, adc1);
+	Cli::Analog::setAdcChannel(1, 1, adc1);
+	Cli::Analog::setAdcChannel(2, 4, adc1);
+	Cli::Analog::registerCli(cli);
+
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F411RE board.\n\n\r");
 	cli.start();
 
@@ -46,7 +53,6 @@ int32_t main(void)
 	{
 		time = time::getRunningMsec();
 		gTest = (float)time / 1000.f;
-		debug_printf("%d\r", time);
 		thread::yield();
 	}
 
