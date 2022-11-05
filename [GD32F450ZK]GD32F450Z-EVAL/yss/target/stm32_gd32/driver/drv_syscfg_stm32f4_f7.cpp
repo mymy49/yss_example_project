@@ -16,23 +16,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <yss/instance.h>
-#include <config.h>
+#include <drv/peripheral.h>
 
-#if defined(SDRAM_ENABLE) && defined(FMC_Bank5_6)
-static void setClockEn(bool en)
+#if defined(STM32F4)
+
+#include <yss/reg.h>
+#include <drv/Syscfg.h>
+
+#if defined(STM32F4)
+#include <cmsis/mcu/st_gigadevice/syscfg_stm32f4.h>
+#elif defined(STM32F7)
+#include <cmsis/mcu/st_gigadevice/syscfg_stm32f7.h>
+#endif
+
+Syscfg::Syscfg(void) : Drv(0, 0)
 {
-	if (en)
-		RCC->AHB3ENR |= RCC_AHB3ENR_FMCEN_Msk;
-	else
-		RCC->AHB3ENR &= ~RCC_AHB3ENR_FMCEN_Msk;
 }
 
-static const Drv::Config gDrvConfig
+void Syscfg::setExtiPort(uint8_t pin, uint8_t port)
 {
-	setClockEn,		//void (*clockFunc)(bool en);
-};
-
-Sdram sdram(gDrvConfig);
-
+	uint8_t field = pin % 4 * 4;
+	uint32_t reg = SYSCFG[SYSCFG_REG::EXTICR0+pin / 4];
+	reg &= 0xF << field;
+	reg |= port << field;
+	SYSCFG[SYSCFG_REG::EXTICR0+pin / 4] = reg;
+}
 #endif
+

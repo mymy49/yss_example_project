@@ -66,7 +66,7 @@ error Uart::send(void *src, int32_t  size)
 	bool result;
 
 	if(mTxDma == 0)
-		return false;
+		return Error::DMA;
 
 	mTxDma->lock();
 

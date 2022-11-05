@@ -18,15 +18,13 @@
 
 #include <drv/peripheral.h>
 
-#if defined(STM32F7) || defined(STM32F4)
+#if defined(GD32F4) || defined(STM32F7)
 
 #include <drv/Sdram.h>
-#include <drv/sdram/register_sdram_stm32f4_f7.h>
 #include <yss.h>
+#include <cmsis/mcu/st_gigadevice/sdram_stm32_gd32f4_f7.h>
 
 #if defined(FMC_Bank5_6)
-
-#define PERIPHERAL FMC_Bank5_6
 
 #define CMD_NORMAL_MODE 0
 #define CMD_CLOCK_CONFIG_ENABLE 1
@@ -61,8 +59,9 @@ Sdram::Sdram(const Drv::Config drvConfig) : Drv(drvConfig)
 
 bool Sdram::init(uint8_t bank, const Specification &spec)
 {
+	uint32_t *peri = (uint32_t*)FMC_Bank5_6;
 	uint8_t sdclk, rpipe;
-	uint32_t clk = yss::getSystemClockFrequency(), comp, t;
+	uint32_t clk = getAhbClockFrequency(), buf, t;
 
 	if (spec.maxFrequency > (clk >> 1))
 	{
@@ -76,16 +75,16 @@ bool Sdram::init(uint8_t bank, const Specification &spec)
 	}
 
 	t = 1000000000 / clk;
-	comp = spec.tOh + spec.tAc;
-	if (t > comp)
+	buf = spec.tOh + spec.tAc;
+	if (t > buf)
 	{
 		rpipe = define::sdram::rpipe::NO_DELAY;
 	}
-	else if (t * 2 > comp)
+	else if (t * 2 > buf)
 	{
 		rpipe = define::sdram::rpipe::ONE_DELAY;
 	}
-	else if (t * 3 > comp)
+	else if (t * 3 > buf)
 	{
 		rpipe = define::sdram::rpipe::TWO_DELAY;
 	}
@@ -108,17 +107,10 @@ bool Sdram::init(uint8_t bank, const Specification &spec)
 			0};
 
 	setSdcr(bank, obj);
-
-	PERIPHERAL->SDTR[0] = 0x0;
-	PERIPHERAL->SDTR[1] = 0x0;
-
-	setSdramSdtrTmrd(bank, (uint8_t)(spec.tMrd / t));
-	setSdramSdtrTxsr(bank, (uint8_t)(spec.tXsr / t));
-	setSdramSdtrTras(bank, (uint8_t)(spec.tRas / t));
-	setSdramSdtrTrc(define::sdram::bank::BANK1, (uint8_t)(spec.tRc / t)); // BANK2	Don't care
-	setSdramSdtrTwr(bank, (uint8_t)(spec.tWr / t));
-	setSdramSdtrTrp(define::sdram::bank::BANK1, (uint8_t)(spec.tRp / t)); // BANK2	Don't care
-	setSdramSdtrTrcd(bank, (uint8_t)(spec.tRcd / t));
+	
+	buf = SDRAM_REG::SDTR0+bank;
+	peri[buf] = (spec.tRcd / t) << 24 | (spec.tWr / t) << 16 | (spec.tRas / t) << 8 | (spec.tXsr / t & 0xF) << 4 | (spec.tMrd / t & 0xF);
+	peri[SDRAM_REG::SDTR0] |= (spec.tRp / t) << 20 | (spec.tRc / t) << 12;
 
 	waitWhileBusy();
 	setCmd(bank, 0, 0, CMD_CLOCK_CONFIG_ENABLE);
@@ -134,8 +126,8 @@ bool Sdram::init(uint8_t bank, const Specification &spec)
 	waitWhileBusy();
 
 	setCmd(bank, spec.mode, 0, CMD_LOAD_MODE_REGISTER);
-
-	setSdramSdrtrRtr((uint16_t)(spec.tRefresh / 1000 * clk / spec.numOfRow));
+	
+	peri[SDRAM_REG::SDRTR] = (uint16_t)(spec.tRefresh / 1000 * clk / spec.numOfRow) << 1;
 	waitWhileBusy();
 
 	return true;
@@ -143,20 +135,22 @@ bool Sdram::init(uint8_t bank, const Specification &spec)
 
 static void waitWhileBusy(void)
 {
-	while (PERIPHERAL->SDSR & (1 << 5))
+	while (FMC_Bank5_6[SDRAM_REG::SDSR] & FMC_SDSR_BUSY_Msk)
 		;
 }
 
 static void setSdcr(uint8_t bank, Sdcr obj)
 {
+	uint32_t *peri = (uint32_t*)FMC_Bank5_6;
+
 	if (bank == define::sdram::bank::BANK1)
 	{
 		uint32_t *buf = (uint32_t *)(&obj);
-		PERIPHERAL->SDCR[0] = *buf;
+		peri[SDRAM_REG::SDCR0] = *buf;
 	}
 	else
 	{
-		uint32_t lsdcr = PERIPHERAL->SDCR[0];
+		uint32_t lsdcr = peri[SDRAM_REG::SDCR0];
 		uint32_t *psdcr = (uint32_t *)(&obj);
 		Sdcr *ssdcr = (Sdcr *)(&lsdcr);
 
@@ -164,9 +158,9 @@ static void setSdcr(uint8_t bank, Sdcr obj)
 		ssdcr->rburst = obj.rburst;
 		ssdcr->rpipe = obj.rpipe;
 		ssdcr->sdclk = obj.sdclk;
-
-		PERIPHERAL->SDCR[0] = lsdcr;
-		PERIPHERAL->SDCR[1] = *psdcr;
+	
+		peri[SDRAM_REG::SDCR0] = lsdcr;
+		peri[SDRAM_REG::SDCR1] = *psdcr;
 	}
 }
 
@@ -179,7 +173,7 @@ static void setCmd(uint8_t bank, uint16_t mrd, uint8_t nrfs, uint8_t mode)
 	else
 		cbt = 0x1;
 
-	PERIPHERAL->SDCMR = (mrd << 9 & 0x1FFFUL << 9) | (nrfs << 5 & 0xFUL << 5) | (cbt << 3) | (mode & 0x7UL);
+	FMC_Bank5_6[SDRAM_REG::SDCMR] = (mrd << 9 & 0x1FFFUL << 9) | (nrfs << 5 & 0xFUL << 5) | (cbt << 3) | (mode & 0x7UL);
 }
 
 #endif

@@ -18,18 +18,13 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F4) || defined(STM32F4)
+#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7)
 
 #include <drv/peripheral.h>
 #include <drv/Clock.h>
 #include <yss/reg.h>
-#include <cmsis/mcu/st_gigadevice/rcc_stm32_gd32f4.h>
-#include <cmsis/mcu/st_gigadevice/flash_stm32_gd32f4.h>
-
-extern uint32_t gCoreClockFrequency;
-extern uint32_t gAhbClockFrequency;
-extern uint32_t gApb1ClockFrequency;
-extern uint32_t gApb2ClockFrequency;
+#include <cmsis/mcu/st_gigadevice/rcc_stm32_gd32f4_f7.h>
+#include <cmsis/mcu/st_gigadevice/flash_stm32_gd32f4_f7.h>
 
 int32_t  Clock::mHseFreq __attribute__((section(".non_init")));
 
@@ -174,6 +169,11 @@ uint32_t Clock::getApb1ClockFrequency(void)
 uint32_t Clock::getApb2ClockFrequency(void)
 {
 	return getSystemClockFrequency() / gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE2_Msk) >> RCC_CFGR_PPRE2_Pos)];
+}
+
+void Clock::enableSdram(bool en)
+{
+	enableAhb3Clock(RCC_AHB3ENR_FMCEN_Pos);
 }
 
 /*
@@ -367,7 +367,7 @@ void Clock::enableApb1Clock(uint32_t position, bool en)
 
 void Clock::enableApb2Clock(uint32_t position, bool en)
 {
-	setBitData(RCC[RCC_REG::AHB2ENR], en, position);
+	setBitData(RCC[RCC_REG::APB2ENR], en, position);
 }
 
 void Clock::resetAhb1(uint32_t position)
