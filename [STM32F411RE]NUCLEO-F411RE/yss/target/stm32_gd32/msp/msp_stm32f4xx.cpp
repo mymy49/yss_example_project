@@ -126,4 +126,12 @@ void __WEAK initDma(void)
 	dmaChannel16.enableInterrupt();
 }
 
+extern "C"
+{
+	void SystemCoreClockUpdate(void)
+	{
+
+	}
+}
+
 #endif
