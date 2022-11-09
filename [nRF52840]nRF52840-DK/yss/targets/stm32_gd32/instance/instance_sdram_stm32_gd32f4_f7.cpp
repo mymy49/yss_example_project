@@ -16,43 +16,34 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
-#include <yss.h>
-#include <bsp.h>
+#include <yss/instance.h>
+#include <config.h>
 
-namespace led
+#if defined(STM32F7) || defined(GD32F4)
+
+#if defined(FMC_Bank5_6)
+
+#include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
+
+#if defined(SDRAM_ENABLE)
+static void enableClock(bool en)
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
-
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
-
-	void setOn1(bool en)
-	{
-		gpio0.setOutput(14, !en);
-	}
-
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
-
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
-	}
+	clock.lock();
+#if defined(STM32F7)
+	clock.enableAhb3Clock(RCC_AHB3ENR_FMCEN_Pos);
+#endif
+	clock.unlock();
 }
+
+static const Drv::Config gDrvConfig
+{
+	enableClock,		//void (*clockFunc)(bool en);
+};
+
+Sdram sdram(gDrvConfig);
+#endif
+
+#endif
+
+#endif
 

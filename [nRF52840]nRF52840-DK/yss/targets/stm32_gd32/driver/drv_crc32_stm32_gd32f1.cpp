@@ -16,43 +16,53 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
-#include <yss.h>
-#include <bsp.h>
+#include <drv/mcu.h>
 
-namespace led
+#if defined(GD32F1) || defined(STM32F1)
+
+#include <drv/peripheral.h>
+#include <drv/Crc32.h>
+#include <targets/st_gigadevice/crc32_stm32_gd32f1.h>
+
+Crc32::Crc32(YSS_CRC32_Peri *peri, const Drv::Config drvConfig) : Drv(drvConfig)
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
+	mPeri = peri;
+	reset();
+}
 
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
+void Crc32::resetCrc32Value(void)
+{
+	mPeri[CRC32_REG::CR] |= CRC_CR_RESET_Msk;
+}
 
-	void setOn1(bool en)
+void Crc32::calculateInLittleEndian(void *src, uint32_t size)
+{
+	uint32_t *src32 = (uint32_t*)src;
+	while(size--)
 	{
-		gpio0.setOutput(14, !en);
-	}
-
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
-
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
+		mPeri[CRC32_REG::DR] = *src32++;
 	}
 }
 
+void Crc32::calculateInBigEndian(void *src, uint32_t size)
+{
+	uint32_t bigendian;
+	uint32_t *src32 = (uint32_t*)src;
+
+	while(size--)
+	{
+		bigendian = *src32 >> 24;
+		bigendian |= (*src32 >> 8) & 0xFF00;
+		bigendian |= (*src32 << 8) & 0xFF0000;
+		bigendian |= (*src32++ << 24) & 0xFF000000;
+		
+		mPeri[CRC32_REG::DR] = bigendian;
+	}
+}
+
+uint32_t Crc32::getCrc32Value(void)
+{
+	return mPeri[CRC32_REG::DR];
+}
+
+#endif

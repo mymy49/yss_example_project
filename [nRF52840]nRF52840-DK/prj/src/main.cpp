@@ -21,7 +21,7 @@
 #include <yss.h>
 #include <bsp.h>
 #include <util/time.h>
-//#include <cli_led.h>
+#include <cli_led.h>
 #include <cli_dump.h>
 //#include <cli_adc.h>
 
@@ -34,9 +34,12 @@ int32_t main(void)
 	
 	uint32_t time;
 	
-	//Cli::Led::setNumOfLed(1);
-	//Cli::Led::setLedFunction(0, led::setOn);
-	//Cli::Led::registerCli(cli);
+	Cli::Led::setNumOfLed(4);
+	Cli::Led::setLedFunction(0, led::setOn0);
+	Cli::Led::setLedFunction(1, led::setOn1);
+	Cli::Led::setLedFunction(2, led::setOn2);
+	Cli::Led::setLedFunction(3, led::setOn3);
+	Cli::Led::registerCli(cli);
 
 	Cli::Dump::registerCli(cli);
 

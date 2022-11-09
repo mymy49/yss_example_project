@@ -16,43 +16,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
+#include <yss/instance.h>
+
+#if defined(GD32F1) || defined(STM32F1)
+
 #include <yss.h>
-#include <bsp.h>
+#include <targets/st_gigadevice/rcc_stm32_gd32f1.h>
 
-namespace led
+#if defined(DAC1) || defined(DAC)
+
+static void setDac1ClockEn(bool en)
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
-
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
-
-	void setOn1(bool en)
-	{
-		gpio0.setOutput(14, !en);
-	}
-
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
-
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
-	}
+	clock.lock();
+    clock.enableApb1Clock(RCC_APB1ENR_DACEN_Pos, en);
+	clock.unlock();
 }
 
+Dac dac1((volatile uint32_t*)DAC, setDac1ClockEn, 0, getApb1ClockFrequency);
+
+#endif
+
+#endif

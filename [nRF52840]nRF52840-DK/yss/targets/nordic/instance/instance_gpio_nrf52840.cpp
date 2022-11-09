@@ -16,43 +16,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
-#include <yss.h>
-#include <bsp.h>
+#include <yss/instance.h>
 
-namespace led
+#if defined(NRF52840_XXAA)
+
+#if defined(NRF_P0)
+static Drv::Config gDrvConfigGpioA =
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
 
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
+static Gpio::Config gConfigGpioA =
+{
+	NRF_P0,	//YSS_GPIO_Peri *peri;
+	0,		//uint8_t exti
+};
 
-	void setOn1(bool en)
-	{
-		gpio0.setOutput(14, !en);
-	}
+Gpio gpio0(gDrvConfigGpioA, gConfigGpioA);
+#endif
 
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
+#if defined(NRF_P1)
+static Drv::Config gDrvConfigGpioB =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
 
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
-	}
-}
+static Gpio::Config gConfigGpioB =
+{
+	NRF_P1,	//YSS_GPIO_Peri *peri;
+	0,		//uint8_t exti
+};
 
+Gpio gpio1(gDrvConfigGpioB, gConfigGpioB);
+#endif
+
+#endif

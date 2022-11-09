@@ -16,43 +16,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
-#include <yss.h>
-#include <bsp.h>
+#include <drv/peripheral.h>
 
-namespace led
+#if defined(STM32F4)
+
+#include <yss/reg.h>
+#include <drv/Syscfg.h>
+
+#if defined(STM32F4)
+#include <targets/st_gigadevice/syscfg_stm32f4.h>
+#elif defined(STM32F7)
+#include <targets/st_gigadevice/syscfg_stm32f7.h>
+#endif
+
+Syscfg::Syscfg(void) : Drv(0, 0)
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
-
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
-
-	void setOn1(bool en)
-	{
-		gpio0.setOutput(14, !en);
-	}
-
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
-
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
-	}
 }
+
+void Syscfg::setExtiPort(uint8_t pin, uint8_t port)
+{
+	uint8_t field = pin % 4 * 4;
+	uint32_t reg = SYSCFG[SYSCFG_REG::EXTICR0+pin / 4];
+	reg &= 0xF << field;
+	reg |= port << field;
+	SYSCFG[SYSCFG_REG::EXTICR0+pin / 4] = reg;
+}
+#endif
 

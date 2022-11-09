@@ -16,43 +16,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <dev/led.h>
-#include <yss.h>
-#include <bsp.h>
+#include <drv/mcu.h>
+#include <yss/instance.h>
 
-namespace led
+#if defined(GD32F1) || defined(STM32F1)
+
+#include <config.h>
+#include <targets/st_gigadevice/rcc_stm32_gd32f1.h>
+
+#if defined(CRC) && defined(CRC32_ENABLE)
+static void setClockEn(bool en)
 {
-	void init(void)
-	{
-		gpio0.setAsOutput(13);
-		gpio0.setAsOutput(14);
-		gpio0.setAsOutput(15);
-		gpio0.setAsOutput(16);
-	
-		setOn0(false);
-		setOn1(false);
-		setOn2(false);
-		setOn3(false);
-	}
-
-	void setOn0(bool en)
-	{
-		gpio0.setOutput(13, !en);
-	}
-
-	void setOn1(bool en)
-	{
-		gpio0.setOutput(14, !en);
-	}
-
-	void setOn2(bool en)
-	{
-		gpio0.setOutput(15, !en);
-	}
-
-	void setOn3(bool en)
-	{
-		gpio0.setOutput(16, !en);
-	}
+	clock.lock();
+	clock.enableAhb1Clock(RCC_AHBENR_CRCEN_Pos);
+	clock.unlock();
 }
+
+static const Drv::Config gDrvConfig
+{
+	setClockEn,	//void (*clockFunc)(bool en);
+	0,			//void (*nvicFunc)(bool en);
+	0,			//void (*resetFunc)(void);
+	0			//uint32_t (*getClockFunc)(void);
+};
+
+Crc32 crc32((YSS_CRC32_Peri*)CRC, gDrvConfig);
+#endif
+
+#endif
 

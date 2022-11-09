@@ -22,7 +22,10 @@
 namespace led
 {
 	void init(void);
-	void setOn(bool en);
+	void setOn0(bool en);
+	void setOn1(bool en);
+	void setOn2(bool en);
+	void setOn3(bool en);
 }
 
 #endif

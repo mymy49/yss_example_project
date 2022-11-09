@@ -27,10 +27,10 @@ void initBoard(void)
 {
 	// USART2 초기화
 	using namespace define::gpio;
-	gpioA.setAsAltFunc(8, altfunc::UART0_RXD);
-	gpioA.setAsAltFunc(6, altfunc::UART0_TXD);
-	gpioA.setAsAltFunc(5, altfunc::UART0_RTS);
-	gpioA.setAsAltFunc(7, altfunc::UART0_CTS);
+	gpio0.setAsAltFunc(8, altfunc::UART0_RXD);
+	gpio0.setAsAltFunc(6, altfunc::UART0_TXD);
+	gpio0.setAsAltFunc(5, altfunc::UART0_RTS);
+	gpio0.setAsAltFunc(7, altfunc::UART0_CTS);
 
 	uart0.enableClock();
 	uart0.init(9600, 256);
@@ -49,7 +49,7 @@ void initBoard(void)
 
 //	adc1.enableInterrupt();
 
-//	// LED 초기화
-//	led::init();
+	// LED 초기화
+	led::init();
 }
 

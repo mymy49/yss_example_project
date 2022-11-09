@@ -32,32 +32,8 @@
   <ProjectSessionItem path="nrf52840-dk"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;common"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;common;inc"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;common;src"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;inc"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;inc;dev"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;src"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;src;dev"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;cmsis"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;cmsis;mcu"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;cmsis;mcu;nordic"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;drv"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;drv;gpio"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;util"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;scheduler"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;system"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;common"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;nordic"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;nordic;instance"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;nordic;nrf52840"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;stm32_gd32"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;target;stm32_gd32;driver"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;util"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;System Files"/>
  </Project>
  <Register1>
@@ -102,7 +78,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="25" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="21" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="28" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="21" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nrf52840-dk" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
