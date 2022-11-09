@@ -37,19 +37,10 @@
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;common;src"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;inc"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;inc;dev"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;src"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;prj;src;dev"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;drv"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;targets"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;inc;targets;nordic"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;targets"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;targets;nordic"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;targets;nordic;driver"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;targets;nordic;instance"/>
-  <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;Source Files;yss;util"/>
   <ProjectSessionItem path="nrf52840-dk;nrf52840-dk;System Files"/>
  </Project>
  <Register1>
@@ -94,10 +85,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="27" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="26" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="27" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="54" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/dev/dev_led.cpp" selected="0" top="30" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="12" y="27" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[nRF52840]nRF52840-DK/prj/src/dev/dev_led.cpp" useBinaryEdit="0" left="0" path="prj/inc/dev/led.h" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="102" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/target/nordic/nrf52840/drv_gpio_nrf52840.cpp" selected="0" top="79" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="5" y="100" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/scheduler/yss_context_switching.s" selected="0" top="91" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="18" y="206" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[nRF52840]nRF52840-DK/prj/src/dev/dev_led.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/yss/instance.h" selected="0" top="180" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="53" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/bsp.cpp" selected="0" top="24" codecName="Default"/>
@@ -105,8 +95,36 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="123" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/targets/nordic/nrf52840.h" selected="0" top="112" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="46" y="24" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/nordic/driver/drv_timer_nrf52840.cpp" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="46" y="26" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/nordic/driver/drv_uart_nrf52840.cpp" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="48" y="11" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/nordic/instance/instance_timer_nrf52840.cpp" selected="0" top="24" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="100" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/util/yss_time.cpp" selected="0" top="82" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="48" y="11" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="28" path="../../yss/targets/nordic/instance/instance_timer_nrf52840.cpp" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="100" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/util/yss_time.cpp" selected="0" top="82" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="2" y="68" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/cli_adc.cpp" selected="0" top="63" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="10" y="33" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Radio.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="71" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Adc.h" selected="0" top="48" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Can.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Capture.h" selected="0" top="3" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Clock.h" selected="0" top="6" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Crc32.h" selected="0" top="12" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Dac.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="40" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Dma.h" selected="0" top="3" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="44" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Dma2d.h" selected="0" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Drv.h" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="17" y="40" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Exti.h" selected="0" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="36" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Flash.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Gpio.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/I2c.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/I2s.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="21" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Ltdc.h" selected="0" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Nvic.h" selected="0" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Pwm.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Quadspi.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="47" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Rtc.h" selected="0" top="21" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Sai.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Sdmmc.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Sdram.h" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Spi.h" selected="0" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="31" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Syscfg.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="45" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Timer.h" selected="0" top="21" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="41" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Uart.h" selected="1" top="18" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nrf52840-dk" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
