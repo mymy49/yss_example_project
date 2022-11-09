@@ -31,7 +31,7 @@ int32_t main(void)
 
 	initYss();
 	initBoard();
-	
+
 	Cli::Led::setNumOfLed(3);
 	Cli::Led::setLedFunction(0, led::setOn0);
 	Cli::Led::setLedFunction(1, led::setOn1);
@@ -46,7 +46,6 @@ int32_t main(void)
 	while(1)
 	{
 		time = time::getRunningMsec();
-		debug_printf("%d\r", time);
 		gTest = (float)time / 1000.f;
 		thread::yield();
 	}

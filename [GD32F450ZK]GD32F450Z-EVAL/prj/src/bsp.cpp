@@ -20,9 +20,11 @@
 #include <yss.h>
 #include <bsp.h>
 #include <mod/sdram/MT48LC16M16A2_6A.h>
+#include <mod/rgb_tft_lcd/GD32_RGB_LCD.h>
 
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart2);
+GD32_RGB_LCD lcd;
 
 void initBoard(void)
 {
@@ -50,6 +52,48 @@ void initBoard(void)
 
 	// LED 초기화
 	led::init();
+
+	// LCD 초기화
+	gpioB.setAsAltFunc(0, altfunc::PB0_LCD_R3, ospeed::FAST, otype::PUSH_PULL);
+	gpioA.setAsAltFunc(11, altfunc::PA11_LCD_R4, ospeed::FAST, otype::PUSH_PULL);
+	gpioA.setAsAltFunc(12, altfunc::PA12_LCD_R5, ospeed::FAST, otype::PUSH_PULL);
+	gpioA.setAsAltFunc(8, altfunc::PA8_LCD_R6, ospeed::FAST, otype::PUSH_PULL);
+	gpioG.setAsAltFunc(6, altfunc::PG6_LCD_R7, ospeed::FAST, otype::PUSH_PULL);
+
+	gpioA.setAsAltFunc(6, altfunc::PA6_LCD_G2, ospeed::FAST, otype::PUSH_PULL);
+	gpioG.setAsAltFunc(10, altfunc::PG10_LCD_G3, ospeed::FAST, otype::PUSH_PULL);
+	gpioB.setAsAltFunc(10, altfunc::PB10_LCD_G4, ospeed::FAST, otype::PUSH_PULL);
+	gpioB.setAsAltFunc(11, altfunc::PB11_LCD_G5, ospeed::FAST, otype::PUSH_PULL);
+	gpioC.setAsAltFunc(7, altfunc::PC7_LCD_G6, ospeed::FAST, otype::PUSH_PULL);
+	gpioD.setAsAltFunc(3, altfunc::PD3_LCD_G7, ospeed::FAST, otype::PUSH_PULL);
+
+	gpioG.setAsAltFunc(11, altfunc::PG11_LCD_B3, ospeed::FAST, otype::PUSH_PULL);
+	gpioG.setAsAltFunc(12, altfunc::PG12_LCD_B4, ospeed::FAST, otype::PUSH_PULL);
+	gpioA.setAsAltFunc(3, altfunc::PA3_LCD_B5, ospeed::FAST, otype::PUSH_PULL);
+	gpioB.setAsAltFunc(8, altfunc::PB8_LCD_B6, ospeed::FAST, otype::PUSH_PULL);
+	gpioB.setAsAltFunc(9, altfunc::PB9_LCD_B7, ospeed::FAST, otype::PUSH_PULL);
+
+	gpioA.setAsAltFunc(4, altfunc::PA4_LCD_VSYNC, ospeed::FAST, otype::PUSH_PULL);
+	gpioC.setAsAltFunc(6, altfunc::PC6_LCD_HSYNC, ospeed::FAST, otype::PUSH_PULL);
+	gpioF.setAsAltFunc(10, altfunc::PF10_LCD_DE, ospeed::FAST, otype::PUSH_PULL);
+	gpioG.setAsAltFunc(7, altfunc::PG7_LCD_CLK, ospeed::FAST, otype::PUSH_PULL);
+	
+	gpioD.setAsOutput(11);
+	gpioE.setAsOutput(3);
+	gpioG.setAsOutput(13);
+	gpioG.setAsOutput(14);
+
+	GD32_RGB_LCD::Config lcdConfig =
+	{
+		{&gpioG, 14},	//Gpio::Pin mosi;
+		{&gpioG, 13},	//Gpio::Pin sck;
+		{&gpioD, 11},	//Gpio::Pin chipSelect;
+		{&gpioE, 3},	//Gpio::Pin dataCommand;
+		{0, 0}			//Gpio::Pin reset;
+	};
+	
+	lcd.setConfig(lcdConfig);
+	lcd.init();
 }
 
 void initSdram(void)
