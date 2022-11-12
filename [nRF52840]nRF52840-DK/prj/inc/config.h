@@ -145,4 +145,7 @@
 // RTC 활성화
 //#define RTC_ENABLE
 
+// RADIO 활성화
+#define RADIO_ENABLE
+
 #endif

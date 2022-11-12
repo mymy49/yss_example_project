@@ -49,6 +49,10 @@ void initBoard(void)
 
 //	adc1.enableInterrupt();
 
+	// Radio 초기화
+	radio.enableClock();
+	radio.init();
+
 	// LED 초기화
 	led::init();
 }
