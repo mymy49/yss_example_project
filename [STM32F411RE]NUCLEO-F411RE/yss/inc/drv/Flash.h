@@ -19,11 +19,9 @@
 #ifndef YSS_DRV_FLASH__H_
 #define YSS_DRV_FLASH__H_
 
-#include <drv/mcu.h>
+#include "mcu.h"
 
-#if defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
-
-#elif defined(GD32F1)
+#if defined(STM32F1) || defined(GD32F1) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
 
 #else
 
@@ -33,7 +31,7 @@
 
 #ifndef YSS_DRV_FLASH_UNSUPPORTED
 
-#include <drv/Drv.h>
+#include "Drv.h"
 
 class Flash : public Drv
 {
@@ -58,6 +56,10 @@ class Flash : public Drv
 #elif defined(STM32F7)
 	void enableArtAccelerator(bool en = true);
 #endif
+#elif defined(STM32L1)
+	uint8_t getVoltageScale(void);
+	void setLatency(uint32_t freq);
+	void set64bitAccess(bool en);
 #endif
 };
 
