@@ -23,7 +23,7 @@
       arm_endian="Little"
       arm_fp_abi="Hard"
       arm_fpu_type="FPv5-SP-D16"
-      arm_linker_heap_size="10240"
+      arm_linker_heap_size="131072"
       arm_linker_process_stack_size="2048"
       arm_linker_stack_size="2048"
       arm_linker_variant="SEGGER"
