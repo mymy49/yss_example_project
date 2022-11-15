@@ -23,15 +23,15 @@
 
 #if defined(STM32F1)
 
-#include <cmsis/mcu/st/stm32f1xx.h>
+#include <targets/st_gigadevice/stm32f1xx.h>
 
 #elif defined(STM32F4)
 
-#include <cmsis/mcu/st/stm32f4xx.h>
+#include <targets/st_gigadevice/stm32f4xx.h>
 
 #elif defined(STM32F7)
 
-#include <cmsis/mcu/st/stm32f7xx.h>
+#include <targets/st_gigadevice/stm32f7xx.h>
 
 #elif defined(STM32G4)
 
@@ -39,15 +39,19 @@
 
 #elif defined(GD32F1)
 
-#include <cmsis/mcu/gigadevice/gd32f10x.h>
+#include <targets/st_gigadevice/gd32f10x.h>
 
 #elif defined(GD32F4)
 
-#include <cmsis/mcu/gigadevice/gd32f4xx.h>
+#include <targets/st_gigadevice/gd32f4xx.h>
 
 #elif defined(NRF52840_XXAA)
 
-#include <nrf52840.h>
+#include <targets/nordic/nrf52840.h>
+
+#elif defined(STM32L1)
+
+#include <targets/st_gigadevice/stm32l1xx.h>
 
 #else
 

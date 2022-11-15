@@ -48,6 +48,7 @@
 #include <drv/Wdog.h>
 #include <drv/Crc32.h>
 #include <drv/I2s.h>
+#include <drv/Radio.h>
 
 // ADC
 #ifndef YSS_DRV_ADC_UNSUPPORTED
@@ -195,12 +196,16 @@ extern Quadspi quadspi;
 #endif
 
 #ifndef YSS_DRV_GPIO_UNSUPPORTED
-#if defined(GPIOA) || defined(PORT_PA00) || defined(NRF_P0)
+#if defined(GPIOA) || defined(PORT_PA00)
 extern Gpio gpioA;
+#elif defined(NRF_P0)
+extern Gpio gpio0;
 #endif
 
-#if defined(GPIOB) || defined(PORT_PB00) || defined(NRF_P1)
+#if defined(GPIOB) || defined(PORT_PB00)
 extern Gpio gpioB;
+#elif defined(NRF_P1)
+extern Gpio gpio1;
 #endif
 
 #if defined(GPIOC)
@@ -274,7 +279,7 @@ extern Rtc rtc;
 
 
 #ifndef YSS_DRV_SDRAM_UNSUPPORTED
-#if defined(FMC_Bank5_6) || defined(EXMC)
+#if defined(FMC_Bank5_6)
 extern Sdram sdram;
 #endif
 #endif
@@ -668,6 +673,12 @@ extern I2s i2s1;
 
 #if defined(I2S2)
 extern I2s i2s2;
+#endif
+#endif
+
+#if !defined(YSS_DRV_RADIO_UNSUPPORTED)
+#if defined(NRF_RADIO)
+extern Radio radio;
 #endif
 #endif
 

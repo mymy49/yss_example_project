@@ -26,6 +26,11 @@
 
 float gTest;
 
+void isr_button(void)
+{
+	
+}
+
 int main(void)
 {
 	initYss();
@@ -48,6 +53,8 @@ int main(void)
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for STM32F756G-DISCO board.\n\n\r");
 	cli.start();
+	
+	exti.add(gpioI, 11, define::exti::mode::FALLING, isr_button);
 
 	while(1)
 	{

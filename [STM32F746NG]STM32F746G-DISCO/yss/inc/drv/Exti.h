@@ -21,7 +21,7 @@
 
 #include "mcu.h"
 
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(STM32F7)
 
 #include "exti/define_exti_stm32_gd32f1.h"
 
@@ -38,7 +38,6 @@
 #if !defined(YSS_DRV_EXTI_UNSUPPORTED)
 
 #include "Drv.h"
-#include <drv/peripheral.h>
 #include "Gpio.h"
 
 class Exti : public Drv
