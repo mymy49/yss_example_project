@@ -112,7 +112,7 @@ void Gpio::setAsAnalog(uint8_t pin)
 	setFieldData(mPeri[GPIO_REG::MODER], 0x3 << pin, define::gpio::mode::ANALOG, pin);
 }
 
-bool Gpio::getData(uint8_t pin)
+bool Gpio::getInputData(uint8_t pin)
 {
 	return (mPeri[GPIO_REG::IDR] >> pin) & 0x01;
 }
