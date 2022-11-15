@@ -23,7 +23,7 @@
 #include <drv/Gpio.h>
 #include <yss/error.h>
 
-#if !defined(YSS_DRV_UART_UNSUPPORTED)
+#if !(defined(YSS_DRV_UART_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
 // BUTTON이 눌린 시간을 측정하는 CLI를 명령을 생성한다.
 // 사용 순서는 아래와 같다.
