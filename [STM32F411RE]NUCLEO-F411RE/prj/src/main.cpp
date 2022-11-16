@@ -23,6 +23,7 @@
 #include <cli_led.h>
 #include <cli_dump.h>
 #include <cli_adc.h>
+#include <cli_button.h>
 
 float gTest;
 
@@ -34,17 +35,24 @@ int32_t main(void)
 	uint32_t time;
 	gTest;
 	
+	// CLI LED 설정
 	Cli::Led::setNumOfLed(1);
 	Cli::Led::setLedFunction(0, led::setOn);
 	Cli::Led::registerCli(cli);
 
+	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
 
+	// CLI ANALOG 설정
 	Cli::Analog::setNumOfAdc(3);
 	Cli::Analog::setAdcChannel(0, 0, adc1);
 	Cli::Analog::setAdcChannel(1, 1, adc1);
 	Cli::Analog::setAdcChannel(2, 4, adc1);
 	Cli::Analog::registerCli(cli);
+
+	// CLI BUTTON 설정
+	Cli::Button::setPin(gpioC, 13, false);
+	Cli::Button::registerCli(cli);
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for NUCLEO-F411RE board.\n\n\r");
 	cli.start();
