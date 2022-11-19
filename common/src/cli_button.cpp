@@ -64,8 +64,7 @@ namespace Button
 		gPinNumber = pinNumber;
 		gRisingFlag = rising;
 		
-		using namespace define::exti::mode;
-		exti.add(gpio, pinNumber, FALLING | RISING, isr_button);
+		exti.add(gpio, pinNumber, Exti::FALLING | Exti::RISING, isr_button);
 		gTriggerId = trigger::add(trigger_button, 512);
 	}
 
