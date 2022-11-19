@@ -19,27 +19,21 @@
 #ifndef YSS_DRV_SYSCFG__H_
 #define YSS_DRV_SYSCFG__H_
 
-#include <drv/mcu.h>
+#include "mcu.h"
 
-#if defined(STM32F4) || defined(STM32G4) || defined(STM32L0) || defined(STM32L4) || defined(STM32F0)
-#include "syscfg/define_syscfg_stm32f4_f7_g4.h"
+#if defined(STM32F4)
 #else
-
 #define YSS_DRV_SYSCFG_UNSUPPORTED
-
 #endif
 
 #ifndef YSS_DRV_SYSCFG_UNSUPPORTED
 
-#include <drv/Drv.h>
+#include "Drv.h"
 
 class Syscfg : public Drv
 {
   public:
-	Syscfg(void (*clockFunc)(bool en), void (*nvicFunc)(bool en));
-#if defined(STM32F7)
-	void swapFmc(bool en);
-#endif
+	Syscfg(void);
 	void setExtiPort(uint8_t pin, uint8_t port);
 };
 
