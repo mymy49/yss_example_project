@@ -16,22 +16,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_EXTI_STM32_GD32F1_F4_F7__H_
-#define YSS_DRV_EXTI_STM32_GD32F1_F4_F7__H_
+#ifndef YSS_MOD_TFT_RK043FN48H__H_
+#define YSS_MOD_TFT_RK043FN48H__H_
 
-namespace define
+#include <drv/Ltdc.h>
+#include <sac/RgbBusTftLcd.h>
+
+#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+
+class RK043FN48H : public RgbBusTftLcd
 {
-namespace exti
-{
-namespace mode
-{
-enum
-{
-	RISING = 0x1,
-	FALLING = 0x2
+  public:
+	const Ltdc::Specification* getSpecification(void); // virtual 0
 };
-}
-}
-}
 
 #endif
+
+#endif
+

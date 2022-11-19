@@ -16,21 +16,76 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_MOD_TFT_RK043FN48H__H_
-#define YSS_MOD_TFT_RK043FN48H__H_
+#include <drv/mcu.h>
 
-#include <drv/Ltdc.h>
+#if defined(NRF52840_XXAA)
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+//#include <targets/st_gigadevice/exti_stm32_gd32f1.h>
+#include <yss/instance.h>
+#include <drv/Exti.h>
 
-class RK043FN48H
+static void enableInterrupt(bool en)
 {
-  public:
-	void init(void);
-	Ltdc::Specification *getSpec(void);
-};
+	nvic.lock();
+	nvic.enableInterrupt(GPIOTE_IRQn, en);
+	nvic.unlock();
+}
 
-#endif
+Exti exti(0, enableInterrupt);
+
+extern "C"
+{
+	void GPIOTE_IRQHandler(void)
+	{
+		if(NRF_GPIOTE->EVENTS_IN[0])
+		{
+			NRF_GPIOTE->EVENTS_IN[0] = 0;
+			exti.isr(0);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[1])
+		{
+			NRF_GPIOTE->EVENTS_IN[1] = 0;
+			exti.isr(1);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[2])
+		{
+			NRF_GPIOTE->EVENTS_IN[2] = 0;
+			exti.isr(2);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[3])
+		{
+			NRF_GPIOTE->EVENTS_IN[3] = 0;
+			exti.isr(3);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[4])
+		{
+			NRF_GPIOTE->EVENTS_IN[4] = 0;
+			exti.isr(4);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[5])
+		{
+			NRF_GPIOTE->EVENTS_IN[5] = 0;
+			exti.isr(5);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[6])
+		{
+			NRF_GPIOTE->EVENTS_IN[6] = 0;
+			exti.isr(6);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[7])
+		{
+			NRF_GPIOTE->EVENTS_IN[7] = 0;
+			exti.isr(7);
+		}
+	}
+}
 
 #endif
 

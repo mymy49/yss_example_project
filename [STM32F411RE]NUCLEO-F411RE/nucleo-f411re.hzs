@@ -9,16 +9,16 @@
   <FrameBufferWindow bufferHeight="-1" addressSpace="" addressText="" bufferWidth="-1"/>
  </FrameBufferWindow>
  <Memory1>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
  </Memory1>
  <Memory2>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
  </Memory2>
  <Memory3>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
  </Memory3>
  <Memory4>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
  </Memory4>
  <Project>
   <ProjectSessionItem path="nucleo-f411re"/>
@@ -65,9 +65,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="41" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="24" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="211" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/mod/rtouch/mod_STMPE811.cpp" selected="0" top="177" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="33" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/targets/stm32_gd32/driver/drv_gpio_stm32_gd32f4_f7_l1.cpp" selected="1" top="13" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="14" y="37" useTextEdit="1" path="prj/src/main.cpp" left="0" top="26" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="211" useTextEdit="1" path="yss/mod/rtouch/mod_STMPE811.cpp" left="0" top="200" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="33" useTextEdit="1" path="yss/targets/stm32_gd32/driver/drv_gpio_stm32_gd32f4_f7_l1.cpp" left="0" selected="1" top="23" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nucleo-f411re" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

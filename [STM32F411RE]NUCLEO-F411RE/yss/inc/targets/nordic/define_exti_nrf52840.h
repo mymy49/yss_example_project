@@ -16,62 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/Ltdc.h>
-
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
-
-#include <mod/tft/RK043FN48H.h>
-
-static Ltdc::Specification gSpec =
-{
-	480,		// width
-	272,		// height
-	1,			// hsyncWidth
-	1,			// vsyncWidth
-	40,			// hbp
-	8,			// vbp
-	5,			// hfp
-	8,			// vfp
-	define::ltdc::format::RGB888	// pixelFormat
-};
-
-Ltdc::Specification* RK043FN48H::getSpec(void)
-{
-	return &gSpec;
-}
-
-void RK043FN48H::init(void)
-{
-}
+#ifndef YSS_DRV_DEFINE_EXTI_NRF52840__H_
+#define YSS_DRV_DEFINE_EXTI_NRF52840__H_
 
 #endif
-/*
-
-#include <mod/tft/RK043FN48H.h>
-
-#if defined(LTDC)
-
-namespace mod
-{
-	namespace tft
-	{
-		namespace RK043FN48H
-		{
-			config::ltdc::Config config =
-			{
-				480,		// width
-				272,		// height
-				1,			// hsyncWidth
-				1,			// vsyncWidth
-				40,			// hbp
-				8,			// vbp
-				5,			// hfp
-				8,			// vfp
-				define::ltdc::format::RGB888	// pixelFormat
-			};
-		}
-	}
-}
-
-#endif
-*/

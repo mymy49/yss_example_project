@@ -16,22 +16,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_EXTI_ST_TYPE_A__H_
-#define YSS_DRV_EXTI_ST_TYPE_A__H_
+#include <drv/Ltdc.h>
 
-namespace define
+#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+
+#include <mod/rgb_tft_lcd/RK043FN48H.h>
+
+static const Ltdc::Specification gSpec =
 {
-namespace exti
-{
-namespace mode
-{
-enum
-{
-	RISING = 0x1,
-	FALLING = 0x2
+	480,		// width
+	272,		// height
+	1,			// hsyncWidth
+	1,			// vsyncWidth
+	40,			// hbp
+	8,			// vbp
+	5,			// hfp
+	8,			// vfp
+	define::ltdc::format::RGB888	// pixelFormat
 };
-}
-}
+
+const Ltdc::Specification* RK043FN48H::getSpecification(void)
+{
+	return &gSpec;
 }
 
 #endif
+
