@@ -16,21 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_MOD_TFT_RK043FN48H__H_
-#define YSS_MOD_TFT_RK043FN48H__H_
-
-#include <drv/Ltdc.h>
-
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
-
-class RK043FN48H
-{
-  public:
-	void init(void);
-	Ltdc::Specification *getSpec(void);
-};
+#ifndef YSS_DRV_DEFINE_EXTI_NRF52840__H_
+#define YSS_DRV_DEFINE_EXTI_NRF52840__H_
 
 #endif
-
-#endif
-

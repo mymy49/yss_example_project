@@ -23,6 +23,7 @@
 #include <util/time.h>
 #include <cli_led.h>
 #include <cli_dump.h>
+#include <cli_button.h>
 //#include <cli_adc.h>
 
 float gTest;
@@ -34,20 +35,28 @@ int32_t main(void)
 	
 	uint32_t time;
 	
+	// CLI LED 설정
 	Cli::Led::setNumOfLed(4);
 	Cli::Led::setLedFunction(0, led::setOn0);
 	Cli::Led::setLedFunction(1, led::setOn1);
 	Cli::Led::setLedFunction(2, led::setOn2);
 	Cli::Led::setLedFunction(3, led::setOn3);
 	Cli::Led::registerCli(cli);
-
+	
+	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
-
+	
+	// CLI ANALOG 설정
 	//Cli::Analog::setNumOfAdc(3);
 	//Cli::Analog::setAdcChannel(0, 0, adc1);
 	//Cli::Analog::setAdcChannel(1, 1, adc1);
 	//Cli::Analog::setAdcChannel(2, 4, adc1);
 	//Cli::Analog::registerCli(cli);
+
+	// CLI BUTTON 설정
+	gpio0.setPullUpDown(25, define::gpio::pupd::PULL_UP);
+	Cli::Button::setPin(gpio0, 25, false);
+	Cli::Button::registerCli(cli);
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for nRF52840-DK board.\n\n\r");
 	cli.start();

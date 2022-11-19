@@ -48,6 +48,7 @@
 #include <drv/Wdog.h>
 #include <drv/Crc32.h>
 #include <drv/I2s.h>
+#include <drv/Radio.h>
 
 // ADC
 #ifndef YSS_DRV_ADC_UNSUPPORTED
@@ -168,9 +169,7 @@ extern Dma2d dma2d;
 
 
 #ifndef YSS_DRV_EXTI_UNSUPPORTED
-#if defined(EXTI) || defined(EIC)
 extern Exti exti;
-#endif
 #endif
 
 
@@ -672,6 +671,12 @@ extern I2s i2s1;
 
 #if defined(I2S2)
 extern I2s i2s2;
+#endif
+#endif
+
+#if !defined(YSS_DRV_RADIO_UNSUPPORTED)
+#if defined(NRF_RADIO)
+extern Radio radio;
 #endif
 #endif
 

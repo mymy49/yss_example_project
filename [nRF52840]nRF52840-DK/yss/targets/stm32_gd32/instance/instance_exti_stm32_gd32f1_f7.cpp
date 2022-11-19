@@ -18,13 +18,13 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
 
 #include <targets/st_gigadevice/exti_stm32_gd32f1.h>
 #include <drv/Exti.h>
 #include <yss/instance.h>
 
-static void setIntEn(bool en)
+static void enableInterrupt(bool en)
 {
 	nvic.lock();
 	nvic.enableInterrupt(EXTI0_IRQn, en);
@@ -37,7 +37,7 @@ static void setIntEn(bool en)
 	nvic.unlock();
 }
 
-Exti exti(0, setIntEn);
+Exti exti(0, enableInterrupt);
 
 extern "C"
 {
@@ -76,11 +76,7 @@ extern "C"
 		peri[EXTI_REG::PR] = 1 << 4;
 	}
 
-#if defined(__SEGGER_LINKER)
-	void EXTI5_9_IRQHandler(void)
-#else
 	void EXTI9_5_IRQHandler(void)
-#endif
 	{
 		volatile uint32_t *peri = (volatile uint32_t*)EXTI;
 		uint32_t imr = peri[EXTI_REG::IMR];
@@ -117,11 +113,7 @@ extern "C"
 		}
 	}
 
-#if defined(__SEGGER_LINKER)
-	void EXTI10_15_IRQHandler(void)
-#else
 	void EXTI15_10_IRQHandler(void)
-#endif
 	{
 		volatile uint32_t *peri = (volatile uint32_t*)EXTI;
 		uint32_t imr = peri[EXTI_REG::IMR];

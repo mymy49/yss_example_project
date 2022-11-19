@@ -25,11 +25,6 @@
 #include <yss/reg.h>
 #include <targets/st_gigadevice/rcc_stm32_gd32f1.h>
 
-extern uint32_t gCoreClockFrequency;
-extern uint32_t gAhbClockFrequency;
-extern uint32_t gApb1ClockFrequency;
-extern uint32_t gApb2ClockFrequency;
-
 int32_t  Clock::mHseFreq __attribute__((section(".non_init")));
 int32_t  Clock::mLseFreq __attribute__((section(".non_init")));
 
@@ -154,7 +149,7 @@ bool Clock::setSysclk(uint8_t sysclkSrc, uint8_t ahb, uint8_t apb1, uint8_t apb2
 		// HSE 활성화 점검
 		if (getBitData(peri[RCC_REG::CR], RCC_CR_HSERDY_Pos) == false)
 			return false;
-		clk = mHseFreq * 1000000;
+		clk = mHseFreq;
 		break;
 	case PLL:
 		// PLL 활성화 점검
@@ -200,11 +195,6 @@ bool Clock::setSysclk(uint8_t sysclkSrc, uint8_t ahb, uint8_t apb1, uint8_t apb2
 	
 	// 클럭 소스 변경
 	setFieldData(peri[RCC_REG::CFGR], RCC_CFGR_SW_Msk, sysclkSrc, RCC_CFGR_SW_Pos);
-
-	gCoreClockFrequency = ahbClk;
-	gAhbClockFrequency = ahbClk;
-	gApb1ClockFrequency = apb1Clk;
-	gApb2ClockFrequency = apb2Clk;
 
 	return true;
 }

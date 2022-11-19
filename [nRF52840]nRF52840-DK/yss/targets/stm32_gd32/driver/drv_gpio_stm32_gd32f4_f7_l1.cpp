@@ -18,11 +18,17 @@
 
 #include <drv/peripheral.h>
 
-#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7)
+#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
 
 #include <drv/Gpio.h>
 #include <yss/reg.h>
-#include <targets/st_gigadevice/gpio_stm32_gd32f4.h>
+#include <targets/st_gigadevice/gpio_stm32_gd32f4_l1.h>
+#include <targets/st_gigadevice/exti_stm32_gd32f1.h>
+#if defined(STM32F7)
+#include <targets/st_gigadevice/syscfg_stm32f7.h>
+#elif defined(STM32F4)
+#include <targets/st_gigadevice/syscfg_stm32f4.h>
+#endif
 
 Gpio::Gpio(YSS_GPIO_Peri *peri, void (*clockFunc)(bool en), void (*resetFunc)(void), uint8_t exti) : Drv(clockFunc, 0, resetFunc)
 {
@@ -32,11 +38,8 @@ Gpio::Gpio(YSS_GPIO_Peri *peri, void (*clockFunc)(bool en), void (*resetFunc)(vo
 
 void Gpio::setExti(uint8_t pin)
 {
-	//uint8_t field = pin % 4 * 4;
-	//uint32_t reg = SYSCFG->EXTICR[pin / 4];
-	//reg &= 0xF << field;
-	//reg |= mExti << field;
-	//SYSCFG->EXTICR[pin / 4] = reg;
+	uint8_t field = pin % 4 * 4;
+	setFieldData(SYSCFG[SYSCFG_REG::EXTICR0 + pin / 4], 0xF << field, mExti, field);
 }
 
 void Gpio::setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t ospeed, uint8_t otype)
@@ -108,7 +111,7 @@ void Gpio::setAsAnalog(uint8_t pin)
 	setFieldData(mPeri[GPIO_REG::MODER], 0x3 << pin, define::gpio::mode::ANALOG, pin);
 }
 
-bool Gpio::getData(uint8_t pin)
+bool Gpio::getInputData(uint8_t pin)
 {
 	return (mPeri[GPIO_REG::IDR] >> pin) & 0x01;
 }

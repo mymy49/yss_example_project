@@ -16,19 +16,76 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_EXTI_ST_TYPE_A__H_
-#define YSS_DRV_EXTI_ST_TYPE_A__H_
+#ifndef YSS_DRV_CLOCK_ST_TYPE_B_EC__H_
+#define YSS_DRV_CLOCK_ST_TYPE_B_EC__H_
 
-namespace define
+#include <drv/mcu.h>
+
+namespace ec
 {
-namespace exti
+namespace clock
 {
-namespace mode
+namespace sysclk
 {
 enum
 {
-	RISING = 0x1,
-	FALLING = 0x2
+	MAX_FREQ = 32000000,
+};
+}
+
+namespace apb1
+{
+enum
+{
+	MAX_FREQ = 32000000,
+};
+}
+
+namespace apb2
+{
+enum
+{
+	MAX_FREQ = 32000000,
+};
+}
+
+namespace adc
+{
+enum
+{
+	MAX_FREQ = 16000000,
+};
+}
+
+namespace hsi
+{
+enum
+{
+	FREQ = 16000000,
+};
+}
+
+namespace hse
+{
+enum
+{
+	HSE_MIN_FREQ = 1000000,
+	HSE_MAX_FREQ = 32000000,
+};
+}
+
+namespace pll
+{
+enum
+{
+	PLL_IN_MIN_FREQ = 2000000,
+	PLL_IN_MAX_FREQ = 24000000,
+	PLL_OUT_MIN_FREQ = 2000000,
+	PLL_OUT_MAX_FREQ = 32000000,
+	PLL_SRC_MAX = 1,
+	PLL_MUL_MAX = 13,
+	PLL_DIV_MIN = 1,
+	PLL_DIV_MAX = 3
 };
 }
 }

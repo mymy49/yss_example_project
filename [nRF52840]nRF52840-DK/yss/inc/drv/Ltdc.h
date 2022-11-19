@@ -19,9 +19,13 @@
 #ifndef YSS_DRV_LTDC__H_
 #define YSS_DRV_LTDC__H_
 
-#include <drv/peripheral.h>
+#include "mcu.h"
 
-#if defined(LTDC) && (defined(STM32F4) || defined(GD32F4))
+#if defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
+
+#include "peripheral.h"
+
+#if defined(LTDC)
 
 #include "ltdc/define_ltdc_stm32_gd32f4_f7.h"
 
@@ -42,7 +46,7 @@ typedef uint32_t		YSS_LTDC_Peri;
 #if !defined(YSS_DRV_LTDC_UNSUPPORTED)
 
 #include <yss/gui.h>
-#include <drv/Drv.h>
+#include "Drv.h"
 
 class Ltdc : public Drv
 {
@@ -72,7 +76,10 @@ class Ltdc : public Drv
   private:
 	const Specification *mSpec;
 };
+#endif
 
+#else
+#define YSS_DRV_LTDC_UNSUPPORTED
 #endif
 
 #endif

@@ -16,62 +16,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/Ltdc.h>
+#ifndef YSS_DRV_RADIO__H_
+#define YSS_DRV_RADIO__H_
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+#include "mcu.h"
 
-#include <mod/tft/RK043FN48H.h>
+#if defined(NRF52840_XXAA)
+typedef NRF_RADIO_Type YSS_RADIO_Peri;
+#else
+#define YSS_DRV_RADIO_UNSUPPORTED
+#endif
 
-static Ltdc::Specification gSpec =
+#ifndef YSS_DRV_RADIO_UNSUPPORTED
+
+#include "Drv.h"
+#include "../yss/error.h"
+
+class Radio : public Drv
 {
-	480,		// width
-	272,		// height
-	1,			// hsyncWidth
-	1,			// vsyncWidth
-	40,			// hbp
-	8,			// vbp
-	5,			// hfp
-	8,			// vfp
-	define::ltdc::format::RGB888	// pixelFormat
+	YSS_RADIO_Peri *mPeri;
+	uint16_t mReload;
+
+  public:
+	Radio(YSS_RADIO_Peri *peri, const Drv::Config drvConfig);
+	error init(void);
 };
 
-Ltdc::Specification* RK043FN48H::getSpec(void)
-{
-	return &gSpec;
-}
-
-void RK043FN48H::init(void)
-{
-}
+#endif
 
 #endif
-/*
-
-#include <mod/tft/RK043FN48H.h>
-
-#if defined(LTDC)
-
-namespace mod
-{
-	namespace tft
-	{
-		namespace RK043FN48H
-		{
-			config::ltdc::Config config =
-			{
-				480,		// width
-				272,		// height
-				1,			// hsyncWidth
-				1,			// vsyncWidth
-				40,			// hbp
-				8,			// vbp
-				5,			// hfp
-				8,			// vfp
-				define::ltdc::format::RGB888	// pixelFormat
-			};
-		}
-	}
-}
-
-#endif
-*/

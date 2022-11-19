@@ -27,7 +27,7 @@
 
 typedef TIM_TypeDef		YSS_TIMER_Peri;
 
-#elif defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
+#elif defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1)
 
 typedef volatile uint32_t YSS_TIMER_Peri;
 
@@ -43,7 +43,7 @@ typedef NRF_TIMER_Type		YSS_TIMER_Peri;
 
 #ifndef YSS_DRV_TIMER_UNSUPPORTED
 
-#include <drv/Drv.h>
+#include "Drv.h"
 
 class Timer : public Drv
 {

@@ -18,8 +18,9 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
 
+#include <drv/peripheral.h>
 #include <drv/Exti.h>
 #include <yss/thread.h>
 #include <yss/reg.h>
@@ -29,42 +30,40 @@ Exti::Exti(void (*clockFunc)(bool en), void (*nvicFunc)(bool en)) : Drv(clockFun
 {
 }
 
-bool Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void))
+error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void))
 {
 	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
 
 	if (pin > 15)
-		return false;
+		return Error::INDEX_OVER;
 
 	mTriggerFlag[pin] = false;
 	mIsr[pin] = func;
 	gpio.setExti(pin);
 
-	using namespace define::exti;
-	setBitData(peri[EXTI_REG::RTSR], (mode::RISING & mode) == mode::RISING, pin);
-	setBitData(peri[EXTI_REG::FTSR], (mode::FALLING & mode) == mode::FALLING, pin);
+	setBitData(peri[EXTI_REG::RTSR], (Exti::RISING & mode) == Exti::RISING, pin);
+	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
 	setBitData(peri[EXTI_REG::IMR], true, pin);
 
-	return true;
+	return Error::NONE;
 }
 
-bool Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
+error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
 {
 	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
 
 	if (pin > 15)
-		return false;
+		return Error::INDEX_OVER;
 
 	mTriggerFlag[pin] = true;
 	mTriggerNum[pin] = trigger;
 	gpio.setExti(pin);
 	
-	using namespace define::exti;
-	setBitData(peri[EXTI_REG::RTSR], (mode::RISING & mode) == mode::RISING, pin);
-	setBitData(peri[EXTI_REG::FTSR], (mode::FALLING & mode) == mode::FALLING, pin);
+	setBitData(peri[EXTI_REG::RTSR], (Exti::RISING & mode) == Exti::RISING, pin);
+	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
 	setBitData(peri[EXTI_REG::IMR], true, pin);
 
-	return true;
+	return Error::NONE;
 }
 
 void Exti::isr(int32_t  num)
