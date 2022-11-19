@@ -21,13 +21,13 @@
 
 #include "mcu.h"
 
-#if defined(STM32F1) || defined(STM32F7)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F7) || defined(STM32F4)
 
-#include "exti/define_exti_stm32_gd32f1.h"
+#define EXTI_COUNT		16
 
-#elif defined(GD32F1)
+#elif defined(NRF52840_XXAA)
 
-#include "exti/define_exti_gd32.h"
+#define EXTI_COUNT		8
 
 #else
 
@@ -39,17 +39,24 @@
 
 #include "Drv.h"
 #include "Gpio.h"
+#include <yss/error.h>
 
 class Exti : public Drv
 {
-	void (*mIsr[16])(void);
-	bool mTriggerFlag[16];
-	int32_t  mTriggerNum[16];
+	void (*mIsr[EXTI_COUNT])(void);
+	bool mTriggerFlag[EXTI_COUNT];
+	int32_t  mTriggerNum[EXTI_COUNT];
 
   public:
+	enum
+	{
+		RISING = 0x1,
+		FALLING = 0x2
+	};
+
 	Exti(void (*clockFunc)(bool en), void (*nvicFunc)(bool en));
-	bool add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void));
-	bool add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger);
+	error add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void));
+	error add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger);
 	void isr(int32_t  num);
 };
 

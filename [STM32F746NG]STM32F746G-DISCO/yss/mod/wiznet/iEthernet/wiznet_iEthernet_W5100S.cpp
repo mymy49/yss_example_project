@@ -212,7 +212,7 @@ bool W5100S::init(Config config)
 	}
 
 	mTriggerId = trigger::add(trigger_isr, this, 512);
-	exti.add(*config.INTn.port, config.INTn.pin, define::exti::mode::FALLING, mTriggerId);
+	exti.add(*config.INTn.port, config.INTn.pin, Exti::FALLING, mTriggerId);
 	
 	return mInitFlag;
 
@@ -460,7 +460,7 @@ void W5100S::isr(void)
 	uint8_t shift, data, status;
 	uint16_t addr;
 
-	while(!mINTn.port->getData(mINTn.pin))
+	while(!mINTn.port->getInputData(mINTn.pin))
 	{
 		lock();
 		readRegister(ADDR::INTERRUPT, &data, sizeof(data));

@@ -18,50 +18,117 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
+#if defined(NRF52840_XXAA)
 
 #include <drv/peripheral.h>
 #include <drv/Exti.h>
 #include <yss/thread.h>
 #include <yss/reg.h>
 #include <targets/st_gigadevice/exti_stm32_gd32f1.h>
+#include <targets/nordic/nrf52840_bitfields.h>
+
+static int8_t gPortList[EXTI_COUNT];
+
+static int8_t findId(int8_t pinId)
+{
+	for(int8_t i=0;i<EXTI_COUNT;i++)
+	{
+		if(gPortList[i] == pinId)
+			return i;
+	}
+
+	return -1;
+}
+
+static int8_t findEmpty(void)
+{
+	for(int8_t i=0;i<EXTI_COUNT;i++)
+	{
+		if(gPortList[i] == -1)
+			return i;
+	}
+
+	return -1;
+}
 
 Exti::Exti(void (*clockFunc)(bool en), void (*nvicFunc)(bool en)) : Drv(clockFunc, nvicFunc)
 {
+	for(uint32_t i=0;i<EXTI_COUNT;i++)
+		gPortList[i] = -1;
 }
 
 error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void))
 {
-	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
+	int8_t pinId, index, port;
 
-	if (pin > 15)
+	if (pin > 31)
 		return Error::INDEX_OVER;
 
-	mTriggerFlag[pin] = false;
-	mIsr[pin] = func;
-	gpio.setExti(pin);
+	if(gpio.getPeripheralAddress() == NRF_P0_BASE)
+	{
+		pinId = pin;
+		port = 0;
+	}
+	else
+	{
+		pinId = pin + 32;
+		port = 1;
+	}
+	
+	index = findId(pinId);
 
-	setBitData(peri[EXTI_REG::RTSR], (Exti::RISING & mode) == Exti::RISING, pin);
-	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
-	setBitData(peri[EXTI_REG::IMR], true, pin);
+	if(index >= 0)
+		return Error::IT_ALREADY_HAVE;
+	
+	index = findEmpty();
+	gPortList[index] = pinId;
+	mTriggerFlag[index] = false;
+	mIsr[index] = func;
+	
+	NRF_GPIOTE->CONFIG[index] = (GPIOTE_CONFIG_MODE_Event << GPIOTE_CONFIG_MODE_Pos) | 
+								(pin << GPIOTE_CONFIG_PSEL_Pos) |
+								(port << GPIOTE_CONFIG_PORT_Pos) |
+								(mode << GPIOTE_CONFIG_POLARITY_Pos);
+	
+	NRF_GPIOTE->INTENSET = 1 << index;
 
 	return Error::NONE;
 }
 
 error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
 {
-	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
+	int8_t pinId, index, port;
 
-	if (pin > 15)
+	if (pin > 31)
 		return Error::INDEX_OVER;
 
-	mTriggerFlag[pin] = true;
-	mTriggerNum[pin] = trigger;
-	gpio.setExti(pin);
+	if(gpio.getPeripheralAddress() == NRF_P0_BASE)
+	{
+		pinId = pin;
+		port = 0;
+	}
+	else
+	{
+		pinId = pin + 32;
+		port = 1;
+	}
 	
-	setBitData(peri[EXTI_REG::RTSR], (Exti::RISING & mode) == Exti::RISING, pin);
-	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
-	setBitData(peri[EXTI_REG::IMR], true, pin);
+	index = findId(pinId);
+
+	if(index >= 0)
+		return Error::IT_ALREADY_HAVE;
+	
+	index = findEmpty();
+	gPortList[index] = pinId;
+	mTriggerFlag[index] = true;
+	mTriggerNum[index] = trigger;
+	
+	NRF_GPIOTE->CONFIG[index] = (GPIOTE_CONFIG_MODE_Event << GPIOTE_CONFIG_MODE_Pos) | 
+								(pin << GPIOTE_CONFIG_PSEL_Pos) |
+								(port << GPIOTE_CONFIG_PORT_Pos) |
+								(mode << GPIOTE_CONFIG_POLARITY_Pos);
+	
+	NRF_GPIOTE->INTENSET = 1 << index;
 
 	return Error::NONE;
 }

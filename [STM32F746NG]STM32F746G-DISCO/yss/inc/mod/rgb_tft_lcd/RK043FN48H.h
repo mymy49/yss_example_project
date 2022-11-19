@@ -16,30 +16,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef	YSS_MOD_TFT_SF_TC240T_9370_T__H_
-#define	YSS_MOD_TFT_SF_TC240T_9370_T__H_
+#ifndef YSS_MOD_TFT_RK043FN48H__H_
+#define YSS_MOD_TFT_RK043FN48H__H_
 
-#include <yss/instance.h>
+#include <drv/Ltdc.h>
+#include <sac/RgbBusTftLcd.h>
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED) && !defined(YSS_DRV_GPIO_UNSUPPORTED) && !defined(YSS_DRV_SPI_UNSUPPORTED)
+#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
 
-class SF_TC240T_9370_T
+class RK043FN48H : public RgbBusTftLcd
 {
-	Gpio::Pin mCs;
-	Gpio::Pin mDcx;
-	Spi *mPeri;
-
-	void sendCmd(uint8_t cmd);
-	void sendData(uint8_t data);
-	void setCs(bool val);
-	void setDcx(bool val);
-
-public :
-	SF_TC240T_9370_T(void);
-	void init(Spi &spi, Gpio::Pin &cs, Gpio::Pin &dcx);
-	Ltdc::Specification* getSpec(void);
+  public:
+	const Ltdc::Specification* getSpecification(void); // virtual 0
 };
 
 #endif
 
 #endif
+

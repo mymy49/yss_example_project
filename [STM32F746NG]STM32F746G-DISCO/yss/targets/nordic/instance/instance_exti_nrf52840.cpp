@@ -16,30 +16,76 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef	YSS_MOD_TFT_SF_TC240T_9370_T__H_
-#define	YSS_MOD_TFT_SF_TC240T_9370_T__H_
+#include <drv/mcu.h>
 
+#if defined(NRF52840_XXAA)
+
+//#include <targets/st_gigadevice/exti_stm32_gd32f1.h>
 #include <yss/instance.h>
+#include <drv/Exti.h>
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED) && !defined(YSS_DRV_GPIO_UNSUPPORTED) && !defined(YSS_DRV_SPI_UNSUPPORTED)
-
-class SF_TC240T_9370_T
+static void enableInterrupt(bool en)
 {
-	Gpio::Pin mCs;
-	Gpio::Pin mDcx;
-	Spi *mPeri;
+	nvic.lock();
+	nvic.enableInterrupt(GPIOTE_IRQn, en);
+	nvic.unlock();
+}
 
-	void sendCmd(uint8_t cmd);
-	void sendData(uint8_t data);
-	void setCs(bool val);
-	void setDcx(bool val);
+Exti exti(0, enableInterrupt);
 
-public :
-	SF_TC240T_9370_T(void);
-	void init(Spi &spi, Gpio::Pin &cs, Gpio::Pin &dcx);
-	Ltdc::Specification* getSpec(void);
-};
+extern "C"
+{
+	void GPIOTE_IRQHandler(void)
+	{
+		if(NRF_GPIOTE->EVENTS_IN[0])
+		{
+			NRF_GPIOTE->EVENTS_IN[0] = 0;
+			exti.isr(0);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[1])
+		{
+			NRF_GPIOTE->EVENTS_IN[1] = 0;
+			exti.isr(1);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[2])
+		{
+			NRF_GPIOTE->EVENTS_IN[2] = 0;
+			exti.isr(2);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[3])
+		{
+			NRF_GPIOTE->EVENTS_IN[3] = 0;
+			exti.isr(3);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[4])
+		{
+			NRF_GPIOTE->EVENTS_IN[4] = 0;
+			exti.isr(4);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[5])
+		{
+			NRF_GPIOTE->EVENTS_IN[5] = 0;
+			exti.isr(5);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[6])
+		{
+			NRF_GPIOTE->EVENTS_IN[6] = 0;
+			exti.isr(6);
+		}
+
+		if(NRF_GPIOTE->EVENTS_IN[7])
+		{
+			NRF_GPIOTE->EVENTS_IN[7] = 0;
+			exti.isr(7);
+		}
+	}
+}
 
 #endif
 
-#endif

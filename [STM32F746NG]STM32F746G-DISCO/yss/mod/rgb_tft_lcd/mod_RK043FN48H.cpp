@@ -16,21 +16,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_MOD_TFT_RK043FN48H__H_
-#define YSS_MOD_TFT_RK043FN48H__H_
-
 #include <drv/Ltdc.h>
 
 #if !defined(YSS_DRV_LTDC_UNSUPPORTED)
 
-class RK043FN48H
+#include <mod/rgb_tft_lcd/RK043FN48H.h>
+
+static const Ltdc::Specification gSpec =
 {
-  public:
-	void init(void);
-	Ltdc::Specification *getSpec(void);
+	480,		// width
+	272,		// height
+	1,			// hsyncWidth
+	1,			// vsyncWidth
+	40,			// hbp
+	8,			// vbp
+	5,			// hfp
+	8,			// vfp
+	define::ltdc::format::RGB888	// pixelFormat
 };
 
-#endif
+const Ltdc::Specification* RK043FN48H::getSpecification(void)
+{
+	return &gSpec;
+}
 
 #endif
 
