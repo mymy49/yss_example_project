@@ -24,7 +24,6 @@
 #include <cli_led.h>
 #include <cli_dump.h>
 #include <cli_button.h>
-//#include <cli_adc.h>
 
 float gTest;
 
@@ -46,13 +45,6 @@ int32_t main(void)
 	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
 	
-	// CLI ANALOG 설정
-	//Cli::Analog::setNumOfAdc(3);
-	//Cli::Analog::setAdcChannel(0, 0, adc1);
-	//Cli::Analog::setAdcChannel(1, 1, adc1);
-	//Cli::Analog::setAdcChannel(2, 4, adc1);
-	//Cli::Analog::registerCli(cli);
-
 	// CLI BUTTON 설정
 	gpio0.setPullUpDown(25, define::gpio::pupd::PULL_UP);
 	Cli::Button::setPin(gpio0, 25, false);
