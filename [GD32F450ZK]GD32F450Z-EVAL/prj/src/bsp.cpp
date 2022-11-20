@@ -38,17 +38,15 @@ void initBoard(void)
 	uart2.enableInterrupt();
 
 	// ADC 초기화
-	//gpioA.setAsAnalog(0);
+	gpioF.setAsAnalog(6);
 
-	//adc1.enableClock();
-	//adc1.init();
+	adc3.enableClock();
+	adc3.init();
 	
-	//using namespace define::adc;
-	//adc1.add(0, lpfLv::LV10, bit::BIT16);
-	//adc1.add(1, lpfLv::LV10, bit::BIT16);
-	//adc1.add(4, lpfLv::LV10, bit::BIT16);
+	using namespace define::adc;
+	adc3.add(4, lpfLv::LV10, bit::BIT16);
 
-	//adc1.enableInterrupt();
+	adc3.enableInterrupt();
 
 	// LED 초기화
 	led::init();
@@ -100,7 +98,8 @@ void initSdram(void)
 {
 	using namespace define::gpio::altfunc;
 
-	Gpio::AltFunc sdramPort[39]{
+	Gpio::AltFunc sdramPort[39] = 
+	{
 		{(YSS_GPIO_Peri*)GPIOF, 0, PF0_FMC_A0},
 		{(YSS_GPIO_Peri*)GPIOF, 1, PF1_FMC_A1},
 		{(YSS_GPIO_Peri*)GPIOF, 2, PF2_FMC_A2},

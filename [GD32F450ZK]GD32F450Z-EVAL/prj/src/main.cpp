@@ -22,6 +22,7 @@
 #include <util/time.h>
 #include <cli_led.h>
 #include <cli_dump.h>
+#include <cli_adc.h>
 #include <cli_button.h>
 
 float gTest;
@@ -43,12 +44,18 @@ int32_t main(void)
 	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
 
-	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for GD32F450Z-EVAL board.\n\n\r");
-	cli.start();
+	// CLI ANALOG 설정
+	Cli::Analog::setNumOfAdc(1);
+	Cli::Analog::setAdcChannel(0, 4, adc3);
+	Cli::Analog::registerCli(cli);
 
 	// CLI BUTTON 설정
 	Cli::Button::setPin(gpioB, 14, false);
 	Cli::Button::registerCli(cli);
+	
+	// CLI 인사말 등록 및 thread 시작
+	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for GD32F450Z-EVAL board.\n\n\r");
+	cli.start();
 
 	while(1)
 	{
