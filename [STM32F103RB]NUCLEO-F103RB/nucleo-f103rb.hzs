@@ -149,7 +149,7 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="36" y="11" useTextEdit="1" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/STM32/STM32F103xB.vec" left="0" top="3" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="22" y="25" useTextEdit="1" openedFrom="/home/mymy49/library/yss/target/stm32_gd32/driver/drv_exti_stm32_gd32f1.cpp" path="../../yss/inc/drv/Exti.h" left="0" top="17" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="89" useTextEdit="1" path="../common/src/cli_led.cpp" left="0" top="81" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="82" y="214" useTextEdit="1" path="../common/src/cli_dump.cpp" left="41" top="207" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="82" y="214" useTextEdit="1" path="../common/src/cli_dump.cpp" left="41" top="206" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="45" useTextEdit="1" path="prj/src/bsp.cpp" left="0" top="38" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nucleo-f103rb" fileDialogDefaultFilter="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.hxx" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>

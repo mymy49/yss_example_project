@@ -16,10 +16,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/peripheral.h>
-
 #if defined(NRF52840_XXAA)
 
+#include <drv/peripheral.h>
 #include <drv/Radio.h>
 #include <yss/reg.h>
 #include <yss/thread.h>

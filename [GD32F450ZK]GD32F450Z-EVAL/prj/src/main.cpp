@@ -22,6 +22,7 @@
 #include <util/time.h>
 #include <cli_led.h>
 #include <cli_dump.h>
+#include <cli_button.h>
 
 float gTest;
 
@@ -32,16 +33,22 @@ int32_t main(void)
 	initYss();
 	initBoard();
 
+	// CLI LED 설정
 	Cli::Led::setNumOfLed(3);
 	Cli::Led::setLedFunction(0, led::setOn0);
 	Cli::Led::setLedFunction(1, led::setOn1);
 	Cli::Led::setLedFunction(2, led::setOn2);
 	Cli::Led::registerCli(cli);
 
+	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for GD32F450Z-EVAL board.\n\n\r");
 	cli.start();
+
+	// CLI BUTTON 설정
+	Cli::Button::setPin(gpioB, 14, false);
+	Cli::Button::registerCli(cli);
 
 	while(1)
 	{
