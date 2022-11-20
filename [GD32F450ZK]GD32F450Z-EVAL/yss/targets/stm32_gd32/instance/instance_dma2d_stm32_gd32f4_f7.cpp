@@ -16,62 +16,63 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <yss/debug.h>
-#include <yss.h>
-#include <bsp.h>
-#include <util/time.h>
-#include <cli_led.h>
-#include <cli_dump.h>
-#include <cli_adc.h>
-#include <cli_button.h>
-#include <yss/gui.h>
+#include <drv/Dma2d.h>
 
-float gTest;
+#ifndef YSS_DRV_DMA2D_UNSUPPORTED
 
-Frame *gFrame;
+#include <yss/instance.h>
 
-int32_t main(void)
+#if defined(DMA2D) && USE_GUI
+
+#include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
+
+#if defined(GD32F4)
+#define DMA2D_IRQHandler	IPA_IRQHandler
+#endif
+
+static void enableClock(bool en)
 {
-	uint32_t time;
-
-	initYss();
-	initBoard();
-
-	// CLI LED 설정
-	Cli::Led::setNumOfLed(3);
-	Cli::Led::setLedFunction(0, led::setOn0);
-	Cli::Led::setLedFunction(1, led::setOn1);
-	Cli::Led::setLedFunction(2, led::setOn2);
-	Cli::Led::registerCli(cli);
-
-	// CLI DUMP 설정
-	Cli::Dump::registerCli(cli);
-
-	// CLI ANALOG 설정
-	Cli::Analog::setNumOfAdc(1);
-	Cli::Analog::setAdcChannel(0, 4, adc3);
-	Cli::Analog::registerCli(cli);
-
-	// CLI BUTTON 설정
-	Cli::Button::setPin(gpioB, 14, false);
-	Cli::Button::registerCli(cli);
-	
-	// CLI 인사말 등록 및 thread 시작
-	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for GD32F450Z-EVAL board.\n\n\r");
-	cli.start();
-	
-	gFrame = new Frame();
-	gFrame->setBackgroundColor(0xFF, 0x00, 0x00);
-	
-	setSystemFrame(gFrame);
-
-	while(1)
-	{
-		time = time::getRunningMsec();
-		gTest = (float)time / 1000.f;
-		thread::yield();
-	}
-
-	return 0;
+	clock.lock();
+    clock.enableAhb1Clock(RCC_AHB1ENR_DMA2DEN_Pos, en);
+	clock.unlock();
 }
 
+static void enableInterrup(bool en)
+{
+	nvic.lock();
+	nvic.enableInterrupt(DMA2D_IRQn, en);
+	nvic.unlock();
+}
+
+static void reset(void)
+{
+	clock.lock();
+    clock.resetAhb1(RCC_AHB1RSTR_DMA2DRST_Pos);
+	clock.unlock();
+}
+
+static const Drv::Config gDrvConfig
+{
+	enableClock,	//void (*clockFunc)(bool en);
+	enableInterrup,	//void (*nvicFunc)(bool en);
+	reset			//void (*resetFunc)(void);
+};
+
+static const Dma2d::Config gConfig
+{
+	(YSS_DMA2D_Peri*)DMA2D	//YSS_DMA2D_Peri *peri;
+};
+
+Dma2d dma2d(gDrvConfig, gConfig);
+
+extern "C"
+{
+	void DMA2D_IRQHandler(void)
+	{
+		dma2d.isr();
+	}
+}
+
+#endif
+
+#endif
