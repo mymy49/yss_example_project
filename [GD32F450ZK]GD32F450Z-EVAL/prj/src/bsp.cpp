@@ -92,6 +92,10 @@ void initBoard(void)
 	
 	lcd.setConfig(lcdConfig);
 	lcd.init();
+
+	ltdc.enableClock();
+	ltdc.init(lcd.getSpecification());
+	ltdc.setInterruptEn(true);
 }
 
 void initSdram(void)

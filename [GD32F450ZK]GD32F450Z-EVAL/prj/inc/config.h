@@ -137,7 +137,7 @@
 #define SDRAM_ENABLE
 
 // LTDC 활성화
-//#define LTDC_ENABLE
+#define LTDC_ENABLE
 
 // SPI 활성화
 #define SPI1_ENABLE
