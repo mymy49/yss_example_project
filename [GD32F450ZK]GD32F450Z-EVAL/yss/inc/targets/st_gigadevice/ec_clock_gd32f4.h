@@ -16,167 +16,116 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_CLOCK_DEFINE_GD32F4__H_
-#define YSS_DRV_CLOCK_DEFINE_GD32F4__H_
+#ifndef YSS_DRV_CLOCK_EC_GD_GD32F4__H_
+#define YSS_DRV_CLOCK_EC_GD_GD32F4__H_
 
-namespace define
+namespace ec
 {
 namespace clock
 {
+namespace sysclk
+{
+enum
+{
+	MAX_FREQ = 240000000,
+};
+}
+
+namespace apb1
+{
+enum
+{
+	MAX_FREQ = 60000000,
+};
+}
+
+namespace apb2
+{
+enum
+{
+	MAX_FREQ = 120000000,
+};
+}
+
+namespace adc
+{
+enum
+{
+	MAX_FREQ = 14000000,
+};
+}
+
+namespace hsi
+{
+enum
+{
+	FREQ = 16000000,
+};
+}
+
+namespace hse
+{
+enum
+{
+	HSE_MIN_FREQ = 3000000,
+	HSE_MAX_FREQ = 32000000,
+};
+}
+
+#define PLL_P_USE
+#define PLL_Q_USE
 namespace pll
 {
-namespace src
-{
 enum
 {
-	HSI = 0,
-	HSE = 1
+	VCO_MIN_FREQ = 100000000,
+	VCO_MAX_FREQ = 500000000,
+	P_MAX_FREQ = 344000000,
+	Q_MAX_FREQ = 75000000,
+	M_MIN = 2,
+	M_MAX = 63,
+	N_MIN = 2,
+	N_MAX = 500,
+	P_MAX = 3,
+	Q_MIN = 2,
+	Q_MAX = 15
 };
 }
 
-namespace pdiv
-{
-enum
-{
-	DIV2 = 0,
-	DIV4 = 1,
-	DIV6 = 2,
-	DIV8 = 3
-};
-}
-
-namespace qdiv
-{
-enum
-{
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7,
-	DIV8 = 8,
-	DIV9 = 9,
-	DIV10 = 10,
-	DIV11 = 11,
-	DIV12 = 12,
-	DIV13 = 13,
-	DIV14 = 14,
-	DIV15 = 15
-};
-}
-}
-
+#define SAIPLL_P_USE
+#define SAIPLL_R_USE
 namespace saipll
 {
-namespace pdiv
-{
 enum
 {
-	DIV2 = 0,
-	DIV4 = 1,
-	DIV6 = 2,
-	DIV8 = 3
+	VCO_MIN_FREQ = 96000000,
+	VCO_MAX_FREQ = 500000000,
+	P_MAX_FREQ = 75000000,
+	R_MAX_FREQ = 42000000,
+	N_MIN = 2,
+	N_MAX = 500,
+	P_MAX = 3,
+	Q_MIN = 2,
+	Q_MAX = 15,
+	R_MIN = 2,
+	R_MAX = 7
 };
-}
-
-namespace rdiv
-{
-enum
-{
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7
-};
-}
 }
 
 namespace i2spll
 {
-namespace rdiv
-{
 enum
 {
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7
-};
-}
-}
-
-namespace usbclk
-{
-namespace src
-{
-enum
-{
-	MAIN_PLL = 0,
-	SAI_PLL = 1,
-};
-}
-}
-
-namespace sysclk
-{
-namespace src
-{
-enum
-{
-	HSI = 0,
-	HSE = 1,
-	PLL = 2
-};
-}
-}
-
-namespace divisionFactor
-{
-namespace ahb
-{
-enum
-{
-	NO_DIV = 0,
-	DIV2 = 0x8,
-	DIV4 = 0x9,
-	DIV8 = 0xa,
-	DIV16 = 0xb,
-	DIV64 = 0xc,
-	DIV128 = 0xd,
-	DIV256 = 0xe,
-	DIV512 = 0xf
+	VCO_MIN_FREQ = 100000000,
+	VCO_MAX_FREQ = 500000000,
+	I2S_MAX_FREQ = 240000000,
+	N_MIN = 2,
+	N_MAX = 500,
+	R_MIN = 2,
+	R_MAX = 7
 };
 }
 
-namespace apb
-{
-enum
-{
-	NO_DIV = 0,
-	DIV2 = 0x4,
-	DIV4 = 0x5,
-	DIV8 = 0x6,
-	DIV16 = 0x7,
-};
-}
-
-namespace ltdc
-{
-enum
-{
-	DIV2 = 0,
-	DIV4 = 1,
-	DIV8 = 2,
-	DIV16 = 3,
-};
-}
-
-}
 }
 }
 

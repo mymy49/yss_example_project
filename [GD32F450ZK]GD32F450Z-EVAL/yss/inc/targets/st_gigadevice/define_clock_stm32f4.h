@@ -29,10 +29,8 @@ namespace src
 {
 enum
 {
-#if defined(STM32F411xE)
 	HSI = 0,
 	HSE = 1
-#endif
 };
 }
 
@@ -40,12 +38,10 @@ namespace pdiv
 {
 enum
 {
-#if defined(STM32F411xE)
 	DIV2 = 0,
 	DIV4 = 1,
 	DIV6 = 2,
 	DIV8 = 3
-#endif
 };
 }
 
@@ -53,7 +49,6 @@ namespace qdiv
 {
 enum
 {
-#if defined(STM32F411xE)
 	DIV2 = 2,
 	DIV3 = 3,
 	DIV4 = 4,
@@ -68,33 +63,6 @@ enum
 	DIV13 = 13,
 	DIV14 = 14,
 	DIV15 = 15
-#endif
-};
-}
-}
-
-namespace saipll
-{
-namespace qdiv
-{
-enum
-{
-#if defined(STM32F411xE)
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7,
-	DIV8 = 8,
-	DIV9 = 9,
-	DIV10 = 10,
-	DIV11 = 11,
-	DIV12 = 12,
-	DIV13 = 13,
-	DIV14 = 14,
-	DIV15 = 15
-#endif
 };
 }
 
@@ -102,16 +70,15 @@ namespace rdiv
 {
 enum
 {
-#if defined(STM32F411xE)
 	DIV2 = 2,
 	DIV3 = 3,
 	DIV4 = 4,
 	DIV5 = 5,
 	DIV6 = 6,
 	DIV7 = 7
-#endif
 };
 }
+
 }
 
 namespace usbclk
@@ -120,10 +87,8 @@ namespace src
 {
 enum
 {
-#if defined(STM32F411xE)
 	MAIN_PLL = 0,
 	SAI_PLL = 1,
-#endif
 };
 }
 }
@@ -134,22 +99,19 @@ namespace src
 {
 enum
 {
-#if defined(STM32F411xE)
 	HSI = 0,
 	HSE = 1,
 	PLL = 2
-#endif
 };
 }
 }
 
-namespace divFactor
+namespace divisionFactor
 {
 namespace ahb
 {
 enum
 {
-#if defined(STM32F411xE)
 	NO_DIV = 0,
 	DIV2 = 0x8,
 	DIV4 = 0x9,
@@ -159,7 +121,6 @@ enum
 	DIV128 = 0xd,
 	DIV256 = 0xe,
 	DIV512 = 0xf
-#endif
 };
 }
 
@@ -167,13 +128,22 @@ namespace apb
 {
 enum
 {
-#if defined(STM32F411xE)
 	NO_DIV = 0,
 	DIV2 = 0x4,
 	DIV4 = 0x5,
 	DIV8 = 0x6,
 	DIV16 = 0x7,
-#endif
+};
+}
+
+namespace ltdc
+{
+enum
+{
+	DIV2 = 0,
+	DIV4 = 1,
+	DIV8 = 2,
+	DIV16 = 3,
 };
 }
 

@@ -24,19 +24,41 @@
 #include <cli_dump.h>
 #include <cli_adc.h>
 #include <cli_button.h>
+#include <cli_guage.h>
 #include <yss/gui.h>
+#include <task.h>
+#include <yss/string.h>
 
 float gTest;
-
-Frame *gFrame;
 
 int32_t main(void)
 {
 	uint32_t time;
-
+	
 	initYss();
 	initBoard();
-
+	/*
+	uint32_t *src, buf;
+	src = (uint32_t*)0xC0000000;
+	for(int i=0;i< 8 * 1024 * 1024 / 4;i++)
+	{
+		*src++ = i;
+	}
+	
+	while(1)
+	{
+		src = (uint32_t*)0xC0000000;
+		for(int i=0;i< 8 * 1024 * 1024 / 4;i++)
+		{
+			buf = *src;
+			if(buf != i)
+			{
+				debug_printf("0x%08X = 0x%08X, 0x%08X\n", 0xC0000000 + i * 4, buf, i);
+			}
+			src++;
+		}
+	}
+	*/
 	// CLI LED 설정
 	Cli::Led::setNumOfLed(3);
 	Cli::Led::setLedFunction(0, led::setOn0);
@@ -48,22 +70,24 @@ int32_t main(void)
 	Cli::Dump::registerCli(cli);
 
 	// CLI ANALOG 설정
-	Cli::Analog::setNumOfAdc(1);
-	Cli::Analog::setAdcChannel(0, 4, adc3);
-	Cli::Analog::registerCli(cli);
+	//Cli::Analog::setNumOfAdc(1);
+	//Cli::Analog::setAdcChannel(0, 4, adc3);
+	//Cli::Analog::registerCli(cli);
 
 	// CLI BUTTON 설정
 	Cli::Button::setPin(gpioB, 14, false);
 	Cli::Button::registerCli(cli);
+
+	// CLI GAUGE 설정
+	Cli::Guage::setFunctionQueue(functionQueue);
+	Cli::Guage::registerCli(cli);
 	
 	// CLI 인사말 등록 및 thread 시작
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is example for GD32F450Z-EVAL board.\n\n\r");
 	cli.start();
-	
-	gFrame = new Frame();
-	gFrame->setBackgroundColor(0xFF, 0x00, 0x00);
-	
-	setSystemFrame(gFrame);
+
+	functionQueue.add(Task::displayGauge);
+	functionQueue.start();
 
 	while(1)
 	{

@@ -23,19 +23,19 @@
 #include <mod/rgb_tft_lcd/GD32_RGB_LCD.h>
 
 FunctionQueue functionQueue(16);
-CommandLineInterface cli(uart2);
+CommandLineInterface cli(uart1);
 GD32_RGB_LCD lcd;
 
 void initBoard(void)
 {
 	// USART2 초기화
 	using namespace define::gpio;
-	gpioA.setAsAltFunc(2, altfunc::PA2_USART2_TX);
-	gpioA.setAsAltFunc(3, altfunc::PA3_USART2_RX);
+	gpioA.setAsAltFunc(9, altfunc::PA9_USART1_TX);
+	gpioA.setAsAltFunc(10, altfunc::PA10_USART1_RX);
 	
-	uart2.enableClock();
-	uart2.init(9600, 256);
-	uart2.enableInterrupt();
+	uart1.enableClock();
+	uart1.init(9600, 256);
+	uart1.enableInterrupt();
 
 	// ADC 초기화
 	gpioF.setAsAnalog(6);

@@ -16,8 +16,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_CLOCK_EC_GD_GD32F4__H_
-#define YSS_DRV_CLOCK_EC_GD_GD32F4__H_
+#ifndef YSS_DRV_CLOCK_EC_STM32_GD32F4__H_
+#define YSS_DRV_CLOCK_EC_STM32_GD32F4__H_
 
 namespace ec
 {
@@ -27,7 +27,14 @@ namespace sysclk
 {
 enum
 {
-	MAX_FREQ = 240000000,
+#if defined(STM32F411xE)
+	MAX_FREQ = 100000000,
+#elif defined(STM32F429xx)
+	MAX_FREQ = 180000000,
+	OVER_DRIVE_FREQ = 168000000,
+#else
+	MAX_FREQ = 168000000
+#endif
 };
 }
 
@@ -35,7 +42,11 @@ namespace apb1
 {
 enum
 {
-	MAX_FREQ = 60000000,
+#if defined(STM32F411xE)
+	MAX_FREQ = 50000000,
+#elif defined(STM32F429xx)
+	MAX_FREQ = 45000000,
+#endif
 };
 }
 
@@ -43,15 +54,11 @@ namespace apb2
 {
 enum
 {
-	MAX_FREQ = 120000000,
-};
-}
-
-namespace adc
-{
-enum
-{
-	MAX_FREQ = 14000000,
+#if defined(STM32F411xE)
+	MAX_FREQ = 100000000,
+#elif defined(STM32F429xx)
+	MAX_FREQ = 90000000,
+#endif
 };
 }
 
@@ -59,7 +66,9 @@ namespace hsi
 {
 enum
 {
+#if defined(STM32F411xE) || defined(STM32F429xx)
 	FREQ = 16000000,
+#endif
 };
 }
 
@@ -67,8 +76,10 @@ namespace hse
 {
 enum
 {
-	HSE_MIN_FREQ = 3000000,
-	HSE_MAX_FREQ = 32000000,
+#if defined(STM32F411xE) || defined(STM32F429xx)
+	HSE_MIN_FREQ = 1000000,
+	HSE_MAX_FREQ = 50000000,
+#endif
 };
 }
 
@@ -76,53 +87,45 @@ namespace pll
 {
 enum
 {
+#if defined(STM32F411xE)
+	P_MAX_FREQ = 100000000,
+#elif defined(STM32F429xx)
+	P_MAX_FREQ = 180000000,
+#endif
 	VCO_MIN_FREQ = 100000000,
-	VCO_MAX_FREQ = 500000000,
-	USB48_MAX_FREQ = 75000000,
+	VCO_MAX_FREQ = 432000000,
+	Q_MAX_FREQ = 75000000,
 	M_MIN = 2,
 	M_MAX = 63,
 	N_MIN = 2,
-	N_MAX = 500,
+	N_MAX = 432,
 	P_MAX = 3,
 	Q_MIN = 2,
 	Q_MAX = 15
 };
 }
 
+#if defined(STM32F429xx)
 namespace saipll
 {
 enum
 {
-	VCO_MIN_FREQ = 96000000,
-	VCO_MAX_FREQ = 500000000,
-	USB48_MAX_FREQ = 75000000,
-	SAI_MAX_FREQ = 999999999,
-	LCD_MAX_FREQ = 42000000,
+	VCO_MIN_FREQ = 100000000,
+	VCO_MAX_FREQ = 432000000,
+	Q_MAX_FREQ = 45000000,
+	R_MAX_FREQ = 42000000,
 	N_MIN = 2,
-	N_MAX = 500,
-	P_MAX = 3,
+	N_MAX = 432,
 	Q_MIN = 2,
 	Q_MAX = 15,
+	P_MAX = 3,
 	R_MIN = 2,
 	R_MAX = 7
 };
 }
-
-namespace i2spll
-{
-enum
-{
-	VCO_MIN_FREQ = 100000000,
-	VCO_MAX_FREQ = 500000000,
-	I2S_MAX_FREQ = 240000000,
-	N_MIN = 2,
-	N_MAX = 500,
-	R_MIN = 2,
-	R_MAX = 7
-};
-}
-
+#endif
 }
 }
 
 #endif
+
