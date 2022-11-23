@@ -32,23 +32,18 @@ namespace Button
 	Gpio *gGpio;
 	uint8_t gPinNumber;
 	ElapsedTime gPressedTime;
-	int32_t gTriggerId, gThreadId;
-	uint32_t gTriggerEnteringTime, gButtonReleaseTime;
-	bool gPressedFlag, gRisingFlag, gCompleteFlag;
+	threadId gThreadId;
+	triggerId gTriggerId;
+	uint32_t gButtonReleaseTime;
+	bool gRisingFlag, gCompleteFlag;
 
 	void trigger_button(void)
-	{
-		gTriggerEnteringTime = gPressedTime.getUsec();
-	}
-
-	void isr_button(void)
 	{
 		bool pin = gGpio->getInputData(gPinNumber);
 
 		if(pin == gRisingFlag)
 		{
 			gPressedTime.reset();
-			trigger::run(gTriggerId);
 		}
 		else
 		{
@@ -56,6 +51,11 @@ namespace Button
 			gCompleteFlag = true;
 			thread::signal(gThreadId);
 		}
+	}
+
+	void isr_button(void)
+	{
+		trigger::run(gTriggerId);
 	}
 
 	void setPin(Gpio &gpio, uint8_t pinNumber, bool rising)
@@ -71,7 +71,7 @@ namespace Button
 	error callback_button(Uart *peripheral, void *var)
 	{
 		char str[64];
-		uint32_t len, enteringTime;
+		uint32_t len;
 		int16_t input;
 
 		sprintf(str, "\n\rWhen you Press 'x' key, It will terminates.\n\r");
@@ -86,19 +86,10 @@ namespace Button
 		{
 			if(gCompleteFlag)
 			{
-				enteringTime = gPressedTime.getUsec();
 				gCompleteFlag = false;
 				
 				peripheral->lock();
-				sprintf(str, "Trigger Entering Time = %d us\n\r", gTriggerEnteringTime);
-				len = strlen(str);
-				peripheral->send(str, len);
-
 				sprintf(str, "Button Release Time = %d us\n\r", gButtonReleaseTime);
-				len = strlen(str);
-				peripheral->send(str, len);
-
-				sprintf(str, "Thread Entering Time = %d us\n\r", enteringTime);
 				len = strlen(str);
 				peripheral->send(str, len);
 				peripheral->unlock();
