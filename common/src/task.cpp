@@ -27,7 +27,10 @@ namespace Task
 	threadId gThreadId[MAX_TASK_THREAD];
 	FunctionQueue *gFq;
 	Mutex gMutex;
+
+#if USE_GUI && YSS_L_HEAP_USE
 	Frame *gFrame;
+#endif
 
 	void setFunctionQueue(FunctionQueue &obj)
 	{
@@ -61,17 +64,21 @@ namespace Task
 			}
 		}
 
+#if USE_GUI && YSS_L_HEAP_USE
 		if(gFrame)
 		{
 			delete gFrame;
 			gFrame = 0;
 		}
+#endif
 	}
 
+#if USE_GUI && YSS_L_HEAP_USE
 	void setFrame(Frame *obj)
 	{
 		setSystemFrame(obj);
 		gFrame = obj;
 	}
+#endif
 }
 
