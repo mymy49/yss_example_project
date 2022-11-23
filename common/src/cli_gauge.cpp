@@ -21,7 +21,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+#if !defined(YSS_DRV_LTDC_UNSUPPORTED) && !defined(YSS_DRV_UART_UNSUPPORTED)
 
 namespace Cli
 {
