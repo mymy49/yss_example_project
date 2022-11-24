@@ -23,7 +23,11 @@
 #include <cli_led.h>
 #include <cli_dump.h>
 #include <cli_adc.h>
+#include <cli_button.h>
+#include <cli_gauge.h>
+#include <cli_logo.h>
 #include <stdint.h>
+#include <task.h>
 
 float gTest;
 
@@ -31,22 +35,39 @@ int32_t main(void)
 {
 	initYss();
 	initBoard();
-	
+
 	uint32_t time;
 	
+	// CLI LED 설정
 	Cli::Led::setNumOfLed(2);
 	Cli::Led::setLedFunction(0, led::setOn0);
 	Cli::Led::setLedFunction(1, led::setOn1);
 	Cli::Led::registerCli(cli);
 
+	// CLI DUMP 설정
 	Cli::Dump::registerCli(cli);
 
 	Cli::Analog::setNumOfAdc(1);
 	Cli::Analog::setAdcChannel(0, 5, adc1);
 	Cli::Analog::registerCli(cli);
 
+	// CLI BUTTON 설정
+	Cli::Button::setPin(gpioA, 0, true);
+	Cli::Button::registerCli(cli);
+
+	// CLI GAUGE 설정
+	Cli::Guage::setFunctionQueue(functionQueue);
+	Cli::Guage::registerCli(cli);
+
+	// CLI LOGO 설정
+	Cli::Logo::setFunctionQueue(functionQueue);
+	Cli::Logo::registerCli(cli);
+
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for STM32F429I-DISC1 board.\n\n\r");
 	cli.start();
+	
+	functionQueue.add(Task::displayLogo);
+	functionQueue.start();
 
 	while(1)
 	{

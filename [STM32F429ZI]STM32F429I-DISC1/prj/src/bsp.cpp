@@ -20,9 +20,13 @@
 #include <yss.h>
 #include <bsp.h>
 #include <mod/sdram/IS42S16400J_7TL.h>
+#include <mod/rgb_tft_lcd/SF_TC240T_9370_T.h>
+
+void initLcd(void);
 
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart1);
+SF_TC240T_9370_T lcd;
 
 void initBoard(void)
 {
@@ -45,8 +49,78 @@ void initBoard(void)
 	adc1.add(5, lpfLv::LV10, bit::BIT16);
 	adc1.enableInterrupt();
 
+	// SPI5 초기화
+	gpioF.setAsAltFunc(7, altfunc::PF7_SPI5_SCK, ospeed::FAST, otype::PUSH_PULL); // SCK
+	gpioF.setAsAltFunc(9, altfunc::PF9_SPI5_MOSI, ospeed::FAST, otype::PUSH_PULL); // MOSI
+
+	spi5.enableClock();
+	spi5.init();
+	spi5.enableInterrupt();
+	
+	// TFT LCD 초기화
+	initLcd();
+
 	// LED 초기화
 	led::init();
+}
+
+void initLcd(void)
+{
+	using namespace define::gpio;
+	using namespace define::gpio::altfunc;
+
+	Gpio::AltFunc lcdPort[20]{
+		{GPIOB, 0, PB0_LCD_R3},
+		{GPIOA, 11, PA11_LCD_R4},
+		{GPIOA, 12, PA12_LCD_R5},
+		{GPIOB, 1, PB1_LCD_R6},
+		{GPIOG, 6, PG6_LCD_R7},
+
+		{GPIOA, 6, PA6_LCD_G2},
+		{GPIOG, 10, PG10_LCD_G3},
+		{GPIOB, 10, PB10_LCD_G4},
+		{GPIOB, 11, PB11_LCD_G5},
+		{GPIOC, 7, PC7_LCD_G6},
+		{GPIOD, 3, PD3_LCD_G7},
+
+		{GPIOG, 11, PG11_LCD_B3},
+		{GPIOG, 12, PG12_LCD_B4},
+		{GPIOA, 3, PA3_LCD_B5},
+		{GPIOB, 8, PB8_LCD_B6},
+		{GPIOB, 9, PB9_LCD_B7},
+
+		{GPIOA, 4, PA4_LCD_VSYNC},
+		{GPIOC, 6, PC6_LCD_HSYNC},
+		{GPIOF, 10, PF10_LCD_DE},
+		{GPIOG, 7, PG7_LCD_CLK}
+	};
+
+	gpioA.setPackageAsAltFunc(lcdPort, 20, define::gpio::ospeed::FAST, define::gpio::otype::PUSH_PULL);
+
+	gpioC.setAsOutput(2, ospeed::FAST, otype::PUSH_PULL);  // CS
+	gpioD.setAsOutput(13, ospeed::FAST, otype::PUSH_PULL); // DCX
+
+	Gpio::Pin lcdCs = {&gpioC, 2};
+	Gpio::Pin lcdDcx = {&gpioD, 13};
+	
+	SF_TC240T_9370_T::Config config = 
+	{
+		spi5,			//Spi &peri;
+		{&gpioC, 2},	//Gpio::Pin chipSelect;
+		{&gpioD, 13},	//Gpio::Pin dataCommand;
+		{0, 0}			//Gpio::Pin reset;
+	};
+
+	lcd.setConfig(config);
+	lcd.init();
+	ltdc.enableClock();
+	ltdc.init(lcd.getSpec());
+	ltdc.enableInterrupt();
+
+	// DMA2D 초기화
+	dma2d.enableClock();
+	dma2d.init();
+	dma2d.enableInterrupt();
 }
 
 void initSdram(void)

@@ -16,36 +16,48 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_SYSTEM__H_
-#define YSS_SYSTEM__H_
+#include <mod/tft_lcd_driver/ILI9341.h>
 
-#include "yss/gui.h"
-#include "yss/instance.h"
-#include "yss/thread.h"
-#include "yss/malloc.h"
+ILI9341::ILI9341(void)
+{
+}
 
-// Core의 클럭 주파수를 반환한다.
-uint32_t getCoreClockFrequency(void);
+void ILI9341::setWindows(uint16_t x, uint16_t y, uint16_t width, uint16_t height)
+{
+	uint8_t data[4];
+	uint16_t end;
 
-// AHB 버스 클럭 주파수를 반환한다.
-uint32_t getAhbClockFrequency(void);
+	end = x + width - 1;
+	data[0] = x >> 8;
+	data[1] = x & 0xFF;
+	data[2] = end >> 8;
+	data[3] = end & 0xFF;
 
-// APB1 버스 클럭 주파수를 반환한다.
-uint32_t getApb1ClockFrequency(void);
+	sendCmd(COLUMN_ADDRESS_SET, data, 4);
+	
+	end = y + height - 1;
+	data[0] = y >> 8;
+	data[1] = y & 0xFF;
+	data[2] = end >> 8;
+	data[3] = end & 0xFF;
 
-// APB2 버스 클럭 주파수를 반환한다.
-uint32_t getApb2ClockFrequency(void);
+	sendCmd(PAGE_ADDRESS_SET, data, 4);
+}
 
-// 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
+void ILI9341::setDirection(bool xMirror, bool yMirror, bool rotate)
+{
+	enable();
+	int8_t memAccCtrl[] = {0x00};
+	if(xMirror)
+		memAccCtrl[0] |= 0x40;
+	if(yMirror)
+		memAccCtrl[0] |= 0x80;
+	if(rotate)
+		memAccCtrl[0] |= 0x20;
 
-#if defined(DMA2D) && USE_EVENT == true
-void setEvent(Position pos, uint8_t event);
-#endif
+	mRotateFlag = rotate;
 
-#if USE_GUI == true && YSS_L_HEAP_USE == true
-void setSystemFrame(Frame &obj);
-void setSystemFrame(Frame *obj);
-#endif
+	sendCmd(MEMORY_ACCESS_CONTROL, (int8_t *)memAccCtrl, sizeof(memAccCtrl));
+	disable();
+}
 
-#endif

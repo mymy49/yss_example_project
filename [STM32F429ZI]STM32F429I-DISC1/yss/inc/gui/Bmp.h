@@ -16,36 +16,21 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_SYSTEM__H_
-#define YSS_SYSTEM__H_
+#ifndef YSS_GUI_BMP__H_
+#define YSS_GUI_BMP__H_
 
-#include "yss/gui.h"
-#include "yss/instance.h"
-#include "yss/thread.h"
-#include "yss/malloc.h"
+#include "Object.h"
+#include "Bmp565.h"
 
-// Core의 클럭 주파수를 반환한다.
-uint32_t getCoreClockFrequency(void);
+class Bmp : public Object
+{
+	bool mPaintFlag;
+	const Bmp565 *mBmp565;
 
-// AHB 버스 클럭 주파수를 반환한다.
-uint32_t getAhbClockFrequency(void);
-
-// APB1 버스 클럭 주파수를 반환한다.
-uint32_t getApb1ClockFrequency(void);
-
-// APB2 버스 클럭 주파수를 반환한다.
-uint32_t getApb2ClockFrequency(void);
-
-// 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
-
-#if defined(DMA2D) && USE_EVENT == true
-void setEvent(Position pos, uint8_t event);
-#endif
-
-#if USE_GUI == true && YSS_L_HEAP_USE == true
-void setSystemFrame(Frame &obj);
-void setSystemFrame(Frame *obj);
-#endif
+public :
+	Bmp(void);
+	void paint(void); // virtual 0
+	void setBmp(const Bmp565 &obj);
+};
 
 #endif

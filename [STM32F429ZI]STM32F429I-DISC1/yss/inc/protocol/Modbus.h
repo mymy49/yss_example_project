@@ -16,36 +16,55 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_SYSTEM__H_
-#define YSS_SYSTEM__H_
+#ifndef YSS_MOD_COMM_MODBUS__H_
+#define YSS_MOD_COMM_MODBUS__H_
 
-#include "yss/gui.h"
-#include "yss/instance.h"
-#include "yss/thread.h"
-#include "yss/malloc.h"
+#include <yss/instance.h>
 
-// Core의 클럭 주파수를 반환한다.
-uint32_t getCoreClockFrequency(void);
+#ifndef YSS_DRV_UART_UNSUPPORTED
 
-// AHB 버스 클럭 주파수를 반환한다.
-uint32_t getAhbClockFrequency(void);
+class Modbus : private Mutex
+{
+  private:
+	Uart *mPeri;
+	void (*setRx)(void);
+	void (*setTx)(void);
+	int16_t *mRcvBuf;
+	int16_t *mMemory;
+	void (*rcvHandler)(uint16_t addr, int16_t data);
+	int32_t  mThreadId;
+	uint16_t mMemoryDepth, mRcvBufSize;
+	uint8_t mId, mCrcHi, mCrcLo;
+	bool mSendFlag, mReceiveFlag;
 
-// APB1 버스 클럭 주파수를 반환한다.
-uint32_t getApb1ClockFrequency(void);
+	void calculateCrc(uint8_t byte);
+	void calculateCrc(void *src, uint16_t size);
+	void resetCrc(void);
+	void responseReadInputRegister(uint16_t addr, uint16_t size);
+	void responseWriteSingleRegister(uint16_t addr);
+	void responseWriteMultiRegister(uint16_t addr, uint16_t size);
 
-// APB2 버스 클럭 주파수를 반환한다.
-uint32_t getApb2ClockFrequency(void);
+  public:
+	struct Config
+	{
+		Uart &peri;
+		uint32_t threadStacksize;
+		void (*setRx)(void);
+		void (*setTx)(void);
+		void (*receiveHandler)(uint16_t addr, int16_t data);
+	};
 
-// 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
+	Modbus(uint16_t rcvBufSize, uint16_t memoryDepth);
+	bool init(Config config);
+	void process(void);
+	void setId(uint8_t id);
+	void setData(uint16_t addr, int16_t data);
+	int16_t getData(uint16_t addr);
+	bool isReceived(void);
+	bool isSent(void);
+};
 
-#if defined(DMA2D) && USE_EVENT == true
-void setEvent(Position pos, uint8_t event);
 #endif
 
-#if USE_GUI == true && YSS_L_HEAP_USE == true
-void setSystemFrame(Frame &obj);
-void setSystemFrame(Frame *obj);
 #endif
 
-#endif

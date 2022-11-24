@@ -60,7 +60,7 @@
 // Touch Event Enable (true, false)
 #define USE_EVENT		false
 
-#define RGB_REVERSE		true
+#define RGB_REVERSE		false
 
 // Stack Size of Touch Event handler (Byte)
 #define TOUCH_EVENT_HANDLER_STACK_SIZE 4096
@@ -137,7 +137,7 @@
 #define SDRAM_ENABLE
 
 // LTDC 활성화
-//#define LTDC_ENABLE
+#define LTDC_ENABLE
 
 // SPI 활성화
 #define SPI1_ENABLE

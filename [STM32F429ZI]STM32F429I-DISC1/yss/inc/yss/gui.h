@@ -37,6 +37,7 @@
 #include "gui/VSlider.h"
 #include "gui/Segment.h"
 #include "gui/Bmp565Brush.h"
+#include "gui/Bmp.h"
 
 //void setSystemFrame(Frame &obj);
 //void setSystemFrameEvent(uint8_t event, Pos pos);

@@ -16,36 +16,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_SYSTEM__H_
-#define YSS_SYSTEM__H_
+#include <drv/mcu.h>
 
-#include "yss/gui.h"
-#include "yss/instance.h"
-#include "yss/thread.h"
-#include "yss/malloc.h"
+#if defined(GD32F4) || defined(STM32F4)
 
-// Core의 클럭 주파수를 반환한다.
-uint32_t getCoreClockFrequency(void);
+#include <config.h>
+#include <yss/instance.h>
 
-// AHB 버스 클럭 주파수를 반환한다.
-uint32_t getAhbClockFrequency(void);
+#if defined(LTDC_ENABLE) && defined(LTDC)
 
-// APB1 버스 클럭 주파수를 반환한다.
-uint32_t getApb1ClockFrequency(void);
+#include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
 
-// APB2 버스 클럭 주파수를 반환한다.
-uint32_t getApb2ClockFrequency(void);
+static void enableClock(bool en)
+{
+	clock.lock();
+	clock.enableApb2Clock(RCC_APB2ENR_LTDCEN_Pos, en);
+	clock.unlock();
+}
 
-// 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
+static void reset(void)
+{
+	clock.lock();
+	clock.resetApb2(RCC_APB2RSTR_LTDCRST_Pos);
+	clock.unlock();
+}
 
-#if defined(DMA2D) && USE_EVENT == true
-void setEvent(Position pos, uint8_t event);
-#endif
+static const Drv::Config gDrvSpi1Config
+{
+	enableClock,	//void (*clockFunc)(bool en);
+	0,				//void (*nvicFunc)(bool en);
+	reset			//void (*resetFunc)(void);
+};
 
-#if USE_GUI == true && YSS_L_HEAP_USE == true
-void setSystemFrame(Frame &obj);
-void setSystemFrame(Frame *obj);
+Ltdc ltdc(gDrvSpi1Config);
+
 #endif
 
 #endif

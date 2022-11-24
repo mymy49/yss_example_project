@@ -16,36 +16,45 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_SYSTEM__H_
-#define YSS_SYSTEM__H_
+#ifndef YSS_MOD_TFT_LCD_DRIVER_ILI9341_SPI__H_
+#define YSS_MOD_TFT_LCD_DRIVER_ILI9341_SPI__H_
 
-#include "yss/gui.h"
-#include "yss/instance.h"
-#include "yss/thread.h"
-#include "yss/malloc.h"
+#include "ILI9341.h"
+#include <drv/peripheral.h>
+#include <drv/Spi.h>
+#include <drv/Gpio.h>
 
-// Core의 클럭 주파수를 반환한다.
-uint32_t getCoreClockFrequency(void);
+#if !(defined(YSS_DRV_SPI_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
-// AHB 버스 클럭 주파수를 반환한다.
-uint32_t getAhbClockFrequency(void);
+class ILI9341_spi : public ILI9341
+{
+  protected:
+	Spi *mPeri;
+	Gpio::Pin mCsPin;
+	Gpio::Pin mDcPin;
+	Gpio::Pin mRstPin;
 
-// APB1 버스 클럭 주파수를 반환한다.
-uint32_t getApb1ClockFrequency(void);
+  public:
+	struct Config 
+	{
+		Spi &peri;
+		Gpio::Pin chipSelect;
+		Gpio::Pin dataCommand;
+		Gpio::Pin reset;
+	};
 
-// APB2 버스 클럭 주파수를 반환한다.
-uint32_t getApb2ClockFrequency(void);
+	ILI9341_spi(void);
 
-// 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
+	void setConfig(const Config &config);
 
-#if defined(DMA2D) && USE_EVENT == true
-void setEvent(Position pos, uint8_t event);
+	void reset(void); // virtual 0
+	void sendCmd(uint8_t cmd); // virtual 0
+	void sendCmd(uint8_t cmd, void *data, uint32_t len); // virtual 0
+	void enable(void); // virtual 0
+	void disable(void); // virtual 0
+};
+
 #endif
 
-#if USE_GUI == true && YSS_L_HEAP_USE == true
-void setSystemFrame(Frame &obj);
-void setSystemFrame(Frame *obj);
 #endif
 
-#endif
