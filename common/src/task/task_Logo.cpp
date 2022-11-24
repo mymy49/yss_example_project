@@ -16,38 +16,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/cli_gauge.h"
-#include "../inc/task.h"
-#include <yss/malloc.h>
-#include <string.h>
-#include <stdio.h>
+#include <task.h>
+#include <yss.h>
+#include "../../bmp/Logo.h"
 
-#if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))
+#if USE_GUI && YSS_L_HEAP_USE
 
-namespace Cli
+namespace Task
 {
-namespace Guage
-{
-	void (**setLedOn)(bool en);
-	static FunctionQueue *gFq;
-
-	void setFunctionQueue(FunctionQueue &obj)
+	error displayLogo(FunctionQueue *obj)
 	{
-		gFq = &obj;
-	}
+		lock();
+		clearTask();
+		Frame *frame = new Frame;
+		Bmp *bmp = new Bmp;
+		bmp->setBmp(Logo);
+		bmp->setPosition(14, 0);
+		frame->setBackgroundColor(0xFF, 0xFF, 0xFF);
+		frame->add(bmp);
+		setFrame(frame);
+		unlock();
 
-	error callback_displayGauge(Uart *peripheral, void *var)
-	{
-		gFq->add(Task::displayGauge);
 		return Error::NONE;
 	}
-
-	void registerCli(CommandLineInterface &cli)
-	{
-		static const uint8_t varType[1] = {CommandLineInterface::TERMINATE};
-		cli.addCommand("gauge", varType, callback_displayGauge, "It displays Gauge example. ex)gauge");
-	}
-}
 }
 
 #endif
+

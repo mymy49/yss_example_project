@@ -16,38 +16,39 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/cli_gauge.h"
-#include "../inc/task.h"
-#include <yss/malloc.h>
-#include <string.h>
-#include <stdio.h>
+#ifndef COMMON_CLI_LOGO__H_
+#define COMMON_CLI_LOGO__H_
 
-#if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))
+#include <util/CommandLineInterface.h>
+#include <util/FunctionQueue.h>
+#include <drv/Ltdc.h>
+#include <yss/error.h>
 
+#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
+
+// TFT LCD에 Logo 화면을 띄우는 CLI를 명령을 생성한다.
+// 사용 순서는 아래와 같다.
+// 1. setFunctionQueue() 함수를 사용해 현재 프로젝트의 FunctionQueue의 인스턴스를 등록한다.
+// 2. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
 namespace Cli
 {
-namespace Guage
+namespace Logo
 {
-	void (**setLedOn)(bool en);
-	static FunctionQueue *gFq;
+	// 현재 프로젝트에 선언된 FunctionQueue의 인스턴스를 등록한다.
+	// 
+	// FunctionQueue &obj
+	//		현재 프로젝트에 선언된 FunctionQueuE의 인스턴스를 설정한다.
+	void setFunctionQueue(FunctionQueue &obj);
 
-	void setFunctionQueue(FunctionQueue &obj)
-	{
-		gFq = &obj;
-	}
-
-	error callback_displayGauge(Uart *peripheral, void *var)
-	{
-		gFq->add(Task::displayGauge);
-		return Error::NONE;
-	}
-
-	void registerCli(CommandLineInterface &cli)
-	{
-		static const uint8_t varType[1] = {CommandLineInterface::TERMINATE};
-		cli.addCommand("gauge", varType, callback_displayGauge, "It displays Gauge example. ex)gauge");
-	}
+	// CommandLineInterface class의 instance에 명령어와 관련 함수등을 등록한다.
+	// 
+	// CommandLineInterface &cli
+	//		등록할 CLI를 설정한다.
+	void registerCli(CommandLineInterface &cli);
 }
 }
 
 #endif
+
+#endif
+

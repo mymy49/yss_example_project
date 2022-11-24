@@ -17,12 +17,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <task.h>
-#include <yss/gui.h>
-#include "../font/Abyssinica_SIL_25.h"
 #include <yss.h>
-#include <stdio.h>
-#include <util/key.h>
 #include <gui/Gauge.h>
+#include "../font/Abyssinica_SIL_25.h"
+#include "../font/Abyssinica_SIL_10.h"
 
 #if USE_GUI && YSS_L_HEAP_USE
 
@@ -37,41 +35,72 @@ namespace Task
 
 	static void thread_displayGauge(void)
 	{
+		Size lcdSize = ltdc.getLcdSize();
+		Size gaugeSize1, gaugeSize2, gaugeSize3;
+		Position gaugePos1, gaugePos2, gaugePos3;
 		float lastValue1 = 0, lastValue2 = 0, lastValue3 = 0;
+		float buf;
+		
+		// 화면 구성 요소의 좌표와 크기 계산
+		if(lcdSize.width > lcdSize.height)
+		{
+			gaugeSize1.height = lcdSize.height * 0.8f;
+			gaugeSize1.width = lcdSize.height * 0.8f;
+			buf = lcdSize.width - gaugeSize1.width;
+			gaugeSize3.height = gaugeSize2.height = buf * 0.8f;
+			gaugeSize3.width = gaugeSize2.width = buf * 0.8f;
 
-		thread::protect(); // frm이 새로 생성되고 gFrame에 무사히 대입 될 때까지 보호
+		}
+		else
+		{
+			gaugeSize1.height = lcdSize.width * 0.8f;
+			gaugeSize1.width = lcdSize.width * 0.8f;
+			buf = lcdSize.height - gaugeSize1.width;
+			gaugeSize3.height = gaugeSize2.height = buf * 0.8f;
+			gaugeSize3.width = gaugeSize2.width = buf * 0.8f;
+
+			gaugePos1.x = lcdSize.width * 0.1f;
+			gaugePos1.y = 0;
+
+			gaugePos2.x = buf * 0.1f;
+			gaugePos2.y = gaugeSize1.height;
+
+			gaugePos3.x = buf * 0.1f + gaugePos2.x + gaugeSize2.width;
+			gaugePos3.y = gaugeSize1.height;
+		}
+	
+		// 화면 구성 instance를 생성하고 설정		
+		thread::protect(); // frm이 새로 생성되고 setFrame() 함수에 전달 될 때까지 보호
 		Frame *frm = new Frame;
 		gGauge1 = new Gauge;
 		gGauge2 = new Gauge;
 		gGauge3 = new Gauge;
 		
-		thread::unprotect();
-
 		frm->setBackgroundColor(0xA0, 0xA5, 0xA8);
 
-		gGauge1->setPosition(Position{60, 10});
+		gGauge1->setPosition(gaugePos1);
 		gGauge1->setBackgroundColor(0xA0, 0xA5, 0xA8);
-		gGauge1->setSize(200, 200);
+		gGauge1->setSize(gaugeSize1);
 		gGauge1->setTopValue(500);
 		gGauge1->setFont(Font_Abyssinica_SIL_25);
 		gGauge1->setTitle("Value1");
 		gGauge1->makeBg();
 
 		gGauge2->setBackgroundColor(0xA0, 0xA5, 0xA8);
-		gGauge2->setSize(150, 150);
+		gGauge2->setSize(gaugeSize2);
 		gGauge2->setTopValue(250);
-		gGauge2->setFont(Font_Abyssinica_SIL_25);
+		gGauge2->setFont(Font_Abyssinica_SIL_10);
 		gGauge2->setTitle("Value2");
 		gGauge2->makeBg();
-		gGauge2->setPosition(5, 220);
+		gGauge2->setPosition(gaugePos2);
 		
 		gGauge3->setBackgroundColor(0xA0, 0xA5, 0xA8);
-		gGauge3->setSize(150, 150);
+		gGauge3->setSize(gaugeSize3);
 		gGauge3->setTopValue(125);
-		gGauge3->setFont(Font_Abyssinica_SIL_25);
+		gGauge3->setFont(Font_Abyssinica_SIL_10);
 		gGauge3->setTitle("Value3");
 		gGauge3->makeBg();
-		gGauge3->setPosition(165, 220);
+		gGauge3->setPosition(gaugePos3);
 
 		frm->add(gGauge1);
 		frm->add(gGauge2);
@@ -79,7 +108,9 @@ namespace Task
 
 		setFrame(frm);
 		gTitleChangeStartFlag = true;
-
+		thread::unprotect();
+		
+		// 게이지 표시 값에 변경 사항이 있으면 업데이트하는 루프
 		while(1)
 		{
 			if(gValue1 != lastValue1)
@@ -103,7 +134,8 @@ namespace Task
 			thread::yield();
 		}
 	}
-
+	
+	// 화면에 표시된 게이지 이름을 1초마다 다른 외국어로 변경하는 쓰레드
 	static void thread_changeTitle(void)
 	{
 		while(!gTitleChangeStartFlag)
@@ -111,7 +143,7 @@ namespace Task
 		
 		while(1)
 		{
-			thread::delay(1000);
+			thread::delay(5000);
 			gGauge1->setTitle("値1");
 			gGauge1->makeBg();
 			gGauge2->setTitle("値2");
@@ -119,7 +151,7 @@ namespace Task
 			gGauge3->setTitle("値3");
 			gGauge3->makeBg();
 			
-			thread::delay(1000);
+			thread::delay(5000);
 			gGauge1->setTitle("значення1");
 			gGauge1->makeBg();
 			gGauge2->setTitle("значення2");
@@ -127,7 +159,7 @@ namespace Task
 			gGauge3->setTitle("значення3");
 			gGauge3->makeBg();
 
-			thread::delay(1000);
+			thread::delay(5000);
 			gGauge1->setTitle("ค่า1");
 			gGauge1->makeBg();
 			gGauge2->setTitle("ค่า2");
@@ -135,7 +167,7 @@ namespace Task
 			gGauge3->setTitle("ค่า3");
 			gGauge3->makeBg();
 
-			thread::delay(1000);
+			thread::delay(5000);
 			gGauge1->setTitle("Value1");
 			gGauge1->makeBg();
 			gGauge2->setTitle("Value2");
@@ -144,7 +176,8 @@ namespace Task
 			gGauge3->makeBg();
 		}
 	}
-
+	
+	// 게이지에 표시되는 값을 증가시키는 쓰레드
 	static void thread_upcountValue(void)
 	{
 		while(1)

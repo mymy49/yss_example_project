@@ -16,7 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/cli_gauge.h"
+#include "../inc/cli_logo.h"
 #include "../inc/task.h"
 #include <yss/malloc.h>
 #include <string.h>
@@ -26,7 +26,7 @@
 
 namespace Cli
 {
-namespace Guage
+namespace Logo
 {
 	void (**setLedOn)(bool en);
 	static FunctionQueue *gFq;
@@ -36,16 +36,16 @@ namespace Guage
 		gFq = &obj;
 	}
 
-	error callback_displayGauge(Uart *peripheral, void *var)
+	error callback_displayLogo(Uart *peripheral, void *var)
 	{
-		gFq->add(Task::displayGauge);
+		gFq->add(Task::displayLogo);
 		return Error::NONE;
 	}
 
 	void registerCli(CommandLineInterface &cli)
 	{
 		static const uint8_t varType[1] = {CommandLineInterface::TERMINATE};
-		cli.addCommand("gauge", varType, callback_displayGauge, "It displays Gauge example. ex)gauge");
+		cli.addCommand("logo", varType, callback_displayLogo, "It displays Logo to TFT LCD. ex)logo");
 	}
 }
 }

@@ -71,6 +71,7 @@ namespace Task
 			gFrame = 0;
 		}
 #endif
+		gThreadCnt = 0;
 	}
 
 #if USE_GUI && YSS_L_HEAP_USE

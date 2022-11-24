@@ -20,6 +20,7 @@
 #define TASK__H_
 
 #include <util/FunctionQueue.h>
+#include <drv/Ltdc.h>
 
 class Frame;
 
@@ -41,6 +42,9 @@ namespace Task
 	void addThread(void (*func)(void), uint32_t stackSize);
 	void clearTask(void);
 	void setFrame(Frame *obj);
+	
+	// Logo
+	error displayLogo(FunctionQueue *obj);
 
 	// Guage
 	error displayGauge(FunctionQueue *obj);
