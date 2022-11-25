@@ -1,5 +1,30 @@
 <!DOCTYPE CrossStudio_Project_File>
 <solution Name="gd32f450z-eval" target="8" version="2">
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
   <project Name="gd32f450z-eval">
     <configuration
       CMSIS_CORE="Yes"
@@ -50,46 +75,21 @@
     </folder>
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
-      <folder Name="prj" exclude="" filter="" path="prj" recurse="Yes" />
-      <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
       <folder
         Name="common"
         exclude=""
         filter=""
         path="../common"
         recurse="Yes" />
+      <folder Name="prj" exclude="" filter="" path="prj" recurse="Yes" />
+      <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
     </folder>
     <folder Name="System Files">
-      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
-      <file file_name="$(TargetsDir)/GD32F4xx/Source/GD32F4xx_Startup.s" />
       <file file_name="$(DeviceVectorsFile)">
         <configuration Name="Common" file_type="Assembly" />
       </file>
+      <file file_name="$(TargetsDir)/GD32F4xx/Source/GD32F4xx_Startup.s" />
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
     </folder>
   </project>
-  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
-  <configuration
-    Name="THUMB"
-    Platform="ARM"
-    arm_instruction_set="Thumb"
-    arm_library_instruction_set="Thumb"
-    c_preprocessor_definitions="__THUMB"
-    hidden="Yes" />
-  <configuration
-    Name="Debug"
-    c_preprocessor_definitions="DEBUG"
-    gcc_debugging_level="Level 3"
-    gcc_omit_frame_pointer="Yes"
-    gcc_optimization_level="None"
-    hidden="Yes" />
-  <configuration
-    Name="THUMB Release"
-    inherited_configurations="THUMB;Release" />
-  <configuration
-    Name="Release"
-    c_preprocessor_definitions="NDEBUG"
-    gcc_debugging_level="None"
-    gcc_omit_frame_pointer="Yes"
-    gcc_optimization_level="Level 1"
-    hidden="Yes" />
 </solution>

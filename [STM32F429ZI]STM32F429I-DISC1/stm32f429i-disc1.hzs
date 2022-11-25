@@ -9,28 +9,28 @@
   <FrameBufferWindow bufferHeight="-1" addressSpace="" addressText="" bufferWidth="-1"/>
  </FrameBufferWindow>
  <Memory1>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" sizeText="" addressText="0xBFFFFFF0"/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" sizeText="" addressText="0x20021fcc"/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" radix="0" sizeText="" addressText="0xBFFFFFF0"/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" radix="0" sizeText="" addressText="0x20021fcc"/>
  </Memory1>
  <Memory2>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" radix="0" sizeText="" addressText=""/>
  </Memory2>
  <Memory3>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" radix="0" sizeText="" addressText=""/>
  </Memory3>
  <Memory4>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" sizeText="" addressText=""/>
-  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="nucleo-f411re" radix="16" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="gd32f450z-eval_THUMB Debug" radix="0" sizeText="" addressText=""/>
+  <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" addressOrder="0" columnsText="" refreshPeriod="0" name="stm32f429i-disc1_THUMB Debug" radix="0" sizeText="" addressText=""/>
  </Memory4>
  <Project>
   <ProjectSessionItem path="stm32f429i-disc1"/>
@@ -89,10 +89,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="33" useTextEdit="1" path="prj/src/main.cpp" left="0" top="34" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="95" useTextEdit="1" path="../common/src/cli_adc.cpp" left="0" top="73" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="111" useTextEdit="1" path="yss/src/util/yss_CommandLineInterface.cpp" left="0" selected="1" top="100" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="70" y="47" useTextEdit="1" path="../common/src/cli_gauge.cpp" left="0" top="25" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="33" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="34" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="stm32f429i-disc1" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

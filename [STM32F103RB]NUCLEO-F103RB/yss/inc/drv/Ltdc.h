@@ -24,18 +24,13 @@
 #if defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
 
 #include "peripheral.h"
+#include <config.h>
 
-#if defined(LTDC)
+#if defined(LTDC) && USE_GUI
 
-#include "ltdc/define_ltdc_stm32_gd32f4_f7.h"
+#include <targets/st_gigadevice/define_ltdc_stm32_gd32f4_f7.h>
 
 typedef volatile uint32_t	YSS_LTDC_Peri;
-
-#elif defined(TLI) && defined(GD32F4)
-
-#include "ltdc/define_ltdc_gd32f4.h"
-
-typedef uint32_t		YSS_LTDC_Peri;
 
 #else
 
@@ -64,7 +59,6 @@ class Ltdc : public Drv
 		uint8_t pixelFormat;
 	};
 
-	Ltdc(YSS_LTDC_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en));
 	Ltdc(const Drv::Config drvConfig);
 
 	bool init(const Ltdc::Specification *spec);

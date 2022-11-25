@@ -24,7 +24,7 @@
 #include <cli_dump.h>
 #include <cli_adc.h>
 #include <cli_button.h>
-#include <cli_guage.h>
+#include <cli_gauge.h>
 #include <yss/gui.h>
 #include <task.h>
 #include <yss/string.h>
@@ -37,7 +37,8 @@ int32_t main(void)
 	
 	initYss();
 	initBoard();
-	/*
+	/* 
+	// SDRAM 읽고 쓰기 에러 확인 코드
 	uint32_t *src, buf;
 	src = (uint32_t*)0xC0000000;
 	for(int i=0;i< 8 * 1024 * 1024 / 4;i++)

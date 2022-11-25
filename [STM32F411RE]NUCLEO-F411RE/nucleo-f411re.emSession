@@ -90,7 +90,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="18" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="26" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="9" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="nucleo-f411re" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>

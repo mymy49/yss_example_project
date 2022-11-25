@@ -100,7 +100,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="35" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="21" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="31" useTextEdit="1" path="prj/src/main.cpp" left="0" selected="1" top="21" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="50" y="166" useTextEdit="1" path="../../../.segger/SEGGER Embedded Studio/v3/packages/libraries/libcxx/include/__config" left="0" top="153" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="stm32f429i-disc1" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>

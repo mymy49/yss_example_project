@@ -42,6 +42,8 @@
   <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;Source Files;prj;inc"/>
   <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;Source Files;prj;src"/>
   <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;Source Files;yss"/>
+  <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;Source Files;yss;inc"/>
+  <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;Source Files;yss;inc;gui"/>
   <ProjectSessionItem path="nucleo-l152re;nucleo-l152re;System Files"/>
  </Project>
  <Register1>
@@ -90,22 +92,14 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="27" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="27" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="29" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Gpio.h" selected="0" top="70" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="105" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/drv/Gpio.h" useBinaryEdit="0" left="0" path="../../yss/inc/drv/gpio/define_gpio_stm32f4_f7_g4.h" selected="0" top="72" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="35" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/drv/Gpio.h" useBinaryEdit="0" left="0" path="../../yss/inc/drv/gpio/define_gpio_stm32l1.h" selected="0" top="13" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="19" y="20" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/stm32_gd32/driver/drv_i2s_stm32_gd32f4.cpp" selected="0" top="6" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="50" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/stm32_gd32/driver/drv_gpio_stm32_gd32f4_f7_l1.cpp" selected="0" top="32" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="18" y="22" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/stm32_gd32/instance/instance_gpio_stm32_gd32f4_f7_l1.cpp" selected="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="87" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/stm32_gd32/msp/msp_stm32l1xx.cpp" selected="0" top="89" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="44" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/targets/stm32_gd32/driver/drv_timer_stm32_gd32.cpp" selected="0" top="21" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="59" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/util/yss_time.cpp" selected="0" top="42" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="86" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/STM32/STM32_Startup.s" selected="0" top="71" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="50" y="90" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Clock.h" selected="0" top="6" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="6" y="49" useTextEdit="1" openedFrom="/home/mymy49/library/yss/targets/stm32_gd32/msp/msp_stm32l1xx.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/targets/st_gigadevice/define_clock_stm32l1.h" selected="0" top="25" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="84" y="227" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="40" path="../../yss/targets/stm32_gd32/driver/drv_clock_stm32l1.cpp" selected="0" top="210" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="139" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="/usr/share/crossworks_for_arm_4.8/source/thumb_crt0.s" selected="0" top="124" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="24" y="21" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/inc/config.h" selected="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="5" y="27" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/gui/painter.h" selected="1" top="0" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nucleo-l152re" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

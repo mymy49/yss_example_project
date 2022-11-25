@@ -22,8 +22,8 @@
 #include "mcu.h"
 
 #if defined(STM32F1)
-#include "clock/ec_clock_stm32f1 .h"
-#include "clock/define_clock_stm32f1.h"
+#include <targets/st_gigadevice/ec_clock_stm32f1 .h>
+#include <targets/st_gigadevice/define_clock_stm32f1.h>
 #elif defined(STM32F4)
 #include <targets/st_gigadevice/ec_clock_stm32f4.h>
 #include <targets/st_gigadevice/define_clock_stm32f4.h>
@@ -40,8 +40,8 @@
 #include <targets/st_gigadevice/ec_clock_gd32f4.h>
 #include <targets/st_gigadevice/define_clock_gd32f4.h>
 #elif defined(NRF52840_XXAA)
-#include "clock/ec_clock_nrf52840.h"
-#include "clock/define_clock_nrf52840.h"
+#include <targets/nordic/ec_clock_nrf52840.h>
+#include <targets/nordic/define_clock_nrf52840.h>
 #elif defined(STM32L1)
 #include <targets/st_gigadevice/define_clock_stm32l1.h>
 #include <targets/st_gigadevice/ec_clock_stm32l1.h>
@@ -80,7 +80,7 @@ class Clock : public Mutex
 	void setLtdcDivisionFactor(uint8_t div);
 #endif
 
-#if defined(GD32F4)
+#if defined(GD32F4) || defined(STM32F429xx) || defined(STM32F7)
 	bool enableSaiPll(uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
 	uint32_t getSaiPllPFrequency(void);
 	uint32_t getSaiPllQFrequency(void);

@@ -33,10 +33,11 @@ typedef volatile uint32_t	YSS_SPI_Peri;
 
 #ifndef YSS_DRV_SPI_UNSUPPORTED
 
-#include "spi/drv_spi_common.h"
+#include <targets/common/drv_spi_common.h>
 
 #include "Drv.h"
 #include "Dma.h"
+#include <yss/thread.h>
 
 class Spi : public Drv
 {
@@ -73,7 +74,7 @@ class Spi : public Drv
 	Dma::DmaInfo mTxDmaInfo, mRxDmaInfo;
 	const Specification *mLastSpec;
 	uint8_t mRxData;
-	int32_t  mThreadId;
+	threadId  mThreadId;
 	bool mCompleteFlag;
 };
 
