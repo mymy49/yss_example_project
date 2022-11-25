@@ -21,6 +21,7 @@
 #include <bsp.h>
 #include <mod/sdram/IS42S16400J_7TL.h>
 #include <mod/rgb_tft_lcd/SF_TC240T_9370_T.h>
+#include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
 
 void initLcd(void);
 
@@ -173,3 +174,77 @@ void initSdram(void)
 	clock.enableSdram();
 	sdram.init(define::sdram::bank::BANK2, IS42S16400J_7TL);
 }
+
+void initSystem(void)
+{
+	// Power Controller 클럭 활성화
+	clock.enableApb1Clock(RCC_APB1ENR_PWREN_Pos);
+
+	// SYSCFG 클럭 활성화
+	clock.enableApb2Clock(RCC_APB2ENR_SYSCFGEN_Pos);
+
+	// 외부 고속 클럭 활성화
+	clock.enableHse(HSE_CLOCK_FREQ);
+
+	using namespace define::clock;
+	
+	// Main PLL 설정
+	clock.enableMainPll(
+		pll::src::HSE,				// uint8_t src
+		HSE_CLOCK_FREQ / 1000000,	// uint8_t m
+#if defined(STM32F411xE)
+		192,						// uint16_t n Sysclk
+		pll::pdiv::DIV2,			// uint8_t pDiv
+		pll::qdiv::DIV4,			// uint8_t qDiv
+#elif defined(STM32F429xx)
+		360,						// uint16_t n Sysclk
+		pll::pdiv::DIV2,			// uint8_t pDiv
+		pll::qdiv::DIV6,			// uint8_t qDiv
+#endif
+		0
+	);
+	
+	clock.setLtdcDivisionFactor(divisionFactor::ltdc::DIV4);
+
+	// SAI PLL 설정
+#if defined(STM32F429xx)
+	clock.enableSaiPll(
+		192,				// uint16_t n
+		0,					// uint8_t pDiv <- 사용되지 않음
+		pll::qdiv::DIV15,	// uint8_t qDiv SAI Clock
+		pll::rdiv::DIV7		// uint8_t rDiv TFT-LCD Clock
+	);
+#endif
+
+#if defined(STM32F411xE)
+	flash.setLatency(96000000, 33);
+#elif defined(STM32F429xx)
+	flash.setLatency(180000000, 33);
+#endif
+	clock.setSysclk(
+		sysclk::src::PLL,				// uint8_t sysclkSrc;
+		divisionFactor::ahb::NO_DIV,	// uint8_t ahb;
+		divisionFactor::apb::DIV4,		// uint8_t apb1;
+		divisionFactor::apb::DIV2,		// uint8_t apb2;
+		33								// uint8_t vcc
+	);
+	
+	// Flash Prefetch, D/I 캐시 활성화
+	flash.enableDataCache();
+	flash.enableInstructionCache();
+	flash.enablePrefetch();
+	
+	// GPIO 클럭 활성화
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOAEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOBEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOCEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIODEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOEEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOFEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOGEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOHEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOIEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOJEN_Pos);
+	clock.enableAhb1Clock(RCC_AHB1ENR_GPIOKEN_Pos);
+}
+

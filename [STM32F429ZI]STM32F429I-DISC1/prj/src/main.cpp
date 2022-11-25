@@ -16,7 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-//#include <yss/debug.h>
+#include <yss/debug.h>
 #include <yss.h>
 #include <bsp.h>
 #include <util/time.h>
@@ -67,6 +67,7 @@ int32_t main(void)
 	cli.start();
 	
 	functionQueue.add(Task::displayLogo);
+	functionQueue.add(Task::displayGauge);
 	functionQueue.start();
 
 	while(1)
