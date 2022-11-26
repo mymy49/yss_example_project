@@ -37,6 +37,8 @@ namespace Task
 		setFrame(frame);
 		unlock();
 
+		thread::delay(5000);
+
 		return Error::NONE;
 	}
 }
