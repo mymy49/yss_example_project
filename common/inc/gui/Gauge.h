@@ -23,8 +23,6 @@
 
 #if USE_GUI && YSS_L_HEAP_USE
 
-#include <gui/Object.h>
-#include <gui/Container.h>
 #include <yss/gui.h>
 
 class Gauge : public Object

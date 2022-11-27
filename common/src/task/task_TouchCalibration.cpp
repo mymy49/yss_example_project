@@ -16,41 +16,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../inc/cli_logo.h"
-#include "../inc/task.h"
-#include <std_ext/malloc.h>
-#include <std_ext/string.h>
-#include <stdio.h>
+#include <task.h>
+#include <yss.h>
+#include <yss/event.h>
+#include <yss/PointerEvent.h>
+#include "../font/Abyssinica_SIL_14.h"
 
-#if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))
+#if USE_GUI && YSS_L_HEAP_USE
 
-namespace Cli
+namespace Task
 {
-namespace Logo
-{
-	void (**setLedOn)(bool en);
-	static FunctionQueue *gFq;
+	sac::Rtouch *gTouch;
 
-	void setFunctionQueue(FunctionQueue &obj)
+	void setTouchScreen(sac::Rtouch *touch)
 	{
-		gFq = &obj;
+		gTouch = touch;
 	}
 
-	error callback_displayLogo(Uart *peripheral, void *var)
+	error calibrateTouchScreen(FunctionQueue *obj)
 	{
-		gFq->lock();
-		gFq->add(Task::displayLogo);
-		gFq->unlock();
+		// gTouch의 값이 설정되어 있지 않다면 교정이 필요 없다고 간주하고 Error::NONE으로 리턴한다.
+		if(gTouch)
+			return Error::NONE;
+
+		PointerEvent *pointerEvent = new PointerEvent(256);
+
+		lock(); // unlock()을 만날 때까지 외부에서 이 함수를 강제 종료 시키지 못한다.
+		clearTask();
+
+		Frame *frame = new Frame;
+		Label *label = new Label;
+		
+		gTouch->setInterface(*pointerEvent, -1);
+		event::setPointerDevice(*gTouch);
+	
+		label->setSize(200, 20);
+		label->setFont(Font_Abyssinica_SIL_14);
+		label->setText("터치 스크린 교정을 시작합니다.");
+		label->setBackgroundColor(0xFF, 0xFF, 0xFF);
+		label->setFontColor(0x00, 0x00, 0x00);
+		label->setPosition(Position{20, 160});
+		frame->add(label);
+
+		setFrame(frame);
+		
+		thread::delay(10000);
+
+		delete pointerEvent;
+		unlock();
 
 		return Error::NONE;
 	}
-
-	void registerCli(CommandLineInterface &cli)
-	{
-		static const uint8_t varType[1] = {CommandLineInterface::TERMINATE};
-		cli.addCommand("logo", varType, callback_displayLogo, "It displays Logo to TFT LCD. ex)logo");
-	}
-}
 }
 
 #endif
+

@@ -16,28 +16,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_POINTER_EVENT__H_
-#define YSS_POINTER_EVENT__H_
+#include <config.h>
+#include <yss/gui.h>
+#include "../inc/gui/TouchCalibration.h"
+#include <string.h>
+#include <yss/instance.h>
+#include <math.h>
+#include <stdio.h>
+#include <util/time.h>
+#include <gui/painter.h>
 
-#include <gui/util.h>
-#include <util/Fifo.h>
+#if USE_GUI && YSS_L_HEAP_USE
 
-class PointerEvent
+TouchCalibration::TouchCalibration(void)
 {
-	Fifo mFifo;
-	Mutex mMutex;
-public :
-	struct PointerEventData
-	{
-		uint16_t x, y;
-		uint8_t event;
-	}__PACKED;
+}
 
-	PointerEvent(uint32_t bufferSize);
-	void push(PointerEventData &data);
-	PointerEventData pop(void);
-	uint32_t getMessageCount(void);
-	void flush(void);
-};
+TouchCalibration::~TouchCalibration(void)
+{
+}
+
+void TouchCalibration::destroy(void)
+{
+}
+
+void TouchCalibration::paint(void)
+{
+	
+}
 
 #endif

@@ -38,7 +38,10 @@ namespace Guage
 
 	error callback_displayGauge(Uart *peripheral, void *var)
 	{
+		gFq->lock();
 		gFq->add(Task::displayGauge);
+		gFq->unlock();
+
 		return Error::NONE;
 	}
 

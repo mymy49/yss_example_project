@@ -200,7 +200,7 @@ namespace Task
 
 	error displayGauge(FunctionQueue *obj)
 	{
-		lock();
+		lock(); // unlock()을 만날 때까지 외부에서 이 함수를 강제 종료 시키지 못한다.
 		gTitleChangeStartFlag = false;
 		clearTask();
 		addThread(thread_displayGauge, 2048);

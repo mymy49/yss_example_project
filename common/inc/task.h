@@ -21,19 +21,11 @@
 
 #include <util/FunctionQueue.h>
 #include <drv/Ltdc.h>
+#include <sac/Rtouch.h>
 
 class Frame;
 
-// LED를 ON/OFF 하는 CLI를 명령을 생성한다.
-// 사용 순서는 아래와 같다.
-// 1. setNumOfLed() 함수를 사용해 전체 LED 수를 설정한다.
-// 2. setLedFunction() 함수를 사용해 각 LED를 ON/OFF 하는 함수를 LED마다 등록한다.
-// 3. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
-
-// 제어할 LED의 전체 개수를 설정하는 함수이다.
-// 
-// uint8_t num
-//		LED의 전체 개수를 설정한다.
+// FunctionQueue에 의해 순차 수행되는 task의 함수 프로토타입 선언부이다.
 namespace Task
 {
 	void setFunctionQueue(FunctionQueue &obj);
@@ -43,11 +35,15 @@ namespace Task
 	void clearTask(void);
 	void setFrame(Frame *obj);
 	
-	// Logo
+	// task_Logo.cpp
 	error displayLogo(FunctionQueue *obj);
 
-	// Guage
+	// task_Guage.cpp
 	error displayGauge(FunctionQueue *obj);
+
+	// task_TouchCalibration.cpp
+	void setTouchScreen(sac::Rtouch *touch);
+	error calibrateTouchScreen(FunctionQueue *obj);
 
 }
 

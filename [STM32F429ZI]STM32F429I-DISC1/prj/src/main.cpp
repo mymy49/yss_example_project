@@ -73,6 +73,7 @@ int32_t main(void)
 	cli.start();
 	
 	functionQueue.add(Task::displayLogo);
+	functionQueue.add(Task::calibrateTouchScreen);
 	functionQueue.add(Task::displayGauge);
 	functionQueue.start();
 

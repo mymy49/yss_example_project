@@ -16,28 +16,40 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_POINTER_EVENT__H_
-#define YSS_POINTER_EVENT__H_
+#ifndef GUI_TOUCH_CALIBRATION__H_
+#define GUI_TOUCH_CALIBRATION__H_
 
-#include <gui/util.h>
-#include <util/Fifo.h>
+#include <config.h>
 
-class PointerEvent
+#if USE_GUI && YSS_L_HEAP_USE
+
+#include <yss/gui.h>
+
+class TouchCalibration : public Object
 {
-	Fifo mFifo;
-	Mutex mMutex;
-public :
-	struct PointerEventData
-	{
-		uint16_t x, y;
-		uint8_t event;
-	}__PACKED;
+	//YSS_GUI_FRAME_BUFFER *mBg;
+	//void drawNeedle(float angle);
+	//bool mInitFlag;
+	//Position mCenter;
+	//unsigned short mNeedleLen;
+	//float mTopValue, mValue;
+	//const char *mTitleStr;
+	//Font mFont;
+	//Mutex mMutex;
 
-	PointerEvent(uint32_t bufferSize);
-	void push(PointerEventData &data);
-	PointerEventData pop(void);
-	uint32_t getMessageCount(void);
-	void flush(void);
+public:
+	TouchCalibration(void);
+	~TouchCalibration(void);
+	void paint(void);
+	void destroy(void);
+	//void makeBg(void);
+	//void setTopValue(float value);
+	//void setValue(float value);
+	//void setTitle(const char *str);
+	//void setFont(Font font);
 };
 
 #endif
+
+#endif
+
