@@ -21,13 +21,16 @@
 #include <bsp.h>
 #include <mod/sdram/IS42S16400J_7TL.h>
 #include <mod/rgb_tft_lcd/SF_TC240T_9370_T.h>
+#include <mod/rtouch/STMPE811.h>
 #include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
+#include <yss/event.h>
 
 void initLcd(void);
 
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart1);
 SF_TC240T_9370_T lcd;
+STMPE811 touch;
 
 void initBoard(void)
 {
@@ -63,6 +66,25 @@ void initBoard(void)
 
 	// LED 초기화
 	led::init();
+
+	// I2C 초기화
+	gpioA.setAsAltFunc(8, altfunc::PA8_I2C3_SCL, ospeed::MID, otype::OPEN_DRAIN);
+	gpioC.setAsAltFunc(9, altfunc::PC9_I2C3_SDA, ospeed::MID, otype::OPEN_DRAIN);
+
+	i2c3.enableClock();
+	i2c3.init(define::i2c::speed::STANDARD);
+	i2c3.enableInterrupt();
+
+	const STMPE811::Config touchConfig =
+	{
+		i2c3,			// I2c &peri
+		{&gpioA, 15}	// Gpio::Pin isrPin
+	};
+
+	touch.init(touchConfig);
+	event::setPointerDevice(touch);
+//	touch.setCalibration(3440, 690, 500, 3650);
+//	touch.setSize(240, 320);
 }
 
 void initLcd(void)

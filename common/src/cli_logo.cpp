@@ -18,8 +18,8 @@
 
 #include "../inc/cli_logo.h"
 #include "../inc/task.h"
-#include <yss/malloc.h>
-#include <string.h>
+#include <std_ext/malloc.h>
+#include <std_ext/string.h>
 #include <stdio.h>
 
 #if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))

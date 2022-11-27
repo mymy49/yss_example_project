@@ -31,6 +31,12 @@
 
 float gTest;
 
+void thread_dummy(void)
+{
+	while(1)
+		thread::yield();
+}
+
 int32_t main(void)
 {
 	initYss();

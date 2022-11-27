@@ -17,7 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/cli_led.h"
-#include <yss/malloc.h>
+#include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
 

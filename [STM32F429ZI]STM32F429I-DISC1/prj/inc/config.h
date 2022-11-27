@@ -58,15 +58,15 @@
 #define USE_GUI			true
 
 // Touch Event Enable (true, false)
-#define USE_EVENT		false
+#define USE_EVENT		true
 
 #define RGB_REVERSE		false
 
 // Stack Size of Touch Event handler (Byte)
 #define TOUCH_EVENT_HANDLER_STACK_SIZE 4096
 
-// Depth of Touch Event Memory ( 32 ~ 256 )
-#define TOUCH_EVENT_MEMORY_DEPTH 128
+// Depth of Touch Event Memory ( 512 ~ 1024 )
+#define TOUCH_EVENT_MEMORY_DEPTH 512
 
 // Frame Buffer of LCD output (Rgb565, Rgb888, Argb1555)
 #define YSS_FRAME_BUFFER Rgb565
@@ -124,7 +124,7 @@
 // I2C 활성화
 //#define I2C1_ENABLE
 //#define I2C2_ENABLE
-//#define I2C3_ENABLE
+#define I2C3_ENABLE
 //#define I2C4_ENABLE
 
 // Quad SPI 활성화

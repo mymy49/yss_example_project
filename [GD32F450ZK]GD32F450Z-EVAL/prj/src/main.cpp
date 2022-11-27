@@ -27,7 +27,7 @@
 #include <cli_gauge.h>
 #include <yss/gui.h>
 #include <task.h>
-#include <yss/string.h>
+#include <std_ext/string.h>
 
 float gTest;
 

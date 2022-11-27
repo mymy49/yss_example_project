@@ -71,6 +71,11 @@
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;prj;src"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;src"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;src;targets"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;src;targets;stm32_gd32"/>
+  <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;Source Files;yss;src;targets;stm32_gd32;driver"/>
   <ProjectSessionItem path="stm32f746g-disco;stm32f746g-disco;System Files"/>
  </Project>
  <Register1>
@@ -151,7 +156,8 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="21" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="15" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="22" y="21" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="15" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="178" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/src/targets/stm32_gd32/driver/drv_clock_stm32_gd32f4_f7.cpp" selected="1" top="166" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="stm32f746g-disco" fileDialogDefaultFilter="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.hxx" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

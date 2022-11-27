@@ -18,7 +18,7 @@
 
 #include "../inc/cli_gauge.h"
 #include "../inc/task.h"
-#include <yss/malloc.h>
+#include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
 

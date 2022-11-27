@@ -86,8 +86,8 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="2" y="43" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="43" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="25" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/drv/Adc.h" selected="1" top="16" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="17" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="26" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/drv/Adc.h" selected="0" top="16" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="gd32f450z-eval" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

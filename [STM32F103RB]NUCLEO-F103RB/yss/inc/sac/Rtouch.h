@@ -20,22 +20,40 @@
 #define	YSS_SAC_RTOUCH__H_
 
 #include <gui/util.h>
+#include <yss/thread.h>
+
+class PointerEvent;
 
 namespace sac
 {
 	class Rtouch
 	{
-		Position calculate(uint16_t x, uint16_t y);
-	protected :
-		int32_t mP1X, mP1Y, mP2X, mP2Y, mWidth, mHeight;
-		bool mInitFlag;
 	public :
+		struct CalibrationData
+		{
+			int32_t p1x;
+			int32_t p1y;
+			int32_t p2x;
+			int32_t p2y;
+			int32_t xOffset;
+			int32_t yOffset;
+			int32_t width;
+			int32_t height;
+		};
+
 		Rtouch(void);
-		void setCalibration(int32_t p1X, int32_t p1y, int32_t p2x, int32_t p2y);
-		void getCalibration(int32_t *p1X, int32_t *p1y, int32_t *p2x, int32_t *p2y);
-		void setSize(int32_t width, signed height);
-		void set(uint16_t x, uint16_t y, uint8_t event);
-		void trigger(void);
+		void setCalibrationData(const CalibrationData &calibrationData);
+		const CalibrationData* getCalibrationData(void);
+		void push(uint32_t x, uint32_t y, uint8_t event);
+		void setInterface(PointerEvent &pointerEvent, triggerId id);
+
+	private:
+		Position calculate(uint32_t x, uint32_t y);
+		uint16_t calculateY(uint32_t y);
+		uint16_t calculateX(uint32_t x);
+		triggerId mTriggerId;
+		const CalibrationData *mCalibrationData;
+		PointerEvent *mPointerEvent;
 	};
 }
 

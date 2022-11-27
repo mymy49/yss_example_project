@@ -21,27 +21,34 @@
 
 #include <sac/Rtouch.h>
 #include <yss/instance.h>
+#include <util/ElapsedTime.h>
 
 #if !(defined(YSS_DRV_I2C_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
 class STMPE811 : public sac::Rtouch
 {
 	I2c *mPeri;
-	Gpio::Pin mIsr;
-	int32_t mId;
-	bool mFirst;
-	uint64_t mLastUpdateTime;
-	int16_t mLastX, mLastY;
+	Gpio::Pin mIsrPin;
+	bool mFirstFlag, mDetectedFlag;
+	int32_t mX, mY;
+	threadId mThreadId;
+	ElapsedTime mLastUpdateTime;
 
   public:
-	STMPE811(void);
+	struct Config
+	{
+		I2c &peri;
+		Gpio::Pin isrPin;
+	};
 
-	bool init(I2c &peri, Gpio::Pin &isr);
+	STMPE811(void);
+	~STMPE811(void);
+
+	bool init(const Config &config);
 	void sendByte(uint8_t addr, uint8_t data);
 	uint8_t receiveByte(uint8_t addr);
 	void readGroup(void);
-	bool getIsrState(void);
-	void handleIsr(void);
+	void isr(void);
 };
 
 #endif

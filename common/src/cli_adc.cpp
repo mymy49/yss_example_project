@@ -17,7 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/cli_adc.h"
-#include <yss/malloc.h>
+#include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
 

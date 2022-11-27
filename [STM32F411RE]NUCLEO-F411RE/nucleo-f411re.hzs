@@ -32,6 +32,11 @@
   <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;inc"/>
   <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;inc;gui"/>
   <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;inc;yss"/>
+  <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;src"/>
+  <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;src;targets"/>
+  <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;src;targets;stm32_gd32"/>
+  <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;src;targets;stm32_gd32;driver"/>
+  <ProjectSessionItem path="nucleo-f411re;nucleo-f411re;Source Files;yss;src;targets;stm32_gd32;msp"/>
  </Project>
  <Register1>
   <RegisterWindow visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="nucleo-f411re" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -77,7 +82,9 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/gui/Panel.h" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="12" y="19" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/task.cpp" selected="0" top="11" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="16" y="23" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/common/src/task.cpp" useBinaryEdit="0" left="0" path="yss/inc/yss.h" selected="0" top="9" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="102" y="29" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[STM32F411RE]NUCLEO-F411RE/yss/inc/yss.h" useBinaryEdit="0" left="0" path="yss/inc/yss/thread.h" selected="1" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="102" y="29" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[STM32F411RE]NUCLEO-F411RE/yss/inc/yss.h" useBinaryEdit="0" left="20" path="yss/inc/yss/thread.h" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="63" y="333" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/src/targets/stm32_gd32/driver/drv_clock_stm32_gd32f4_f7.cpp" selected="0" top="315" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="63" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/src/targets/stm32_gd32/msp/msp_stm32f4xx.cpp" selected="1" top="37" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="nucleo-f411re" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
