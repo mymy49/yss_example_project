@@ -20,16 +20,22 @@
 #define YSS_MOD_TFT_LCD_DRIVER_ST7796_SPI__H_
 
 #include <yss/instance.h>
-#include "ST7796S.h"
+#include "ST7796S_with_Brush_RGB888.h"
 
 #if !defined(YSS_DRV_SPI_UNSUPPORTED) && !defined(YSS_DRV_GPIO_UNSUPPORTED)
 
-class ST7796S_SPI : public ST7796S
+class ST7796S_SPI_with_Brush_RGB888 : public ST7796S_with_Brush_RGB888
 {
 	Spi *mPeri;
 	Gpio::Pin mCsPin;
 	Gpio::Pin mDcPin;
 	Gpio::Pin mRstPin;
+
+  protected:
+	void sendCmd(uint8_t cmd); // virtual 0
+	void sendCmd(uint8_t cmd, void *data, uint32_t len); // virtual 0
+	void enable(void); // virtual 0
+	void disable(void); // virtual 0
 
   public:
 	struct Config 
@@ -40,20 +46,10 @@ class ST7796S_SPI : public ST7796S
 		Gpio::Pin reset;
 	};
 
+	ST7796S_SPI_with_Brush_RGB888(void);
+
 	void setConfig(const Config &config);
-	error init(void);	// virtual 0
-	void setDirection(bool xMirror, bool yMirror, bool rotate);	// virtual 0
 	void reset(void);	// virtual 0
-
-	ST7796S_SPI(void);
-  protected:
-	void sendCmd(uint8_t cmd); // virtual 0
-	void sendCmd(uint8_t cmd, void *data, uint32_t len); // virtual 0
-	void enable(void); // virtual 0
-	void disable(void); // virtual 0
-
-	void setWindows(uint16_t x, uint16_t y, uint16_t width = 1, uint16_t height = 1); // virtual 0
-
 };
 
 #endif

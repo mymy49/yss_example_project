@@ -16,12 +16,15 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_MOD_TFT_LCD_DRIVER_ST7796__H_
-#define YSS_MOD_TFT_LCD_DRIVER_ST7796__H_
+#ifndef YSS_MOD_TFT_LCD_DRIVER_ILI9341__H_
+#define YSS_MOD_TFT_LCD_DRIVER_ILI9341__H_
 
+#include <yss/instance.h>
 #include <sac/TftLcdDriver.h>
+#include <gui/Brush.h>
+#include <gui/Bmp565Brush.h>
 
-class ST7796S : public TftLcdDriver
+class ILI9341_with_Brush : public TftLcdDriver, public Brush
 {
   protected:
 	enum
@@ -35,7 +38,7 @@ class ST7796S : public TftLcdDriver
 		READ_DISP_IMAGE_FORMAT = 0x0D,
 		READ_DISP_SIGNAL_MODE = 0x0E,
 		READ_DISP_SELF_DIAGNOSTIC = 0x0F,
-		ENTER_SLEEP_MODE = 0x10,
+		SLEEP_IN = 0x10,
 		SLEEP_OUT = 0x11,
 		PARTIAL_MODE_ON = 0x12,
 		NORMAL_DISP_MODE_ON = 0x13,
@@ -70,40 +73,58 @@ class ST7796S : public TftLcdDriver
 		READ_CONTENT_ADAPT_BRIGHTNESS = 0x56,
 		WRITE_MIN_CAB_LEVEL = 0x5E,
 		READ_MIN_CAB_LEVEL = 0x5F,
-		INTERFACE_MODE_CON = 0xB0,
+		INTERFACE_MODE_CTRL = 0xB0,
 		FRAME_RATE = 0xB1,
-		DISPLAY_INVERSION_CON = 0xB4,
-		BLANKING_PORCH_CON = 0xB5,
+		DISPLAY_INVERSION_CTRL = 0xB4,
 		DISPLAY_CTRL = 0xB6,
-		ENTRY_MODE_SET = 0xB7,
-		POWER_CTRL1 = 0xc0,
+		POWER_CTRL1 = 0xC0,
 		POWER_CTRL2 = 0xc1,
-		POWER_CTRL3 = 0xC2,
 		VCOM_CTRL1 = 0xC5,
-		VCOM_CTRL2 = 0xc7,
-		POWER_A = 0xcb,
-		POWER_B = 0xcf,
-		READ_ID1 = 0xDA,
+		VCOM_CTRL2 = 0xC7,
+		POWER_A = 0xCB,
+		POWER_B = 0xCF,
+		CMD_READ_ID1 = 0xDA,
 		READ_ID2 = 0xDB,
-		READ_ID3 = 0xDC,
+		CMD_READ_ID3 = 0xDC,
 		POS_GAMMA = 0xE0,
 		NEG_GAMMA = 0xE1,
 		DTCA = 0xE8,
-		DTCB = 0xea,
-		POWER_SEQ = 0xed,
-		SET_CONFIG = 0xF0,
-		GAMMA3_FUNC_DIS = 0xf2,
-		PRC = 0xf7
+		SET_IMAGE_FUNC = 0xE9,
+		DTCB = 0xEA,
+		POWER_SEQ = 0xED,
+		GAMMA3_FUNC_DIS = 0xF2,
+		INTERFACE_CONTROL = 0xF6,
+		ADJUST_CTRL3 = 0xF7,
+
+		INTERFACE_RGB565 = 0,
 	};
 
+	RGB565_union mBrushColor, mBgColor;
+	Bmp565BrushSwappedByte *mBmpBrush;
+	uint32_t mBmpBufferSize;
 	bool mRotateFlag;
 
-	virtual void setWindows(uint16_t x, uint16_t y, uint16_t width = 1, uint16_t height = 1) = 0;
-	virtual void reset(void) = 0;
-
   public:
-	ST7796S(void);
-	virtual void setDirection(bool xMirror, bool yMirror, bool rotate) = 0;
+	ILI9341_with_Brush(void);
+
+	void setDirection(bool xMirror, bool yMirror, bool rotate);
+	void setWindows(uint16_t x, uint16_t y, uint16_t width = 1, uint16_t height = 1);
+	void setBmp565Brush(Bmp565BrushSwappedByte &obj);
+
+	// Brush
+	void drawDot(int16_t x, int16_t y); // virtual 0
+	void drawDot(int16_t x, int16_t y, uint16_t color); // virtual 0
+	void drawDot(int16_t x, int16_t y, uint32_t color); // virtual 0
+	void drawFontDot(int16_t x, int16_t y, uint8_t color); // virtual 0
+	void eraseDot(Position pos); // virtual 0
+	void setBrushColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255); // virtual 0
+	void setFontColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255); // virtual 0
+	void setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue); // virtual 0
+	void clear(void); // virtual
+	void fillRect(Position p1, Position p2);
+	void fillRect(Position pos, Size size);
+	void drawBmp(Position pos, const Bmp565 *image);
 };
 
 #endif
+

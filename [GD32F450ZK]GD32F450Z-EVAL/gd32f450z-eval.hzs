@@ -38,12 +38,7 @@
   <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;common;src;gui"/>
   <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;common;src;task"/>
   <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;prj"/>
-  <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;prj;inc"/>
-  <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;prj;inc;dev"/>
-  <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;prj;src"/>
   <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;yss"/>
-  <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;yss;inc"/>
-  <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;Source Files;yss;inc;drv"/>
   <ProjectSessionItem path="gd32f450z-eval;gd32f450z-eval;System Files"/>
  </Project>
  <Register1>
@@ -86,8 +81,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="1" top="17" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="prj/src/main.cpp" selected="0" top="32" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="26" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/drv/Adc.h" selected="0" top="16" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="63" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../common/src/task/task_TouchCalibration.cpp" selected="1" top="25" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="gd32f450z-eval" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

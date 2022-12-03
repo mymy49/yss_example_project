@@ -16,70 +16,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_MOD_CPUTFT_ILI9320__H_
-#define YSS_MOD_CPUTFT_ILI9320__H_
+#ifndef YSS_MOD_TFT_LCD_DRIVER_ILI9341_SPI__H_
+#define YSS_MOD_TFT_LCD_DRIVER_ILI9341_SPI__H_
 
-#include <config.h>
-
-#if USE_GUI
-
-#include <sac/CpuTft.h>
-#include <yss/instance.h>
+#include "ILI9341_with_Brush.h"
+#include <drv/peripheral.h>
+#include <drv/Spi.h>
+#include <drv/Gpio.h>
 
 #if !(defined(YSS_DRV_SPI_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
-class ILI9320 : public sac::CpuTft
+class ILI9341_spi_with_Brush : public ILI9341_with_Brush
 {
+  protected:
+	Spi *mPeri;
+	Gpio::Pin mCsPin;
+	Gpio::Pin mDcPin;
+	Gpio::Pin mRstPin;
+
   public:
-	struct Config
+	struct Config 
 	{
 		Spi &peri;
-		Size displayResolution;
 		Gpio::Pin chipSelect;
 		Gpio::Pin dataCommand;
 		Gpio::Pin reset;
-		uint8_t madctl;
 	};
 
-	enum
-	{
-		Y_MIRROR = 0x80,
-		X_MIRROR = 0x40,
-		V_MIRROR = 0x20
-	};
+	ILI9341_spi_with_Brush(void);
 
-	ILI9320(void);
+	void setConfig(const Config &config);
 
-	bool init(const Config config);
-
-	void drawDots(uint16_t x, uint16_t y, uint16_t color, uint16_t size);
-	void drawDots(uint16_t x, uint16_t y, uint16_t *src, uint16_t size);
-
-	void drawDot(int16_t x, int16_t y);
-	void drawDot(int16_t x, int16_t y, uint16_t color);
-	void drawDot(int16_t x, int16_t y, uint32_t color);
-	void drawFontDot(int16_t x, int16_t y, uint8_t color);
-	void eraseDot(Position pos);
-	void setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255);
-	void setFontColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255);
-	void setBgColor(uint8_t red, uint8_t green, uint8_t blue);
-
-	virtual void drawBmp(Position pos, const Bmp565 *image);
-	virtual void drawBmp(Position pos, const Bmp565 &image);
-
-  private:
-	void sendCmd(uint8_t cmd);
-	void sendCmd(uint8_t cmd, uint16_t data);
-	void sendData(void *src, uint32_t size);
-
-	Spi *mPeri;
-	Gpio::Pin mCs, mDc, mRst;
-
-	uint16_t *mLineBuffer;
-	uint32_t mLineBufferSize;
+	void reset(void); // virtual 0
+	void sendCmd(uint8_t cmd); // virtual 0
+	void sendCmd(uint8_t cmd, void *data, uint32_t len); // virtual 0
+	void enable(void); // virtual 0
+	void disable(void); // virtual 0
 };
-
-#endif
 
 #endif
 

@@ -16,66 +16,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <mod/codec/WM8994.h>
+#ifndef YSS_DRV_DMA_STM32F0_MAP__H_
+#define YSS_DRV_DMA_STM32F0_MAP__H_
 
-#if !(defined(YSS_DRV_I2C_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED) || defined(YSS_DRV_SAI_UNSUPPORTED))
 
-WM8994::WM8994(void)
-{
-	mInitFlag = false;
-	mAddr = ADDR_LOW;
-	mCMFMODpin.port = 0;
-	mCMFMODpin.pin = 0;
-	mPeri = 0;
-}
-
-bool WM8994::init(const Config config)
-{
-	uint16_t data;
-
-	mPeri = &(config.peri);
-	mAddr = config.addr;
-	mCMFMODpin = config.CMFMOD;
-	mInitFlag = true;
-
-	if(mCMFMODpin.port)
-		mCMFMODpin.port->setOutput(mCMFMODpin.pin, false);
-
-	read(0, &data, 1);
-
-	if(data == 0x8994)
-		return true;
-	else
-		return false;
-}
-
-bool WM8994::read(uint16_t addr, void *des, uint32_t len)
-{
-	bool result;
-	uint8_t buf;
-	uint8_t *cDes = (uint8_t*)des;
-
-	len *= 2;
-
-	mPeri->lock();
-	result = mPeri->send(mAddr, &addr, 2);
-	if(result)
-		result = mPeri->receive(mAddr, des, len);
-	mPeri->stop();
-	mPeri->unlock();
-
-	if(result)
-	{
-		for(int32_t  i=0;i<len;i+=2)
-		{
-			buf = cDes[i];
-			cDes[i] = cDes[i+1];
-			cDes[i+1] = buf;
-		}
-	}
-
-	return result;
-}
 
 #endif
-

@@ -16,32 +16,91 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/Ltdc.h>
+#ifndef YSS_DRV_CLOCK_DEFINE_STM32F0__H_
+#define YSS_DRV_CLOCK_DEFINE_STM32F0__H_
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
-
-#include <mod/tft/RX050A_0701.h>
-
-static Ltdc::Specification gSpec =
-	{
-		800,                         // width
-		480,                         // height
-		3,                           // hsyncWidth
-		3,                           // vsyncWidth
-		46,                          // hbp
-		23,                          // vbp
-		210,                         // hfp
-		22,                          // vfp
-		define::ltdc::format::RGB888 // pixelFormat
-};
-
-Ltdc::Specification *RX005A_0701::getSpec(void)
+namespace define
 {
-	return &gSpec;
+namespace clock
+{
+namespace pll
+{
+namespace src
+{
+enum
+{
+	HSI_DIV2 = 0,
+	HSE = 1
+};
 }
 
-void RX005A_0701::init(void)
+namespace xtpre
 {
+enum
+{
+	NO_DIV = 0,
+	DIV2 = 1
+};
+}
+}
+
+namespace usbclk
+{
+namespace src
+{
+enum
+{
+	MAIN_PLL = 0,
+	SAI_PLL = 1,
+};
+}
+}
+
+namespace sysclk
+{
+namespace src
+{
+enum
+{
+	HSI = 0,
+	HSE = 1,
+	PLL = 2
+};
+}
+}
+
+namespace divFactor
+{
+namespace ahb
+{
+enum
+{
+	NO_DIV = 0,
+	DIV2 = 0x8,
+	DIV4 = 0x9,
+	DIV8 = 0xa,
+	DIV16 = 0xb,
+	DIV64 = 0xc,
+	DIV128 = 0xd,
+	DIV256 = 0xe,
+	DIV512 = 0xf
+};
+}
+
+namespace apb
+{
+enum
+{
+	NO_DIV = 0,
+	DIV2 = 0x4,
+	DIV4 = 0x5,
+	DIV8 = 0x6,
+	DIV16 = 0x7,
+};
+}
+
+}
+}
 }
 
 #endif

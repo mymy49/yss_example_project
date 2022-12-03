@@ -32,7 +32,7 @@ struct Size
 	uint16_t width, height;
 };
 
-#if (RGB_REVERSE == true)
+#if (RGB_ORDER_REVERSE == true)
 struct RGB565_struct
 {
 	unsigned red : 5;

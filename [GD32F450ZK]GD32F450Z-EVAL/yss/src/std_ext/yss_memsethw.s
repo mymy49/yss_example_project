@@ -16,29 +16,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#if defined(STM32F746xx) || defined(STM32F745xx) || \
-	defined(STM32F765xx) || defined(STM32F767xx) || defined(STM32F768xx) || defined(STM32F769xx) || \
-	defined(STM32F405xx) ||	defined(STM32F415xx) ||	\
-	defined(STM32F407xx) ||	defined(STM32F417xx) ||	\
-	defined(STM32F427xx) ||	defined(STM32F437xx) ||	\
-	defined(STM32F429xx) ||	defined(STM32F439xx) || \
-	defined(STM32F100xB) || defined(STM32F100xE) || \
-	defined(STM32F101x6) || defined(STM32F101xB) || defined(STM32F101xE) || defined(STM32F101xG) || \
-	defined(STM32F102x6) || defined(STM32F102xB) || \
-	defined(STM32F103x6) || defined(STM32F103xB) || defined(STM32F103xE) || defined(STM32F103xG) || \
-	defined(STM32F105xC) || \
-	defined(STM32F107xC) || \
-	defined(STM32L151xB) || \
-	defined (STM32G431xx) || defined (STM32G441xx) || \
-	defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32GBK1CB) || \
-	defined(GD32F10X_XD) || defined(GD32F10X_HD) || defined(GD32F450)
+#include <drv/mcu.h>
 
-#define __CORE_CM3_CM4_CM7_H_GENERIC
-#else
-#define __CORE_CM0PLUS_H_GENERIC
-#endif
-
-#if defined(__CORE_CM3_CM4_CM7_H_GENERIC)
+#if defined(YSS__CORE_CM3_CM4_CM7_H_GENERIC) 
 	.thumb_func
 	.syntax unified
 	.func memsethw
@@ -46,7 +26,7 @@
 	.global memsethw
 	.section .text, "ax"
 memsethw:
-	push {r3-r7}
+	push {r4-r7}
 	mov r4, #0xffff
 	lsl r4, #16
 	bic r1, r4
@@ -119,7 +99,107 @@ sub2:
 	beq finish
 	strh r4, [r0], #2
 finish:
-	pop {r3-r7}
+	pop {r4-r7}
 	bx lr
-
+#elif defined(YSS__CORE_CM0_H_GENERIC)
+	.thumb_func
+	.syntax unified
+	.func memsethw
+	.type memsethw, %function
+	.global memsethw
+	.section .text, "ax"
+memsethw:
+	push {r4-r5}
+	ldr r4, =0xFFFF0000
+	bics r1, r4
+	lsls r3, r1, #16
+	mov r4, r1
+	orrs r4, r3
+	movs r5, #1
+	bics r2, r5
+repeat:
+	ldr r1, =128
+	subs r3, r2, r1
+	bge greater
+	movs r5, #0x03
+	ands r3, r3, r5
+	bics r2, r5
+	subs r1, r1, r2 
+	movs r2, r3
+	add pc, pc, r1
+greater:
+	subs r2, #128
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	str	r4, [R0]
+	adds r0, #4
+	movs r5, #4
+	subs r3, r2, r5
+	bge repeat
+	movs r2, r2
+	beq finish
+	strh r4, [r0]
+finish:
+	pop {r4-r5}
+	bx lr
 #endif

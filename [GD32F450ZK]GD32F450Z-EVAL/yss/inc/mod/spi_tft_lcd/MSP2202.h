@@ -16,46 +16,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef	YSS_MOD_USBD_MASS_STORAGE__H_
-#define	YSS_MOD_USBD_MASS_STORAGE__H_
+#ifndef YSS_MOD_SPI_TFT_LCD_MSP2402__H_
+#define YSS_MOD_SPI_TFT_LCD_MSP2402__H_
 
-#include <sac/MassStorage.h>
-/*
-namespace config
-{
-namespace mod
-{
-namespace usbd
-{
-namespace massStorage
-{
-	struct Config_
-	{
-		int8_t manufacturer[32];
-		int8_t product[32];
-		uint16_t vid;
-		uint16_t pid;
-		uint16_t bcdVersion;
-		uint8_t maxPower;
-		bool selfPowered;
-		sac::MassStorage &storage;
-	};
+#include <config.h>
 
-	typedef	const Config_ Config;
-}
-}
-}
-}
+#if USE_GUI
 
-namespace mod
+#include <yss/instance.h>
+
+#if !defined(YSS_DRV_SPI_UNSUPPORTED) && !defined(YSS_DRV_GPIO_UNSUPPORTED)
+
+#include <mod/tft_lcd_driver/ILI9341_spi_with_Brush.h>
+#include <yss/Mutex.h>
+
+class MSP2202 : public ILI9341_spi_with_Brush
 {
-namespace usbd
-{
-namespace massStorage
-{
-	bool init(drv::Usbd &peri, config::mod::usbd::massStorage::Config &config);
-}
-}
-}
-*/
+  public:
+	MSP2202(void);
+	
+	// TftLcdDriver
+	error init(void); // virtual 0
+};
+
 #endif
+
+#endif
+
+#endif
+

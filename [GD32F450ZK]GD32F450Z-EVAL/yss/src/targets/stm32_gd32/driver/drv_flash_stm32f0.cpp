@@ -16,10 +16,41 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <mod/tft_lcd_driver/ST7796S.h>
+#include <drv/mcu.h>
 
-ST7796S::ST7796S(void)
+#if defined(STM32F0)
+
+#include <drv/peripheral.h>
+#include <drv/Flash.h>
+#include <yss/thread.h>
+#include <yss/reg.h>
+#include <targets/st_gigadevice/flash_stm32f0.h>
+
+Flash::Flash(void) : Drv(0, 0)
 {
-	mRotateFlag = false;
 }
+
+void Flash::setLatency(uint32_t freq)
+{
+	volatile uint32_t* peri = (volatile uint32_t*)FLASH;
+
+	if (freq <= 24000000)
+		setFieldData(peri[FLASH_REG::ACR], FLASH_ACR_LATENCY_Msk, 0, FLASH_ACR_LATENCY_Pos);
+	else
+		setFieldData(peri[FLASH_REG::ACR], FLASH_ACR_LATENCY_Msk, 1, FLASH_ACR_LATENCY_Pos);
+}
+
+void Flash::setPrefetchEn(bool en)
+{
+	volatile uint32_t* peri = (volatile uint32_t*)FLASH;
+	setBitData(peri[FLASH_REG::ACR], FLASH_ACR_PRFTBE_Pos, en);
+}
+
+void Flash::setHalfCycleAccessEn(bool en)
+{
+	volatile uint32_t* peri = (volatile uint32_t*)FLASH;
+	setBitData(peri[FLASH_REG::ACR], FLASH_ACR_HLFCYA_Pos, en);
+}
+#endif
+
 

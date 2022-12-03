@@ -16,43 +16,70 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef	YSS_MOD_USBD_PRINTER__H_
-#define	YSS_MOD_USBD_PRINTER__H_
-/*
-namespace config
-{
-namespace mod
-{
-namespace usbd
-{
-namespace printer
-{
-	struct Config_
-	{
-		int8_t manufacturer[32];
-		int8_t product[32];
-		uint16_t vid;
-		uint16_t pid;
-		uint16_t bcdVersion;
-		uint8_t maxPower;
-		bool selfPowered;
-	};
+#ifndef YSS_DRV_CLOCK_EC_STM32F0__H_
+#define YSS_DRV_CLOCK_EC_STM32F0__H_
 
-	typedef	const Config_ Config;
-}
-}
-}
+#include <drv/mcu.h>
+
+namespace ec
+{
+namespace clock
+{
+namespace sysclk
+{
+enum
+{
+	MAX_FREQ = 48000000,
+};
 }
 
-namespace mod
+namespace apb1
 {
-namespace usbd
+enum
 {
-namespace printer
+	MAX_FREQ = 48000000,
+};
+}
+
+namespace adc
 {
-	bool init(drv::Usbd &peri);
+enum
+{
+	MAX_FREQ = 14000000,
+};
+}
+
+namespace hsi
+{
+enum
+{
+	FREQ = 8000000,
+};
+}
+
+namespace hse
+{
+enum
+{
+	HSE_MIN_FREQ = 1000000,
+	HSE_MAX_FREQ = 25000000,
+};
+}
+
+namespace pll
+{
+enum
+{
+	PLL_IN_MIN_FREQ = 1000000,
+	PLL_IN_MAX_FREQ = 24000000,
+	PLL_OUT_MIN_FREQ = 16000000,
+	PLL_OUT_MAX_FREQ = 48000000,
+	PLL_SRC_MAX = 1,
+	PLL_MUL_MAX = 14,
+	PLL_XTPRE_MAX = 1
+};
 }
 }
 }
-*/
+
 #endif

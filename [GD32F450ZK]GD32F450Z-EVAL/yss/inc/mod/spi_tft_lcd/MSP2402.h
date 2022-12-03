@@ -32,7 +32,7 @@
 #include <yss/Mutex.h>
 #include <gui/Bmp565Brush.h>
 
-class MSP2402 : public ILI9341, public Brush, public Mutex
+class MSP2402 : public ILI9341, public Brush
 {
 
   protected:
