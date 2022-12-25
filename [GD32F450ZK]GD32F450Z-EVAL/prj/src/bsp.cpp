@@ -34,7 +34,7 @@ void initBoard(void)
 	gpioA.setAsAltFunc(10, altfunc::PA10_USART1_RX);
 	
 	uart1.enableClock();
-	uart1.init(9600, 256);
+	uart1.initialize(9600, 256);
 	uart1.enableInterrupt();
 
 	// ADC 초기화
@@ -91,11 +91,11 @@ void initBoard(void)
 	};
 	
 	lcd.setConfig(lcdConfig);
-	lcd.init();
+	lcd.initialize();
 
 	ltdc.enableClock();
 	ltdc.init(lcd.getSpecification());
-	ltdc.setInterruptEn(true);
+	ltdc.enableInterrupt(true);
 }
 
 void initSdram(void)

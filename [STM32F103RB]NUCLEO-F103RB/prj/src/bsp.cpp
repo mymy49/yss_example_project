@@ -31,7 +31,7 @@ void initBoard(void)
 //	gpioA.setAsAltFunc(3, altfunc::PA3_USART2_RX);
 	
 	uart2.enableClock();
-	uart2.init(9600, 256);
+	uart2.initialize(9600, 256);
 	uart2.enableInterrupt();
 
 	// ADC 초기화

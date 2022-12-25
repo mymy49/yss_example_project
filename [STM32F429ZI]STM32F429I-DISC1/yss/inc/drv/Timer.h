@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -21,9 +20,9 @@
 
 #include "mcu.h"
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F0) || defined(STM32G4)
 
-typedef volatile uint32_t YSS_TIMER_Peri;
+typedef volatile uint32_t	YSS_TIMER_Peri;
 
 #elif defined(NRF52840_XXAA)
 
@@ -31,11 +30,11 @@ typedef NRF_TIMER_Type		YSS_TIMER_Peri;
 
 #else
 
+typedef volatile uint32_t YSS_TIMER_Peri;
+
 #define YSS_DRV_TIMER_UNSUPPORTED
 
 #endif
-
-#ifndef YSS_DRV_TIMER_UNSUPPORTED
 
 #include "Drv.h"
 
@@ -70,7 +69,5 @@ class Timer : public Drv
 };
 
 #define setUpdateIntEn		enableInterrupt
-
-#endif
 
 #endif

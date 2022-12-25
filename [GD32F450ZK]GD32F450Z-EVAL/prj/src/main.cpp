@@ -19,7 +19,7 @@
 #include <yss/debug.h>
 #include <yss.h>
 #include <bsp.h>
-#include <util/time.h>
+#include <util/runtime.h>
 #include <cli_led.h>
 #include <cli_dump.h>
 #include <cli_adc.h>
@@ -92,7 +92,7 @@ int32_t main(void)
 
 	while(1)
 	{
-		time = time::getRunningMsec();
+		time = runtime::getMsec();
 		gTest = (float)time / 1000.f;
 		thread::yield();
 	}

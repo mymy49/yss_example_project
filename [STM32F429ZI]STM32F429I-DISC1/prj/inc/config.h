@@ -58,7 +58,7 @@
 #define USE_GUI			true
 
 // Touch Event Enable (true, false)
-#define USE_EVENT		true
+#define USE_EVENT		false
 
 #define RGB_REVERSE		false
 
@@ -68,8 +68,8 @@
 // Depth of Touch Event Memory ( 512 ~ 1024 )
 #define TOUCH_EVENT_MEMORY_DEPTH 512
 
-// Frame Buffer of LCD output (Rgb565, Rgb888, Argb1555)
-#define YSS_FRAME_BUFFER Rgb565
+// GUI Object class의 내부 이미지 버퍼의 타입 설정 (Rgb565, Rgb888, Argb1555)
+#define YSS_GUI_OBJECT_BUFFER Rgb565
 
 // Frame Buffer of GUI Frame (Rgb565, Rgb888, Argb1555)
 #define YSS_GUI_FRAME_BUFFER Rgb565

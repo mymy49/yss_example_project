@@ -30,7 +30,7 @@ void initLcd(void);
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart1);
 SF_TC240T_9370_T lcd;
-STMPE811 touch;
+//STMPE811 touch;
 
 void initBoard(void)
 {
@@ -40,7 +40,7 @@ void initBoard(void)
 	gpioA.setAsAltFunc(10, altfunc::PA10_USART1_RX);
 	
 	uart1.enableClock();
-	uart1.init(9600, 256);
+	uart1.initialize(9600, 256);
 	uart1.enableInterrupt();
 
 	// ADC 초기화
@@ -58,7 +58,7 @@ void initBoard(void)
 	gpioF.setAsAltFunc(9, altfunc::PF9_SPI5_MOSI, ospeed::FAST, otype::PUSH_PULL); // MOSI
 
 	spi5.enableClock();
-	spi5.init();
+	spi5.initialize();
 	spi5.enableInterrupt();
 	
 	// TFT LCD 초기화
@@ -81,8 +81,8 @@ void initBoard(void)
 		{&gpioA, 15}	// Gpio::Pin isrPin
 	};
 
-	touch.init(touchConfig);
-	event::setPointerDevice(touch);
+	//touch.init(touchConfig);
+	//event::setPointerDevice(touch);
 //	touch.setCalibration(3440, 690, 500, 3650);
 //	touch.setSize(240, 320);
 }
@@ -135,7 +135,9 @@ void initLcd(void)
 	};
 
 	lcd.setConfig(config);
-	lcd.init();
+	lcd.initialize();
+	setSystemTftLcd(lcd);
+
 	ltdc.enableClock();
 	ltdc.init(lcd.getSpec());
 	ltdc.enableInterrupt();

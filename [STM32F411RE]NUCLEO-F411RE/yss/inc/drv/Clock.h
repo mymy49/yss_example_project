@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -30,12 +29,12 @@
 #elif defined(STM32F7)
 #include <targets/st_gigadevice/ec_clock_stm32f7.h>
 #include <targets/st_gigadevice/define_clock_stm32f7.h>
-#elif defined(STM32G4)
-#include "clock/ec_clock_stm32g4.h"
-#include "clock/define_clock_stm32g4.h"
+//#elif defined(STM32G4)
+//#include "clock/ec_clock_stm32g4.h"
+//#include "clock/define_clock_stm32g4.h"
 #elif defined(GD32F1)
-#include "clock/ec_clock_gd32f1.h"
-#include "clock/define_clock_gd32f1.h"
+#include <targets/st_gigadevice/ec_clock_gd32f1.h>
+#include <targets/st_gigadevice/define_clock_gd32f1.h>
 #elif defined(GD32F4)
 #include <targets/st_gigadevice/ec_clock_gd32f4.h>
 #include <targets/st_gigadevice/define_clock_gd32f4.h>
@@ -45,11 +44,17 @@
 #elif defined(STM32L1)
 #include <targets/st_gigadevice/define_clock_stm32l1.h>
 #include <targets/st_gigadevice/ec_clock_stm32l1.h>
+#elif defined(STM32F0)
+#include <targets/st_gigadevice/ec_clock_stm32f0.h>
+#include <targets/st_gigadevice/define_clock_stm32f0.h>
+#elif defined(STM32G4)
+#define PLL_P_USE
+#define PLL_Q_USE
+#define PLL_R_USE
+#include <targets/st_gigadevice/define_clock_stm32g4.h>
 #else
 #define YSS_DRV_CLOCK_UNSUPPORTED
 #endif
-
-#ifndef YSS_DRV_CLOCK_UNSUPPORTED
 
 #include <yss/Mutex.h>
 #include <yss/error.h>
@@ -72,6 +77,8 @@ class Clock : public Mutex
 	void enableAhb2Clock(uint32_t position, bool en = true);
 	void enableAhb3Clock(uint32_t position, bool en = true);
 	void enableApb1Clock(uint32_t position, bool en = true);
+	void enableApb1_1Clock(uint32_t position, bool en = true);
+	void enableApb1_2Clock(uint32_t position, bool en = true);
 	void enableApb2Clock(uint32_t position, bool en = true);
 
 	void resetAhb1(uint32_t position);
@@ -87,10 +94,10 @@ class Clock : public Mutex
 	uint32_t getApb2ClockFrequency(void);
 	
 	// MCU별 옵션 사양
-#if defined(STM32F1) || defined(GD32F1)
+#if defined(STM32F1) || defined(GD32F1) || defined(STM32F0)
 	bool enableMainPll(uint8_t src, uint8_t xtpre, uint8_t mul);
 	uint32_t getMainPllFrequency(void);
-#elif defined(GD32F4) || defined(STM32F4) || defined(STM32F7)
+#elif defined(GD32F4) || defined(STM32F4) || defined(STM32F7) || defined(STM32G4)
 	bool enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
 #if defined(PLL_P_USE)
 	uint32_t getMainPllPFrequency(void);
@@ -124,9 +131,12 @@ class Clock : public Mutex
 	uint32_t getSaiPllRFrequency(void);
 #endif
 #endif
-};
 
+#if defined(STM32G4)
+	void setVoltageScale(uint8_t scale);
 #endif
+	
+};
 
 #endif
 

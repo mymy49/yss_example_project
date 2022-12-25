@@ -33,7 +33,7 @@ void initBoard(void)
 	gpio0.setAsAltFunc(7, altfunc::UART0_CTS);
 
 	uart0.enableClock();
-	uart0.init(9600, 256);
+	uart0.initialize(9600, 256);
 	uart0.enableInterrupt();
 
 	// Radio 초기화

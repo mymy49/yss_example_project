@@ -17,12 +17,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/cli_gauge.h"
+
+#if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))
+
 #include "../inc/task.h"
 #include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
-
-#if !(defined(YSS_DRV_LTDC_UNSUPPORTED) || defined(YSS_DRV_UART_UNSUPPORTED))
 
 namespace Cli
 {

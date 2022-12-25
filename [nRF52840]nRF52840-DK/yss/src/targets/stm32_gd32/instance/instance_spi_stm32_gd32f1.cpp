@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -18,7 +17,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(STM32F0)
 
 #include <yss/instance.h>
 #include <config.h>
@@ -30,8 +29,11 @@
 #elif defined(STM32F4)
 #include <targets/st_gigadevice/dma_stm32_gd32f4_f7.h>
 #include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
+#elif defined(STM32F0)
+#include <targets/st_gigadevice/dma_stm32_gd32f1.h>
+#include <targets/st_gigadevice/rcc_stm32f0.h>
 #endif
-#include <targets/st_gigadevice/spi_stm32_gd32f1_f4.h>
+#include <targets/st_gigadevice/spi_stm32_gd32f0_f1_f4.h>
 
 #if defined(GD32F1)
 #if defined(__SEGGER_LINKER)
@@ -43,13 +45,12 @@
 #define YSS_SPI2_IRQHandler			SPI2_IRQHandler
 #define YSS_SPI3_IRQHandler			SPI3_IRQHandler
 #endif
-#elif defined(STM32F1) || defined(STM32F4)
+#elif defined(STM32F1) || defined(STM32F4) || defined(STM32F0)
 #define YSS_SPI1_IRQHandler			SPI1_IRQHandler
 #define YSS_SPI2_IRQHandler			SPI2_IRQHandler
 #define YSS_SPI3_IRQHandler			SPI3_IRQHandler
 #define YSS_SPI4_IRQHandler			SPI4_IRQHandler
 #define YSS_SPI5_IRQHandler			SPI5_IRQHandler
-
 #endif
 
 #if defined(SPI1_ENABLE) && defined(SPI1)
@@ -84,7 +85,7 @@ static const Drv::Config gDrvSpi1Config =
 
 static const Dma::DmaInfo gSpi1TxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |	 // uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |
@@ -116,7 +117,7 @@ static const Dma::DmaInfo gSpi1TxDmaInfo =
 
 static const Dma::DmaInfo gSpi1RxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |		// uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |
@@ -199,7 +200,7 @@ static const Drv::Config gDrvSpi2Config =
 
 static const Dma::DmaInfo gSpi2TxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(STM32F0) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |		 // uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |
@@ -208,8 +209,8 @@ static const Dma::DmaInfo gSpi2TxDmaInfo =
 	DMA_CCR_TCIE_Msk | 
 	DMA_CCR_TEIE_Msk | 
 	DMA_CCR_EN_Msk ,
-	0,															// uint32_t controlRegister2
-	0,															// uint32_t controlRegister3
+	0x0F << (4 * 4),									// uint32_t controlRegister2
+	0x03 << (4 * 4),											// uint32_t controlRegister3
 	(void*)&SPI2[SPI_REG::DR],									//void *dataRegister;
 #elif defined(STM32F4)
 	(define::dma1::stream4::SPI2_TX << DMA_SxCR_CHSEL_Pos) |	// uint32_t controlRegister1
@@ -231,7 +232,7 @@ static const Dma::DmaInfo gSpi2TxDmaInfo =
 
 static const Dma::DmaInfo gSpi2RxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(STM32F0) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |		// uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |
@@ -240,8 +241,8 @@ static const Dma::DmaInfo gSpi2RxDmaInfo =
 	DMA_CCR_TCIE_Msk | 
 	DMA_CCR_TEIE_Msk | 
 	DMA_CCR_EN_Msk ,
-	0,															// uint32_t controlRegister2
-	0,															// uint32_t controlRegister3
+	0x0F << (4 * 3),											// uint32_t controlRegister2
+	0x03 << (4 * 3),											// uint32_t controlRegister3
 	(void*)&SPI2[SPI_REG::DR],									//void *dataRegister;
 #elif defined(STM32F4)
 	(define::dma1::stream3::SPI2_RX << DMA_SxCR_CHSEL_Pos) |	// uint32_t controlRegister1
@@ -313,7 +314,7 @@ static const Drv::Config gDrvSpi3Config
 
 static const Dma::DmaInfo gSpi3TxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |		// uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |
@@ -345,7 +346,7 @@ static const Dma::DmaInfo gSpi3TxDmaInfo =
 
 static const Dma::DmaInfo gSpi3RxDmaInfo = 
 {
-#if defined(STM32F1)
+#if defined(STM32F1) || defined(GD32F1)
 	(define::dma::priorityLevel::LOW << DMA_CCR_PL_Pos) |		// uint32_t controlRegister1
 	(define::dma::size::BYTE << DMA_CCR_MSIZE_Pos) |
 	(define::dma::size::BYTE << DMA_CCR_PSIZE_Pos) |

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -20,6 +19,7 @@
 #define YSS_DRV_GPIO__H_
 
 #include "mcu.h"
+#include <stdint.h>
 
 #if defined(GD32F1) || defined(STM32F1)
 
@@ -29,7 +29,7 @@ typedef volatile uint32_t	YSS_GPIO_Peri;
 
 #elif defined(STM32F4) || defined(STM32F7)
 
-#include <targets/st_gigadevice/define_gpio_stm32f4_f7_g4.h>
+#include <targets/st_gigadevice/define_gpio_stm32f0_f4_f7_g4.h>
 
 typedef volatile uint32_t	YSS_GPIO_Peri;
 
@@ -39,11 +39,17 @@ typedef volatile uint32_t	YSS_GPIO_Peri;
 
 typedef volatile uint32_t	YSS_GPIO_Peri;
 
+#elif defined(STM32F0)
+
+#include <targets/st_gigadevice/define_gpio_stm32f0.h>
+
+typedef volatile uint32_t	YSS_GPIO_Peri;
+
 #elif defined(GD32F4)
 
 #include <targets/st_gigadevice/define_gpio_gd32f4.h>
 
-typedef uint32_t		YSS_GPIO_Peri;
+typedef volatile uint32_t	YSS_GPIO_Peri;
 
 #elif defined(NRF52840_XXAA)
 
@@ -53,11 +59,13 @@ typedef NRF_GPIO_Type		YSS_GPIO_Peri;
 
 #else
 
+#include <targets/st_gigadevice/define_gpio_gd32f1.h>
+
+typedef volatile uint32_t	YSS_GPIO_Peri;
+
 #define YSS_DRV_GPIO_UNSUPPORTED
 
 #endif
-
-#ifndef YSS_DRV_GPIO_UNSUPPORTED
 
 #include "Drv.h"
 
@@ -104,7 +112,4 @@ class Gpio : public Drv
 };
 
 #endif
-
-#endif
-
 

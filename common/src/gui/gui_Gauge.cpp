@@ -23,7 +23,7 @@
 #include <yss/instance.h>
 #include <math.h>
 #include <stdio.h>
-#include <util/time.h>
+#include <util/runtime.h>
 #include <gui/painter.h>
 
 #if USE_GUI && YSS_L_HEAP_USE
@@ -185,3 +185,4 @@ void Gauge::setFont(Font font)
 }
 
 #endif
+

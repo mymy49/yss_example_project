@@ -17,11 +17,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/cli_led.h"
+
+#if !defined(YSS_DRV_UART_UNSUPPORTED)
+
 #include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
-
-#if !defined(YSS_DRV_UART_UNSUPPORTED)
 
 namespace Cli
 {

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -22,6 +21,9 @@
 
 #include <math.h>
 #include <yss/gui.h>
+#include <gui/Bmp1555.h>
+#include <gui/Bmp565.h>
+#include <gui/Bmp888.h>
 
 #define PI (float)3.14159265358979323846
 
@@ -29,6 +31,44 @@ Brush::Brush(void)
 {
 	mSize.height = 0;
 	mSize.width = 0;
+
+	mBrushColor.setToWhite();
+	mFontColor.setToWhite();
+	mBgColor.setToBlack();
+}
+
+void Brush::setBrushColor(Color color)
+{
+	mBrushColor = color;
+}
+
+void Brush::setFontColor(Color color)
+{
+	mFontColor = color;
+	updateFontColor();
+}
+
+void Brush::setBackgroundColor(Color color)
+{
+	mBgColor = color;
+	updateFontColor();
+}
+
+void Brush::setBrushColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mBrushColor.setColor(red, green, blue);
+}
+
+void Brush::setFontColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mFontColor.setColor(red, green, blue);
+	updateFontColor();
+}
+
+void Brush::setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mBgColor.setColor(red, green, blue);
+	updateFontColor();
 }
 
 void Brush::drawLine(Position start, Position end)
@@ -193,6 +233,7 @@ void Brush::setSize(Size size)
 
 uint8_t Brush::drawChar(Position pos, uint32_t utf8)
 {
+/*
 	if (mFont.setChar(utf8))
 		return 0;
 
@@ -236,6 +277,7 @@ uint8_t Brush::drawChar(Position pos, uint32_t utf8)
 	}
 
 	return fontInfo->width;
+*/
 }
 
 uint8_t Brush::drawString(Position pos, const char *str, uint8_t int8_tWidth)
@@ -522,7 +564,7 @@ void Brush::fillRect(Position p1, Position p2)
 
 void Brush::fillRect(Position pos, Size size)
 {
-	int16_t sx = pos.x, ex = pos.x + size.width, sy = pos.y, ey = pos.y + size.height;
+	int16_t sx = pos.x, ex = pos.x + size.width - 1, sy = pos.y, ey = pos.y + size.height - 1;
 
 	if (ey > mSize.height - 1)
 		ey = mSize.height - 1;
@@ -595,69 +637,9 @@ void Brush::clear(void)
 	eraseRect(Position{0, 0}, mSize);
 }
 
-void Brush::drawBmp(Position pos, const Bmp565 *image)
-{
-	uint16_t *fb = (uint16_t *)image->data, *src;
-	uint16_t width = image->width;
-	uint16_t height = image->height;
-	int16_t xs = pos.x, ys = pos.y;
-
-	if (xs + width > mSize.width)
-		width = mSize.width - xs;
-	if (ys + height > mSize.height)
-		height = mSize.height - ys;
-
-	width += xs;
-	height += ys;
-
-	for (int16_t y = ys; y < height; y++)
-	{
-		src = fb;
-		fb += image->width;
-
-		for (int16_t x = xs; x < width; x++)
-		{
-			drawDot(x, y, *src++);
-		}
-	}
-}
-
-void Brush::drawBmp(Position pos, const Bmp888 *image)
-{
-	uint8_t *fb = (uint8_t *)image->data, *src;
-	uint16_t width = image->width;
-	uint16_t height = image->height;
-	int16_t xs = pos.x, ys = pos.y;
-
-	if (xs + width > mSize.width)
-		width = mSize.width - xs;
-	if (ys + height > mSize.height)
-		height = mSize.height - ys;
-
-	width += xs;
-	height += ys;
-
-	for (int16_t y = ys; y < height; y++)
-	{
-		src = fb;
-		fb += image->width * 3;
-
-		for (int16_t x = xs; x < width; x++)
-		{
-			drawDot(x, y, *(uint32_t*)src);
-			src += 3;
-		}
-	}
-}
-
-
-void Brush::drawBmp(Position pos, const Bmp565 &image)
-{
-	drawBmp(pos, &image);
-}
-
 void Brush::drawBmp(Position pos, const Bmp1555 *image)
 {
+/*
 	uint16_t *fb = (uint16_t *)image->data, *src, buf;
 	uint16_t width = image->width;
 	uint16_t height = image->height;
@@ -690,6 +672,7 @@ void Brush::drawBmp(Position pos, const Bmp1555 *image)
 			src++;
 		}
 	}
+*/
 }
 
 void Brush::drawBmp(Position pos, const Bmp1555 &image)
@@ -699,6 +682,13 @@ void Brush::drawBmp(Position pos, const Bmp1555 &image)
 
 Brush::~Brush(void)
 {
+}
+
+void Brush::setReverseRgbOrder(bool reverse)
+{
+	mBrushColor.setReverseRgbOrder(reverse);
+	mFontColor.setReverseRgbOrder(reverse);
+	mBgColor.setReverseRgbOrder(reverse);
 }
 
 #endif

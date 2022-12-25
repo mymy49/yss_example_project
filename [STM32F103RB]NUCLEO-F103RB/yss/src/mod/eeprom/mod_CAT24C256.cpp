@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -18,7 +17,7 @@
 
 #include <mod/eeprom/CAT24C256.h>
 #include <string.h>
-#include <util/time.h>
+#include <util/runtime.h>
 
 #if !(defined(YSS_DRV_I2C_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
@@ -94,7 +93,7 @@ bool CAT24C256::writeBytes(uint32_t addr, void *src, uint32_t size)
 				while (mThisTime < mLastWritingTime + 10)
 				{
 					thread::yield();
-					mThisTime = time::getRunningMsec();
+					mThisTime = runtime::getMsec();
 				}
 
 				mPeri->lock();
@@ -105,7 +104,7 @@ bool CAT24C256::writeBytes(uint32_t addr, void *src, uint32_t size)
 				if (mWp.port)
 					mWp.port->setOutput(mWp.pin, true);
 				mPeri->unlock();
-				mLastWritingTime = time::getRunningMsec();
+				mLastWritingTime = runtime::getMsec();
 
 				if (rt)
 					break;
@@ -131,7 +130,7 @@ bool CAT24C256::writeBytes(uint32_t addr, void *src, uint32_t size)
 			while (mThisTime < mLastWritingTime + 10)
 			{
 				thread::yield();
-				mThisTime = time::getRunningMsec();
+				mThisTime = runtime::getMsec();
 			}
 
 			mPeri->lock();
@@ -142,7 +141,7 @@ bool CAT24C256::writeBytes(uint32_t addr, void *src, uint32_t size)
 			if (mWp.port)
 				mWp.port->setOutput(mWp.pin, true);
 			mPeri->unlock();
-			mLastWritingTime = time::getRunningMsec();
+			mLastWritingTime = runtime::getMsec();
 
 			if (rt)
 				break;
@@ -165,11 +164,11 @@ bool CAT24C256::readBytes(uint32_t addr, void *des, uint32_t size)
 	int8_t *pAddr = (int8_t *)&addr;
 	bool rt = false;
 
-	mThisTime = time::getRunningMsec();
+	mThisTime = runtime::getMsec();
 	while (mThisTime < mLastWritingTime + 5)
 	{
 		thread::yield();
-		mThisTime = time::getRunningMsec();
+		mThisTime = runtime::getMsec();
 	}
 
 	if (addr + size > getSize())

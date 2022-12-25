@@ -17,13 +17,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../inc/cli_led.h"
+
+#if !(defined(YSS_DRV_UART_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
+
 #include <std_ext/malloc.h>
 #include <string.h>
 #include <stdio.h>
 #include <util/ElapsedTime.h>
 #include <yss.h>
-
-#if !(defined(YSS_DRV_UART_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
 
 namespace Cli
 {

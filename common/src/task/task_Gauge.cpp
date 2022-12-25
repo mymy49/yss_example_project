@@ -75,6 +75,8 @@ namespace Task
 		gGauge1 = new Gauge;
 		gGauge2 = new Gauge;
 		gGauge3 = new Gauge;
+
+		gGauge1->setReverseRgbOrder(true);
 		
 		frm->setBackgroundColor(0xA0, 0xA5, 0xA8);
 

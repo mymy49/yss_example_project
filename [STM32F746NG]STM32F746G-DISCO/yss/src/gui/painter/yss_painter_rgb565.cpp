@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -26,6 +25,7 @@
 
 #include <gui/Rgb565.h>
 #include <yss/thread.h>
+#include <gui/Bmp565.h>
 
 namespace Painter
 {
@@ -41,7 +41,7 @@ inline void swapStartPosition(int16_t &startPos, int16_t &endPos)
 	}
 }
 
-void fill(Rgb565 &obj, RGB565_union color)
+void fill(Rgb565 &obj, Color color)
 {
 	uint32_t fb = (uint32_t)obj.getFrameBuffer();
 
@@ -60,7 +60,7 @@ void fill(Rgb565 &obj, RGB565_union color)
 	Dma2d::FillConfig config = 
 	{
 		(void*)fb,			//void *address;
-		color.halfword,		//uint32_t color;
+		color.getRgb565Code(),		//uint32_t color;
 		colorMode::RGB565,	//uint8_t colorMode;
 		size				//Size size;
 	};
@@ -71,7 +71,7 @@ void fill(Rgb565 &obj, RGB565_union color)
 	dma2d.unlock();
 }
 
-void fillRectangle(Rgb565 &obj, Position sp, Position ep, RGB565_union color)
+void fillRectangle(Rgb565 &obj, Position sp, Position ep, Color color)
 {
 	uint8_t *desAddr;
 
@@ -114,7 +114,7 @@ void fillRectangle(Rgb565 &obj, Position sp, Position ep, RGB565_union color)
 	//mMutex.unlock();
 }
 
-void fillRectangle(Rgb565 &obj, Position pos, Size size, RGB565_union color)
+void fillRectangle(Rgb565 &obj, Position pos, Size size, Color color)
 {
 	uint8_t *desAddr;
 
@@ -140,10 +140,10 @@ void fillRectangle(Rgb565 &obj, Position pos, Size size, RGB565_union color)
 	using namespace define::dma2d;
 	Dma2d::FillConfig config = 
 	{
-		(void*)desAddr,		//void *address;
-		color.halfword,		//uint32_t color;
-		colorMode::RGB565,	//uint8_t colorMode;
-		size				//Size size;
+		(void*)desAddr,			//void *address;
+		color.getRgb565Code(),	//uint32_t color;
+		colorMode::RGB565,		//uint8_t colorMode;
+		size					//Size size;
 	};
 	
 	dma2d.lock();
@@ -152,7 +152,7 @@ void fillRectangle(Rgb565 &obj, Position pos, Size size, RGB565_union color)
 	dma2d.unlock();
 }
 
-uint8_t drawChar(Rgb565 &des, Font *font, uint32_t utf8, Position pos, uint32_t color, uint8_t alpha)
+uint8_t drawChar(Rgb565 &des, Font *font, uint32_t utf8, Position pos, Color color)
 {
 	if (font->setChar(utf8))
 		return 0;
@@ -343,7 +343,7 @@ void drawArea(Rgb565 &des, Position areaPos, Size areaSize, Rgb565 &src, Positio
 		(uint16_t)desOffset,			//uint16_t destinationOffset;
 		colorMode::RGB565,	//uint8_t destinationColorMode;
 
-		Size{width, height}	//Size size;
+		Size{(uint16_t)width, (uint16_t)height}	//Size size;
 	};
 	
 	dma2d.lock();

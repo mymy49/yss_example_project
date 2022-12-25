@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -24,7 +23,7 @@
 #include <drv/I2c.h>
 
 #include <yss/thread.h>
-#include <util/time.h>
+#include <util/runtime.h>
 #include <yss/reg.h>
 #include <targets/st_gigadevice/i2c_stm32_gd32f1.h>
 
@@ -81,7 +80,7 @@ bool I2c::init(uint8_t speed)
 bool I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
 {
 	uint8_t *data = (uint8_t *)src;
-	uint64_t endingTime = time::getRunningMsec() + timeout;
+	uint64_t endingTime = runtime::getMsec() + timeout;
 
 	setBitData(mPeri[I2C_REG::CR1], true, 8);		// start
 	mDir = TRANSMIT;
@@ -92,7 +91,7 @@ bool I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
 
 	while (mDataCount || getBitData(mPeri[I2C_REG::SR1], 2) == false) // Byte 전송 완료 비트 확인
 	{
-		if (endingTime <= time::getRunningMsec())
+		if (endingTime <= runtime::getMsec())
 		{
 			mPeri[I2C_REG::CR2] &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
 			return false;
@@ -105,7 +104,7 @@ bool I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
 
 bool I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 {
-	uint64_t endingTime = time::getRunningMsec() + timeout;
+	uint64_t endingTime = runtime::getMsec() + timeout;
 	uint8_t *data = (uint8_t *)des;
 	volatile uint16_t sr;
 
@@ -132,7 +131,7 @@ bool I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 
 	while (mDataCount) // Byte 전송 완료 비트 확인
 	{
-		if (endingTime <= time::getRunningMsec())
+		if (endingTime <= runtime::getMsec())
 		{
 			mPeri[I2C_REG::CR2] &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
 			return false;

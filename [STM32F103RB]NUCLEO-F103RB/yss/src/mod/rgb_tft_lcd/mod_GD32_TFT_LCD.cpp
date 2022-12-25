@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,13 +8,16 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
 // Copyright 2022. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
+
+#include <config.h>
+
+#if USE_GUI == true
 
 #include <mod/rgb_tft_lcd/GD32_RGB_LCD.h>
 
@@ -41,7 +44,7 @@ GD32_RGB_LCD::GD32_RGB_LCD(void)
 {
 }
 
-error GD32_RGB_LCD::init(void)
+error GD32_RGB_LCD::initialize(void)
 {
 	if(mRstPin.port)
 	{
@@ -54,12 +57,6 @@ error GD32_RGB_LCD::init(void)
 
 	thread::delay(100);
 	
-	//const uint8_t pgamma[] = {0xE0, 0x00, 0x10, 0x14, 0x03, 0x0E, 0x04, 0x36, 0x56, 0x4B, 0x04, 0x0C, 0x0A, 0x30, 0x34, 0x0F};
-	//sendCmd(POS_GAMMA, (void*)pgamma, sizeof(pgamma));
-
-	//const uint8_t ngamma[] = {0xE1, 0x00, 0x0E, 0x13, 0x03, 0x10, 0x06, 0x3E, 0x34, 0x55, 0x05, 0x0F, 0x0E, 0x3A, 0x3E, 0x0F};
-	//sendCmd(NEG_GAMMA, (void*)ngamma, sizeof(ngamma));
-
 	const uint8_t powerCon1[] = {0x0F, 0x0C};
 	sendCmd(POWER_CTRL1, (void*)powerCon1, sizeof(powerCon1));
 
@@ -186,3 +183,6 @@ const Ltdc::Specification* GD32_RGB_LCD::getSpecification(void)
 }
 
 #endif
+
+#endif
+

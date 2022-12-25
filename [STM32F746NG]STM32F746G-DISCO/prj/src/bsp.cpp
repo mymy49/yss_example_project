@@ -32,7 +32,7 @@ void initBoard(void)
 	gpioB.setAsAltFunc(7, altfunc::PB7_USART1_RX);
 	
 	uart1.enableClock();
-	uart1.init(9600, 256);
+	uart1.initialize(9600, 256);
 	uart1.enableInterrupt();
 
 	// ADC 초기화

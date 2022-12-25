@@ -47,8 +47,8 @@ namespace Task
 		Frame *frame = new Frame;
 		Label *label = new Label;
 		
-		gTouch->setInterface(*pointerEvent, -1);
-		event::setPointerDevice(*gTouch);
+		//gTouch->setInterface(*pointerEvent, -1);
+		//event::setPointerDevice(*gTouch);
 	
 		label->setSize(200, 20);
 		label->setFont(Font_Abyssinica_SIL_14);

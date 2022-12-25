@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -18,7 +17,8 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined (STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1)
+#if defined(GD32F1) || defined (STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1) || \
+	defined(STM32F0) || defined(STM32G4)
 
 #include <yss/instance.h>
 #include <config.h>
@@ -31,6 +31,10 @@
 #include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
 #elif defined(STM32L1)
 #include <targets/st_gigadevice/rcc_stm32l1.h>
+#elif defined(STM32F0)
+#include <targets/st_gigadevice/rcc_stm32f0.h>
+#elif defined(STM32G4)
+#include <targets/st_gigadevice/rcc_stm32g4.h>
 #endif
 
 #if defined(GD32F1)
@@ -44,7 +48,7 @@
 #define TIM7_IRQHandler			TIMER6_IRQHandler
 #define TIM8_UP_IRQHandler		TIMER7_UP_TIMER12_IRQHandler
 #else
-#define TIM1_UP_IRQHandler		TIMER1_UP_TIMER10_IRQHandler
+#define TIM1_UP_IRQHandler		TIMER1_UP_IRQHandler
 #define TIM2_IRQHandler			TIMER2_IRQHandler
 #define TIM3_IRQHandler			TIMER3_IRQHandler
 #define TIM4_IRQHandler			TIMER4_IRQHandler
@@ -68,10 +72,36 @@
 
 #define TIM1_UP_IRQn			TIM1_UP_TIM10_IRQn
 #define	TIM6_IRQn				TIM6_DAC_IRQn
+#elif defined(STM32F0)
+#define TIM1_UP_IRQn			TIM1_BRK_UP_TRG_COM_IRQn
+#elif defined(STM32G4)
+#define TIM1_UP_IRQn			TIM1_UP_TIM16_IRQn
+#define TIM6_IRQn				TIM6_DAC_IRQn
 #endif
 
 static const uint32_t gPpreDiv[8] = {1, 1, 1, 1, 2, 4, 8, 16};
 
+#if defined (STM32F0)
+uint32_t getApb1TimerClockFrequency(void)
+{
+	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
+
+	if(pre > 1)
+		return getApb1ClockFrequency() << 1;
+	else
+		return getApb1ClockFrequency();
+}
+
+uint32_t getApb2TimerClockFrequency(void)
+{
+	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
+
+	if(pre > 1)
+		return getApb2ClockFrequency() << 1;
+	else
+		return getApb2ClockFrequency();
+}
+#else
 uint32_t getApb1TimerClockFrequency(void)
 {
 	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE1_Msk) >> RCC_CFGR_PPRE1_Pos)];
@@ -91,6 +121,7 @@ uint32_t getApb2TimerClockFrequency(void)
 	else
 		return getApb2ClockFrequency();
 }
+#endif
 
 #if defined(TIM1_ENABLE) && (defined(TIMER1) || defined(TIM1))
 static void enableTimer1Clock(bool en)
@@ -152,7 +183,11 @@ void TIM1_UP_IRQHandler(void)
 static void enableTimer2Clock(bool en)
 {
 	clock.lock();
+#if defined(STM32G4)
+    clock.enableApb1_1Clock(RCC_APB1ENR1_TIM2EN_Pos, en);
+#else
     clock.enableApb1Clock(0, en);
+#endif
 	clock.unlock();
 }
 
@@ -199,7 +234,11 @@ void TIM2_IRQHandler(void)
 static void enableTimer3Clock(bool en)
 {
 	clock.lock();
+#if defined(STM32G4)
+    clock.enableApb1_1Clock(RCC_APB1ENR1_TIM3EN_Pos, en);
+#else
     clock.enableApb1Clock(1, en);
+#endif
 	clock.unlock();
 }
 
@@ -246,7 +285,11 @@ void TIM3_IRQHandler(void)
 static void enableTimer4Clock(bool en)
 {
 	clock.lock();
+#if defined(STM32G4)
+    clock.enableApb1_1Clock(RCC_APB1ENR1_TIM4EN_Pos, en);
+#else
     clock.enableApb1Clock(2, en);
+#endif
 	clock.unlock();
 }
 
@@ -293,7 +336,11 @@ void TIM4_IRQHandler(void)
 static void enableTimer5Clock(bool en)
 {
 	clock.lock();
+#if defined(STM32G4)
+    clock.enableApb1_1Clock(RCC_APB1ENR1_TIM5EN_Pos, en);
+#else
     clock.enableApb1Clock(3, en);
+#endif
 	clock.unlock();
 }
 
@@ -340,7 +387,11 @@ void TIM5_IRQHandler(void)
 static void enableTimer6Clock(bool en)
 {
 	clock.lock();
+#if defined(STM32G4)
+    clock.enableApb1_1Clock(RCC_APB1ENR1_TIM6EN_Pos, en);
+#else
     clock.enableApb1Clock(4, en);
+#endif
 	clock.unlock();
 }
 

@@ -232,13 +232,12 @@ typedef enum IRQn
 #endif /* GD32F10X_CL */     
 } IRQn_Type;
 
-#define TIM1_UP_IRQn	TIM1_UP_TIM10_IRQn
 /**
   * @}
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "../../core_cm3.h"
+#include "../../cmsis/core_cm3.h"
 #include <stdint.h>
 
 /** @addtogroup Exported_types
