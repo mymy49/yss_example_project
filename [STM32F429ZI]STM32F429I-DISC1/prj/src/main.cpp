@@ -68,15 +68,13 @@ int32_t main(void)
 	Cli::Guage::registerCli(cli);
 
 	// CLI LOGO 설정
-	//Cli::Logo::setFunctionQueue(functionQueue);
-	//Cli::Logo::registerCli(cli);
+	Cli::Logo::setFunctionQueue(functionQueue);
+	Cli::Logo::registerCli(cli);
 
 	cli.setGreetings("\r\n\nHello!!\n\rWelcome to yss operating system!!\n\rThis is an example for STM32F429I-DISC1 board.\n\n\r");
 	cli.start();
 	
-	//functionQueue.add(Task::displayLogo);
-	//functionQueue.add(Task::calibrateTouchScreen);
-	functionQueue.add(Task::displayGauge);
+	functionQueue.add(Task::displayLogo);
 	functionQueue.start();
 
 	while(1)

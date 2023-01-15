@@ -38,6 +38,11 @@ namespace Task
 			bmp->setBmp(Logo_179_272);
 			bmp->setPosition((480-179)/2, 0);
 		}
+		else if(lcdSize.width == 240 && lcdSize.height == 320)
+		{
+			bmp->setBmp(Logo_211_320);
+			bmp->setPosition((240-211)/2, 0);
+		}
 
 		frame->setBackgroundColor(0xFF, 0xFF, 0xFF);
 		frame->add(bmp);

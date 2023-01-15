@@ -13526,7 +13526,7 @@ static const unsigned char data[135040] = // 131.9 kB
 	
 };
 
-const struct Bmp565 Logo = 
+const struct Bmp565 Logo_211_320 = 
 {
 	211,	// width
 	320,	// height

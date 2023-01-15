@@ -47,7 +47,7 @@ void initBoard(void)
 	gpioA.setAsAnalog(5);
 
 	adc1.enableClock();
-	adc1.init();
+	adc1.initialize();
 	
 	using namespace define::adc;
 	adc1.add(5, lpfLv::LV10, bit::BIT16);
@@ -72,7 +72,7 @@ void initBoard(void)
 	gpioC.setAsAltFunc(9, altfunc::PC9_I2C3_SDA, ospeed::MID, otype::OPEN_DRAIN);
 
 	i2c3.enableClock();
-	i2c3.init(define::i2c::speed::STANDARD);
+	i2c3.initializeAsMain(define::i2c::speed::STANDARD);
 	i2c3.enableInterrupt();
 
 	const STMPE811::Config touchConfig =

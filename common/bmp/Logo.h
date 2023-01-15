@@ -20,7 +20,7 @@
 
 #include <gui/Bmp565.h>
 
-extern const struct Bmp565 Logo;
+extern const struct Bmp565 Logo_211_320;
 
 #endif
 
