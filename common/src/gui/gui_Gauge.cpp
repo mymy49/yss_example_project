@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -32,7 +31,7 @@
 
 Gauge::Gauge(void)
 {
-	mBg = new Rgb565();
+	mBg = new YssSysFrameBuffer();
 	mInitFlag = false;
 	mTopValue = 100;
 	mValue = 0;
@@ -54,17 +53,18 @@ void Gauge::makeBg(void)
 	unsigned int r;
 	Position p1, p2, p3;
 	mMutex.lock();
-	mBg->setSize(mSize);
+	Size size = mFrameBuffer->getSize();
+	mBg->setSize(size);
 
-	if(mSize.width > mSize.height)
-		r = mSize.height / 2 - 1;
+	if(size.width > size.height)
+		r = size.height / 2 - 1;
 	else
-		r = mSize.width / 2 - 1;
+		r = size.width / 2 - 1;
 	
 	mCenter.x = r;
 	mCenter.y = r;
 
-	mBg->setBackgroundColor(mBgColor);
+	mBg->setBackgroundColor(mFrameBuffer->getBackgroundColor());
 	mBg->clear();
 
 	mBg->setBrushColor(0x00, 0x00, 0x00);
@@ -114,7 +114,7 @@ void Gauge::makeBg(void)
 
 void Gauge::paint(void)
 {
-	Painter::draw(*this, *mBg, Position{0, 0});
+	Painter::draw(*mFrameBuffer, *mBg, Position{0, 0});
 
 	if(mInitFlag)
 	{
@@ -167,21 +167,31 @@ void Gauge::drawNeedle(float angle)
 	p3.x = sin(radian) * r2 + mCenter.x;
 	p3.y = cos(radian) * r2 + mCenter.y;
 	
-	setBrushColor(0xFF, 0x00, 0x00);
-	fillTriangle(p1, p2, p3);
+	mFrameBuffer->setBrushColor(0xFF, 0x00, 0x00);
+	mFrameBuffer->fillTriangle(p1, p2, p3);
 
-	setBrushColor(0x80, 0x80, 0x80);
-	drawLine(p3, mCenter);
+	mFrameBuffer->setBrushColor(0x80, 0x80, 0x80);
+	mFrameBuffer->drawLine(p3, mCenter);
 
-	setBrushColor(0x00, 0x00, 0x00);
-	drawLine(p3, p1);
-	drawLine(p3, p2);
-	fillCircle(mCenter, (unsigned short)(r1 * 1.5f));
+	mFrameBuffer->setBrushColor(0x00, 0x00, 0x00);
+	mFrameBuffer->drawLine(p3, p1);
+	mFrameBuffer->drawLine(p3, p2);
+	mFrameBuffer->fillCircle(mCenter, (unsigned short)(r1 * 1.5f));
 }
 
 void Gauge::setFont(Font font)
 {
 	mFont = font;
+}
+
+void Gauge::setBackgroundColor(Color color)
+{
+	mFrameBuffer->setBackgroundColor(color);
+}
+
+void Gauge::setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mFrameBuffer->setBackgroundColor(red, green, blue);
 }
 
 #endif

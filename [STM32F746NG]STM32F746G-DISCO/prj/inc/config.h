@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.0
+// 저작권 표기 License_ver_3.1
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -8,7 +8,6 @@
 // 본 소스 코드를 사용하였다면 아래 사항을 모두 동의하는 것으로 자동 간주 합니다.
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
-// 본 소스 코드의 내용을 무단 전재하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
@@ -58,12 +57,10 @@
 
 // ####################### GUI 설정 #######################
 // GUI library Enable (true, false)
-#define USE_GUI			false
+#define USE_GUI			true
 
 // Touch Event Enable (true, false)
-#define USE_EVENT		false
-
-#define RGB_REVERSE		true
+#define USE_EVENT		true
 
 // Stack Size of Touch Event handler (Byte)
 #define TOUCH_EVENT_HANDLER_STACK_SIZE 4096
@@ -72,10 +69,10 @@
 #define TOUCH_EVENT_MEMORY_DEPTH 128
 
 // Frame Buffer of LCD output (Rgb565, Rgb888, Argb1555)
-#define YSS_FRAME_BUFFER Rgb565
+#define YSS_FRAME_BUFFER Rgb888
 
 // Frame Buffer of GUI Frame (Rgb565, Rgb888, Argb1555)
-#define YSS_GUI_FRAME_BUFFER Rgb565
+#define YSS_GUI_FRAME_BUFFER Rgb888
 
 // ####################### KEY 설정 #######################
 // 최대 KEY 생성 가능 갯수 설정 (0 ~ ), 0일 경우 기능 꺼짐
@@ -140,7 +137,7 @@
 #define SDRAM_ENABLE
 
 // LTDC 활성화
-//#define LTDC_ENABLE
+#define LTDC_ENABLE
 
 // SPI 활성화
 #define SPI1_ENABLE

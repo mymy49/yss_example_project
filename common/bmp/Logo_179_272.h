@@ -15,39 +15,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMMON_GUAGE__H_
-#define COMMON_GUAGE__H_
+#ifndef YSS_Logo_179_272_BMP__H_
+#define YSS_Logo_179_272_BMP__H_
 
-#include <util/CommandLineInterface.h>
-#include <util/FunctionQueue.h>
-#include <drv/Ltdc.h>
-#include <yss/error.h>
+#include <gui/Bmp565.h>
 
-#if !defined(YSS_DRV_LTDC_UNSUPPORTED)
-
-// TFT LCD에 Guage 테스트 화면을 띄우는 CLI를 명령을 생성한다.
-// 사용 순서는 아래와 같다.
-// 1. setFunctionQueue() 함수를 사용해 현재 프로젝트의 FunctionQueue의 인스턴스를 등록한다.
-// 2. registerCli() 함수를 사용해 CommandLineInterface class의 instance에 등록한다.
-namespace Cli
-{
-namespace Guage
-{
-	// 현재 프로젝트에 선언된 FunctionQueue의 인스턴스를 등록한다.
-	// 
-	// FunctionQueue &obj
-	//		현재 프로젝트에 선언된 FunctionQueuE의 인스턴스를 설정한다.
-	void setFunctionQueue(FunctionQueue &obj);
-
-	// CommandLineInterface class의 instance에 명령어와 관련 함수등을 등록한다.
-	// 
-	// CommandLineInterface &cli
-	//		등록할 CLI를 설정한다.
-	void registerCli(CommandLineInterface &cli);
-}
-}
-
-#endif
+extern const struct Bmp565 Logo_179_272;
 
 #endif
 
