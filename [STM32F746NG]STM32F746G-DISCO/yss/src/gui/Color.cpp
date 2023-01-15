@@ -21,6 +21,7 @@ Color::Color(void)
 {
 	setToBlack();
 	mReverseRgb = false;
+	mReverseEndian = false;
 	mAlpha = 0xFF;
 }
 
@@ -31,6 +32,7 @@ Color::Color(uint8_t red, uint8_t green, uint8_t blue)
 	mBlue = blue;
 	mAlpha = 0xFF;
 	mReverseRgb = false;
+	mReverseEndian = false;
 }
 
 Color::Color(uint8_t red, uint8_t green, uint8_t blue, bool reverseRgb)
@@ -53,9 +55,9 @@ uint16_t Color::getRgb565Code(void)
 {
 	uint8_t code[2];
 
-	if(mReverseRgb)
+	if(mReverseRgb == true)
 	{
-		if(mReverseEndian)
+		if(mReverseEndian == true)
 		{
 			code [0] = (mGreen & 0xFC) << 3;
 			code [0] |= mBlue >> 3;
@@ -72,7 +74,7 @@ uint16_t Color::getRgb565Code(void)
 	}
 	else
 	{
-		if(mReverseEndian)
+		if(mReverseEndian == true)
 		{
 			code [0] = (mGreen & 0xFC) << 3;
 			code [0] |= mRed >> 3;

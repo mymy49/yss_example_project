@@ -28,14 +28,22 @@ typedef YSS_GUI_FRAME_BUFFER YssSysFrameBuffer;
 class Container;
 class Frame;
 
-class Object : public YssSysFrameBuffer
+class Object
 {
   protected:
 	bool mVisibleFlag;
-	static Mutex mMutex;
+	bool mResizeAble;
 	Position mPos;
 	Container *mParent;
 	Frame *mFrame;
+	YssSysFrameBuffer *mFrameBuffer;
+	Mutex mMutex;
+
+	virtual void eventSizeChanged(Size size);
+
+	virtual void update(Position pos, Size size);
+	virtual void update(Position beforePos, Size beforeSize, Position currentPos, Size currentSize);
+	virtual void update(void);
 
   public:
 	Object(void);
@@ -45,15 +53,15 @@ class Object : public YssSysFrameBuffer
 
 	void setPosition(Position pos);
 	void setPosition(int16_t x, int16_t y);
-	Position getPos(void);
+
 	void setSize(Size size);
-	void setSize(int16_t size, int16_t height);
+	void setSize(uint16_t width, uint16_t height);
+
+	Size getSize(void);
+
+	Position getPos(void);
 
 	Position getAbsolutePos(void);
-
-	virtual void update(Position pos, Size size);
-	virtual void update(Position beforePos, Size beforeSize, Position currentPos, Size currentSize);
-	virtual void update(void);
 
 	virtual Object *handlerPush(Position pos);
 	virtual Object *handlerDrag(Position pos);
@@ -66,6 +74,8 @@ class Object : public YssSysFrameBuffer
 
 	void setParent(Container *parent);
 	void setFrame(Frame *frame);
+
+	YssSysFrameBuffer* getFrameBuffer(void);
 };
 
 #endif

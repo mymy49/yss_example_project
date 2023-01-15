@@ -71,6 +71,21 @@ void Brush::setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue)
 	updateFontColor();
 }
 
+Color Brush::getBrushColor(void)
+{
+	return mBrushColor;
+}
+
+Color Brush::getFontColor(void)
+{
+	return mFontColor;
+}
+
+Color Brush::getBackgroundColor(void)
+{
+	return mBgColor;
+}
+
 void Brush::drawLine(Position start, Position end)
 {
 	uint16_t startX = start.x, startY = start.y, endX = end.x, endY = end.y;
@@ -689,6 +704,13 @@ void Brush::setReverseRgbOrder(bool reverse)
 	mBrushColor.setReverseRgbOrder(reverse);
 	mFontColor.setReverseRgbOrder(reverse);
 	mBgColor.setReverseRgbOrder(reverse);
+}
+
+void Brush::setReverseEndian(bool reverse)
+{
+	mBrushColor.setReverseEndian(reverse);
+	mFontColor.setReverseEndian(reverse);
+	mBgColor.setReverseEndian(reverse);
 }
 
 #endif

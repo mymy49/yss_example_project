@@ -96,11 +96,11 @@ class ILI9488 : public TftLcdDriver
 
 	bool mRotateFlag;
 
-	void setDirection(bool xMirror, bool yMirror, bool rotate);
-	void setWindows(uint16_t x, uint16_t y, uint16_t width = 1, uint16_t height = 1);
-
   public:
 	ILI9488(void);
+
+	void setDirection(bool xMirror, bool yMirror, bool rotate);
+	void setWindows(uint16_t x, uint16_t y, uint16_t width = 1, uint16_t height = 1);
 };
 
 #endif

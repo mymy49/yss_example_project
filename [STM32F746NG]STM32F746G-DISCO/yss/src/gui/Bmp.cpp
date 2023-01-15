@@ -26,7 +26,6 @@
 Bmp::Bmp(void)
 {
 	mPaintFlag = false;
-//	setSize(10, 10);
 	mBmp565 = 0;
 }
 
@@ -39,9 +38,11 @@ void Bmp::setBmp(const Bmp565 &obj)
 
 void Bmp::paint(void)
 {
+	mFrameBuffer->setBackgroundColor(0xFF, 0x00, 0x00);
+	mFrameBuffer->clear();
 	if(mBmp565 && mPaintFlag == false)
 	{
-		Painter::draw(*this, mBmp565, Position{0, 0});
+		Painter::draw(*mFrameBuffer, mBmp565, Position{0, 0});
 		mPaintFlag = true;
 	}
 }

@@ -18,12 +18,25 @@
 #ifndef	YSS_SAC_TOUCH__H_
 #define	YSS_SAC_TOUCH__H_
 
+#include <gui/util.h>
+#include <yss/thread.h>
+
+class PointerEvent;
+
 namespace sac
 {
 	class Touch
 	{
-	protected :
 	public :
+		Touch(void);
+		void setInterface(PointerEvent &pointerEvent, triggerId id);
+		void push(uint32_t x, uint32_t y, uint8_t event);
+
+	protected :
+
+	private :
+		triggerId mTriggerId;
+		PointerEvent *mPointerEvent;
 	};
 }
 

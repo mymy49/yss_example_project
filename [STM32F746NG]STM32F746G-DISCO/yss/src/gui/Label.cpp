@@ -25,18 +25,20 @@
 Label::Label(void)
 {
 	mText = 0;
-	setBrushColor(0x00, 0x00, 0x00);
+	mFrameBuffer->setBrushColor(0x00, 0x00, 0x00);
 }
 
 void Label::paint(void)
 {
+	Font *font = mFrameBuffer->getFont();
+
 	if (mFrameBuffer == 0)
 		return;
 
-	clear();
-	if (mText && mFont.isAble())
+	mFrameBuffer->clear();
+	if (mText && font->isAble())
 	{
-		drawString(Position{2, 2}, (char *)mText);
+		mFrameBuffer->drawString(Position{2, 2}, (char *)mText);
 	}
 }
 
@@ -45,6 +47,31 @@ void Label::setText(const char *text)
 	mText = text;
 	paint();
 	update();
+}
+
+void Label::setFontColor(Color color)
+{
+	mFrameBuffer->setFontColor(color);
+}
+
+void Label::setFontColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mFrameBuffer->setFontColor(red, green, blue);
+}
+
+void Label::setFont(Font font)
+{
+	mFrameBuffer->setFont(font);
+}
+
+void Label::setBackgroundColor(Color color)
+{
+	mFrameBuffer->setBackgroundColor(color);
+}
+
+void Label::setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue)
+{
+	mFrameBuffer->setBackgroundColor(red, green, blue);
 }
 
 #endif

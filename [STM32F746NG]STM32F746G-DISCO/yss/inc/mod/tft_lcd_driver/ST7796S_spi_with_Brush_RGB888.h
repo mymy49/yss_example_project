@@ -22,8 +22,6 @@
 #include <drv/Spi.h>
 #include "ST7796S_with_Brush_RGB888.h"
 
-#if !defined(YSS_DRV_SPI_UNSUPPORTED) && !defined(YSS_DRV_GPIO_UNSUPPORTED)
-
 class ST7796S_spi_with_Brush_RGB888 : public ST7796S_with_Brush_RGB888
 {
 	Spi *mPeri;
@@ -32,6 +30,7 @@ class ST7796S_spi_with_Brush_RGB888 : public ST7796S_with_Brush_RGB888
 	Gpio::Pin mRstPin;
 
   protected:
+	// TftLcdDriver
 	void sendCmd(uint8_t cmd); // virtual 0
 	void sendCmd(uint8_t cmd, void *data, uint32_t len); // virtual 0
 	void enable(void); // virtual 0
@@ -49,9 +48,9 @@ class ST7796S_spi_with_Brush_RGB888 : public ST7796S_with_Brush_RGB888
 	ST7796S_spi_with_Brush_RGB888(void);
 
 	void setConfig(const Config &config);
-	void reset(void);	// virtual 0
+
+	void reset(void); // virtual 0
 };
 
 #endif
 
-#endif

@@ -42,6 +42,8 @@ public:
 
 	void setReverseRgbOrder(bool reverse);
 
+	void setReverseEndian(bool reverse);
+
 	void drawLine(Position start, Position end);
 	
 	void drawTriangle(Position p1, Position p2, Position p3);
@@ -60,23 +62,53 @@ public:
 	
 	void eraseRect(Position pos, Size size);
 	
-	void clear(void);
-
 	Size calculateStringSize(const char *str);
 
 	void setFont(Font font);
 
+	virtual void clear(void);
+	
 	virtual void setBrushColor(Color color);
 	
 	virtual void setBrushColor(uint8_t red, uint8_t green, uint8_t blue);
 	
+	// 현재 설정된 브러쉬 색을 얻어온다.
+	//
+	// 반환
+	//		현재 설정된 브러쉬 색을 반환한다.
+	virtual Color getBrushColor(void);
+	
 	virtual void setFontColor(Color color);
 	
 	virtual void setFontColor(uint8_t red, uint8_t green, uint8_t blue);
+
+	// 현재 설정된 글자색을 얻어온다.
+	//
+	// 반환
+	//		현재 설정된 글자색을 반환한다.
+	virtual Color getFontColor(void);
 	
+	// 브러쉬의 배경색을 설정한다.
+	//
+	// Color color
+	//		배경색을 설정한다.
 	virtual void setBackgroundColor(Color color);
 	
+	// 브러쉬의 배경색을 설정한다.
+	//
+	// uint8_t red
+	//		배경색의 빨간색 농도를 설정한다.
+	// uint8_t green
+	//		배경색의 녹색 농도를 설정한다.
+	// uint8_t blue
+	//		배경색의 파랑색 농도를 설정한다.
 	virtual void setBackgroundColor(uint8_t red, uint8_t green, uint8_t blue);
+
+	// 현재 설정된 배경색을 얻어온다.
+	//
+	// 반환
+	//		현재 설정된 배경색을 반환한다.
+	virtual Color getBackgroundColor(void);
 
 	virtual uint8_t drawChar(Position pos, uint32_t utf8);
 	

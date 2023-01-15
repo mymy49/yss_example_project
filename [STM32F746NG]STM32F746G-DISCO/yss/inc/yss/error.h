@@ -73,6 +73,8 @@ namespace Error
 		HSE_NOT_READY = 44,
 		WRONG_CLOCK_FREQUENCY = 45,
 		IT_ALREADY_HAVE = 46,
+		NOT_HAVE_SPECIFICATON = 47,
+		NACK = 48,
 	};
 }
 

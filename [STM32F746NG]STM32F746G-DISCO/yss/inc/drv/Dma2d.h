@@ -27,7 +27,7 @@
 
 typedef volatile uint32_t	YSS_DMA2D_Peri;
 
-#elif defined(GD32F4) || defined(STM32F4) && defined(DMA2D)
+#elif defined(GD32F4) || defined(STM32F4) || defined(STM32F7) && defined(DMA2D)
 
 #include <targets/st_gigadevice/define_dma2d_stm32_gd32f4.h>
 
@@ -64,10 +64,24 @@ class Dma2d : public Drv
 		void *address;
 		uint32_t color;
 		uint8_t colorMode;
+		int16_t destinationOffset;
 		Size size;
 	};
 
 	struct CopyConfig
+	{
+		void *sourceAddress;
+		uint16_t sourceOffset;
+		uint8_t sourceColorMode;
+
+		void *destinationAddress;
+		uint16_t destinationOffset;
+		uint8_t destinationColorMode;
+
+		Size size;
+	};
+
+	struct BlendConfig
 	{
 		void *sourceAddress;
 		uint16_t sourceOffset;
@@ -91,6 +105,7 @@ class Dma2d : public Drv
 		uint8_t destinationColorMode;
 
 		Size size;
+		uint32_t color;
 	};
 
 	Dma2d(const Drv::Config drvConfig, const Config config);
@@ -99,6 +114,7 @@ class Dma2d : public Drv
 
 	void fill(FillConfig &config);
 	void copy(CopyConfig &config);
+	void blend(BlendConfig &config);
 	void copyWithBlending(CopyConfig &config);
 	void drawCharacter(DrawCharConfig &config);
 
