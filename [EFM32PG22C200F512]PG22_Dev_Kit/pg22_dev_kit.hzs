@@ -2,7 +2,6 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="64" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFM32PG/Source/EFM32PG_Startup.s" useHWbreakpoint="false"/>
   <Exceptions set="Reset;MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
@@ -113,7 +112,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="31" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="1" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="0" top="24" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="21" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="app/inc/config.h" selected="0" top="21" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="27" y="88" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/drv/Timer.h" useBinaryEdit="0" left="0" path="../../yss/inc/drv/mcu.h" selected="0" top="18" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="44" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/msp_default.cpp" selected="0" top="31" codecName="Default"/>
@@ -142,11 +141,11 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/class_clock_efm32pg22.h" selected="0" top="25" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="102" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/driver/drv_clock_efm32pg22.cpp" selected="0" top="86" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="18" y="39" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/driver/drv_clock_efm32pg22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/yss/reg.h" selected="0" top="30" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="49" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="4" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" selected="1" top="24" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="581" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/scheduler/yss_scheduler.cpp" selected="0" top="544" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="8" y="155" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/efm32pg22_dcdc.h" selected="0" top="139" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="106" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFM32PG/Source/EFM32PG_Startup.s" selected="0" top="82" codecName=""/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="83" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="/usr/share/crossworks_for_arm_4.8/source/thumb_crt0.s" selected="0" top="68" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="63" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFM32PG/Source/EFM32PG_Startup.s" selected="0" top="48" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="83" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="/usr/share/crossworks_for_arm_4.8/source/thumb_crt0.s" selected="0" top="68" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
