@@ -26,9 +26,7 @@
 
 void __WEAK initSystem(void)
 {
-	// 주변 장치 클럭으로 FSRCO 클럭 사용
-	CMU->EM01GRPACLKCTRL = CMU_EM01GRPACLKCTRL_CLKSEL_FSRCO;
-	CMU->EM01GRPBCLKCTRL = CMU_EM01GRPBCLKCTRL_CLKSEL_FSRCO;
+	clock.initialize();
 	
 	// DCDC 컨버터를 사용하도록 회로가 구성된 경우 사용
 	clock.enableApb0Clock(_CMU_CLKEN0_DCDC_SHIFT, true);
@@ -36,17 +34,16 @@ void __WEAK initSystem(void)
 	DCDC->CTRL_SET = _DCDC_CTRL_MODE_DCDCREGULATION;
 
 	// 외부 크리스탈 활성화
-	Clock::HfxoConfig HfxoConfig = 
+	Clock::HfxoConfig hfxoConfig = 
 	{
 		11000,			//uint16_t capacitorValue;	// fF(팸토패럿) 단위
 		160,			//uint16_t biasCurrent;		// uA 단위
 		HSE_CLOCK_FREQ	//uint32_t frequency;		// Hz 단위
 	};
 	clock.enableApb0Clock(_CMU_CLKEN0_HFXO0_SHIFT, true);
-	clock.enableHfxo(HfxoConfig);
+	clock.enableHfxo(hfxoConfig);
 
 	// DPLL 활성화
-	clock.enableApb0Clock(_CMU_CLKEN0_DPLL0_SHIFT, true);
 	clock.enableDpll(Clock::DPLLREF::HFXO, 399, 199); 
 }
 

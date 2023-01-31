@@ -47,6 +47,8 @@ public:
 	void enableApb1Clock(uint32_t position, bool en = true);
 
 	error enableDpll(uint8_t dpllref, uint16_t n, uint16_t m);
+
+	error setSysclk(uint8_t sysclkSrc, uint8_t ahb, uint8_t apb1, uint8_t apb2, uint8_t vcc = 33);
 private:
 	uint32_t mHfxoFrequency;
 };

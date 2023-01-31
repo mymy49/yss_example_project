@@ -26,6 +26,10 @@
 void Clock::initialize(void)
 {
 	mHfxoFrequency = 0;
+
+	// 주변 장치 클럭으로 FSRCO 클럭 사용
+	CMU->EM01GRPACLKCTRL = CMU_EM01GRPACLKCTRL_CLKSEL_FSRCO;
+	CMU->EM01GRPBCLKCTRL = CMU_EM01GRPBCLKCTRL_CLKSEL_FSRCO;
 }
 
 error Clock::enableHfxo(HfxoConfig config, bool en)
@@ -55,6 +59,43 @@ void Clock::enableApb1Clock(uint32_t position, bool en)
 {
 	setBitData(CMU->CLKEN1, en, position);
 }
+
+static const struct HfrcoCalTableElement{
+  uint32_t  minFreq;
+  uint32_t  maxFreq;
+  uint32_t  value;
+} gHfrcoCalTable[] =
+{
+  //  minFreq   maxFreq    HFRCOCAL value
+  {  900000UL, 1080000UL, 0x82401F00UL},
+  { 1080000UL, 1300000UL, 0xA2411F3AUL},
+  { 1300000UL, 1530000UL, 0xA2421F3AUL},
+  { 1530000UL, 1800000UL, 0xB6439F3AUL},
+  { 1800000UL, 2150000UL, 0x81401F00UL},
+  { 2150000UL, 2600000UL, 0xA1411F3AUL},
+  { 2600000UL, 3050000UL, 0xA1421F3AUL},
+  { 3050000UL, 3600000UL, 0xB5439F3AUL},
+  { 3600000UL, 4300000UL, 0x80401F00UL},
+  { 4300000UL, 5200000UL, 0xA0411F3AUL},
+  { 5200000UL, 6100000UL, 0xA0421F3AUL},
+  { 6100000UL, 7800000UL, 0xB4439F00UL},
+  { 7800000UL, 9800000UL, 0xB4449F3AUL},
+  { 9800000UL, 11800000UL, 0xB4459F3AUL},
+  { 11800000UL, 14400000UL, 0xB4669F00UL},
+  { 14400000UL, 17200000UL, 0xB4679F00UL},
+  { 17200000UL, 19700000UL, 0xA8689F00UL},
+  { 19700000UL, 23800000UL, 0xB8899F3AUL},
+  { 23800000UL, 28700000UL, 0xB88A9F00UL},
+  { 28700000UL, 34800000UL, 0xB8AB9F00UL},
+  { 34800000UL, 42800000UL, 0xA8CC9F00UL},
+  { 42800000UL, 51600000UL, 0xACED9F00UL},
+  { 51600000UL, 60500000UL, 0xBCEE9F00UL},
+  { 60500000UL, 72600000UL, 0xBCEF9F00UL},
+  { 72600000UL, 80000000UL, 0xCCF09F00UL},
+  { 80000000UL, 100000000UL, 0xCCF19F00UL}
+};
+
+#define HFRCOCALTABLE_ENTRIES (sizeof(gHfrcoCalTable) / sizeof(struct HfrcoCalTableElement))
 
 error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 {
@@ -100,12 +141,29 @@ error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 			return Error::WRONG_CLOCK_FREQUENCY;
 	}
 	
+	enableApb0Clock(_CMU_CLKEN0_HFRCO0_SHIFT, true);
+	for(uint32_t i=0;i<HFRCOCALTABLE_ENTRIES;i++)
+	{
+		if(gHfrcoCalTable[i].minFreq <= clk && gHfrcoCalTable[i].maxFreq >= clk)
+		{
+			HFRCO0->CAL = gHfrcoCalTable[i].value;
+		}
+	}
+	HFRCO0->CTRL_SET = _HFRCO_CTRL_FORCEEN_MASK;
+
+	enableApb0Clock(_CMU_CLKEN0_DPLL0_SHIFT, true);
+
 	setFieldData(CMU->DPLLREFCLKCTRL, _CMU_DPLLREFCLKCTRL_MASK, dpllref, _CMU_DPLLREFCLKCTRL_CLKSEL_SHIFT);
-//	DPLL0->CFG = 1;
 	setTwoFieldData(DPLL0->CFG1, _DPLL_CFG1_N_MASK, n, _DPLL_CFG1_N_SHIFT, _DPLL_CFG1_M_MASK, m, _DPLL_CFG1_M_SHIFT);	
 	DPLL0->EN_SET = _DPLL_EN_EN_MASK;
 
-	return Error::NONE;
+	for(uint32_t i=0;i<1000000;i++)
+	{
+		if(getBitData(DPLL0->STATUS, _DPLL_STATUS_RDY_SHIFT))
+			return Error::NONE;
+	}
+	
+	return Error::TIMEOUT;
 }
 
 #endif
