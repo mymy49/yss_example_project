@@ -27,9 +27,6 @@
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app;src"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;misc"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;System Files"/>
  </Project>
  <Register1>
@@ -63,11 +60,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="29" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="4" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="409" useTextEdit="1" path="yss/inc/targets/siliconlabs/efm32pg22c200f512im40.h" left="0" top="384" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="EFM32PG22/Source/EFM32PG22_Startup.s" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="116" useTextEdit="1" path="EFM32PG22_Flash.icf" left="0" top="85" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="178" useTextEdit="1" path="yss/src/misc/SEGGER_THUMB_Startup.s" left="0" top="159" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="24" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="4" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="/home/mymy49/library/yss_example_project/[EFM32PG22C200F512]PG22_Dev_Kit/SEGGER_THUMB_Startup.s&#xa;" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

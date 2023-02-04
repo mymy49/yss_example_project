@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,13 +33,13 @@ Capture::Capture(const Drv::Config &drvConfig, const Config &config) : Drv(drvCo
 	mLastCcr = 0;
 }
 
-void Capture::init(uint32_t psc, uint8_t option)
+void Capture::initialize(uint32_t psc, uint8_t option)
 {
 	mPeri[TIM_REG::PSC] = (uint16_t)psc;
 	mPeri[TIM_REG::ARR] = (uint16_t)0xFFFF;
 	setBitData(mPeri[TIM_REG::DIER], true, 0);	// Update Interrupt Enable
 
-	initChannel(option);
+	initializeChannel(option);
 }
 
 uint32_t Capture::getSourceFrequency(void)
@@ -96,7 +97,7 @@ CaptureCh1::CaptureCh1(const Drv::Config &drvConfig, const Capture::Config &conf
 	
 }
 
-void CaptureCh1::initChannel(uint8_t option)
+void CaptureCh1::initializeChannel(uint8_t option)
 {
 	mPeri[TIM_REG::CCMR1] &= ~(TIM_CCMR1_CC1S_Msk | TIM_CCMR1_IC1F_Msk);
 	mPeri[TIM_REG::CCMR1] |= (1 << 0) | (2 << 4);
@@ -127,7 +128,7 @@ CaptureCh2::CaptureCh2(const Drv::Config &drvConfig, const Capture::Config &conf
 	
 }
 
-void CaptureCh2::initChannel(uint8_t option)
+void CaptureCh2::initializeChannel(uint8_t option)
 {
 	mPeri[TIM_REG::CCMR1] &= ~(TIM_CCMR1_CC2S_Msk | TIM_CCMR1_IC2F_Msk);
 	mPeri[TIM_REG::CCMR1] |= (1 << 8) | (2 << 12);
@@ -158,7 +159,7 @@ CaptureCh3::CaptureCh3(const Drv::Config &drvConfig, const Capture::Config &conf
 	
 }
 
-void CaptureCh3::initChannel(uint8_t option)
+void CaptureCh3::initializeChannel(uint8_t option)
 {
 	mPeri[TIM_REG::CCMR2] &= ~(TIM_CCMR2_CC3S_Msk | TIM_CCMR2_IC3F_Msk);
 	mPeri[TIM_REG::CCMR2] |= (1 << 0) | (2 << 4);
@@ -187,7 +188,7 @@ CaptureCh4::CaptureCh4(const Drv::Config &drvConfig, const Capture::Config &conf
 	
 }
 
-void CaptureCh4::initChannel(uint8_t option)
+void CaptureCh4::initializeChannel(uint8_t option)
 {
 	mPeri[TIM_REG::CCMR2] &= ~(TIM_CCMR2_CC4S_Msk | TIM_CCMR2_IC4F_Msk);
 	mPeri[TIM_REG::CCMR2] |= (1 << 8) | (2 << 12);

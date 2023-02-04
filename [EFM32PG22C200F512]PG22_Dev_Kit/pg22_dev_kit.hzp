@@ -22,7 +22,7 @@
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
       arm_v8M_has_cmse="Yes"
-      c_user_include_directories="$(ProjectDir)/yss/inc;$(ProjectDir)/app/inc"
+      c_user_include_directories="$(ProjectDir)/yss/inc;$(ProjectDir)/app/inc;$(ProjectDir)/../common/inc"
       debug_register_definition_file="$(DeviceRegisterDefinitionFile)"
       gcc_cplusplus_language_standard="gnu++11"
       gcc_entry_point="Reset_Handler"
@@ -54,6 +54,12 @@
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <folder Name="app" exclude="" filter="" path="app" recurse="Yes" />
       <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
+      <folder
+        Name="common"
+        exclude=""
+        filter=""
+        path="../common"
+        recurse="Yes" />
     </folder>
     <folder Name="System Files">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />

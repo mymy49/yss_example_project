@@ -33,7 +33,7 @@
       arm_target_device_name="EFM32PG22CxxxF512"
       arm_target_interface_type="SWD"
       c_preprocessor_definitions="EFM32PG22C200F512IM40;__EFM32PG22_FAMILY;__EFM32PG22C200_SUBFAMILY;ARM_MATH_ARMV8MML"
-      c_user_include_directories="$(ProjectDir)/yss/inc;$(ProjectDir)/app/inc"
+      c_user_include_directories="$(ProjectDir)/yss/inc;$(ProjectDir)/app/inc;$(ProjectDir)/../common/inc"
       debug_register_definition_file="$(ProjectDir)/EFM32PG22C200F512IM40_Registers.xml"
       debug_stack_pointer_start="__stack_end__"
       debug_target_connection="J-Link"
@@ -57,6 +57,12 @@
     </folder>
     <folder Name="Source Files">
       <folder Name="app" exclude="" filter="" path="app" recurse="Yes" />
+      <folder
+        Name="common"
+        exclude=""
+        filter=""
+        path="../common"
+        recurse="Yes" />
       <folder Name="yss" exclude="" filter="" path="yss" recurse="Yes" />
     </folder>
     <folder Name="System Files">

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,12 +9,12 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
-
 
 #ifndef YSS_DRV_CAN__H_
 #define YSS_DRV_CAN__H_
@@ -96,8 +96,6 @@ struct J1939Frame{};
 class Can : public Drv
 {
   public:
-	Can(YSS_CAN_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void), uint32_t (*getClockFreq)(void));
-	
 	// CAN 장치를 초기화 한다. 이 함수에서 보레이트와 최대 수신 패킷 링 버퍼의 크기 및 샘플 타임을 설정한다.
 	// 
 	// 반환
@@ -222,9 +220,10 @@ class Can : public Drv
 	//		수신한 데이터를 얻는다.
 	J1939Frame generateJ1939FrameBuffer(uint8_t priority, uint16_t pgn, uint8_t sa, uint8_t count);
 
-	// 인터럽트 벡터에서 호출되는 함수이다.
-	// 사용자 임의의 호출은 금지한다.
+	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
 	void isr(void);
+
+	Can(YSS_CAN_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void), uint32_t (*getClockFreq)(void));
 
 private :
 	CanFrame *mCanFrame;

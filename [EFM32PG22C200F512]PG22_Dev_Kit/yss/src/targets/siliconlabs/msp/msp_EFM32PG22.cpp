@@ -49,6 +49,9 @@ void __WEAK initSystem(void)
 	
 	// SYSCLK 변경
 	clock.setSysclk(Clock::SYSCLK_SRC::HFRCODPLL_SRC, 1, 1);
+
+	// GPIO 활성화
+	clock.enableApb0Clock(_CMU_CLKEN0_GPIO_SHIFT, true);
 }
 
 void initDma(void)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -57,6 +58,8 @@ typedef volatile uint32_t	YSS_GPIO_Peri;
 
 typedef NRF_GPIO_Type		YSS_GPIO_Peri;
 
+#elif defined(EFM32PG22)
+
 #else
 
 #include <targets/st_gigadevice/define_gpio_gd32f1.h>
@@ -69,6 +72,7 @@ typedef volatile uint32_t	YSS_GPIO_Peri;
 
 #include "Drv.h"
 
+#if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
 class Gpio : public Drv
 {
 	YSS_GPIO_Peri *mPeri;
@@ -110,6 +114,29 @@ class Gpio : public Drv
 
 	uint32_t getPeripheralAddress(void);
 };
+#elif defined(EFM32PG22) // 추후 앞으로 이 방식을 사용할 예정
+class GpioBase : public Drv
+{
+public :
+	// 아래 멤버 함수들을 상속 받는 곳에서 다시 선언하고 구현해야함
+
+	// 설정된 핀의 출력값을 제어한다.
+	// 
+	// uint8_t pin
+	//		설정할 핀의 번호를 설정한다.
+	// bool data
+	//		출력할 값을 설정한다. true일 경우 High가 출력된다.
+	void setOutput(uint8_t pin, bool data);
+
+	bool getInputData(uint8_t pin);
+
+	GpioBase(const Drv::Config drvConfig) : Drv(drvConfig) {}
+};
+
+#if defined(EFM32PG22)
+#include <targets/siliconlabs/class_gpio_efm32pg22.h>
+#endif
+#endif
 
 #endif
 
