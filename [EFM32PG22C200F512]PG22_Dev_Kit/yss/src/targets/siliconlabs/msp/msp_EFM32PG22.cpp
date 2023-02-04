@@ -16,6 +16,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <drv/peripheral.h>
+#include <targets/siliconlabs/efm32pg22_cmu.h>
+#include <targets/siliconlabs/efm32pg22_dcdc.h>
 
 #if defined(EFM32PG22)
 
@@ -24,6 +26,9 @@
 #include <drv/peripheral.h>
 #include <yss/instance.h>
 
+// EFM32PG22 시리즈는 yss OS에서 micro second 관련 기능에 관해 정상적으로 사용하기 위해
+// 외부 크리스탈을 100 kHz 단위 이상되는 제품을 사용해야 한다.
+// 예를 들어 38.4 MHz는 사용 가능하지만, 12.34 MHz는 10kHz 단위의 숫자를 갖고 있기 때문에 사용 불가능하다.
 void __WEAK initSystem(void)
 {
 	clock.initialize();
@@ -34,17 +39,16 @@ void __WEAK initSystem(void)
 	DCDC->CTRL_SET = _DCDC_CTRL_MODE_DCDCREGULATION;
 
 	// 외부 크리스탈 활성화
-	Clock::HfxoConfig hfxoConfig = 
-	{
-		11000,			//uint16_t capacitorValue;	// fF(팸토패럿) 단위
-		160,			//uint16_t biasCurrent;		// uA 단위
-		HSE_CLOCK_FREQ	//uint32_t frequency;		// Hz 단위
-	};
 	clock.enableApb0Clock(_CMU_CLKEN0_HFXO0_SHIFT, true);
-	clock.enableHfxo(hfxoConfig);
+	clock.enableHfxo(11000, 160, HSE_CLOCK_FREQ);
 
 	// DPLL 활성화
-	clock.enableDpll(Clock::DPLLREF::HFXO, 399, 199); 
+	// n/10 MHz의 동작 주파수가 설정된다.
+	// 반드시 MHz 단위의 사용 주파수가 설정되야 한다.
+	clock.enableDpll(Clock::DPLLREF::HFXO, 760, HSE_CLOCK_FREQ/100000); 
+	
+	// SYSCLK 변경
+	clock.setSysclk(Clock::SYSCLK_SRC::HFRCODPLL_SRC, 1, 1);
 }
 
 void initDma(void)

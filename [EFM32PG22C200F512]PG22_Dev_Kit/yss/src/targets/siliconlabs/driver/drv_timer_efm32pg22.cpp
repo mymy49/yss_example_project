@@ -25,61 +25,96 @@
 
 static uint32_t gDivider = 1;
 
-Timer::Timer(YSS_TIMER_Peri *peri, const Drv::Config drvConfig) : Drv(drvConfig)
+Timer::Timer(Timer::Config config, const Drv::Config drvConfig) : Drv(drvConfig)
 {
-	mPeri = peri;
+	mDev = config.dev;
+	mBit = config.bit;
 	mIsrUpdate = 0;
 }
 
-void Timer::initSystemTime(void)
+Timer::Timer(YSS_TIMER_Dev *dev, const Drv::Config drvConfig) : Drv(drvConfig)
 {
-	uint32_t clk = getClockFrequency();
-	gDivider = clk / 1000000;
-
-	mPeri->EN_SET = TIMER_EN_EN;
-	mPeri->TOP = 0xFFFFFFFF;
-
-	enableUpdateInterrupt();
+	mDev = dev;
+	mBit = BIT::BIT_16;
+	mIsrUpdate = 0;
 }
 
-void Timer::init(uint32_t psc, uint32_t arr)
-{
-	// 본 MCU에서는 타이머가 32비트이므로 PSC를 사용하지 않음
-	mPeri->EN_SET = TIMER_EN_EN;
-	mPeri->TOP = arr;
-}
-
-void Timer::init(uint32_t freq)
+void Timer::initializeAsSystemRuntime(void)
 {
 	uint32_t clk = getClockFrequency();
 
-	mPeri->EN_SET = TIMER_EN_EN;
-	mPeri->TOP = clk / freq - 1;
+	setFieldData(mDev->CFG, _TIMER_CFG_PRESC_MASK, clk / 1000000 - 1, _TIMER_CFG_PRESC_SHIFT);
+
+	mDev->EN_SET = TIMER_EN_EN;
+
+	if(mBit == BIT::BIT_32)
+		mDev->TOP = 0xFFFFFFFF;
+	else
+		mDev->TOP = 0xFFFF;
+}
+
+void Timer::initialize(uint32_t psc, uint32_t arr)
+{
+	setFieldData(mDev->CFG, _TIMER_CFG_PRESC_MASK, psc, _TIMER_CFG_PRESC_SHIFT);
+
+	mDev->TOP = arr;
+
+	mDev->EN_SET = TIMER_EN_EN;
+}
+
+void Timer::initialize(uint32_t freq)
+{
+	uint32_t clk = getClockFrequency();
+	uint32_t psc = 1024, top;
+
+	if(mBit == BIT::BIT_32)
+		top = 0xFFFFFFFF;
+	else
+		top = 0xFFFF;
+	
+	top = clk / freq;
+	while(psc)
+	{
+		if(top % psc == 0)
+		{
+			clk /= psc;
+			psc--;
+			break;
+		}
+		psc--;
+	}
+	
+	setFieldData(mDev->CFG, _TIMER_CFG_PRESC_MASK, psc, _TIMER_CFG_PRESC_SHIFT);
+	mDev->EN_SET = TIMER_EN_EN;
+	mDev->TOP = clk / freq - 1;
 }
 
 void Timer::enableUpdateInterrupt(bool en)
 {
-	setBitData(mPeri->IEN, en, _TIMER_IEN_OF_SHIFT);
+	setBitData(mDev->IEN, en, _TIMER_IEN_OF_SHIFT);
 }
 
 void Timer::start(void)
 {
-	mPeri->CMD_SET = _TIMER_CMD_START_MASK;
+	mDev->CMD_SET = _TIMER_CMD_START_MASK;
 }
 
 void Timer::stop(void)
 {
-	mPeri->CMD_SET = _TIMER_CMD_STOP_MASK;
+	mDev->CMD_SET = _TIMER_CMD_STOP_MASK;
 }
 
 uint32_t Timer::getCounterValue(void)
 {
-	return mPeri->CNT / gDivider;
+	return mDev->CNT;
 }
 
 uint32_t Timer::getOverFlowCount(void)
 {
-	return 0xFFFFFFFF / gDivider;
+	if(mBit == BIT::BIT_32)
+		return 0xFFFFFFFF;
+	else
+		return 0xFFFF;
 }
 
 void Timer::setUpdateIsr(void (*isr)(void))

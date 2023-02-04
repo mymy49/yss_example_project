@@ -35,39 +35,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_CRYPTOACC CRYPTOACC
- * @{
- * @brief EFM32PG22 CRYPTOACC Register Declaration.
- *****************************************************************************/
-
-/** CRYPTOACC Register Declaration. */
-typedef struct {
-  __IOM uint32_t FETCHADDR;                     /**< Fetcher Address                                    */
-  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
-  __IOM uint32_t FETCHLEN;                      /**< Fetcher Length                                     */
-  __IOM uint32_t FETCHTAG;                      /**< Fetcher Tag                                        */
-  __IOM uint32_t PUSHADDR;                      /**< Pusher Address                                     */
-  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
-  __IOM uint32_t PUSHLEN;                       /**< Pusher Length                                      */
-  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
-  uint32_t       RESERVED2[2U];                 /**< Reserved for future use                            */
-  __IM uint32_t  IF;                            /**< Interrupt Flags                                    */
-  uint32_t       RESERVED3[1U];                 /**< Reserved for future use                            */
-  __IOM uint32_t IF_CLR;                        /**< Interrupt status clear                             */
-  __IOM uint32_t CTRL;                          /**< Control register                                   */
-  __IOM uint32_t CMD;                           /**< Command register                                   */
-  __IM uint32_t  STATUS;                        /**< Status register                                    */
-  uint32_t       RESERVED4[240U];               /**< Reserved for future use                            */
-  __IM uint32_t  INCL_IPS_HW_CFG;               /**< General CRYPTOACC Hardware Configuration           */
-  __IM uint32_t  BA411E_HW_CFG_1;               /**< BA411E Hardware Configuration 1                    */
-  __IM uint32_t  BA411E_HW_CFG_2;               /**< BA411E Hardware Configuration 2                    */
-  __IM uint32_t  BA413_HW_CFG;                  /**< BA413 Hardware Configuration                       */
-  __IM uint32_t  BA418_HW_CFG;                  /**< BA418 Hardware Configuration                       */
-  __IM uint32_t  BA419_HW_CFG;                  /**< BA419 Hardware Configuration                       */
-} CRYPTOACC_TypeDef;
-/** @} End of group EFM32PG22_CRYPTOACC */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_CRYPTOACC
  * @{
  * @defgroup EFM32PG22_CRYPTOACC_BitFields CRYPTOACC Bit Fields

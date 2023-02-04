@@ -34,19 +34,6 @@
 * @addtogroup Parts
 * @{
 ******************************************************************************/
-/**************************************************************************//**
- * @brief EFM32PG22 GPIO PORT
- *****************************************************************************/
-typedef struct {
-  __IOM uint32_t CTRL;                          /**< Port control            */
-  __IOM uint32_t MODEL;                         /**< mode low                */
-  uint32_t       RESERVED0[1];                  /**< Reserved for future use */
-  __IOM uint32_t MODEH;                         /**< mode high               */
-  __IOM uint32_t DOUT;                          /**< data out                */
-  __IM uint32_t  DIN;                           /**< data in                 */
-  uint32_t       RESERVED1[6];                  /**< Reserved for future use */
-} GPIO_PORT_TypeDef;
-
 /* Bit fields for GPIO_P CTRL */
 #define _GPIO_P_CTRL_RESETVALUE                        0x00400040UL                             /**< Default value for GPIO_P_CTRL               */
 #define _GPIO_P_CTRL_MASK                              0x10701070UL                             /**< Mask for GPIO_P_CTRL                        */

@@ -31,11 +31,13 @@ int main(int argc, char *argv[])
 	initYss();
 
 	timer1.enableClock();
-	timer1.init(1000);
+	timer1.initialize(1000);
 	timer1.enableUpdateInterrupt();
 	timer1.setUpdateIsr(isr_timer1);
 	timer1.enableInterrupt();
 	timer1.start();
+
+	debug_printf("clk = %d\n", clock.getCoreClockFrequency());
 
 	while(1)
 	{

@@ -22,20 +22,20 @@
 
 #if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F0) || defined(STM32G4)
 
-typedef volatile uint32_t	YSS_TIMER_Peri;
+typedef volatile uint32_t	YSS_TIMER_Dev;
 
 #elif defined(NRF52840_XXAA)
 
-typedef NRF_TIMER_Type		YSS_TIMER_Peri;
+typedef NRF_TIMER_Type		YSS_TIMER_Dev;
 
 #elif defined(EFM32PG22)
 
 #include <targets/siliconlabs/efm32pg22_timer.h>
-typedef TIMER_TypeDef		YSS_TIMER_Peri;
+typedef TIMER_TypeDef		YSS_TIMER_Dev;
 
 #else
 
-typedef volatile uint32_t YSS_TIMER_Peri;
+typedef volatile uint32_t YSS_TIMER_Dev;
 
 #define YSS_DRV_TIMER_UNSUPPORTED
 
@@ -45,19 +45,25 @@ typedef volatile uint32_t YSS_TIMER_Peri;
 
 class Timer : public Drv
 {
-	YSS_TIMER_Peri *mPeri;
-	uint64_t mTimeUpdateCnt;
-	void (*mIsrUpdate)(void);
+public:
+	enum BIT
+	{
+		BIT_16,
+		BIT_32
+	};
 
-	void isrInputCapture(void);
+	struct Config
+	{
+		YSS_TIMER_Dev *dev;
+		uint8_t bit;
+	};
 
-  public:
-	Timer(YSS_TIMER_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void), uint32_t (*getClockFreq)(void));
-	Timer(YSS_TIMER_Peri *peri, const Drv::Config drvConfig);
+	Timer(YSS_TIMER_Dev *config, const Drv::Config drvConfig);
+	Timer(Config dev, const Drv::Config drvConfig);
 
-	void init(uint32_t freq);
-	void init(uint32_t psc, uint32_t arr);
-	void initSystemTime(void);
+	void initialize(uint32_t freq);
+	void initialize(uint32_t psc, uint32_t arr);
+	void initializeAsSystemRuntime(void);
 
 	void setUpdateIsr(void (*isr)(void));
 	void enableUpdateInterrupt(bool en = true);
@@ -78,6 +84,14 @@ class Timer : public Drv
 	uint32_t getOverFlowCount(void);
 
 	void isrUpdate(void);
+
+private :
+	YSS_TIMER_Dev *mDev;
+	uint8_t mBit;
+	uint64_t mTimeUpdateCnt;
+	void (*mIsrUpdate)(void);
+
+	void isrInputCapture(void);
 };
 
 #define setUpdateIntEn		enableInterrupt

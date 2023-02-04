@@ -411,55 +411,3041 @@ typedef enum IRQn{
 
 /* Include standard ARM headers for the core */
 #include <cmsis/core_cm33.h>        /* Core Header File */
-//#include "system_efm32pg22.h" /* System Header File */
 
 /** @} End of group EFM32PG22C200F512IM40_Part */
 
 /**************************************************************************//**
- * @defgroup EFM32PG22C200F512IM40_Peripheral_TypeDefs EFM32PG22C200F512IM40 Peripheral TypeDefs
+ * @defgroup EFM32PG22_AMUXCP AMUXCP
  * @{
- * @brief Device Specific Peripheral Register Structures
+ * @brief EFM32PG22 AMUXCP Register Declaration.
  *****************************************************************************/
-#include "efm32pg22_emu.h"
-#include "efm32pg22_cmu.h"
-#include "efm32pg22_hfxo.h"
-#include "efm32pg22_hfrco.h"
-#include "efm32pg22_fsrco.h"
-#include "efm32pg22_dpll.h"
-#include "efm32pg22_lfxo.h"
-#include "efm32pg22_lfrco.h"
-#include "efm32pg22_ulfrco.h"
-#include "efm32pg22_msc.h"
-#include "efm32pg22_icache.h"
-#include "efm32pg22_prs.h"
-#include "efm32pg22_gpio.h"
-#include "efm32pg22_ldma.h"
-#include "efm32pg22_ldmaxbar.h"
-#include "efm32pg22_timer.h"
-#include "efm32pg22_usart.h"
-#include "efm32pg22_burtc.h"
-#include "efm32pg22_i2c.h"
-#include "efm32pg22_syscfg.h"
-#include "efm32pg22_buram.h"
-#include "efm32pg22_gpcrc.h"
-#include "efm32pg22_dcdc.h"
-#include "efm32pg22_pdm.h"
-#include "efm32pg22_smu.h"
-#include "efm32pg22_rtcc.h"
-#include "efm32pg22_letimer.h"
-#include "efm32pg22_iadc.h"
-#include "efm32pg22_wdog.h"
-#include "efm32pg22_amuxcp.h"
-#include "efm32pg22_eusart.h"
-#include "efm32pg22_cryptoacc.h"
-#include "efm32pg22_devinfo.h"
 
-/* Custom headers for LDMAXBAR and PRS mappings */
-#include "efm32pg22_prs_signals.h"
-#include "efm32pg22_dma_descriptor.h"
-#include "efm32pg22_ldmaxbar_defines.h"
+/** AMUXCP Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IPVERSION                                          */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CTRL;                          /**< Control                                            */
+  __IM uint32_t  STATUS;                        /**< Status                                             */
+  __IOM uint32_t TEST;                          /**< Test                                               */
+  __IOM uint32_t TRIM;                          /**< Trim                                               */
+  uint32_t       RESERVED1[1018U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IPVERSION                                          */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_SET;                      /**< Control                                            */
+  __IM uint32_t  STATUS_SET;                    /**< Status                                             */
+  __IOM uint32_t TEST_SET;                      /**< Test                                               */
+  __IOM uint32_t TRIM_SET;                      /**< Trim                                               */
+  uint32_t       RESERVED3[1018U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IPVERSION                                          */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_CLR;                      /**< Control                                            */
+  __IM uint32_t  STATUS_CLR;                    /**< Status                                             */
+  __IOM uint32_t TEST_CLR;                      /**< Test                                               */
+  __IOM uint32_t TRIM_CLR;                      /**< Trim                                               */
+  uint32_t       RESERVED5[1018U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IPVERSION                                          */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_TGL;                      /**< Control                                            */
+  __IM uint32_t  STATUS_TGL;                    /**< Status                                             */
+  __IOM uint32_t TEST_TGL;                      /**< Test                                               */
+  __IOM uint32_t TRIM_TGL;                      /**< Trim                                               */
+} AMUXCP_TypeDef;
+/** @} End of group EFM32PG22_AMUXCP */
 
-/** @} End of group EFM32PG22C200F512IM40_Peripheral_TypeDefs  */
+/**************************************************************************//**
+ * @defgroup EFM32PG22_BURAM BURAM
+ * @{
+ * @brief EFM32PG22 BURAM Register Declaration.
+ *****************************************************************************/
+
+/** BURAM RET Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t REG;                                /**< Retention Register                                 */
+} BURAM_RET_TypeDef;
+
+/** BURAM Register Declaration. */
+typedef struct {
+  BURAM_RET_TypeDef RET[32U];                   /**< RetentionReg                                       */
+  uint32_t          RESERVED0[992U];            /**< Reserved for future use                            */
+  BURAM_RET_TypeDef RET_SET[32U];               /**< RetentionReg                                       */
+  uint32_t          RESERVED1[992U];            /**< Reserved for future use                            */
+  BURAM_RET_TypeDef RET_CLR[32U];               /**< RetentionReg                                       */
+  uint32_t          RESERVED2[992U];            /**< Reserved for future use                            */
+  BURAM_RET_TypeDef RET_TGL[32U];               /**< RetentionReg                                       */
+} BURAM_TypeDef;
+/** @} End of group EFM32PG22_BURAM */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_BURTC BURTC
+ * @{
+ * @brief EFM32PG22 BURTC Register Declaration.
+ *****************************************************************************/
+
+/** BURTC Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version ID                                      */
+  __IOM uint32_t EN;                            /**< Module Enable Register                             */
+  __IOM uint32_t CFG;                           /**< Configuration Register                             */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  __IOM uint32_t PRECNT;                        /**< Pre-Counter Value Register                         */
+  __IOM uint32_t CNT;                           /**< Counter Value Register                             */
+  __IOM uint32_t EM4WUEN;                       /**< EM4 wakeup request Enable Register                 */
+  __IM uint32_t  SYNCBUSY;                      /**< Synchronization Busy Register                      */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  __IOM uint32_t COMP;                          /**< Compare Value Register                             */
+  uint32_t       RESERVED0[1011U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_SET;                        /**< Module Enable Register                             */
+  __IOM uint32_t CFG_SET;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t PRECNT_SET;                    /**< Pre-Counter Value Register                         */
+  __IOM uint32_t CNT_SET;                       /**< Counter Value Register                             */
+  __IOM uint32_t EM4WUEN_SET;                   /**< EM4 wakeup request Enable Register                 */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< Synchronization Busy Register                      */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t COMP_SET;                      /**< Compare Value Register                             */
+  uint32_t       RESERVED1[1011U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_CLR;                        /**< Module Enable Register                             */
+  __IOM uint32_t CFG_CLR;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t PRECNT_CLR;                    /**< Pre-Counter Value Register                         */
+  __IOM uint32_t CNT_CLR;                       /**< Counter Value Register                             */
+  __IOM uint32_t EM4WUEN_CLR;                   /**< EM4 wakeup request Enable Register                 */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< Synchronization Busy Register                      */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t COMP_CLR;                      /**< Compare Value Register                             */
+  uint32_t       RESERVED2[1011U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_TGL;                        /**< Module Enable Register                             */
+  __IOM uint32_t CFG_TGL;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t PRECNT_TGL;                    /**< Pre-Counter Value Register                         */
+  __IOM uint32_t CNT_TGL;                       /**< Counter Value Register                             */
+  __IOM uint32_t EM4WUEN_TGL;                   /**< EM4 wakeup request Enable Register                 */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< Synchronization Busy Register                      */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t COMP_TGL;                      /**< Compare Value Register                             */
+} BURTC_TypeDef;
+/** @} End of group EFM32PG22_BURTC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_CMU CMU
+ * @{
+ * @brief EFM32PG22 CMU Register Declaration.
+ *****************************************************************************/
+
+/** CMU Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version ID                                      */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  __IOM uint32_t WDOGLOCK;                      /**< WDOG Configuration Lock Register                   */
+  uint32_t       RESERVED2[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED3[10U];                /**< Reserved for future use                            */
+  __IOM uint32_t CALCMD;                        /**< Calibration Command Register                       */
+  __IOM uint32_t CALCTRL;                       /**< Calibration Control Register                       */
+  __IM uint32_t  CALCNT;                        /**< Calibration Result Counter Register                */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CLKEN0;                        /**< Clock Enable Register 0                            */
+  __IOM uint32_t CLKEN1;                        /**<  Clock Enable Register 1                           */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t SYSCLKCTRL;                    /**< System Clock Control                               */
+  uint32_t       RESERVED6[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t TRACECLKCTRL;                  /**< Debug Trace Clock Control                          */
+  uint32_t       RESERVED7[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t EXPORTCLKCTRL;                 /**< Export Clock Control                               */
+  uint32_t       RESERVED8[27U];                /**< Reserved for future use                            */
+  __IOM uint32_t DPLLREFCLKCTRL;                /**< Digital PLL Reference Clock Control                */
+  uint32_t       RESERVED9[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t EM01GRPACLKCTRL;               /**< EM01 Peripheral Group A Clock Control              */
+  __IOM uint32_t EM01GRPBCLKCTRL;               /**< EM01 Peripheral Group B Clock Control              */
+  uint32_t       RESERVED10[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM23GRPACLKCTRL;               /**< EM23 Peripheral Group A Clock Control              */
+  uint32_t       RESERVED11[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM4GRPACLKCTRL;                /**< EM4 Peripheral Group A Clock Control               */
+  uint32_t       RESERVED12[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t IADCCLKCTRL;                   /**< IADC Clock Control                                 */
+  uint32_t       RESERVED13[31U];               /**< Reserved for future use                            */
+  __IOM uint32_t WDOG0CLKCTRL;                  /**< Watchdog0 Clock Control                            */
+  uint32_t       RESERVED14[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EUART0CLKCTRL;                 /**< UART Clock Control                                 */
+  uint32_t       RESERVED15[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t RTCCCLKCTRL;                   /**< RTCC Clock Control                                 */
+  uint32_t       RESERVED16[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t CRYPTOACCCLKCTRL;              /**< CRYPTOACC Clock Control                            */
+  uint32_t       RESERVED17[871U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version ID                                      */
+  uint32_t       RESERVED18[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED19[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t WDOGLOCK_SET;                  /**< WDOG Configuration Lock Register                   */
+  uint32_t       RESERVED20[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED21[10U];               /**< Reserved for future use                            */
+  __IOM uint32_t CALCMD_SET;                    /**< Calibration Command Register                       */
+  __IOM uint32_t CALCTRL_SET;                   /**< Calibration Control Register                       */
+  __IM uint32_t  CALCNT_SET;                    /**< Calibration Result Counter Register                */
+  uint32_t       RESERVED22[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CLKEN0_SET;                    /**< Clock Enable Register 0                            */
+  __IOM uint32_t CLKEN1_SET;                    /**<  Clock Enable Register 1                           */
+  uint32_t       RESERVED23[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t SYSCLKCTRL_SET;                /**< System Clock Control                               */
+  uint32_t       RESERVED24[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t TRACECLKCTRL_SET;              /**< Debug Trace Clock Control                          */
+  uint32_t       RESERVED25[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t EXPORTCLKCTRL_SET;             /**< Export Clock Control                               */
+  uint32_t       RESERVED26[27U];               /**< Reserved for future use                            */
+  __IOM uint32_t DPLLREFCLKCTRL_SET;            /**< Digital PLL Reference Clock Control                */
+  uint32_t       RESERVED27[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM01GRPACLKCTRL_SET;           /**< EM01 Peripheral Group A Clock Control              */
+  __IOM uint32_t EM01GRPBCLKCTRL_SET;           /**< EM01 Peripheral Group B Clock Control              */
+  uint32_t       RESERVED28[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM23GRPACLKCTRL_SET;           /**< EM23 Peripheral Group A Clock Control              */
+  uint32_t       RESERVED29[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM4GRPACLKCTRL_SET;            /**< EM4 Peripheral Group A Clock Control               */
+  uint32_t       RESERVED30[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t IADCCLKCTRL_SET;               /**< IADC Clock Control                                 */
+  uint32_t       RESERVED31[31U];               /**< Reserved for future use                            */
+  __IOM uint32_t WDOG0CLKCTRL_SET;              /**< Watchdog0 Clock Control                            */
+  uint32_t       RESERVED32[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EUART0CLKCTRL_SET;             /**< UART Clock Control                                 */
+  uint32_t       RESERVED33[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t RTCCCLKCTRL_SET;               /**< RTCC Clock Control                                 */
+  uint32_t       RESERVED34[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t CRYPTOACCCLKCTRL_SET;          /**< CRYPTOACC Clock Control                            */
+  uint32_t       RESERVED35[871U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version ID                                      */
+  uint32_t       RESERVED36[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED37[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t WDOGLOCK_CLR;                  /**< WDOG Configuration Lock Register                   */
+  uint32_t       RESERVED38[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED39[10U];               /**< Reserved for future use                            */
+  __IOM uint32_t CALCMD_CLR;                    /**< Calibration Command Register                       */
+  __IOM uint32_t CALCTRL_CLR;                   /**< Calibration Control Register                       */
+  __IM uint32_t  CALCNT_CLR;                    /**< Calibration Result Counter Register                */
+  uint32_t       RESERVED40[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CLKEN0_CLR;                    /**< Clock Enable Register 0                            */
+  __IOM uint32_t CLKEN1_CLR;                    /**<  Clock Enable Register 1                           */
+  uint32_t       RESERVED41[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t SYSCLKCTRL_CLR;                /**< System Clock Control                               */
+  uint32_t       RESERVED42[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t TRACECLKCTRL_CLR;              /**< Debug Trace Clock Control                          */
+  uint32_t       RESERVED43[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t EXPORTCLKCTRL_CLR;             /**< Export Clock Control                               */
+  uint32_t       RESERVED44[27U];               /**< Reserved for future use                            */
+  __IOM uint32_t DPLLREFCLKCTRL_CLR;            /**< Digital PLL Reference Clock Control                */
+  uint32_t       RESERVED45[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM01GRPACLKCTRL_CLR;           /**< EM01 Peripheral Group A Clock Control              */
+  __IOM uint32_t EM01GRPBCLKCTRL_CLR;           /**< EM01 Peripheral Group B Clock Control              */
+  uint32_t       RESERVED46[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM23GRPACLKCTRL_CLR;           /**< EM23 Peripheral Group A Clock Control              */
+  uint32_t       RESERVED47[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM4GRPACLKCTRL_CLR;            /**< EM4 Peripheral Group A Clock Control               */
+  uint32_t       RESERVED48[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t IADCCLKCTRL_CLR;               /**< IADC Clock Control                                 */
+  uint32_t       RESERVED49[31U];               /**< Reserved for future use                            */
+  __IOM uint32_t WDOG0CLKCTRL_CLR;              /**< Watchdog0 Clock Control                            */
+  uint32_t       RESERVED50[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EUART0CLKCTRL_CLR;             /**< UART Clock Control                                 */
+  uint32_t       RESERVED51[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t RTCCCLKCTRL_CLR;               /**< RTCC Clock Control                                 */
+  uint32_t       RESERVED52[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t CRYPTOACCCLKCTRL_CLR;          /**< CRYPTOACC Clock Control                            */
+  uint32_t       RESERVED53[871U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version ID                                      */
+  uint32_t       RESERVED54[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED55[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t WDOGLOCK_TGL;                  /**< WDOG Configuration Lock Register                   */
+  uint32_t       RESERVED56[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED57[10U];               /**< Reserved for future use                            */
+  __IOM uint32_t CALCMD_TGL;                    /**< Calibration Command Register                       */
+  __IOM uint32_t CALCTRL_TGL;                   /**< Calibration Control Register                       */
+  __IM uint32_t  CALCNT_TGL;                    /**< Calibration Result Counter Register                */
+  uint32_t       RESERVED58[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CLKEN0_TGL;                    /**< Clock Enable Register 0                            */
+  __IOM uint32_t CLKEN1_TGL;                    /**<  Clock Enable Register 1                           */
+  uint32_t       RESERVED59[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t SYSCLKCTRL_TGL;                /**< System Clock Control                               */
+  uint32_t       RESERVED60[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t TRACECLKCTRL_TGL;              /**< Debug Trace Clock Control                          */
+  uint32_t       RESERVED61[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t EXPORTCLKCTRL_TGL;             /**< Export Clock Control                               */
+  uint32_t       RESERVED62[27U];               /**< Reserved for future use                            */
+  __IOM uint32_t DPLLREFCLKCTRL_TGL;            /**< Digital PLL Reference Clock Control                */
+  uint32_t       RESERVED63[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM01GRPACLKCTRL_TGL;           /**< EM01 Peripheral Group A Clock Control              */
+  __IOM uint32_t EM01GRPBCLKCTRL_TGL;           /**< EM01 Peripheral Group B Clock Control              */
+  uint32_t       RESERVED64[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM23GRPACLKCTRL_TGL;           /**< EM23 Peripheral Group A Clock Control              */
+  uint32_t       RESERVED65[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM4GRPACLKCTRL_TGL;            /**< EM4 Peripheral Group A Clock Control               */
+  uint32_t       RESERVED66[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t IADCCLKCTRL_TGL;               /**< IADC Clock Control                                 */
+  uint32_t       RESERVED67[31U];               /**< Reserved for future use                            */
+  __IOM uint32_t WDOG0CLKCTRL_TGL;              /**< Watchdog0 Clock Control                            */
+  uint32_t       RESERVED68[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t EUART0CLKCTRL_TGL;             /**< UART Clock Control                                 */
+  uint32_t       RESERVED69[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t RTCCCLKCTRL_TGL;               /**< RTCC Clock Control                                 */
+  uint32_t       RESERVED70[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t CRYPTOACCCLKCTRL_TGL;          /**< CRYPTOACC Clock Control                            */
+} CMU_TypeDef;
+/** @} End of group EFM32PG22_CMU */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_CRYPTOACC CRYPTOACC
+ * @{
+ * @brief EFM32PG22 CRYPTOACC Register Declaration.
+ *****************************************************************************/
+
+/** CRYPTOACC Register Declaration. */
+typedef struct {
+  __IOM uint32_t FETCHADDR;                     /**< Fetcher Address                                    */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t FETCHLEN;                      /**< Fetcher Length                                     */
+  __IOM uint32_t FETCHTAG;                      /**< Fetcher Tag                                        */
+  __IOM uint32_t PUSHADDR;                      /**< Pusher Address                                     */
+  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PUSHLEN;                       /**< Pusher Length                                      */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  uint32_t       RESERVED2[2U];                 /**< Reserved for future use                            */
+  __IM uint32_t  IF;                            /**< Interrupt Flags                                    */
+  uint32_t       RESERVED3[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt status clear                             */
+  __IOM uint32_t CTRL;                          /**< Control register                                   */
+  __IOM uint32_t CMD;                           /**< Command register                                   */
+  __IM uint32_t  STATUS;                        /**< Status register                                    */
+  uint32_t       RESERVED4[240U];               /**< Reserved for future use                            */
+  __IM uint32_t  INCL_IPS_HW_CFG;               /**< General CRYPTOACC Hardware Configuration           */
+  __IM uint32_t  BA411E_HW_CFG_1;               /**< BA411E Hardware Configuration 1                    */
+  __IM uint32_t  BA411E_HW_CFG_2;               /**< BA411E Hardware Configuration 2                    */
+  __IM uint32_t  BA413_HW_CFG;                  /**< BA413 Hardware Configuration                       */
+  __IM uint32_t  BA418_HW_CFG;                  /**< BA418 Hardware Configuration                       */
+  __IM uint32_t  BA419_HW_CFG;                  /**< BA419 Hardware Configuration                       */
+} CRYPTOACC_TypeDef;
+/** @} End of group EFM32PG22_CRYPTOACC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_DCDC DCDC
+ * @{
+ * @brief EFM32PG22 DCDC Register Declaration.
+ *****************************************************************************/
+
+/** DCDC Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IPVERSION                                          */
+  __IOM uint32_t EN;                            /**< Enable                                             */
+  __IOM uint32_t CTRL;                          /**< Control                                            */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t EM01CTRL0;                     /**< EM01 Control                                       */
+  __IOM uint32_t EM23CTRL0;                     /**< EM23 Control                                       */
+  uint32_t       RESERVED1[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED2[4U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Lock Register                                      */
+  __IM uint32_t  LOCKSTATUS;                    /**< Lock Status Register                               */
+  uint32_t       RESERVED3[2U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED5[7U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED7[995U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_SET;                        /**< Enable                                             */
+  __IOM uint32_t CTRL_SET;                      /**< Control                                            */
+  uint32_t       RESERVED8[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t EM01CTRL0_SET;                 /**< EM01 Control                                       */
+  __IOM uint32_t EM23CTRL0_SET;                 /**< EM23 Control                                       */
+  uint32_t       RESERVED9[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED10[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Lock Register                                      */
+  __IM uint32_t  LOCKSTATUS_SET;                /**< Lock Status Register                               */
+  uint32_t       RESERVED11[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED13[7U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED14[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED15[995U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_CLR;                        /**< Enable                                             */
+  __IOM uint32_t CTRL_CLR;                      /**< Control                                            */
+  uint32_t       RESERVED16[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM01CTRL0_CLR;                 /**< EM01 Control                                       */
+  __IOM uint32_t EM23CTRL0_CLR;                 /**< EM23 Control                                       */
+  uint32_t       RESERVED17[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED18[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Lock Register                                      */
+  __IM uint32_t  LOCKSTATUS_CLR;                /**< Lock Status Register                               */
+  uint32_t       RESERVED19[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED20[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED21[7U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED22[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED23[995U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_TGL;                        /**< Enable                                             */
+  __IOM uint32_t CTRL_TGL;                      /**< Control                                            */
+  uint32_t       RESERVED24[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t EM01CTRL0_TGL;                 /**< EM01 Control                                       */
+  __IOM uint32_t EM23CTRL0_TGL;                 /**< EM23 Control                                       */
+  uint32_t       RESERVED25[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED26[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Lock Register                                      */
+  __IM uint32_t  LOCKSTATUS_TGL;                /**< Lock Status Register                               */
+  uint32_t       RESERVED27[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED28[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED29[7U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED30[1U];                /**< Reserved for future use                            */
+} DCDC_TypeDef;
+/** @} End of group EFM32PG22_DCDC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_DEVINFO DEVINFO
+ * @{
+ * @brief EFM32PG22 DEVINFO Register Declaration.
+ *****************************************************************************/
+
+/** DEVINFO HFRCODPLLCAL Register Group Declaration. */
+typedef struct {
+  __IM uint32_t HFRCODPLLCAL;                        /**< HFRCODPLL Calibration                              */
+} DEVINFO_HFRCODPLLCAL_TypeDef;
+
+/** DEVINFO HFRCOEM23CAL Register Group Declaration. */
+typedef struct {
+  uint32_t RESERVED0[1U];                            /**< Reserved for future use                            */
+} DEVINFO_HFRCOEM23CAL_TypeDef;
+
+/** DEVINFO HFRCOSECAL Register Group Declaration. */
+typedef struct {
+  uint32_t RESERVED0[1U];                            /**< Reserved for future use                            */
+} DEVINFO_HFRCOSECAL_TypeDef;
+
+/** DEVINFO Register Declaration. */
+typedef struct {
+  __IM uint32_t                INFO;                  /**< DI Information                                     */
+  __IM uint32_t                PART;                  /**< Part Info                                          */
+  __IM uint32_t                MEMINFO;               /**< Memory Info                                        */
+  __IM uint32_t                MSIZE;                 /**< Memory Size                                        */
+  __IM uint32_t                PKGINFO;               /**< Misc Device Info                                   */
+  __IM uint32_t                CUSTOMINFO;            /**< Custom Part Info                                   */
+  __IM uint32_t                SWFIX;                 /**< SW Fix Register                                    */
+  __IM uint32_t                SWCAPA0;               /**< Software Restriction                               */
+  __IM uint32_t                SWCAPA1;               /**< Software Restriction                               */
+  uint32_t                     RESERVED0[1U];         /**< Reserved for future use                            */
+  __IM uint32_t                EXTINFO;               /**< External Component Info                            */
+  uint32_t                     RESERVED1[2U];         /**< Reserved for future use                            */
+  uint32_t                     RESERVED2[3U];         /**< Reserved for future use                            */
+  __IM uint32_t                EUI48L;                /**< EUI 48 Low                                         */
+  __IM uint32_t                EUI48H;                /**< EUI 48 High                                        */
+  __IM uint32_t                EUI64L;                /**< EUI64 Low                                          */
+  __IM uint32_t                EUI64H;                /**< EUI64 High                                         */
+  __IM uint32_t                CALTEMP;               /**< Calibration temperature Information                */
+  __IM uint32_t                EMUTEMP;               /**< EMU Temperature Sensor Calibration Information     */
+  DEVINFO_HFRCODPLLCAL_TypeDef HFRCODPLLCAL[18U];     /**<                                                    */
+  DEVINFO_HFRCOEM23CAL_TypeDef HFRCOEM23CAL[18U];     /**<                                                    */
+  DEVINFO_HFRCOSECAL_TypeDef   HFRCOSECAL[18U];       /**<                                                    */
+  __IM uint32_t                MODULENAME0;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME1;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME2;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME3;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME4;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME5;           /**< Module Name Information                            */
+  __IM uint32_t                MODULENAME6;           /**< Module Name Information                            */
+  __IM uint32_t                MODULEINFO;            /**< Module Information                                 */
+  __IM uint32_t                MODXOCAL;              /**< Module External Oscillator Calibration Information */
+  uint32_t                     RESERVED3[11U];        /**< Reserved for future use                            */
+  __IM uint32_t                IADC0GAIN0;            /**< IADC Gain Calibration                              */
+  __IM uint32_t                IADC0GAIN1;            /**< IADC Gain Calibration                              */
+  __IM uint32_t                IADC0OFFSETCAL0;       /**< IADC Offset Calibration                            */
+  __IM uint32_t                IADC0NORMALOFFSETCAL0; /**< IADC Offset Calibration                            */
+  __IM uint32_t                IADC0NORMALOFFSETCAL1; /**< IADC Offset Calibration                            */
+  __IM uint32_t                IADC0HISPDOFFSETCAL0;  /**< IADC Offset Calibration                            */
+  __IM uint32_t                IADC0HISPDOFFSETCAL1;  /**< IADC Offset Calibration                            */
+  uint32_t                     RESERVED4[24U];        /**< Reserved for future use                            */
+  __IM uint32_t                LEGACY;                /**< Legacy Device Info                                 */
+  uint32_t                     RESERVED5[23U];        /**< Reserved for future use                            */
+  __IM uint32_t                RTHERM;                /**< Thermistor Calibration                             */
+  uint32_t                     RESERVED6[80U];        /**< Reserved for future use                            */
+  uint32_t                     RESERVED7[1U];         /**< Reserved for future use                            */
+} DEVINFO_TypeDef;
+/** @} End of group EFM32PG22_DEVINFO */
+
+/**************************************************************************//**
+ * @defgroup DMA_DESCRIPTOR DMA Descriptor
+ * @{
+ *****************************************************************************/
+/** DMA_DESCRIPTOR Register Declaration */
+typedef struct {
+  /* Note! Use of double __IOM (volatile) qualifier to ensure that both */
+  /* pointer and referenced memory are declared volatile. */
+  __IOM uint32_t     CTRL;     /**< DMA control register */
+  __IOM void * __IOM SRC;      /**< DMA source address */
+  __IOM void * __IOM DST;      /**< DMA destination address */
+  __IOM void * __IOM LINK;     /**< DMA link address */
+} DMA_DESCRIPTOR_TypeDef;      /**< @} */
+
+/** @} End of group Parts */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_DPLL DPLL
+ * @{
+ * @brief EFM32PG22 DPLL Register Declaration.
+ *****************************************************************************/
+
+/** DPLL Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version                                         */
+  __IOM uint32_t EN;                            /**< Enable                                             */
+  __IOM uint32_t CFG;                           /**< Config                                             */
+  __IOM uint32_t CFG1;                          /**< Config1                                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS;                        /**< Status                                             */
+  uint32_t       RESERVED0[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Lock                                               */
+  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version                                         */
+  __IOM uint32_t EN_SET;                        /**< Enable                                             */
+  __IOM uint32_t CFG_SET;                       /**< Config                                             */
+  __IOM uint32_t CFG1_SET;                      /**< Config1                                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status                                             */
+  uint32_t       RESERVED2[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Lock                                               */
+  uint32_t       RESERVED3[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version                                         */
+  __IOM uint32_t EN_CLR;                        /**< Enable                                             */
+  __IOM uint32_t CFG_CLR;                       /**< Config                                             */
+  __IOM uint32_t CFG1_CLR;                      /**< Config1                                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status                                             */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Lock                                               */
+  uint32_t       RESERVED5[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version                                         */
+  __IOM uint32_t EN_TGL;                        /**< Enable                                             */
+  __IOM uint32_t CFG_TGL;                       /**< Config                                             */
+  __IOM uint32_t CFG1_TGL;                      /**< Config1                                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status                                             */
+  uint32_t       RESERVED6[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Lock                                               */
+} DPLL_TypeDef;
+/** @} End of group EFM32PG22_DPLL */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_EMU EMU
+ * @{
+ * @brief EFM32PG22 EMU Register Declaration.
+ *****************************************************************************/
+
+/** EMU Register Declaration. */
+typedef struct {
+  uint32_t       RESERVED0[4U];                 /**< Reserved for future use                            */
+  __IOM uint32_t DECBOD;                        /**< DECOUPLE LVBOD  Control register                   */
+  uint32_t       RESERVED1[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t BOD3SENSE;                     /**< BOD3SENSE Control register                         */
+  uint32_t       RESERVED2[6U];                 /**< Reserved for future use                            */
+  __IOM uint32_t VREGVDDCMPCTRL;                /**< DC-DC VREGVDD Comparator Control Register          */
+  __IOM uint32_t PD1PARETCTRL;                  /**< PD1 Partial Retention Control                      */
+  uint32_t       RESERVED3[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< EMU Configuration lock register                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN;                           /**< Interrupt Enables                                  */
+  __IOM uint32_t EM4CTRL;                       /**< EM4 Control                                        */
+  __IOM uint32_t CMD;                           /**< EMU Command register                               */
+  __IOM uint32_t CTRL;                          /**< EMU Control register                               */
+  __IOM uint32_t TEMPLIMITS;                    /**< EMU Temperature thresholds                         */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< EMU Status register                                */
+  __IM uint32_t  TEMP;                          /**< Temperature                                        */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t RSTCTRL;                       /**< Reset Management Control register                  */
+  __IM uint32_t  RSTCAUSE;                      /**< Reset cause                                        */
+  uint32_t       RESERVED6[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t DGIF;                          /**< Interrupt Flags Debug                              */
+  __IOM uint32_t DGIEN;                         /**< Interrupt Enables Debug                            */
+  uint32_t       RESERVED7[6U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED8[1U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED9[15U];                /**< Reserved for future use                            */
+  __IOM uint32_t EFPIF;                         /**< EFP Interrupt Register                             */
+  __IOM uint32_t EFPIEN;                        /**< EFP Interrupt Enable Register                      */
+  uint32_t       RESERVED10[958U];              /**< Reserved for future use                            */
+  uint32_t       RESERVED11[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t DECBOD_SET;                    /**< DECOUPLE LVBOD  Control register                   */
+  uint32_t       RESERVED12[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BOD3SENSE_SET;                 /**< BOD3SENSE Control register                         */
+  uint32_t       RESERVED13[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t VREGVDDCMPCTRL_SET;            /**< DC-DC VREGVDD Comparator Control Register          */
+  __IOM uint32_t PD1PARETCTRL_SET;              /**< PD1 Partial Retention Control                      */
+  uint32_t       RESERVED14[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< EMU Configuration lock register                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enables                                  */
+  __IOM uint32_t EM4CTRL_SET;                   /**< EM4 Control                                        */
+  __IOM uint32_t CMD_SET;                       /**< EMU Command register                               */
+  __IOM uint32_t CTRL_SET;                      /**< EMU Control register                               */
+  __IOM uint32_t TEMPLIMITS_SET;                /**< EMU Temperature thresholds                         */
+  uint32_t       RESERVED15[2U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< EMU Status register                                */
+  __IM uint32_t  TEMP_SET;                      /**< Temperature                                        */
+  uint32_t       RESERVED16[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t RSTCTRL_SET;                   /**< Reset Management Control register                  */
+  __IM uint32_t  RSTCAUSE_SET;                  /**< Reset cause                                        */
+  uint32_t       RESERVED17[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t DGIF_SET;                      /**< Interrupt Flags Debug                              */
+  __IOM uint32_t DGIEN_SET;                     /**< Interrupt Enables Debug                            */
+  uint32_t       RESERVED18[6U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED19[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED20[15U];               /**< Reserved for future use                            */
+  __IOM uint32_t EFPIF_SET;                     /**< EFP Interrupt Register                             */
+  __IOM uint32_t EFPIEN_SET;                    /**< EFP Interrupt Enable Register                      */
+  uint32_t       RESERVED21[958U];              /**< Reserved for future use                            */
+  uint32_t       RESERVED22[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t DECBOD_CLR;                    /**< DECOUPLE LVBOD  Control register                   */
+  uint32_t       RESERVED23[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BOD3SENSE_CLR;                 /**< BOD3SENSE Control register                         */
+  uint32_t       RESERVED24[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t VREGVDDCMPCTRL_CLR;            /**< DC-DC VREGVDD Comparator Control Register          */
+  __IOM uint32_t PD1PARETCTRL_CLR;              /**< PD1 Partial Retention Control                      */
+  uint32_t       RESERVED25[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< EMU Configuration lock register                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enables                                  */
+  __IOM uint32_t EM4CTRL_CLR;                   /**< EM4 Control                                        */
+  __IOM uint32_t CMD_CLR;                       /**< EMU Command register                               */
+  __IOM uint32_t CTRL_CLR;                      /**< EMU Control register                               */
+  __IOM uint32_t TEMPLIMITS_CLR;                /**< EMU Temperature thresholds                         */
+  uint32_t       RESERVED26[2U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< EMU Status register                                */
+  __IM uint32_t  TEMP_CLR;                      /**< Temperature                                        */
+  uint32_t       RESERVED27[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t RSTCTRL_CLR;                   /**< Reset Management Control register                  */
+  __IM uint32_t  RSTCAUSE_CLR;                  /**< Reset cause                                        */
+  uint32_t       RESERVED28[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t DGIF_CLR;                      /**< Interrupt Flags Debug                              */
+  __IOM uint32_t DGIEN_CLR;                     /**< Interrupt Enables Debug                            */
+  uint32_t       RESERVED29[6U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED30[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED31[15U];               /**< Reserved for future use                            */
+  __IOM uint32_t EFPIF_CLR;                     /**< EFP Interrupt Register                             */
+  __IOM uint32_t EFPIEN_CLR;                    /**< EFP Interrupt Enable Register                      */
+  uint32_t       RESERVED32[958U];              /**< Reserved for future use                            */
+  uint32_t       RESERVED33[4U];                /**< Reserved for future use                            */
+  __IOM uint32_t DECBOD_TGL;                    /**< DECOUPLE LVBOD  Control register                   */
+  uint32_t       RESERVED34[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BOD3SENSE_TGL;                 /**< BOD3SENSE Control register                         */
+  uint32_t       RESERVED35[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t VREGVDDCMPCTRL_TGL;            /**< DC-DC VREGVDD Comparator Control Register          */
+  __IOM uint32_t PD1PARETCTRL_TGL;              /**< PD1 Partial Retention Control                      */
+  uint32_t       RESERVED36[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< EMU Configuration lock register                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flags                                    */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enables                                  */
+  __IOM uint32_t EM4CTRL_TGL;                   /**< EM4 Control                                        */
+  __IOM uint32_t CMD_TGL;                       /**< EMU Command register                               */
+  __IOM uint32_t CTRL_TGL;                      /**< EMU Control register                               */
+  __IOM uint32_t TEMPLIMITS_TGL;                /**< EMU Temperature thresholds                         */
+  uint32_t       RESERVED37[2U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< EMU Status register                                */
+  __IM uint32_t  TEMP_TGL;                      /**< Temperature                                        */
+  uint32_t       RESERVED38[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t RSTCTRL_TGL;                   /**< Reset Management Control register                  */
+  __IM uint32_t  RSTCAUSE_TGL;                  /**< Reset cause                                        */
+  uint32_t       RESERVED39[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t DGIF_TGL;                      /**< Interrupt Flags Debug                              */
+  __IOM uint32_t DGIEN_TGL;                     /**< Interrupt Enables Debug                            */
+  uint32_t       RESERVED40[6U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED41[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED42[15U];               /**< Reserved for future use                            */
+  __IOM uint32_t EFPIF_TGL;                     /**< EFP Interrupt Register                             */
+  __IOM uint32_t EFPIEN_TGL;                    /**< EFP Interrupt Enable Register                      */
+} EMU_TypeDef;
+/** @} End of group EFM32PG22_EMU */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_EUSART EUSART
+ * @{
+ * @brief EFM32PG22 EUSART Register Declaration.
+ *****************************************************************************/
+
+/** EUSART Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version ID                                      */
+  __IOM uint32_t EN;                            /**< Enable Register                                    */
+  __IOM uint32_t CFG0;                          /**< Configuration 0 Register                           */
+  __IOM uint32_t CFG1;                          /**< Configuration 1 Register                           */
+  __IOM uint32_t FRAMECFG;                      /**< Frame Format Register                              */
+  __IOM uint32_t IRHFCFG;                       /**< HF IrDA Mod Config Register                        */
+  __IOM uint32_t IRLFCFG;                       /**< LF IrDA Pulse Config Register                      */
+  __IOM uint32_t TIMINGCFG;                     /**< Timing Register                                    */
+  __IOM uint32_t STARTFRAMECFG;                 /**< Start Frame Register                               */
+  __IOM uint32_t SIGFRAMECFG;                   /**< Signal Frame Register                              */
+  __IOM uint32_t CLKDIV;                        /**< Clock Divider Register                             */
+  __IOM uint32_t TRIGCTRL;                      /**< Trigger Control Register                           */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IM uint32_t  RXDATA;                        /**< RX Data Register                                   */
+  __IM uint32_t  RXDATAP;                       /**< RX Data Peek Register                              */
+  __IOM uint32_t TXDATA;                        /**< TX Data Register                                   */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY;                      /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED0[1004U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_SET;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG0_SET;                      /**< Configuration 0 Register                           */
+  __IOM uint32_t CFG1_SET;                      /**< Configuration 1 Register                           */
+  __IOM uint32_t FRAMECFG_SET;                  /**< Frame Format Register                              */
+  __IOM uint32_t IRHFCFG_SET;                   /**< HF IrDA Mod Config Register                        */
+  __IOM uint32_t IRLFCFG_SET;                   /**< LF IrDA Pulse Config Register                      */
+  __IOM uint32_t TIMINGCFG_SET;                 /**< Timing Register                                    */
+  __IOM uint32_t STARTFRAMECFG_SET;             /**< Start Frame Register                               */
+  __IOM uint32_t SIGFRAMECFG_SET;               /**< Signal Frame Register                              */
+  __IOM uint32_t CLKDIV_SET;                    /**< Clock Divider Register                             */
+  __IOM uint32_t TRIGCTRL_SET;                  /**< Trigger Control Register                           */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IM uint32_t  RXDATA_SET;                    /**< RX Data Register                                   */
+  __IM uint32_t  RXDATAP_SET;                   /**< RX Data Peek Register                              */
+  __IOM uint32_t TXDATA_SET;                    /**< TX Data Register                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED1[1004U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_CLR;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG0_CLR;                      /**< Configuration 0 Register                           */
+  __IOM uint32_t CFG1_CLR;                      /**< Configuration 1 Register                           */
+  __IOM uint32_t FRAMECFG_CLR;                  /**< Frame Format Register                              */
+  __IOM uint32_t IRHFCFG_CLR;                   /**< HF IrDA Mod Config Register                        */
+  __IOM uint32_t IRLFCFG_CLR;                   /**< LF IrDA Pulse Config Register                      */
+  __IOM uint32_t TIMINGCFG_CLR;                 /**< Timing Register                                    */
+  __IOM uint32_t STARTFRAMECFG_CLR;             /**< Start Frame Register                               */
+  __IOM uint32_t SIGFRAMECFG_CLR;               /**< Signal Frame Register                              */
+  __IOM uint32_t CLKDIV_CLR;                    /**< Clock Divider Register                             */
+  __IOM uint32_t TRIGCTRL_CLR;                  /**< Trigger Control Register                           */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IM uint32_t  RXDATA_CLR;                    /**< RX Data Register                                   */
+  __IM uint32_t  RXDATAP_CLR;                   /**< RX Data Peek Register                              */
+  __IOM uint32_t TXDATA_CLR;                    /**< TX Data Register                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED2[1004U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version ID                                      */
+  __IOM uint32_t EN_TGL;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG0_TGL;                      /**< Configuration 0 Register                           */
+  __IOM uint32_t CFG1_TGL;                      /**< Configuration 1 Register                           */
+  __IOM uint32_t FRAMECFG_TGL;                  /**< Frame Format Register                              */
+  __IOM uint32_t IRHFCFG_TGL;                   /**< HF IrDA Mod Config Register                        */
+  __IOM uint32_t IRLFCFG_TGL;                   /**< LF IrDA Pulse Config Register                      */
+  __IOM uint32_t TIMINGCFG_TGL;                 /**< Timing Register                                    */
+  __IOM uint32_t STARTFRAMECFG_TGL;             /**< Start Frame Register                               */
+  __IOM uint32_t SIGFRAMECFG_TGL;               /**< Signal Frame Register                              */
+  __IOM uint32_t CLKDIV_TGL;                    /**< Clock Divider Register                             */
+  __IOM uint32_t TRIGCTRL_TGL;                  /**< Trigger Control Register                           */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IM uint32_t  RXDATA_TGL;                    /**< RX Data Register                                   */
+  __IM uint32_t  RXDATAP_TGL;                   /**< RX Data Peek Register                              */
+  __IOM uint32_t TXDATA_TGL;                    /**< TX Data Register                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< Synchronization Busy Register                      */
+} EUSART_TypeDef;
+/** @} End of group EFM32PG22_EUSART */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_FSRCO FSRCO
+ * @{
+ * @brief EFM32PG22 FSRCO Register Declaration.
+ *****************************************************************************/
+
+/** FSRCO Register Declaration. */
+typedef struct {
+  __IM uint32_t IPVERSION;                      /**< IP Version                                         */
+  uint32_t      RESERVED0[1023U];               /**< Reserved for future use                            */
+  __IM uint32_t IPVERSION_SET;                  /**< IP Version                                         */
+  uint32_t      RESERVED1[1023U];               /**< Reserved for future use                            */
+  __IM uint32_t IPVERSION_CLR;                  /**< IP Version                                         */
+  uint32_t      RESERVED2[1023U];               /**< Reserved for future use                            */
+  __IM uint32_t IPVERSION_TGL;                  /**< IP Version                                         */
+} FSRCO_TypeDef;
+/** @} End of group EFM32PG22_FSRCO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_GPCRC GPCRC
+ * @{
+ * @brief EFM32PG22 GPCRC Register Declaration.
+ *****************************************************************************/
+
+/** GPCRC Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version ID                                      */
+  __IOM uint32_t EN;                            /**< CRC Enable                                         */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IOM uint32_t INIT;                          /**< CRC Init Value                                     */
+  __IOM uint32_t POLY;                          /**< CRC Polynomial Value                               */
+  __IOM uint32_t INPUTDATA;                     /**< Input 32-bit Data Register                         */
+  __IOM uint32_t INPUTDATAHWORD;                /**< Input 16-bit Data Register                         */
+  __IOM uint32_t INPUTDATABYTE;                 /**< Input 8-bit Data Register                          */
+  __IM uint32_t  DATA;                          /**< CRC Data Register                                  */
+  __IM uint32_t  DATAREV;                       /**< CRC Data Reverse Register                          */
+  __IM uint32_t  DATABYTEREV;                   /**< CRC Data Byte Reverse Register                     */
+  uint32_t       RESERVED0[1012U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_SET;                        /**< CRC Enable                                         */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IOM uint32_t INIT_SET;                      /**< CRC Init Value                                     */
+  __IOM uint32_t POLY_SET;                      /**< CRC Polynomial Value                               */
+  __IOM uint32_t INPUTDATA_SET;                 /**< Input 32-bit Data Register                         */
+  __IOM uint32_t INPUTDATAHWORD_SET;            /**< Input 16-bit Data Register                         */
+  __IOM uint32_t INPUTDATABYTE_SET;             /**< Input 8-bit Data Register                          */
+  __IM uint32_t  DATA_SET;                      /**< CRC Data Register                                  */
+  __IM uint32_t  DATAREV_SET;                   /**< CRC Data Reverse Register                          */
+  __IM uint32_t  DATABYTEREV_SET;               /**< CRC Data Byte Reverse Register                     */
+  uint32_t       RESERVED1[1012U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_CLR;                        /**< CRC Enable                                         */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IOM uint32_t INIT_CLR;                      /**< CRC Init Value                                     */
+  __IOM uint32_t POLY_CLR;                      /**< CRC Polynomial Value                               */
+  __IOM uint32_t INPUTDATA_CLR;                 /**< Input 32-bit Data Register                         */
+  __IOM uint32_t INPUTDATAHWORD_CLR;            /**< Input 16-bit Data Register                         */
+  __IOM uint32_t INPUTDATABYTE_CLR;             /**< Input 8-bit Data Register                          */
+  __IM uint32_t  DATA_CLR;                      /**< CRC Data Register                                  */
+  __IM uint32_t  DATAREV_CLR;                   /**< CRC Data Reverse Register                          */
+  __IM uint32_t  DATABYTEREV_CLR;               /**< CRC Data Byte Reverse Register                     */
+  uint32_t       RESERVED2[1012U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_TGL;                        /**< CRC Enable                                         */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IOM uint32_t INIT_TGL;                      /**< CRC Init Value                                     */
+  __IOM uint32_t POLY_TGL;                      /**< CRC Polynomial Value                               */
+  __IOM uint32_t INPUTDATA_TGL;                 /**< Input 32-bit Data Register                         */
+  __IOM uint32_t INPUTDATAHWORD_TGL;            /**< Input 16-bit Data Register                         */
+  __IOM uint32_t INPUTDATABYTE_TGL;             /**< Input 8-bit Data Register                          */
+  __IM uint32_t  DATA_TGL;                      /**< CRC Data Register                                  */
+  __IM uint32_t  DATAREV_TGL;                   /**< CRC Data Reverse Register                          */
+  __IM uint32_t  DATABYTEREV_TGL;               /**< CRC Data Byte Reverse Register                     */
+} GPCRC_TypeDef;
+/** @} End of group EFM32PG22_GPCRC */
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< CMU pin enable                                     */
+  __IOM uint32_t CLKIN0ROUTE;                        /**< CLKIN0 port/pin select                             */
+  __IOM uint32_t CLKOUT0ROUTE;                       /**< CLKOUT0 port/pin select                            */
+  __IOM uint32_t CLKOUT1ROUTE;                       /**< CLKOUT1 port/pin select                            */
+  __IOM uint32_t CLKOUT2ROUTE;                       /**< CLKOUT2 port/pin select                            */
+  uint32_t       RESERVED0[2U];                      /**< Reserved for future use                            */
+} GPIO_CMUROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< DCDC pin enable                                    */
+  uint32_t       RESERVED0[3U];                      /**< Reserved for future use                            */
+} GPIO_DCDCROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< I2C0 pin enable                                    */
+  __IOM uint32_t SCLROUTE;                           /**< SCL port/pin select                                */
+  __IOM uint32_t SDAROUTE;                           /**< SDA port/pin select                                */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_I2CROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< LETIMER pin enable                                 */
+  __IOM uint32_t OUT0ROUTE;                          /**< OUT0 port/pin select                               */
+  __IOM uint32_t OUT1ROUTE;                          /**< OUT1 port/pin select                               */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_LETIMERROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< EUART pin enable                                   */
+  __IOM uint32_t CTSROUTE;                           /**< CTS port/pin select                                */
+  __IOM uint32_t RTSROUTE;                           /**< RTS port/pin select                                */
+  __IOM uint32_t RXROUTE;                            /**< RX port/pin select                                 */
+  __IOM uint32_t TXROUTE;                            /**< TX port/pin select                                 */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_EUARTROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< PDM pin enable                                     */
+  __IOM uint32_t CLKROUTE;                           /**< CLK port/pin select                                */
+  __IOM uint32_t DAT0ROUTE;                          /**< DAT0 port/pin select                               */
+  __IOM uint32_t DAT1ROUTE;                          /**< DAT1 port/pin select                               */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_PDMROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< PRS0 pin enable                                    */
+  __IOM uint32_t ASYNCH0ROUTE;                       /**< ASYNCH0 port/pin select                            */
+  __IOM uint32_t ASYNCH1ROUTE;                       /**< ASYNCH1 port/pin select                            */
+  __IOM uint32_t ASYNCH2ROUTE;                       /**< ASYNCH2 port/pin select                            */
+  __IOM uint32_t ASYNCH3ROUTE;                       /**< ASYNCH3 port/pin select                            */
+  __IOM uint32_t ASYNCH4ROUTE;                       /**< ASYNCH4 port/pin select                            */
+  __IOM uint32_t ASYNCH5ROUTE;                       /**< ASYNCH5 port/pin select                            */
+  __IOM uint32_t ASYNCH6ROUTE;                       /**< ASYNCH6 port/pin select                            */
+  __IOM uint32_t ASYNCH7ROUTE;                       /**< ASYNCH7 port/pin select                            */
+  __IOM uint32_t ASYNCH8ROUTE;                       /**< ASYNCH8 port/pin select                            */
+  __IOM uint32_t ASYNCH9ROUTE;                       /**< ASYNCH9 port/pin select                            */
+  __IOM uint32_t ASYNCH10ROUTE;                      /**< ASYNCH10 port/pin select                           */
+  __IOM uint32_t ASYNCH11ROUTE;                      /**< ASYNCH11 port/pin select                           */
+  __IOM uint32_t SYNCH0ROUTE;                        /**< SYNCH0 port/pin select                             */
+  __IOM uint32_t SYNCH1ROUTE;                        /**< SYNCH1 port/pin select                             */
+  __IOM uint32_t SYNCH2ROUTE;                        /**< SYNCH2 port/pin select                             */
+  __IOM uint32_t SYNCH3ROUTE;                        /**< SYNCH3 port/pin select                             */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_PRSROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< TIMER0 pin enable                                  */
+  __IOM uint32_t CC0ROUTE;                           /**< CC0 port/pin select                                */
+  __IOM uint32_t CC1ROUTE;                           /**< CC1 port/pin select                                */
+  __IOM uint32_t CC2ROUTE;                           /**< CC2 port/pin select                                */
+  __IOM uint32_t CDTI0ROUTE;                         /**< CDTI0 port/pin select                              */
+  __IOM uint32_t CDTI1ROUTE;                         /**< CDTI1 port/pin select                              */
+  __IOM uint32_t CDTI2ROUTE;                         /**< CDTI2 port/pin select                              */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_TIMERROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t ROUTEEN;                            /**< USART0 pin enable                                  */
+  __IOM uint32_t CSROUTE;                            /**< CS port/pin select                                 */
+  __IOM uint32_t CTSROUTE;                           /**< CTS port/pin select                                */
+  __IOM uint32_t RTSROUTE;                           /**< RTS port/pin select                                */
+  __IOM uint32_t RXROUTE;                            /**< RX port/pin select                                 */
+  __IOM uint32_t CLKROUTE;                           /**< SCLK port/pin select                               */
+  __IOM uint32_t TXROUTE;                            /**< TX port/pin select                                 */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+} GPIO_USARTROUTE_TypeDef;
+
+typedef struct {
+  __IOM uint32_t CTRL;                          /**< Port control            */
+  __IOM uint32_t MODEL;                         /**< mode low                */
+  uint32_t       RESERVED0[1];                  /**< Reserved for future use */
+  __IOM uint32_t MODEH;                         /**< mode high               */
+  __IOM uint32_t DOUT;                          /**< data out                */
+  __IM uint32_t  DIN;                           /**< data in                 */
+  uint32_t       RESERVED1[6];                  /**< Reserved for future use */
+} GPIO_PORT_TypeDef;
+
+typedef struct {
+  GPIO_PORT_TypeDef         P[4U];                   /**<                                                    */
+  uint32_t                  RESERVED0[144U];         /**< Reserved for future use                            */
+  __IOM uint32_t            LOCK;                    /**< Lock Register                                      */
+  uint32_t                  RESERVED1[3U];           /**< Reserved for future use                            */
+  __IM uint32_t             GPIOLOCKSTATUS;          /**< Lock Status                                        */
+  uint32_t                  RESERVED2[3U];           /**< Reserved for future use                            */
+  __IOM uint32_t            ABUSALLOC;               /**< A Bus allocation                                   */
+  __IOM uint32_t            BBUSALLOC;               /**< B Bus allocation                                   */
+  __IOM uint32_t            CDBUSALLOC;              /**< CD Bus allocation                                  */
+  uint32_t                  RESERVED3[53U];          /**< Reserved for future use                            */
+  __IOM uint32_t            EXTIPSELL;               /**< External Interrupt Port Select Low                 */
+  __IOM uint32_t            EXTIPSELH;               /**< External interrupt Port Select High                */
+  __IOM uint32_t            EXTIPINSELL;             /**< External Interrupt Pin Select Low                  */
+  __IOM uint32_t            EXTIPINSELH;             /**< External Interrupt Pin Select High                 */
+  __IOM uint32_t            EXTIRISE;                /**< External Interrupt Rising Edge Trigger             */
+  __IOM uint32_t            EXTIFALL;                /**< External Interrupt Falling Edge Trigger            */
+  uint32_t                  RESERVED4[2U];           /**< Reserved for future use                            */
+  __IOM uint32_t            IF;                      /**< Interrupt Flag                                     */
+  __IOM uint32_t            IEN;                     /**< Interrupt Enable                                   */
+  uint32_t                  RESERVED5[1U];           /**< Reserved for future use                            */
+  __IOM uint32_t            EM4WUEN;                 /**< EM4 wakeup enable                                  */
+  __IOM uint32_t            EM4WUPOL;                /**< EM4 wakeup polarity                                */
+  uint32_t                  RESERVED6[3U];           /**< Reserved for future use                            */
+  __IOM uint32_t            DBGROUTEPEN;             /**< Debugger Route Pin enable                          */
+  __IOM uint32_t            TRACEROUTEPEN;           /**< Trace Route Pin Enable                             */
+  uint32_t                  RESERVED7[2U];           /**< Reserved for future use                            */
+  GPIO_CMUROUTE_TypeDef     CMUROUTE;                /**< cmu DBUS config registers                          */
+  GPIO_DCDCROUTE_TypeDef    DCDCROUTE;               /**< dcdc DBUS config registers                         */
+  uint32_t                  RESERVED8[5U];           /**< Reserved for future use                            */
+  GPIO_I2CROUTE_TypeDef     I2CROUTE[2U];            /**< i2c0 DBUS config registers                         */
+  GPIO_LETIMERROUTE_TypeDef LETIMERROUTE[1U];        /**< letimer DBUS config registers                      */
+  GPIO_EUARTROUTE_TypeDef   EUARTROUTE[1U];          /**< leuart DBUS config registers                       */
+  uint32_t                  RESERVED9[18U];          /**< Reserved for future use                            */
+  GPIO_PDMROUTE_TypeDef     PDMROUTE;                /**< pdm DBUS config registers                          */
+  GPIO_PRSROUTE_TypeDef     PRSROUTE[1U];            /**< prs0 DBUS config registers                         */
+  GPIO_TIMERROUTE_TypeDef   TIMERROUTE[5U];          /**< timer0 DBUS config registers                       */
+  GPIO_USARTROUTE_TypeDef   USARTROUTE[2U];          /**< usart0 DBUS config registers                       */
+  uint32_t                  RESERVED10[617U];        /**< Reserved for future use                            */
+  GPIO_PORT_TypeDef         P_SET[4U];               /**<                                                    */
+  uint32_t                  RESERVED11[144U];        /**< Reserved for future use                            */
+  __IOM uint32_t            LOCK_SET;                /**< Lock Register                                      */
+  uint32_t                  RESERVED12[3U];          /**< Reserved for future use                            */
+  __IM uint32_t             GPIOLOCKSTATUS_SET;      /**< Lock Status                                        */
+  uint32_t                  RESERVED13[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            ABUSALLOC_SET;           /**< A Bus allocation                                   */
+  __IOM uint32_t            BBUSALLOC_SET;           /**< B Bus allocation                                   */
+  __IOM uint32_t            CDBUSALLOC_SET;          /**< CD Bus allocation                                  */
+  uint32_t                  RESERVED14[53U];         /**< Reserved for future use                            */
+  __IOM uint32_t            EXTIPSELL_SET;           /**< External Interrupt Port Select Low                 */
+  __IOM uint32_t            EXTIPSELH_SET;           /**< External interrupt Port Select High                */
+  __IOM uint32_t            EXTIPINSELL_SET;         /**< External Interrupt Pin Select Low                  */
+  __IOM uint32_t            EXTIPINSELH_SET;         /**< External Interrupt Pin Select High                 */
+  __IOM uint32_t            EXTIRISE_SET;            /**< External Interrupt Rising Edge Trigger             */
+  __IOM uint32_t            EXTIFALL_SET;            /**< External Interrupt Falling Edge Trigger            */
+  uint32_t                  RESERVED15[2U];          /**< Reserved for future use                            */
+  __IOM uint32_t            IF_SET;                  /**< Interrupt Flag                                     */
+  __IOM uint32_t            IEN_SET;                 /**< Interrupt Enable                                   */
+  uint32_t                  RESERVED16[1U];          /**< Reserved for future use                            */
+  __IOM uint32_t            EM4WUEN_SET;             /**< EM4 wakeup enable                                  */
+  __IOM uint32_t            EM4WUPOL_SET;            /**< EM4 wakeup polarity                                */
+  uint32_t                  RESERVED17[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            DBGROUTEPEN_SET;         /**< Debugger Route Pin enable                          */
+  __IOM uint32_t            TRACEROUTEPEN_SET;       /**< Trace Route Pin Enable                             */
+  uint32_t                  RESERVED18[2U];          /**< Reserved for future use                            */
+  GPIO_CMUROUTE_TypeDef     CMUROUTE_SET;            /**< cmu DBUS config registers                          */
+  GPIO_DCDCROUTE_TypeDef    DCDCROUTE_SET;           /**< dcdc DBUS config registers                         */
+  uint32_t                  RESERVED19[5U];          /**< Reserved for future use                            */
+  GPIO_I2CROUTE_TypeDef     I2CROUTE_SET[2U];        /**< i2c0 DBUS config registers                         */
+  GPIO_LETIMERROUTE_TypeDef LETIMERROUTE_SET[1U];    /**< letimer DBUS config registers                      */
+  GPIO_EUARTROUTE_TypeDef   EUARTROUTE_SET[1U];      /**< leuart DBUS config registers                       */
+  uint32_t                  RESERVED20[18U];         /**< Reserved for future use                            */
+  GPIO_PDMROUTE_TypeDef     PDMROUTE_SET;            /**< pdm DBUS config registers                          */
+  GPIO_PRSROUTE_TypeDef     PRSROUTE_SET[1U];        /**< prs0 DBUS config registers                         */
+  GPIO_TIMERROUTE_TypeDef   TIMERROUTE_SET[5U];      /**< timer0 DBUS config registers                       */
+  GPIO_USARTROUTE_TypeDef   USARTROUTE_SET[2U];      /**< usart0 DBUS config registers                       */
+  uint32_t                  RESERVED21[617U];        /**< Reserved for future use                            */
+  GPIO_PORT_TypeDef         P_CLR[4U];               /**<                                                    */
+  uint32_t                  RESERVED22[144U];        /**< Reserved for future use                            */
+  __IOM uint32_t            LOCK_CLR;                /**< Lock Register                                      */
+  uint32_t                  RESERVED23[3U];          /**< Reserved for future use                            */
+  __IM uint32_t             GPIOLOCKSTATUS_CLR;      /**< Lock Status                                        */
+  uint32_t                  RESERVED24[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            ABUSALLOC_CLR;           /**< A Bus allocation                                   */
+  __IOM uint32_t            BBUSALLOC_CLR;           /**< B Bus allocation                                   */
+  __IOM uint32_t            CDBUSALLOC_CLR;          /**< CD Bus allocation                                  */
+  uint32_t                  RESERVED25[53U];         /**< Reserved for future use                            */
+  __IOM uint32_t            EXTIPSELL_CLR;           /**< External Interrupt Port Select Low                 */
+  __IOM uint32_t            EXTIPSELH_CLR;           /**< External interrupt Port Select High                */
+  __IOM uint32_t            EXTIPINSELL_CLR;         /**< External Interrupt Pin Select Low                  */
+  __IOM uint32_t            EXTIPINSELH_CLR;         /**< External Interrupt Pin Select High                 */
+  __IOM uint32_t            EXTIRISE_CLR;            /**< External Interrupt Rising Edge Trigger             */
+  __IOM uint32_t            EXTIFALL_CLR;            /**< External Interrupt Falling Edge Trigger            */
+  uint32_t                  RESERVED26[2U];          /**< Reserved for future use                            */
+  __IOM uint32_t            IF_CLR;                  /**< Interrupt Flag                                     */
+  __IOM uint32_t            IEN_CLR;                 /**< Interrupt Enable                                   */
+  uint32_t                  RESERVED27[1U];          /**< Reserved for future use                            */
+  __IOM uint32_t            EM4WUEN_CLR;             /**< EM4 wakeup enable                                  */
+  __IOM uint32_t            EM4WUPOL_CLR;            /**< EM4 wakeup polarity                                */
+  uint32_t                  RESERVED28[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            DBGROUTEPEN_CLR;         /**< Debugger Route Pin enable                          */
+  __IOM uint32_t            TRACEROUTEPEN_CLR;       /**< Trace Route Pin Enable                             */
+  uint32_t                  RESERVED29[2U];          /**< Reserved for future use                            */
+  GPIO_CMUROUTE_TypeDef     CMUROUTE_CLR;            /**< cmu DBUS config registers                          */
+  GPIO_DCDCROUTE_TypeDef    DCDCROUTE_CLR;           /**< dcdc DBUS config registers                         */
+  uint32_t                  RESERVED30[5U];          /**< Reserved for future use                            */
+  GPIO_I2CROUTE_TypeDef     I2CROUTE_CLR[2U];        /**< i2c0 DBUS config registers                         */
+  GPIO_LETIMERROUTE_TypeDef LETIMERROUTE_CLR[1U];    /**< letimer DBUS config registers                      */
+  GPIO_EUARTROUTE_TypeDef   EUARTROUTE_CLR[1U];      /**< leuart DBUS config registers                       */
+  uint32_t                  RESERVED31[18U];         /**< Reserved for future use                            */
+  GPIO_PDMROUTE_TypeDef     PDMROUTE_CLR;            /**< pdm DBUS config registers                          */
+  GPIO_PRSROUTE_TypeDef     PRSROUTE_CLR[1U];        /**< prs0 DBUS config registers                         */
+  GPIO_TIMERROUTE_TypeDef   TIMERROUTE_CLR[5U];      /**< timer0 DBUS config registers                       */
+  GPIO_USARTROUTE_TypeDef   USARTROUTE_CLR[2U];      /**< usart0 DBUS config registers                       */
+  uint32_t                  RESERVED32[617U];        /**< Reserved for future use                            */
+  GPIO_PORT_TypeDef         P_TGL[4U];               /**<                                                    */
+  uint32_t                  RESERVED33[144U];        /**< Reserved for future use                            */
+  __IOM uint32_t            LOCK_TGL;                /**< Lock Register                                      */
+  uint32_t                  RESERVED34[3U];          /**< Reserved for future use                            */
+  __IM uint32_t             GPIOLOCKSTATUS_TGL;      /**< Lock Status                                        */
+  uint32_t                  RESERVED35[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            ABUSALLOC_TGL;           /**< A Bus allocation                                   */
+  __IOM uint32_t            BBUSALLOC_TGL;           /**< B Bus allocation                                   */
+  __IOM uint32_t            CDBUSALLOC_TGL;          /**< CD Bus allocation                                  */
+  uint32_t                  RESERVED36[53U];         /**< Reserved for future use                            */
+  __IOM uint32_t            EXTIPSELL_TGL;           /**< External Interrupt Port Select Low                 */
+  __IOM uint32_t            EXTIPSELH_TGL;           /**< External interrupt Port Select High                */
+  __IOM uint32_t            EXTIPINSELL_TGL;         /**< External Interrupt Pin Select Low                  */
+  __IOM uint32_t            EXTIPINSELH_TGL;         /**< External Interrupt Pin Select High                 */
+  __IOM uint32_t            EXTIRISE_TGL;            /**< External Interrupt Rising Edge Trigger             */
+  __IOM uint32_t            EXTIFALL_TGL;            /**< External Interrupt Falling Edge Trigger            */
+  uint32_t                  RESERVED37[2U];          /**< Reserved for future use                            */
+  __IOM uint32_t            IF_TGL;                  /**< Interrupt Flag                                     */
+  __IOM uint32_t            IEN_TGL;                 /**< Interrupt Enable                                   */
+  uint32_t                  RESERVED38[1U];          /**< Reserved for future use                            */
+  __IOM uint32_t            EM4WUEN_TGL;             /**< EM4 wakeup enable                                  */
+  __IOM uint32_t            EM4WUPOL_TGL;            /**< EM4 wakeup polarity                                */
+  uint32_t                  RESERVED39[3U];          /**< Reserved for future use                            */
+  __IOM uint32_t            DBGROUTEPEN_TGL;         /**< Debugger Route Pin enable                          */
+  __IOM uint32_t            TRACEROUTEPEN_TGL;       /**< Trace Route Pin Enable                             */
+  uint32_t                  RESERVED40[2U];          /**< Reserved for future use                            */
+  GPIO_CMUROUTE_TypeDef     CMUROUTE_TGL;            /**< cmu DBUS config registers                          */
+  GPIO_DCDCROUTE_TypeDef    DCDCROUTE_TGL;           /**< dcdc DBUS config registers                         */
+  uint32_t                  RESERVED41[5U];          /**< Reserved for future use                            */
+  GPIO_I2CROUTE_TypeDef     I2CROUTE_TGL[2U];        /**< i2c0 DBUS config registers                         */
+  GPIO_LETIMERROUTE_TypeDef LETIMERROUTE_TGL[1U];    /**< letimer DBUS config registers                      */
+  GPIO_EUARTROUTE_TypeDef   EUARTROUTE_TGL[1U];      /**< leuart DBUS config registers                       */
+  uint32_t                  RESERVED42[18U];         /**< Reserved for future use                            */
+  GPIO_PDMROUTE_TypeDef     PDMROUTE_TGL;            /**< pdm DBUS config registers                          */
+  GPIO_PRSROUTE_TypeDef     PRSROUTE_TGL[1U];        /**< prs0 DBUS config registers                         */
+  GPIO_TIMERROUTE_TypeDef   TIMERROUTE_TGL[5U];      /**< timer0 DBUS config registers                       */
+  GPIO_USARTROUTE_TypeDef   USARTROUTE_TGL[2U];      /**< usart0 DBUS config registers                       */
+} GPIO_TypeDef;
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_HFRCO HFRCO
+ * @{
+ * @brief EFM32PG22 HFRCO Register Declaration.
+ *****************************************************************************/
+
+/** HFRCO Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version ID                                      */
+  __IOM uint32_t CTRL;                          /**< Ctrl Register                                      */
+  __IOM uint32_t CAL;                           /**< Calibration Register                               */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Lock Register                                      */
+  uint32_t       RESERVED1[1016U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version ID                                      */
+  __IOM uint32_t CTRL_SET;                      /**< Ctrl Register                                      */
+  __IOM uint32_t CAL_SET;                       /**< Calibration Register                               */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Lock Register                                      */
+  uint32_t       RESERVED3[1016U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version ID                                      */
+  __IOM uint32_t CTRL_CLR;                      /**< Ctrl Register                                      */
+  __IOM uint32_t CAL_CLR;                       /**< Calibration Register                               */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Lock Register                                      */
+  uint32_t       RESERVED5[1016U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version ID                                      */
+  __IOM uint32_t CTRL_TGL;                      /**< Ctrl Register                                      */
+  __IOM uint32_t CAL_TGL;                       /**< Calibration Register                               */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Lock Register                                      */
+} HFRCO_TypeDef;
+/** @} End of group EFM32PG22_HFRCO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_HFXO HFXO
+ * @{
+ * @brief EFM32PG22 HFXO Register Declaration.
+ *****************************************************************************/
+
+/** HFXO Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version ID                                      */
+  uint32_t       RESERVED0[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t XTALCFG;                       /**< Crystal Configuration Register                     */
+  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t XTALCTRL;                      /**< Crystal Control Register                           */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CFG;                           /**< Configuration Register                             */
+  uint32_t       RESERVED3[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  uint32_t       RESERVED4[9U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED6[5U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED7[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  uint32_t       RESERVED8[991U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version ID                                      */
+  uint32_t       RESERVED9[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t XTALCFG_SET;                   /**< Crystal Configuration Register                     */
+  uint32_t       RESERVED10[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t XTALCTRL_SET;                  /**< Crystal Control Register                           */
+  uint32_t       RESERVED11[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFG_SET;                       /**< Configuration Register                             */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  uint32_t       RESERVED13[9U];                /**< Reserved for future use                            */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  uint32_t       RESERVED14[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED15[5U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED16[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  uint32_t       RESERVED17[991U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version ID                                      */
+  uint32_t       RESERVED18[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t XTALCFG_CLR;                   /**< Crystal Configuration Register                     */
+  uint32_t       RESERVED19[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t XTALCTRL_CLR;                  /**< Crystal Control Register                           */
+  uint32_t       RESERVED20[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFG_CLR;                       /**< Configuration Register                             */
+  uint32_t       RESERVED21[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  uint32_t       RESERVED22[9U];                /**< Reserved for future use                            */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  uint32_t       RESERVED23[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED24[5U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED25[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  uint32_t       RESERVED26[991U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version ID                                      */
+  uint32_t       RESERVED27[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t XTALCFG_TGL;                   /**< Crystal Configuration Register                     */
+  uint32_t       RESERVED28[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t XTALCTRL_TGL;                  /**< Crystal Control Register                           */
+  uint32_t       RESERVED29[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFG_TGL;                       /**< Configuration Register                             */
+  uint32_t       RESERVED30[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  uint32_t       RESERVED31[9U];                /**< Reserved for future use                            */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  uint32_t       RESERVED32[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED33[5U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED34[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+} HFXO_TypeDef;
+/** @} End of group EFM32PG22_HFXO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_I2C I2C
+ * @{
+ * @brief EFM32PG22 I2C Register Declaration.
+ *****************************************************************************/
+
+/** I2C Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP VERSION Register                                */
+  __IOM uint32_t EN;                            /**< Enable Register                                    */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IM uint32_t  STATE;                         /**< State Register                                     */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t CLKDIV;                        /**< Clock Division Register                            */
+  __IOM uint32_t SADDR;                         /**< Follower Address Register                          */
+  __IOM uint32_t SADDRMASK;                     /**< Follower Address Mask Register                     */
+  __IM uint32_t  RXDATA;                        /**< Receive Buffer Data Register                       */
+  __IM uint32_t  RXDOUBLE;                      /**< Receive Buffer Double Data Register                */
+  __IM uint32_t  RXDATAP;                       /**< Receive Buffer Data Peek Register                  */
+  __IM uint32_t  RXDOUBLEP;                     /**< Receive Buffer Double Data Peek Register           */
+  __IOM uint32_t TXDATA;                        /**< Transmit Buffer Data Register                      */
+  __IOM uint32_t TXDOUBLE;                      /**< Transmit Buffer Double Data Register               */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED0[1007U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP VERSION Register                                */
+  __IOM uint32_t EN_SET;                        /**< Enable Register                                    */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IM uint32_t  STATE_SET;                     /**< State Register                                     */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t CLKDIV_SET;                    /**< Clock Division Register                            */
+  __IOM uint32_t SADDR_SET;                     /**< Follower Address Register                          */
+  __IOM uint32_t SADDRMASK_SET;                 /**< Follower Address Mask Register                     */
+  __IM uint32_t  RXDATA_SET;                    /**< Receive Buffer Data Register                       */
+  __IM uint32_t  RXDOUBLE_SET;                  /**< Receive Buffer Double Data Register                */
+  __IM uint32_t  RXDATAP_SET;                   /**< Receive Buffer Data Peek Register                  */
+  __IM uint32_t  RXDOUBLEP_SET;                 /**< Receive Buffer Double Data Peek Register           */
+  __IOM uint32_t TXDATA_SET;                    /**< Transmit Buffer Data Register                      */
+  __IOM uint32_t TXDOUBLE_SET;                  /**< Transmit Buffer Double Data Register               */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED1[1007U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP VERSION Register                                */
+  __IOM uint32_t EN_CLR;                        /**< Enable Register                                    */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IM uint32_t  STATE_CLR;                     /**< State Register                                     */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t CLKDIV_CLR;                    /**< Clock Division Register                            */
+  __IOM uint32_t SADDR_CLR;                     /**< Follower Address Register                          */
+  __IOM uint32_t SADDRMASK_CLR;                 /**< Follower Address Mask Register                     */
+  __IM uint32_t  RXDATA_CLR;                    /**< Receive Buffer Data Register                       */
+  __IM uint32_t  RXDOUBLE_CLR;                  /**< Receive Buffer Double Data Register                */
+  __IM uint32_t  RXDATAP_CLR;                   /**< Receive Buffer Data Peek Register                  */
+  __IM uint32_t  RXDOUBLEP_CLR;                 /**< Receive Buffer Double Data Peek Register           */
+  __IOM uint32_t TXDATA_CLR;                    /**< Transmit Buffer Data Register                      */
+  __IOM uint32_t TXDOUBLE_CLR;                  /**< Transmit Buffer Double Data Register               */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED2[1007U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP VERSION Register                                */
+  __IOM uint32_t EN_TGL;                        /**< Enable Register                                    */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IM uint32_t  STATE_TGL;                     /**< State Register                                     */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t CLKDIV_TGL;                    /**< Clock Division Register                            */
+  __IOM uint32_t SADDR_TGL;                     /**< Follower Address Register                          */
+  __IOM uint32_t SADDRMASK_TGL;                 /**< Follower Address Mask Register                     */
+  __IM uint32_t  RXDATA_TGL;                    /**< Receive Buffer Data Register                       */
+  __IM uint32_t  RXDOUBLE_TGL;                  /**< Receive Buffer Double Data Register                */
+  __IM uint32_t  RXDATAP_TGL;                   /**< Receive Buffer Data Peek Register                  */
+  __IM uint32_t  RXDOUBLEP_TGL;                 /**< Receive Buffer Double Data Peek Register           */
+  __IOM uint32_t TXDATA_TGL;                    /**< Transmit Buffer Data Register                      */
+  __IOM uint32_t TXDOUBLE_TGL;                  /**< Transmit Buffer Double Data Register               */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+} I2C_TypeDef;
+/** @} End of group EFM32PG22_I2C */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_IADC IADC
+ * @{
+ * @brief EFM32PG22 IADC Register Declaration.
+ *****************************************************************************/
+
+/** IADC CFG Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t CFG;                                /**< Configuration                                      */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+  __IOM uint32_t SCALE;                              /**< Scaling                                            */
+  __IOM uint32_t SCHED;                              /**< Scheduling                                         */
+} IADC_CFG_TypeDef;
+
+/** IADC SCANTABLE Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t SCAN;                               /**< SCAN Entry                                         */
+} IADC_SCANTABLE_TypeDef;
+
+/** IADC Register Declaration. */
+typedef struct {
+  __IM uint32_t          IPVERSION;             /**< IPVERSION                                          */
+  __IOM uint32_t         EN;                    /**< Enable                                             */
+  __IOM uint32_t         CTRL;                  /**< Control                                            */
+  __IOM uint32_t         CMD;                   /**< Command                                            */
+  __IOM uint32_t         TIMER;                 /**< Timer                                              */
+  __IM uint32_t          STATUS;                /**< Status                                             */
+  __IOM uint32_t         MASKREQ;               /**< Mask Request                                       */
+  __IM uint32_t          STMASK;                /**< Scan Table Mask                                    */
+  __IOM uint32_t         CMPTHR;                /**< Digital Window Comparator Threshold                */
+  __IOM uint32_t         IF;                    /**< Interrupt Flags                                    */
+  __IOM uint32_t         IEN;                   /**< Interrupt Enable                                   */
+  __IOM uint32_t         TRIGGER;               /**< Trigger                                            */
+  uint32_t               RESERVED0[1U];         /**< Reserved for future use                            */
+  uint32_t               RESERVED1[5U];         /**< Reserved for future use                            */
+  IADC_CFG_TypeDef       CFG[2U];               /**< CFG                                                */
+  uint32_t               RESERVED2[2U];         /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLEFIFOCFG;         /**< Single FIFO Configuration                          */
+  __IM uint32_t          SINGLEFIFODATA;        /**< Single FIFO Read Data                              */
+  __IM uint32_t          SINGLEFIFOSTAT;        /**< Single FIFO Status                                 */
+  __IM uint32_t          SINGLEDATA;            /**< Single Data                                        */
+  __IOM uint32_t         SCANFIFOCFG;           /**< Scan FIFO Configuration                            */
+  __IM uint32_t          SCANFIFODATA;          /**< Scan FIFO Read Data                                */
+  __IM uint32_t          SCANFIFOSTAT;          /**< Scan FIFO Status                                   */
+  __IM uint32_t          SCANDATA;              /**< Scan Data                                          */
+  uint32_t               RESERVED3[1U];         /**< Reserved for future use                            */
+  uint32_t               RESERVED4[1U];         /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLE;                /**< Single Queue Port Selection                        */
+  uint32_t               RESERVED5[1U];         /**< Reserved for future use                            */
+  IADC_SCANTABLE_TypeDef SCANTABLE[16U];        /**< SCANTABLE                                          */
+  uint32_t               RESERVED6[4U];         /**< Reserved for future use                            */
+  uint32_t               RESERVED7[1U];         /**< Reserved for future use                            */
+  uint32_t               RESERVED8[963U];       /**< Reserved for future use                            */
+  __IM uint32_t          IPVERSION_SET;         /**< IPVERSION                                          */
+  __IOM uint32_t         EN_SET;                /**< Enable                                             */
+  __IOM uint32_t         CTRL_SET;              /**< Control                                            */
+  __IOM uint32_t         CMD_SET;               /**< Command                                            */
+  __IOM uint32_t         TIMER_SET;             /**< Timer                                              */
+  __IM uint32_t          STATUS_SET;            /**< Status                                             */
+  __IOM uint32_t         MASKREQ_SET;           /**< Mask Request                                       */
+  __IM uint32_t          STMASK_SET;            /**< Scan Table Mask                                    */
+  __IOM uint32_t         CMPTHR_SET;            /**< Digital Window Comparator Threshold                */
+  __IOM uint32_t         IF_SET;                /**< Interrupt Flags                                    */
+  __IOM uint32_t         IEN_SET;               /**< Interrupt Enable                                   */
+  __IOM uint32_t         TRIGGER_SET;           /**< Trigger                                            */
+  uint32_t               RESERVED9[1U];         /**< Reserved for future use                            */
+  uint32_t               RESERVED10[5U];        /**< Reserved for future use                            */
+  IADC_CFG_TypeDef       CFG_SET[2U];           /**< CFG                                                */
+  uint32_t               RESERVED11[2U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLEFIFOCFG_SET;     /**< Single FIFO Configuration                          */
+  __IM uint32_t          SINGLEFIFODATA_SET;    /**< Single FIFO Read Data                              */
+  __IM uint32_t          SINGLEFIFOSTAT_SET;    /**< Single FIFO Status                                 */
+  __IM uint32_t          SINGLEDATA_SET;        /**< Single Data                                        */
+  __IOM uint32_t         SCANFIFOCFG_SET;       /**< Scan FIFO Configuration                            */
+  __IM uint32_t          SCANFIFODATA_SET;      /**< Scan FIFO Read Data                                */
+  __IM uint32_t          SCANFIFOSTAT_SET;      /**< Scan FIFO Status                                   */
+  __IM uint32_t          SCANDATA_SET;          /**< Scan Data                                          */
+  uint32_t               RESERVED12[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED13[1U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLE_SET;            /**< Single Queue Port Selection                        */
+  uint32_t               RESERVED14[1U];        /**< Reserved for future use                            */
+  IADC_SCANTABLE_TypeDef SCANTABLE_SET[16U];    /**< SCANTABLE                                          */
+  uint32_t               RESERVED15[4U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED16[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED17[963U];      /**< Reserved for future use                            */
+  __IM uint32_t          IPVERSION_CLR;         /**< IPVERSION                                          */
+  __IOM uint32_t         EN_CLR;                /**< Enable                                             */
+  __IOM uint32_t         CTRL_CLR;              /**< Control                                            */
+  __IOM uint32_t         CMD_CLR;               /**< Command                                            */
+  __IOM uint32_t         TIMER_CLR;             /**< Timer                                              */
+  __IM uint32_t          STATUS_CLR;            /**< Status                                             */
+  __IOM uint32_t         MASKREQ_CLR;           /**< Mask Request                                       */
+  __IM uint32_t          STMASK_CLR;            /**< Scan Table Mask                                    */
+  __IOM uint32_t         CMPTHR_CLR;            /**< Digital Window Comparator Threshold                */
+  __IOM uint32_t         IF_CLR;                /**< Interrupt Flags                                    */
+  __IOM uint32_t         IEN_CLR;               /**< Interrupt Enable                                   */
+  __IOM uint32_t         TRIGGER_CLR;           /**< Trigger                                            */
+  uint32_t               RESERVED18[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED19[5U];        /**< Reserved for future use                            */
+  IADC_CFG_TypeDef       CFG_CLR[2U];           /**< CFG                                                */
+  uint32_t               RESERVED20[2U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLEFIFOCFG_CLR;     /**< Single FIFO Configuration                          */
+  __IM uint32_t          SINGLEFIFODATA_CLR;    /**< Single FIFO Read Data                              */
+  __IM uint32_t          SINGLEFIFOSTAT_CLR;    /**< Single FIFO Status                                 */
+  __IM uint32_t          SINGLEDATA_CLR;        /**< Single Data                                        */
+  __IOM uint32_t         SCANFIFOCFG_CLR;       /**< Scan FIFO Configuration                            */
+  __IM uint32_t          SCANFIFODATA_CLR;      /**< Scan FIFO Read Data                                */
+  __IM uint32_t          SCANFIFOSTAT_CLR;      /**< Scan FIFO Status                                   */
+  __IM uint32_t          SCANDATA_CLR;          /**< Scan Data                                          */
+  uint32_t               RESERVED21[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED22[1U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLE_CLR;            /**< Single Queue Port Selection                        */
+  uint32_t               RESERVED23[1U];        /**< Reserved for future use                            */
+  IADC_SCANTABLE_TypeDef SCANTABLE_CLR[16U];    /**< SCANTABLE                                          */
+  uint32_t               RESERVED24[4U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED25[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED26[963U];      /**< Reserved for future use                            */
+  __IM uint32_t          IPVERSION_TGL;         /**< IPVERSION                                          */
+  __IOM uint32_t         EN_TGL;                /**< Enable                                             */
+  __IOM uint32_t         CTRL_TGL;              /**< Control                                            */
+  __IOM uint32_t         CMD_TGL;               /**< Command                                            */
+  __IOM uint32_t         TIMER_TGL;             /**< Timer                                              */
+  __IM uint32_t          STATUS_TGL;            /**< Status                                             */
+  __IOM uint32_t         MASKREQ_TGL;           /**< Mask Request                                       */
+  __IM uint32_t          STMASK_TGL;            /**< Scan Table Mask                                    */
+  __IOM uint32_t         CMPTHR_TGL;            /**< Digital Window Comparator Threshold                */
+  __IOM uint32_t         IF_TGL;                /**< Interrupt Flags                                    */
+  __IOM uint32_t         IEN_TGL;               /**< Interrupt Enable                                   */
+  __IOM uint32_t         TRIGGER_TGL;           /**< Trigger                                            */
+  uint32_t               RESERVED27[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED28[5U];        /**< Reserved for future use                            */
+  IADC_CFG_TypeDef       CFG_TGL[2U];           /**< CFG                                                */
+  uint32_t               RESERVED29[2U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLEFIFOCFG_TGL;     /**< Single FIFO Configuration                          */
+  __IM uint32_t          SINGLEFIFODATA_TGL;    /**< Single FIFO Read Data                              */
+  __IM uint32_t          SINGLEFIFOSTAT_TGL;    /**< Single FIFO Status                                 */
+  __IM uint32_t          SINGLEDATA_TGL;        /**< Single Data                                        */
+  __IOM uint32_t         SCANFIFOCFG_TGL;       /**< Scan FIFO Configuration                            */
+  __IM uint32_t          SCANFIFODATA_TGL;      /**< Scan FIFO Read Data                                */
+  __IM uint32_t          SCANFIFOSTAT_TGL;      /**< Scan FIFO Status                                   */
+  __IM uint32_t          SCANDATA_TGL;          /**< Scan Data                                          */
+  uint32_t               RESERVED30[1U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED31[1U];        /**< Reserved for future use                            */
+  __IOM uint32_t         SINGLE_TGL;            /**< Single Queue Port Selection                        */
+  uint32_t               RESERVED32[1U];        /**< Reserved for future use                            */
+  IADC_SCANTABLE_TypeDef SCANTABLE_TGL[16U];    /**< SCANTABLE                                          */
+  uint32_t               RESERVED33[4U];        /**< Reserved for future use                            */
+  uint32_t               RESERVED34[1U];        /**< Reserved for future use                            */
+} IADC_TypeDef;
+/** @} End of group EFM32PG22_IADC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_ICACHE ICACHE
+ * @{
+ * @brief EFM32PG22 ICACHE Register Declaration.
+ *****************************************************************************/
+
+/** ICACHE Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version                                         */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IM uint32_t  PCHITS;                        /**< Performance Counter Hits                           */
+  __IM uint32_t  PCMISSES;                      /**< Performance Counter Misses                         */
+  __IM uint32_t  PCAHITS;                       /**< Performance Counter Advanced Hits                  */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IOM uint32_t LPMODE;                        /**< Low Power Mode                                     */
+  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  uint32_t       RESERVED0[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version                                         */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IM uint32_t  PCHITS_SET;                    /**< Performance Counter Hits                           */
+  __IM uint32_t  PCMISSES_SET;                  /**< Performance Counter Misses                         */
+  __IM uint32_t  PCAHITS_SET;                   /**< Performance Counter Advanced Hits                  */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IOM uint32_t LPMODE_SET;                    /**< Low Power Mode                                     */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version                                         */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IM uint32_t  PCHITS_CLR;                    /**< Performance Counter Hits                           */
+  __IM uint32_t  PCMISSES_CLR;                  /**< Performance Counter Misses                         */
+  __IM uint32_t  PCAHITS_CLR;                   /**< Performance Counter Advanced Hits                  */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IOM uint32_t LPMODE_CLR;                    /**< Low Power Mode                                     */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED2[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version                                         */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IM uint32_t  PCHITS_TGL;                    /**< Performance Counter Hits                           */
+  __IM uint32_t  PCMISSES_TGL;                  /**< Performance Counter Misses                         */
+  __IM uint32_t  PCAHITS_TGL;                   /**< Performance Counter Advanced Hits                  */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IOM uint32_t LPMODE_TGL;                    /**< Low Power Mode                                     */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
+} ICACHE_TypeDef;
+/** @} End of group EFM32PG22_ICACHE */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_LDMA LDMA
+ * @{
+ * @brief EFM32PG22 LDMA Register Declaration.
+ *****************************************************************************/
+
+/** LDMA CH Register Group Declaration. */
+typedef struct {
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+  __IOM uint32_t CFG;                                /**< Channel Configuration Register                     */
+  __IOM uint32_t LOOP;                               /**< Channel Loop Counter Register                      */
+  __IOM uint32_t CTRL;                               /**< Channel Descriptor Control Word Register           */
+  __IOM uint32_t SRC;                                /**< Channel Descriptor Source Address                  */
+  __IOM uint32_t DST;                                /**< Channel Descriptor Destination Address             */
+  __IOM uint32_t LINK;                               /**< Channel Descriptor Link Address                    */
+  uint32_t       RESERVED1[5U];                      /**< Reserved for future use                            */
+} LDMA_CH_TypeDef;
+
+/** LDMA Register Declaration. */
+typedef struct {
+  __IM uint32_t   IPVERSION;                    /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  EN;                           /**< DMA module enable disable Register                 */
+  __IOM uint32_t  CTRL;                         /**< DMA Control Register                               */
+  __IM uint32_t   STATUS;                       /**< DMA Status Register                                */
+  __IOM uint32_t  SYNCSWSET;                    /**< DMA Sync Trig Sw Set Register                      */
+  __IOM uint32_t  SYNCSWCLR;                    /**< DMA Sync Trig Sw Clear register                    */
+  __IOM uint32_t  SYNCHWEN;                     /**< DMA Sync HW trigger enable register                */
+  __IOM uint32_t  SYNCHWSEL;                    /**< DMA Sync HW trigger selection register             */
+  __IM uint32_t   SYNCSTATUS;                   /**< DMA Sync Trigger Status Register                   */
+  __IOM uint32_t  CHEN;                         /**< DMA Channel Enable Register                        */
+  __IOM uint32_t  CHDIS;                        /**< DMA Channel Disable Register                       */
+  __IM uint32_t   CHSTATUS;                     /**< DMA Channel Status Register                        */
+  __IM uint32_t   CHBUSY;                       /**< DMA Channel Busy Register                          */
+  __IOM uint32_t  CHDONE;                       /**< DMA Channel Linking Done Register                  */
+  __IOM uint32_t  DBGHALT;                      /**< DMA Channel Debug Halt Register                    */
+  __IOM uint32_t  SWREQ;                        /**< DMA Channel Software Transfer Request              */
+  __IOM uint32_t  REQDIS;                       /**< DMA Channel Request Disable Register               */
+  __IM uint32_t   REQPEND;                      /**< DMA Channel Requests Pending Register              */
+  __IOM uint32_t  LINKLOAD;                     /**< DMA Channel Link Load Register                     */
+  __IOM uint32_t  REQCLEAR;                     /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  IF;                           /**< Interrupt Flag Register                            */
+  __IOM uint32_t  IEN;                          /**< Interrupt Enable Register                          */
+  LDMA_CH_TypeDef CH[8U];                       /**< DMA Channel Registers                              */
+  uint32_t        RESERVED0[906U];              /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_SET;                /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  EN_SET;                       /**< DMA module enable disable Register                 */
+  __IOM uint32_t  CTRL_SET;                     /**< DMA Control Register                               */
+  __IM uint32_t   STATUS_SET;                   /**< DMA Status Register                                */
+  __IOM uint32_t  SYNCSWSET_SET;                /**< DMA Sync Trig Sw Set Register                      */
+  __IOM uint32_t  SYNCSWCLR_SET;                /**< DMA Sync Trig Sw Clear register                    */
+  __IOM uint32_t  SYNCHWEN_SET;                 /**< DMA Sync HW trigger enable register                */
+  __IOM uint32_t  SYNCHWSEL_SET;                /**< DMA Sync HW trigger selection register             */
+  __IM uint32_t   SYNCSTATUS_SET;               /**< DMA Sync Trigger Status Register                   */
+  __IOM uint32_t  CHEN_SET;                     /**< DMA Channel Enable Register                        */
+  __IOM uint32_t  CHDIS_SET;                    /**< DMA Channel Disable Register                       */
+  __IM uint32_t   CHSTATUS_SET;                 /**< DMA Channel Status Register                        */
+  __IM uint32_t   CHBUSY_SET;                   /**< DMA Channel Busy Register                          */
+  __IOM uint32_t  CHDONE_SET;                   /**< DMA Channel Linking Done Register                  */
+  __IOM uint32_t  DBGHALT_SET;                  /**< DMA Channel Debug Halt Register                    */
+  __IOM uint32_t  SWREQ_SET;                    /**< DMA Channel Software Transfer Request              */
+  __IOM uint32_t  REQDIS_SET;                   /**< DMA Channel Request Disable Register               */
+  __IM uint32_t   REQPEND_SET;                  /**< DMA Channel Requests Pending Register              */
+  __IOM uint32_t  LINKLOAD_SET;                 /**< DMA Channel Link Load Register                     */
+  __IOM uint32_t  REQCLEAR_SET;                 /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  IF_SET;                       /**< Interrupt Flag Register                            */
+  __IOM uint32_t  IEN_SET;                      /**< Interrupt Enable Register                          */
+  LDMA_CH_TypeDef CH_SET[8U];                   /**< DMA Channel Registers                              */
+  uint32_t        RESERVED1[906U];              /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_CLR;                /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  EN_CLR;                       /**< DMA module enable disable Register                 */
+  __IOM uint32_t  CTRL_CLR;                     /**< DMA Control Register                               */
+  __IM uint32_t   STATUS_CLR;                   /**< DMA Status Register                                */
+  __IOM uint32_t  SYNCSWSET_CLR;                /**< DMA Sync Trig Sw Set Register                      */
+  __IOM uint32_t  SYNCSWCLR_CLR;                /**< DMA Sync Trig Sw Clear register                    */
+  __IOM uint32_t  SYNCHWEN_CLR;                 /**< DMA Sync HW trigger enable register                */
+  __IOM uint32_t  SYNCHWSEL_CLR;                /**< DMA Sync HW trigger selection register             */
+  __IM uint32_t   SYNCSTATUS_CLR;               /**< DMA Sync Trigger Status Register                   */
+  __IOM uint32_t  CHEN_CLR;                     /**< DMA Channel Enable Register                        */
+  __IOM uint32_t  CHDIS_CLR;                    /**< DMA Channel Disable Register                       */
+  __IM uint32_t   CHSTATUS_CLR;                 /**< DMA Channel Status Register                        */
+  __IM uint32_t   CHBUSY_CLR;                   /**< DMA Channel Busy Register                          */
+  __IOM uint32_t  CHDONE_CLR;                   /**< DMA Channel Linking Done Register                  */
+  __IOM uint32_t  DBGHALT_CLR;                  /**< DMA Channel Debug Halt Register                    */
+  __IOM uint32_t  SWREQ_CLR;                    /**< DMA Channel Software Transfer Request              */
+  __IOM uint32_t  REQDIS_CLR;                   /**< DMA Channel Request Disable Register               */
+  __IM uint32_t   REQPEND_CLR;                  /**< DMA Channel Requests Pending Register              */
+  __IOM uint32_t  LINKLOAD_CLR;                 /**< DMA Channel Link Load Register                     */
+  __IOM uint32_t  REQCLEAR_CLR;                 /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  IF_CLR;                       /**< Interrupt Flag Register                            */
+  __IOM uint32_t  IEN_CLR;                      /**< Interrupt Enable Register                          */
+  LDMA_CH_TypeDef CH_CLR[8U];                   /**< DMA Channel Registers                              */
+  uint32_t        RESERVED2[906U];              /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_TGL;                /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  EN_TGL;                       /**< DMA module enable disable Register                 */
+  __IOM uint32_t  CTRL_TGL;                     /**< DMA Control Register                               */
+  __IM uint32_t   STATUS_TGL;                   /**< DMA Status Register                                */
+  __IOM uint32_t  SYNCSWSET_TGL;                /**< DMA Sync Trig Sw Set Register                      */
+  __IOM uint32_t  SYNCSWCLR_TGL;                /**< DMA Sync Trig Sw Clear register                    */
+  __IOM uint32_t  SYNCHWEN_TGL;                 /**< DMA Sync HW trigger enable register                */
+  __IOM uint32_t  SYNCHWSEL_TGL;                /**< DMA Sync HW trigger selection register             */
+  __IM uint32_t   SYNCSTATUS_TGL;               /**< DMA Sync Trigger Status Register                   */
+  __IOM uint32_t  CHEN_TGL;                     /**< DMA Channel Enable Register                        */
+  __IOM uint32_t  CHDIS_TGL;                    /**< DMA Channel Disable Register                       */
+  __IM uint32_t   CHSTATUS_TGL;                 /**< DMA Channel Status Register                        */
+  __IM uint32_t   CHBUSY_TGL;                   /**< DMA Channel Busy Register                          */
+  __IOM uint32_t  CHDONE_TGL;                   /**< DMA Channel Linking Done Register                  */
+  __IOM uint32_t  DBGHALT_TGL;                  /**< DMA Channel Debug Halt Register                    */
+  __IOM uint32_t  SWREQ_TGL;                    /**< DMA Channel Software Transfer Request              */
+  __IOM uint32_t  REQDIS_TGL;                   /**< DMA Channel Request Disable Register               */
+  __IM uint32_t   REQPEND_TGL;                  /**< DMA Channel Requests Pending Register              */
+  __IOM uint32_t  LINKLOAD_TGL;                 /**< DMA Channel Link Load Register                     */
+  __IOM uint32_t  REQCLEAR_TGL;                 /**< DMA Channel Request Clear Register                 */
+  __IOM uint32_t  IF_TGL;                       /**< Interrupt Flag Register                            */
+  __IOM uint32_t  IEN_TGL;                      /**< Interrupt Enable Register                          */
+  LDMA_CH_TypeDef CH_TGL[8U];                   /**< DMA Channel Registers                              */
+} LDMA_TypeDef;
+/** @} End of group EFM32PG22_LDMA */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_LDMAXBAR LDMAXBAR
+ * @{
+ * @brief EFM32PG22 LDMAXBAR Register Declaration.
+ *****************************************************************************/
+
+/** LDMAXBAR CH Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t REQSEL;                             /**< Channel Peripheral Request Select Reg...           */
+} LDMAXBAR_CH_TypeDef;
+
+/** LDMAXBAR Register Declaration. */
+typedef struct {
+  LDMAXBAR_CH_TypeDef CH[8U];                   /**< DMA Channel Registers                              */
+  uint32_t            RESERVED0[1016U];         /**< Reserved for future use                            */
+  LDMAXBAR_CH_TypeDef CH_SET[8U];               /**< DMA Channel Registers                              */
+  uint32_t            RESERVED1[1016U];         /**< Reserved for future use                            */
+  LDMAXBAR_CH_TypeDef CH_CLR[8U];               /**< DMA Channel Registers                              */
+  uint32_t            RESERVED2[1016U];         /**< Reserved for future use                            */
+  LDMAXBAR_CH_TypeDef CH_TGL[8U];               /**< DMA Channel Registers                              */
+} LDMAXBAR_TypeDef;
+/** @} End of group EFM32PG22_LDMAXBAR */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_LETIMER LETIMER
+ * @{
+ * @brief EFM32PG22 LETIMER Register Declaration.
+ *****************************************************************************/
+
+/** LETIMER Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version                                         */
+  __IOM uint32_t EN;                            /**< module en                                          */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CNT;                           /**< Counter Value Register                             */
+  __IOM uint32_t COMP0;                         /**< Compare Value Register 0                           */
+  __IOM uint32_t COMP1;                         /**< Compare Value Register 1                           */
+  __IOM uint32_t TOP;                           /**< Counter TOP Value Register                         */
+  __IOM uint32_t TOPBUFF;                       /**< Buffered Counter TOP Value                         */
+  __IOM uint32_t REP0;                          /**< Repeat Counter Register 0                          */
+  __IOM uint32_t REP1;                          /**< Repeat Counter Register 1                          */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY;                      /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED2[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PRSMODE;                       /**< PRS Input mode select Register                     */
+  uint32_t       RESERVED3[1003U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version                                         */
+  __IOM uint32_t EN_SET;                        /**< module en                                          */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CNT_SET;                       /**< Counter Value Register                             */
+  __IOM uint32_t COMP0_SET;                     /**< Compare Value Register 0                           */
+  __IOM uint32_t COMP1_SET;                     /**< Compare Value Register 1                           */
+  __IOM uint32_t TOP_SET;                       /**< Counter TOP Value Register                         */
+  __IOM uint32_t TOPBUFF_SET;                   /**< Buffered Counter TOP Value                         */
+  __IOM uint32_t REP0_SET;                      /**< Repeat Counter Register 0                          */
+  __IOM uint32_t REP1_SET;                      /**< Repeat Counter Register 1                          */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED6[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PRSMODE_SET;                   /**< PRS Input mode select Register                     */
+  uint32_t       RESERVED7[1003U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version                                         */
+  __IOM uint32_t EN_CLR;                        /**< module en                                          */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED8[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CNT_CLR;                       /**< Counter Value Register                             */
+  __IOM uint32_t COMP0_CLR;                     /**< Compare Value Register 0                           */
+  __IOM uint32_t COMP1_CLR;                     /**< Compare Value Register 1                           */
+  __IOM uint32_t TOP_CLR;                       /**< Counter TOP Value Register                         */
+  __IOM uint32_t TOPBUFF_CLR;                   /**< Buffered Counter TOP Value                         */
+  __IOM uint32_t REP0_CLR;                      /**< Repeat Counter Register 0                          */
+  __IOM uint32_t REP1_CLR;                      /**< Repeat Counter Register 1                          */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED9[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED10[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t PRSMODE_CLR;                   /**< PRS Input mode select Register                     */
+  uint32_t       RESERVED11[1003U];             /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version                                         */
+  __IOM uint32_t EN_TGL;                        /**< module en                                          */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t CNT_TGL;                       /**< Counter Value Register                             */
+  __IOM uint32_t COMP0_TGL;                     /**< Compare Value Register 0                           */
+  __IOM uint32_t COMP1_TGL;                     /**< Compare Value Register 1                           */
+  __IOM uint32_t TOP_TGL;                       /**< Counter TOP Value Register                         */
+  __IOM uint32_t TOPBUFF_TGL;                   /**< Buffered Counter TOP Value                         */
+  __IOM uint32_t REP0_TGL;                      /**< Repeat Counter Register 0                          */
+  __IOM uint32_t REP1_TGL;                      /**< Repeat Counter Register 1                          */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED13[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED14[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t PRSMODE_TGL;                   /**< PRS Input mode select Register                     */
+} LETIMER_TypeDef;
+/** @} End of group EFM32PG22_LETIMER */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_LFRCO LFRCO
+ * @{
+ * @brief EFM32PG22 LFRCO Register Declaration.
+ *****************************************************************************/
+
+/** LFRCO Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version                                         */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED0[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED1[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  __IOM uint32_t CFG;                           /**< Configuration Register                             */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t NOMCAL;                        /**< Nominal Calibration Register                       */
+  __IOM uint32_t NOMCALINV;                     /**< Nominal Calibration Inverted Register              */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  uint32_t       RESERVED3[1010U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version                                         */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t CFG_SET;                       /**< Configuration Register                             */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t NOMCAL_SET;                    /**< Nominal Calibration Register                       */
+  __IOM uint32_t NOMCALINV_SET;                 /**< Nominal Calibration Inverted Register              */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  uint32_t       RESERVED7[1010U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version                                         */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED8[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED9[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t CFG_CLR;                       /**< Configuration Register                             */
+  uint32_t       RESERVED10[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t NOMCAL_CLR;                    /**< Nominal Calibration Register                       */
+  __IOM uint32_t NOMCALINV_CLR;                 /**< Nominal Calibration Inverted Register              */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  uint32_t       RESERVED11[1010U];             /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version                                         */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED12[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED13[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t CFG_TGL;                       /**< Configuration Register                             */
+  uint32_t       RESERVED14[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t NOMCAL_TGL;                    /**< Nominal Calibration Register                       */
+  __IOM uint32_t NOMCALINV_TGL;                 /**< Nominal Calibration Inverted Register              */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+} LFRCO_TypeDef;
+/** @} End of group EFM32PG22_LFRCO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_LFXO LFXO
+ * @{
+ * @brief EFM32PG22 LFXO Register Declaration.
+ *****************************************************************************/
+
+/** LFXO Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< LFXO IP version                                    */
+  __IOM uint32_t CTRL;                          /**< LFXO Control Register                              */
+  __IOM uint32_t CFG;                           /**< LFXO Configuration Register                        */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< LFXO Status Register                               */
+  __IOM uint32_t CAL;                           /**< LFXO Calibration Register                          */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY;                      /**< LFXO Sync Busy Register                            */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< LFXO IP version                                    */
+  __IOM uint32_t CTRL_SET;                      /**< LFXO Control Register                              */
+  __IOM uint32_t CFG_SET;                       /**< LFXO Configuration Register                        */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< LFXO Status Register                               */
+  __IOM uint32_t CAL_SET;                       /**< LFXO Calibration Register                          */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< LFXO Sync Busy Register                            */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  uint32_t       RESERVED3[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< LFXO IP version                                    */
+  __IOM uint32_t CTRL_CLR;                      /**< LFXO Control Register                              */
+  __IOM uint32_t CFG_CLR;                       /**< LFXO Configuration Register                        */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< LFXO Status Register                               */
+  __IOM uint32_t CAL_CLR;                       /**< LFXO Calibration Register                          */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< LFXO Sync Busy Register                            */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  uint32_t       RESERVED5[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< LFXO IP version                                    */
+  __IOM uint32_t CTRL_TGL;                      /**< LFXO Control Register                              */
+  __IOM uint32_t CFG_TGL;                       /**< LFXO Configuration Register                        */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< LFXO Status Register                               */
+  __IOM uint32_t CAL_TGL;                       /**< LFXO Calibration Register                          */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< LFXO Sync Busy Register                            */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+} LFXO_TypeDef;
+/** @} End of group EFM32PG22_LFXO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_MSC MSC
+ * @{
+ * @brief EFM32PG22 MSC Register Declaration.
+ *****************************************************************************/
+
+/** MSC Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version ID                                      */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t READCTRL;                      /**< Read Control Register                              */
+  __IOM uint32_t WRITECTRL;                     /**< Write Control Register                             */
+  __IOM uint32_t WRITECMD;                      /**< Write Command Register                             */
+  __IOM uint32_t ADDRB;                         /**< Page Erase/Write Address Buffer                    */
+  __IOM uint32_t WDATA;                         /**< Write Data Register                                */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED1[3U];                 /**< Reserved for future use                            */
+  __IM uint32_t  USERDATASIZE;                  /**< User Data Region Size Register                     */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
+  __IOM uint32_t MISCLOCKWORD;                  /**< Mass erase and User data page lock word            */
+  uint32_t       RESERVED2[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PWRCTRL;                       /**< Power control register                             */
+  uint32_t       RESERVED3[51U];                /**< Reserved for future use                            */
+  __IOM uint32_t PAGELOCK0;                     /**< Main space page 0-31 lock word                     */
+  __IOM uint32_t PAGELOCK1;                     /**< Main space page 32-63 lock word                    */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED5[4U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED6[4U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED7[4U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED8[4U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED9[12U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED10[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED11[919U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version ID                                      */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t READCTRL_SET;                  /**< Read Control Register                              */
+  __IOM uint32_t WRITECTRL_SET;                 /**< Write Control Register                             */
+  __IOM uint32_t WRITECMD_SET;                  /**< Write Command Register                             */
+  __IOM uint32_t ADDRB_SET;                     /**< Page Erase/Write Address Buffer                    */
+  __IOM uint32_t WDATA_SET;                     /**< Write Data Register                                */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED13[3U];                /**< Reserved for future use                            */
+  __IM uint32_t  USERDATASIZE_SET;              /**< User Data Region Size Register                     */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t MISCLOCKWORD_SET;              /**< Mass erase and User data page lock word            */
+  uint32_t       RESERVED14[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t PWRCTRL_SET;                   /**< Power control register                             */
+  uint32_t       RESERVED15[51U];               /**< Reserved for future use                            */
+  __IOM uint32_t PAGELOCK0_SET;                 /**< Main space page 0-31 lock word                     */
+  __IOM uint32_t PAGELOCK1_SET;                 /**< Main space page 32-63 lock word                    */
+  uint32_t       RESERVED16[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED17[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED18[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED19[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED20[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED21[12U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED22[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED23[919U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version ID                                      */
+  uint32_t       RESERVED24[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t READCTRL_CLR;                  /**< Read Control Register                              */
+  __IOM uint32_t WRITECTRL_CLR;                 /**< Write Control Register                             */
+  __IOM uint32_t WRITECMD_CLR;                  /**< Write Command Register                             */
+  __IOM uint32_t ADDRB_CLR;                     /**< Page Erase/Write Address Buffer                    */
+  __IOM uint32_t WDATA_CLR;                     /**< Write Data Register                                */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED25[3U];                /**< Reserved for future use                            */
+  __IM uint32_t  USERDATASIZE_CLR;              /**< User Data Region Size Register                     */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t MISCLOCKWORD_CLR;              /**< Mass erase and User data page lock word            */
+  uint32_t       RESERVED26[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t PWRCTRL_CLR;                   /**< Power control register                             */
+  uint32_t       RESERVED27[51U];               /**< Reserved for future use                            */
+  __IOM uint32_t PAGELOCK0_CLR;                 /**< Main space page 0-31 lock word                     */
+  __IOM uint32_t PAGELOCK1_CLR;                 /**< Main space page 32-63 lock word                    */
+  uint32_t       RESERVED28[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED29[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED30[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED31[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED32[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED33[12U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED34[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED35[919U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version ID                                      */
+  uint32_t       RESERVED36[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t READCTRL_TGL;                  /**< Read Control Register                              */
+  __IOM uint32_t WRITECTRL_TGL;                 /**< Write Control Register                             */
+  __IOM uint32_t WRITECMD_TGL;                  /**< Write Command Register                             */
+  __IOM uint32_t ADDRB_TGL;                     /**< Page Erase/Write Address Buffer                    */
+  __IOM uint32_t WDATA_TGL;                     /**< Write Data Register                                */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED37[3U];                /**< Reserved for future use                            */
+  __IM uint32_t  USERDATASIZE_TGL;              /**< User Data Region Size Register                     */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
+  __IOM uint32_t MISCLOCKWORD_TGL;              /**< Mass erase and User data page lock word            */
+  uint32_t       RESERVED38[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t PWRCTRL_TGL;                   /**< Power control register                             */
+  uint32_t       RESERVED39[51U];               /**< Reserved for future use                            */
+  __IOM uint32_t PAGELOCK0_TGL;                 /**< Main space page 0-31 lock word                     */
+  __IOM uint32_t PAGELOCK1_TGL;                 /**< Main space page 32-63 lock word                    */
+  uint32_t       RESERVED40[2U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED41[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED42[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED43[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED44[4U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED45[12U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED46[1U];                /**< Reserved for future use                            */
+} MSC_TypeDef;
+/** @} End of group EFM32PG22_MSC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_PDM PDM
+ * @{
+ * @brief EFM32PG22 PDM Register Declaration.
+ *****************************************************************************/
+
+/** PDM Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version ID                                      */
+  __IOM uint32_t EN;                            /**< PDM Module enable Register                         */
+  __IOM uint32_t CTRL;                          /**< PDM Core Control Register                          */
+  __IOM uint32_t CMD;                           /**< PDM Core Command Register                          */
+  __IM uint32_t  STATUS;                        /**< PDM Status register                                */
+  __IOM uint32_t CFG0;                          /**< PDM Core Configuration Register0                   */
+  __IOM uint32_t CFG1;                          /**< PDM Core Configuration Register1                   */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  RXDATA;                        /**< PDM Received Data Register                         */
+  uint32_t       RESERVED1[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Flag Register                            */
+  uint32_t       RESERVED2[6U];                 /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY;                      /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED3[999U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_SET;                        /**< PDM Module enable Register                         */
+  __IOM uint32_t CTRL_SET;                      /**< PDM Core Control Register                          */
+  __IOM uint32_t CMD_SET;                       /**< PDM Core Command Register                          */
+  __IM uint32_t  STATUS_SET;                    /**< PDM Status register                                */
+  __IOM uint32_t CFG0_SET;                      /**< PDM Core Configuration Register0                   */
+  __IOM uint32_t CFG1_SET;                      /**< PDM Core Configuration Register1                   */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  RXDATA_SET;                    /**< PDM Received Data Register                         */
+  uint32_t       RESERVED5[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Flag Register                            */
+  uint32_t       RESERVED6[6U];                 /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED7[999U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_CLR;                        /**< PDM Module enable Register                         */
+  __IOM uint32_t CTRL_CLR;                      /**< PDM Core Control Register                          */
+  __IOM uint32_t CMD_CLR;                       /**< PDM Core Command Register                          */
+  __IM uint32_t  STATUS_CLR;                    /**< PDM Status register                                */
+  __IOM uint32_t CFG0_CLR;                      /**< PDM Core Configuration Register0                   */
+  __IOM uint32_t CFG1_CLR;                      /**< PDM Core Configuration Register1                   */
+  uint32_t       RESERVED8[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  RXDATA_CLR;                    /**< PDM Received Data Register                         */
+  uint32_t       RESERVED9[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Flag Register                            */
+  uint32_t       RESERVED10[6U];                /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED11[999U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version ID                                      */
+  __IOM uint32_t EN_TGL;                        /**< PDM Module enable Register                         */
+  __IOM uint32_t CTRL_TGL;                      /**< PDM Core Control Register                          */
+  __IOM uint32_t CMD_TGL;                       /**< PDM Core Command Register                          */
+  __IM uint32_t  STATUS_TGL;                    /**< PDM Status register                                */
+  __IOM uint32_t CFG0_TGL;                      /**< PDM Core Configuration Register0                   */
+  __IOM uint32_t CFG1_TGL;                      /**< PDM Core Configuration Register1                   */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  RXDATA_TGL;                    /**< PDM Received Data Register                         */
+  uint32_t       RESERVED13[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Flag Register                            */
+  uint32_t       RESERVED14[6U];                /**< Reserved for future use                            */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< Synchronization Busy Register                      */
+} PDM_TypeDef;
+/** @} End of group EFM32PG22_PDM */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_PRS PRS
+ * @{
+ * @brief EFM32PG22 PRS Register Declaration.
+ *****************************************************************************/
+
+/** PRS ASYNC_CH Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t CTRL;                               /**< Async Channel Control Register                     */
+} PRS_ASYNC_CH_TypeDef;
+
+/** PRS SYNC_CH Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t CTRL;                               /**< Sync Channel Control Register                      */
+} PRS_SYNC_CH_TypeDef;
+
+/** PRS Register Declaration. */
+typedef struct {
+  __IM uint32_t        IPVERSION;                        /**< IP version ID                                      */
+  uint32_t             RESERVED0[1U];                    /**< Reserved for future use                            */
+  __IOM uint32_t       ASYNC_SWPULSE;                    /**< Software Pulse Register                            */
+  __IOM uint32_t       ASYNC_SWLEVEL;                    /**< Software Level Register                            */
+  __IM uint32_t        ASYNC_PEEK;                       /**< Async Channel Values                               */
+  __IM uint32_t        SYNC_PEEK;                        /**< Sync Channel Values                                */
+  PRS_ASYNC_CH_TypeDef ASYNC_CH[12U];                    /**< Async Channel registers                            */
+  PRS_SYNC_CH_TypeDef  SYNC_CH[4U];                      /**< Sync Channel registers                             */
+  __IOM uint32_t       CONSUMER_CMU_CALDN;               /**< CMU CALDN Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_CMU_CALUP;               /**< CMU CALUP Consumer Selection                       */
+  uint32_t             RESERVED1[1U];                    /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_IADC0_SCANTRIGGER;       /**< IADC0 SCANTRIGGER Consumer Selection               */
+  __IOM uint32_t       CONSUMER_IADC0_SINGLETRIGGER;     /**< IADC0 SINGLETRIGGER Consumer Selection             */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ0;        /**< DMAREQ0 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ1;        /**< DMAREQ1 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LETIMER0_CLEAR;          /**< LETIMER CLEAR Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_START;          /**< LETIMER START Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_STOP;           /**< LETIMER STOP Consumer Selection                    */
+  __IOM uint32_t       CONSUMER_EUART0_RX;               /**< EUART0 RX consumer register                        */
+  __IOM uint32_t       CONSUMER_EUART0_TRIGGER;          /**< EUART0 TRIGGER Consumer register                   */
+  uint32_t             RESERVED2[1U];                    /**< Reserved for future use                            */
+  uint32_t             RESERVED3[2U];                    /**< Reserved for future use                            */
+  uint32_t             RESERVED4[11U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED5[10U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_RTCC_CC0;                /**< RTCC CC0 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC1;                /**< RTCC CC1 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC2;                /**< RTCC CC2 Consumer Selection                        */
+  uint32_t             RESERVED6[1U];                    /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN0;             /**< CTI0 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN1;             /**< CTI1 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN2;             /**< CTI2 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN3;             /**< CTI3 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_M33RXEV;            /**< M33 Consumer Selection                             */
+  __IOM uint32_t       CONSUMER_TIMER0_CC0;              /**< TIMER0 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC1;              /**< TIMER0 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC2;              /**< TIMER0 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTI;              /**< TIMER0 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS1;           /**< TIMER0 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS2;           /**< TIMER0 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_CC0;              /**< TIMER1 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC1;              /**< TIMER1 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC2;              /**< TIMER1 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTI;              /**< TIMER1 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS1;           /**< TIMER1 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS2;           /**< TIMER1 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_CC0;              /**< TIMER2 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC1;              /**< TIMER2 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC2;              /**< TIMER2 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTI;              /**< TIMER2 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS1;           /**< TIMER2 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS2;           /**< TIMER2 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_CC0;              /**< TIMER3 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC1;              /**< TIMER3 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC2;              /**< TIMER3 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTI;              /**< TIMER3 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS1;           /**< TIMER3 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS2;           /**< TIMER3 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_CC0;              /**< TIMER4 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC1;              /**< TIMER4 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC2;              /**< TIMER4 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTI;              /**< TIMER4 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS1;           /**< TIMER4 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS2;           /**< TIMER4 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_USART0_CLK;              /**< USART0 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART0_IR;               /**< USART0 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_RX;               /**< USART0 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_TRIGGER;          /**< USART0 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_USART1_CLK;              /**< USART1 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART1_IR;               /**< USART1 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_RX;               /**< USART1 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_TRIGGER;          /**< USART1 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC0;              /**< WDOG0 SRC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC1;              /**< WDOG0 SRC1 Consumer Selection                      */
+  uint32_t             RESERVED7[917U];                  /**< Reserved for future use                            */
+  __IM uint32_t        IPVERSION_SET;                    /**< IP version ID                                      */
+  uint32_t             RESERVED8[1U];                    /**< Reserved for future use                            */
+  __IOM uint32_t       ASYNC_SWPULSE_SET;                /**< Software Pulse Register                            */
+  __IOM uint32_t       ASYNC_SWLEVEL_SET;                /**< Software Level Register                            */
+  __IM uint32_t        ASYNC_PEEK_SET;                   /**< Async Channel Values                               */
+  __IM uint32_t        SYNC_PEEK_SET;                    /**< Sync Channel Values                                */
+  PRS_ASYNC_CH_TypeDef ASYNC_CH_SET[12U];                /**< Async Channel registers                            */
+  PRS_SYNC_CH_TypeDef  SYNC_CH_SET[4U];                  /**< Sync Channel registers                             */
+  __IOM uint32_t       CONSUMER_CMU_CALDN_SET;           /**< CMU CALDN Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_CMU_CALUP_SET;           /**< CMU CALUP Consumer Selection                       */
+  uint32_t             RESERVED9[1U];                    /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_IADC0_SCANTRIGGER_SET;   /**< IADC0 SCANTRIGGER Consumer Selection               */
+  __IOM uint32_t       CONSUMER_IADC0_SINGLETRIGGER_SET; /**< IADC0 SINGLETRIGGER Consumer Selection             */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ0_SET;    /**< DMAREQ0 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ1_SET;    /**< DMAREQ1 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LETIMER0_CLEAR_SET;      /**< LETIMER CLEAR Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_START_SET;      /**< LETIMER START Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_STOP_SET;       /**< LETIMER STOP Consumer Selection                    */
+  __IOM uint32_t       CONSUMER_EUART0_RX_SET;           /**< EUART0 RX consumer register                        */
+  __IOM uint32_t       CONSUMER_EUART0_TRIGGER_SET;      /**< EUART0 TRIGGER Consumer register                   */
+  uint32_t             RESERVED10[1U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED11[2U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED12[11U];                  /**< Reserved for future use                            */
+  uint32_t             RESERVED13[10U];                  /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_RTCC_CC0_SET;            /**< RTCC CC0 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC1_SET;            /**< RTCC CC1 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC2_SET;            /**< RTCC CC2 Consumer Selection                        */
+  uint32_t             RESERVED14[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN0_SET;         /**< CTI0 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN1_SET;         /**< CTI1 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN2_SET;         /**< CTI2 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN3_SET;         /**< CTI3 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_M33RXEV_SET;        /**< M33 Consumer Selection                             */
+  __IOM uint32_t       CONSUMER_TIMER0_CC0_SET;          /**< TIMER0 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC1_SET;          /**< TIMER0 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC2_SET;          /**< TIMER0 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTI_SET;          /**< TIMER0 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS1_SET;       /**< TIMER0 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS2_SET;       /**< TIMER0 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_CC0_SET;          /**< TIMER1 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC1_SET;          /**< TIMER1 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC2_SET;          /**< TIMER1 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTI_SET;          /**< TIMER1 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS1_SET;       /**< TIMER1 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS2_SET;       /**< TIMER1 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_CC0_SET;          /**< TIMER2 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC1_SET;          /**< TIMER2 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC2_SET;          /**< TIMER2 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTI_SET;          /**< TIMER2 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS1_SET;       /**< TIMER2 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS2_SET;       /**< TIMER2 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_CC0_SET;          /**< TIMER3 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC1_SET;          /**< TIMER3 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC2_SET;          /**< TIMER3 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTI_SET;          /**< TIMER3 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS1_SET;       /**< TIMER3 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS2_SET;       /**< TIMER3 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_CC0_SET;          /**< TIMER4 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC1_SET;          /**< TIMER4 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC2_SET;          /**< TIMER4 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTI_SET;          /**< TIMER4 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS1_SET;       /**< TIMER4 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS2_SET;       /**< TIMER4 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_USART0_CLK_SET;          /**< USART0 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART0_IR_SET;           /**< USART0 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_RX_SET;           /**< USART0 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_TRIGGER_SET;      /**< USART0 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_USART1_CLK_SET;          /**< USART1 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART1_IR_SET;           /**< USART1 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_RX_SET;           /**< USART1 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_TRIGGER_SET;      /**< USART1 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC0_SET;          /**< WDOG0 SRC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC1_SET;          /**< WDOG0 SRC1 Consumer Selection                      */
+  uint32_t             RESERVED15[917U];                 /**< Reserved for future use                            */
+  __IM uint32_t        IPVERSION_CLR;                    /**< IP version ID                                      */
+  uint32_t             RESERVED16[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       ASYNC_SWPULSE_CLR;                /**< Software Pulse Register                            */
+  __IOM uint32_t       ASYNC_SWLEVEL_CLR;                /**< Software Level Register                            */
+  __IM uint32_t        ASYNC_PEEK_CLR;                   /**< Async Channel Values                               */
+  __IM uint32_t        SYNC_PEEK_CLR;                    /**< Sync Channel Values                                */
+  PRS_ASYNC_CH_TypeDef ASYNC_CH_CLR[12U];                /**< Async Channel registers                            */
+  PRS_SYNC_CH_TypeDef  SYNC_CH_CLR[4U];                  /**< Sync Channel registers                             */
+  __IOM uint32_t       CONSUMER_CMU_CALDN_CLR;           /**< CMU CALDN Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_CMU_CALUP_CLR;           /**< CMU CALUP Consumer Selection                       */
+  uint32_t             RESERVED17[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_IADC0_SCANTRIGGER_CLR;   /**< IADC0 SCANTRIGGER Consumer Selection               */
+  __IOM uint32_t       CONSUMER_IADC0_SINGLETRIGGER_CLR; /**< IADC0 SINGLETRIGGER Consumer Selection             */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ0_CLR;    /**< DMAREQ0 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ1_CLR;    /**< DMAREQ1 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LETIMER0_CLEAR_CLR;      /**< LETIMER CLEAR Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_START_CLR;      /**< LETIMER START Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_STOP_CLR;       /**< LETIMER STOP Consumer Selection                    */
+  __IOM uint32_t       CONSUMER_EUART0_RX_CLR;           /**< EUART0 RX consumer register                        */
+  __IOM uint32_t       CONSUMER_EUART0_TRIGGER_CLR;      /**< EUART0 TRIGGER Consumer register                   */
+  uint32_t             RESERVED18[1U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED19[2U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED20[11U];                  /**< Reserved for future use                            */
+  uint32_t             RESERVED21[10U];                  /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_RTCC_CC0_CLR;            /**< RTCC CC0 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC1_CLR;            /**< RTCC CC1 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC2_CLR;            /**< RTCC CC2 Consumer Selection                        */
+  uint32_t             RESERVED22[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN0_CLR;         /**< CTI0 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN1_CLR;         /**< CTI1 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN2_CLR;         /**< CTI2 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN3_CLR;         /**< CTI3 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_M33RXEV_CLR;        /**< M33 Consumer Selection                             */
+  __IOM uint32_t       CONSUMER_TIMER0_CC0_CLR;          /**< TIMER0 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC1_CLR;          /**< TIMER0 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC2_CLR;          /**< TIMER0 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTI_CLR;          /**< TIMER0 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS1_CLR;       /**< TIMER0 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS2_CLR;       /**< TIMER0 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_CC0_CLR;          /**< TIMER1 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC1_CLR;          /**< TIMER1 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC2_CLR;          /**< TIMER1 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTI_CLR;          /**< TIMER1 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS1_CLR;       /**< TIMER1 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS2_CLR;       /**< TIMER1 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_CC0_CLR;          /**< TIMER2 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC1_CLR;          /**< TIMER2 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC2_CLR;          /**< TIMER2 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTI_CLR;          /**< TIMER2 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS1_CLR;       /**< TIMER2 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS2_CLR;       /**< TIMER2 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_CC0_CLR;          /**< TIMER3 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC1_CLR;          /**< TIMER3 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC2_CLR;          /**< TIMER3 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTI_CLR;          /**< TIMER3 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS1_CLR;       /**< TIMER3 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS2_CLR;       /**< TIMER3 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_CC0_CLR;          /**< TIMER4 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC1_CLR;          /**< TIMER4 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC2_CLR;          /**< TIMER4 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTI_CLR;          /**< TIMER4 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS1_CLR;       /**< TIMER4 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS2_CLR;       /**< TIMER4 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_USART0_CLK_CLR;          /**< USART0 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART0_IR_CLR;           /**< USART0 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_RX_CLR;           /**< USART0 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_TRIGGER_CLR;      /**< USART0 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_USART1_CLK_CLR;          /**< USART1 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART1_IR_CLR;           /**< USART1 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_RX_CLR;           /**< USART1 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_TRIGGER_CLR;      /**< USART1 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC0_CLR;          /**< WDOG0 SRC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC1_CLR;          /**< WDOG0 SRC1 Consumer Selection                      */
+  uint32_t             RESERVED23[917U];                 /**< Reserved for future use                            */
+  __IM uint32_t        IPVERSION_TGL;                    /**< IP version ID                                      */
+  uint32_t             RESERVED24[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       ASYNC_SWPULSE_TGL;                /**< Software Pulse Register                            */
+  __IOM uint32_t       ASYNC_SWLEVEL_TGL;                /**< Software Level Register                            */
+  __IM uint32_t        ASYNC_PEEK_TGL;                   /**< Async Channel Values                               */
+  __IM uint32_t        SYNC_PEEK_TGL;                    /**< Sync Channel Values                                */
+  PRS_ASYNC_CH_TypeDef ASYNC_CH_TGL[12U];                /**< Async Channel registers                            */
+  PRS_SYNC_CH_TypeDef  SYNC_CH_TGL[4U];                  /**< Sync Channel registers                             */
+  __IOM uint32_t       CONSUMER_CMU_CALDN_TGL;           /**< CMU CALDN Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_CMU_CALUP_TGL;           /**< CMU CALUP Consumer Selection                       */
+  uint32_t             RESERVED25[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_IADC0_SCANTRIGGER_TGL;   /**< IADC0 SCANTRIGGER Consumer Selection               */
+  __IOM uint32_t       CONSUMER_IADC0_SINGLETRIGGER_TGL; /**< IADC0 SINGLETRIGGER Consumer Selection             */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ0_TGL;    /**< DMAREQ0 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LDMAXBAR_DMAREQ1_TGL;    /**< DMAREQ1 Consumer Selection                         */
+  __IOM uint32_t       CONSUMER_LETIMER0_CLEAR_TGL;      /**< LETIMER CLEAR Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_START_TGL;      /**< LETIMER START Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_LETIMER0_STOP_TGL;       /**< LETIMER STOP Consumer Selection                    */
+  __IOM uint32_t       CONSUMER_EUART0_RX_TGL;           /**< EUART0 RX consumer register                        */
+  __IOM uint32_t       CONSUMER_EUART0_TRIGGER_TGL;      /**< EUART0 TRIGGER Consumer register                   */
+  uint32_t             RESERVED26[1U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED27[2U];                   /**< Reserved for future use                            */
+  uint32_t             RESERVED28[11U];                  /**< Reserved for future use                            */
+  uint32_t             RESERVED29[10U];                  /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_RTCC_CC0_TGL;            /**< RTCC CC0 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC1_TGL;            /**< RTCC CC1 Consumer Selection                        */
+  __IOM uint32_t       CONSUMER_RTCC_CC2_TGL;            /**< RTCC CC2 Consumer Selection                        */
+  uint32_t             RESERVED30[1U];                   /**< Reserved for future use                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN0_TGL;         /**< CTI0 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN1_TGL;         /**< CTI1 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN2_TGL;         /**< CTI2 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_CTIIN3_TGL;         /**< CTI3 Consumer Selection                            */
+  __IOM uint32_t       CONSUMER_CORE_M33RXEV_TGL;        /**< M33 Consumer Selection                             */
+  __IOM uint32_t       CONSUMER_TIMER0_CC0_TGL;          /**< TIMER0 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC1_TGL;          /**< TIMER0 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_CC2_TGL;          /**< TIMER0 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTI_TGL;          /**< TIMER0 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS1_TGL;       /**< TIMER0 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER0_DTIFS2_TGL;       /**< TIMER0 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_CC0_TGL;          /**< TIMER1 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC1_TGL;          /**< TIMER1 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_CC2_TGL;          /**< TIMER1 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTI_TGL;          /**< TIMER1 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS1_TGL;       /**< TIMER1 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER1_DTIFS2_TGL;       /**< TIMER1 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_CC0_TGL;          /**< TIMER2 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC1_TGL;          /**< TIMER2 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_CC2_TGL;          /**< TIMER2 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTI_TGL;          /**< TIMER2 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS1_TGL;       /**< TIMER2 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER2_DTIFS2_TGL;       /**< TIMER2 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_CC0_TGL;          /**< TIMER3 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC1_TGL;          /**< TIMER3 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_CC2_TGL;          /**< TIMER3 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTI_TGL;          /**< TIMER3 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS1_TGL;       /**< TIMER3 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER3_DTIFS2_TGL;       /**< TIMER3 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_CC0_TGL;          /**< TIMER4 CC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC1_TGL;          /**< TIMER4 CC1 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_CC2_TGL;          /**< TIMER4 CC2 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTI_TGL;          /**< TIMER4 DTI Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS1_TGL;       /**< TIMER4 DTIFS1 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_TIMER4_DTIFS2_TGL;       /**< TIMER4 DTIFS2 Consumer Selection                   */
+  __IOM uint32_t       CONSUMER_USART0_CLK_TGL;          /**< USART0 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART0_IR_TGL;           /**< USART0 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_RX_TGL;           /**< USART0 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART0_TRIGGER_TGL;      /**< USART0 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_USART1_CLK_TGL;          /**< USART1 CLK Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_USART1_IR_TGL;           /**< USART1 IR Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_RX_TGL;           /**< USART1 RX Consumer Selection                       */
+  __IOM uint32_t       CONSUMER_USART1_TRIGGER_TGL;      /**< USART1 TRIGGER Consumer Selection                  */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC0_TGL;          /**< WDOG0 SRC0 Consumer Selection                      */
+  __IOM uint32_t       CONSUMER_WDOG0_SRC1_TGL;          /**< WDOG0 SRC1 Consumer Selection                      */
+} PRS_TypeDef;
+/** @} End of group EFM32PG22_PRS */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_RTCC RTCC
+ * @{
+ * @brief EFM32PG22 RTCC Register Declaration.
+ *****************************************************************************/
+
+/** RTCC CC Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t CTRL;                               /**< CC Channel Control Register                        */
+  __IOM uint32_t OCVALUE;                            /**< Output Compare Value Register                      */
+  __IM uint32_t  ICVALUE;                            /**< Input Capture Value Register                       */
+} RTCC_CC_TypeDef;
+
+/** RTCC Register Declaration. */
+typedef struct {
+  __IM uint32_t   IPVERSION;                    /**< IP VERSION                                         */
+  __IOM uint32_t  EN;                           /**< Module Enable Register                             */
+  __IOM uint32_t  CFG;                          /**< Configuration Register                             */
+  __IOM uint32_t  CMD;                          /**< Command Register                                   */
+  __IM uint32_t   STATUS;                       /**< Status register                                    */
+  __IOM uint32_t  IF;                           /**< RTCC Interrupt Flags                               */
+  __IOM uint32_t  IEN;                          /**< Interrupt Enable Register                          */
+  __IOM uint32_t  PRECNT;                       /**< Pre-Counter Value Register                         */
+  __IOM uint32_t  CNT;                          /**< Counter Value Register                             */
+  __IM uint32_t   COMBCNT;                      /**< Combined Pre-Counter and Counter Valu...           */
+  __IM uint32_t   SYNCBUSY;                     /**< Synchronization Busy Register                      */
+  __IOM uint32_t  LOCK;                         /**< Configuration Lock Register                        */
+  RTCC_CC_TypeDef CC[3U];                       /**< Capture/Compare Channel                            */
+  uint32_t        RESERVED0[1003U];             /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_SET;                /**< IP VERSION                                         */
+  __IOM uint32_t  EN_SET;                       /**< Module Enable Register                             */
+  __IOM uint32_t  CFG_SET;                      /**< Configuration Register                             */
+  __IOM uint32_t  CMD_SET;                      /**< Command Register                                   */
+  __IM uint32_t   STATUS_SET;                   /**< Status register                                    */
+  __IOM uint32_t  IF_SET;                       /**< RTCC Interrupt Flags                               */
+  __IOM uint32_t  IEN_SET;                      /**< Interrupt Enable Register                          */
+  __IOM uint32_t  PRECNT_SET;                   /**< Pre-Counter Value Register                         */
+  __IOM uint32_t  CNT_SET;                      /**< Counter Value Register                             */
+  __IM uint32_t   COMBCNT_SET;                  /**< Combined Pre-Counter and Counter Valu...           */
+  __IM uint32_t   SYNCBUSY_SET;                 /**< Synchronization Busy Register                      */
+  __IOM uint32_t  LOCK_SET;                     /**< Configuration Lock Register                        */
+  RTCC_CC_TypeDef CC_SET[3U];                   /**< Capture/Compare Channel                            */
+  uint32_t        RESERVED1[1003U];             /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_CLR;                /**< IP VERSION                                         */
+  __IOM uint32_t  EN_CLR;                       /**< Module Enable Register                             */
+  __IOM uint32_t  CFG_CLR;                      /**< Configuration Register                             */
+  __IOM uint32_t  CMD_CLR;                      /**< Command Register                                   */
+  __IM uint32_t   STATUS_CLR;                   /**< Status register                                    */
+  __IOM uint32_t  IF_CLR;                       /**< RTCC Interrupt Flags                               */
+  __IOM uint32_t  IEN_CLR;                      /**< Interrupt Enable Register                          */
+  __IOM uint32_t  PRECNT_CLR;                   /**< Pre-Counter Value Register                         */
+  __IOM uint32_t  CNT_CLR;                      /**< Counter Value Register                             */
+  __IM uint32_t   COMBCNT_CLR;                  /**< Combined Pre-Counter and Counter Valu...           */
+  __IM uint32_t   SYNCBUSY_CLR;                 /**< Synchronization Busy Register                      */
+  __IOM uint32_t  LOCK_CLR;                     /**< Configuration Lock Register                        */
+  RTCC_CC_TypeDef CC_CLR[3U];                   /**< Capture/Compare Channel                            */
+  uint32_t        RESERVED2[1003U];             /**< Reserved for future use                            */
+  __IM uint32_t   IPVERSION_TGL;                /**< IP VERSION                                         */
+  __IOM uint32_t  EN_TGL;                       /**< Module Enable Register                             */
+  __IOM uint32_t  CFG_TGL;                      /**< Configuration Register                             */
+  __IOM uint32_t  CMD_TGL;                      /**< Command Register                                   */
+  __IM uint32_t   STATUS_TGL;                   /**< Status register                                    */
+  __IOM uint32_t  IF_TGL;                       /**< RTCC Interrupt Flags                               */
+  __IOM uint32_t  IEN_TGL;                      /**< Interrupt Enable Register                          */
+  __IOM uint32_t  PRECNT_TGL;                   /**< Pre-Counter Value Register                         */
+  __IOM uint32_t  CNT_TGL;                      /**< Counter Value Register                             */
+  __IM uint32_t   COMBCNT_TGL;                  /**< Combined Pre-Counter and Counter Valu...           */
+  __IM uint32_t   SYNCBUSY_TGL;                 /**< Synchronization Busy Register                      */
+  __IOM uint32_t  LOCK_TGL;                     /**< Configuration Lock Register                        */
+  RTCC_CC_TypeDef CC_TGL[3U];                   /**< Capture/Compare Channel                            */
+} RTCC_TypeDef;
+/** @} End of group EFM32PG22_RTCC */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_SMU SMU
+ * @{
+ * @brief EFM32PG22 SMU Register Declaration.
+ *****************************************************************************/
+
+/** SMU Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version                                         */
+  __IM uint32_t  STATUS;                        /**< Status                                             */
+  __IOM uint32_t LOCK;                          /**< Lock                                               */
+  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  uint32_t       RESERVED0[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t M33CTRL;                       /**< M33 Control                                        */
+  uint32_t       RESERVED1[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PPUPATD0;                      /**< PPU PATD Register 0                                */
+  __IOM uint32_t PPUPATD1;                      /**< PPU PATD Register 1                                */
+  uint32_t       RESERVED2[6U];                 /**< Reserved for future use                            */
+  __IOM uint32_t PPUSATD0;                      /**< PPU SATD Register 0                                */
+  __IOM uint32_t PPUSATD1;                      /**< PPU SATD Register 1                                */
+  uint32_t       RESERVED3[54U];                /**< Reserved for future use                            */
+  __IM uint32_t  PPUFS;                         /**< PPU Fault Status                                   */
+  uint32_t       RESERVED4[3U];                 /**< Reserved for future use                            */
+  __IOM uint32_t BMPUPATD0;                     /**< BMPU PATD Register 0                               */
+  uint32_t       RESERVED5[7U];                 /**< Reserved for future use                            */
+  __IOM uint32_t BMPUSATD0;                     /**< BMPU SATD Register 0                               */
+  uint32_t       RESERVED6[55U];                /**< Reserved for future use                            */
+  __IM uint32_t  BMPUFS;                        /**< BMPU Fault Status                                  */
+  __IM uint32_t  BMPUFSADDR;                    /**< BMPU Fault Status Address                          */
+  uint32_t       RESERVED7[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t ESAURTYPES0;                   /**< ESAU Region Types Register 0                       */
+  __IOM uint32_t ESAURTYPES1;                   /**< ESAU Region Types Register 1                       */
+  uint32_t       RESERVED8[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB01;                     /**< ESAU Movable Region Boundary 0-1                   */
+  __IOM uint32_t ESAUMRB12;                     /**< ESAU Movable Region Boundary 1-2                   */
+  uint32_t       RESERVED9[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB45;                     /**< ESAU Movable Region Boundary 4-5                   */
+  __IOM uint32_t ESAUMRB56;                     /**< ESAU Movable Region Boundary 5-6                   */
+  uint32_t       RESERVED10[862U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version                                         */
+  __IM uint32_t  STATUS_SET;                    /**< Status                                             */
+  __IOM uint32_t LOCK_SET;                      /**< Lock                                               */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED11[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t M33CTRL_SET;                   /**< M33 Control                                        */
+  uint32_t       RESERVED12[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUPATD0_SET;                  /**< PPU PATD Register 0                                */
+  __IOM uint32_t PPUPATD1_SET;                  /**< PPU PATD Register 1                                */
+  uint32_t       RESERVED13[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUSATD0_SET;                  /**< PPU SATD Register 0                                */
+  __IOM uint32_t PPUSATD1_SET;                  /**< PPU SATD Register 1                                */
+  uint32_t       RESERVED14[54U];               /**< Reserved for future use                            */
+  __IM uint32_t  PPUFS_SET;                     /**< PPU Fault Status                                   */
+  uint32_t       RESERVED15[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUPATD0_SET;                 /**< BMPU PATD Register 0                               */
+  uint32_t       RESERVED16[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUSATD0_SET;                 /**< BMPU SATD Register 0                               */
+  uint32_t       RESERVED17[55U];               /**< Reserved for future use                            */
+  __IM uint32_t  BMPUFS_SET;                    /**< BMPU Fault Status                                  */
+  __IM uint32_t  BMPUFSADDR_SET;                /**< BMPU Fault Status Address                          */
+  uint32_t       RESERVED18[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAURTYPES0_SET;               /**< ESAU Region Types Register 0                       */
+  __IOM uint32_t ESAURTYPES1_SET;               /**< ESAU Region Types Register 1                       */
+  uint32_t       RESERVED19[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB01_SET;                 /**< ESAU Movable Region Boundary 0-1                   */
+  __IOM uint32_t ESAUMRB12_SET;                 /**< ESAU Movable Region Boundary 1-2                   */
+  uint32_t       RESERVED20[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB45_SET;                 /**< ESAU Movable Region Boundary 4-5                   */
+  __IOM uint32_t ESAUMRB56_SET;                 /**< ESAU Movable Region Boundary 5-6                   */
+  uint32_t       RESERVED21[862U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version                                         */
+  __IM uint32_t  STATUS_CLR;                    /**< Status                                             */
+  __IOM uint32_t LOCK_CLR;                      /**< Lock                                               */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED22[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t M33CTRL_CLR;                   /**< M33 Control                                        */
+  uint32_t       RESERVED23[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUPATD0_CLR;                  /**< PPU PATD Register 0                                */
+  __IOM uint32_t PPUPATD1_CLR;                  /**< PPU PATD Register 1                                */
+  uint32_t       RESERVED24[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUSATD0_CLR;                  /**< PPU SATD Register 0                                */
+  __IOM uint32_t PPUSATD1_CLR;                  /**< PPU SATD Register 1                                */
+  uint32_t       RESERVED25[54U];               /**< Reserved for future use                            */
+  __IM uint32_t  PPUFS_CLR;                     /**< PPU Fault Status                                   */
+  uint32_t       RESERVED26[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUPATD0_CLR;                 /**< BMPU PATD Register 0                               */
+  uint32_t       RESERVED27[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUSATD0_CLR;                 /**< BMPU SATD Register 0                               */
+  uint32_t       RESERVED28[55U];               /**< Reserved for future use                            */
+  __IM uint32_t  BMPUFS_CLR;                    /**< BMPU Fault Status                                  */
+  __IM uint32_t  BMPUFSADDR_CLR;                /**< BMPU Fault Status Address                          */
+  uint32_t       RESERVED29[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAURTYPES0_CLR;               /**< ESAU Region Types Register 0                       */
+  __IOM uint32_t ESAURTYPES1_CLR;               /**< ESAU Region Types Register 1                       */
+  uint32_t       RESERVED30[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB01_CLR;                 /**< ESAU Movable Region Boundary 0-1                   */
+  __IOM uint32_t ESAUMRB12_CLR;                 /**< ESAU Movable Region Boundary 1-2                   */
+  uint32_t       RESERVED31[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB45_CLR;                 /**< ESAU Movable Region Boundary 4-5                   */
+  __IOM uint32_t ESAUMRB56_CLR;                 /**< ESAU Movable Region Boundary 5-6                   */
+  uint32_t       RESERVED32[862U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version                                         */
+  __IM uint32_t  STATUS_TGL;                    /**< Status                                             */
+  __IOM uint32_t LOCK_TGL;                      /**< Lock                                               */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED33[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t M33CTRL_TGL;                   /**< M33 Control                                        */
+  uint32_t       RESERVED34[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUPATD0_TGL;                  /**< PPU PATD Register 0                                */
+  __IOM uint32_t PPUPATD1_TGL;                  /**< PPU PATD Register 1                                */
+  uint32_t       RESERVED35[6U];                /**< Reserved for future use                            */
+  __IOM uint32_t PPUSATD0_TGL;                  /**< PPU SATD Register 0                                */
+  __IOM uint32_t PPUSATD1_TGL;                  /**< PPU SATD Register 1                                */
+  uint32_t       RESERVED36[54U];               /**< Reserved for future use                            */
+  __IM uint32_t  PPUFS_TGL;                     /**< PPU Fault Status                                   */
+  uint32_t       RESERVED37[3U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUPATD0_TGL;                 /**< BMPU PATD Register 0                               */
+  uint32_t       RESERVED38[7U];                /**< Reserved for future use                            */
+  __IOM uint32_t BMPUSATD0_TGL;                 /**< BMPU SATD Register 0                               */
+  uint32_t       RESERVED39[55U];               /**< Reserved for future use                            */
+  __IM uint32_t  BMPUFS_TGL;                    /**< BMPU Fault Status                                  */
+  __IM uint32_t  BMPUFSADDR_TGL;                /**< BMPU Fault Status Address                          */
+  uint32_t       RESERVED40[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAURTYPES0_TGL;               /**< ESAU Region Types Register 0                       */
+  __IOM uint32_t ESAURTYPES1_TGL;               /**< ESAU Region Types Register 1                       */
+  uint32_t       RESERVED41[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB01_TGL;                 /**< ESAU Movable Region Boundary 0-1                   */
+  __IOM uint32_t ESAUMRB12_TGL;                 /**< ESAU Movable Region Boundary 1-2                   */
+  uint32_t       RESERVED42[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t ESAUMRB45_TGL;                 /**< ESAU Movable Region Boundary 4-5                   */
+  __IOM uint32_t ESAUMRB56_TGL;                 /**< ESAU Movable Region Boundary 5-6                   */
+} SMU_TypeDef;
+/** @} End of group EFM32PG22_SMU */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_SYSCFG SYSCFG
+ * @{
+ * @brief EFM32PG22 SYSCFG Register Declaration.
+ *****************************************************************************/
+
+/** SYSCFG Register Declaration. */
+typedef struct {
+  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
+  uint32_t       RESERVED0[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CHIPREVHW;                     /**< Chip Revision, Hard-wired                          */
+  __IOM uint32_t CHIPREV;                       /**< Part Family and Revision Values                    */
+  uint32_t       RESERVED1[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CFGSYSTIC;                     /**< SysTick clock source                               */
+  uint32_t       RESERVED2[55U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED3[1U];                 /**< Reserved for future use                            */
+  uint32_t       RESERVED4[63U];                /**< Reserved for future use                            */
+  __IOM uint32_t CTRL;                          /**< Memory System Control                              */
+  uint32_t       RESERVED5[1U];                 /**< Reserved for future use                            */
+  __IOM uint32_t DMEM0RETNCTRL;                 /**< DMEM0 Retention Control                            */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  DMEM0ECCADDR;                  /**< DMEM0 ECC Address                                  */
+  __IOM uint32_t DMEM0ECCCTRL;                  /**< DMEM0 ECC Control                                  */
+  uint32_t       RESERVED7[250U];               /**< Reserved for future use                            */
+  __IOM uint32_t ROOTDATA0;                     /**< Root Data Register 0                               */
+  __IOM uint32_t ROOTDATA1;                     /**< Root Data Register 1                               */
+  __IM uint32_t  ROOTLOCKSTATUS;                /**< Lock Status                                        */
+  uint32_t       RESERVED8[637U];               /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED9[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t CHIPREVHW_SET;                 /**< Chip Revision, Hard-wired                          */
+  __IOM uint32_t CHIPREV_SET;                   /**< Part Family and Revision Values                    */
+  uint32_t       RESERVED10[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFGSYSTIC_SET;                 /**< SysTick clock source                               */
+  uint32_t       RESERVED11[55U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED12[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED13[63U];               /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_SET;                      /**< Memory System Control                              */
+  uint32_t       RESERVED14[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t DMEM0RETNCTRL_SET;             /**< DMEM0 Retention Control                            */
+  uint32_t       RESERVED15[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  DMEM0ECCADDR_SET;              /**< DMEM0 ECC Address                                  */
+  __IOM uint32_t DMEM0ECCCTRL_SET;              /**< DMEM0 ECC Control                                  */
+  uint32_t       RESERVED16[250U];              /**< Reserved for future use                            */
+  __IOM uint32_t ROOTDATA0_SET;                 /**< Root Data Register 0                               */
+  __IOM uint32_t ROOTDATA1_SET;                 /**< Root Data Register 1                               */
+  __IM uint32_t  ROOTLOCKSTATUS_SET;            /**< Lock Status                                        */
+  uint32_t       RESERVED17[637U];              /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED18[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CHIPREVHW_CLR;                 /**< Chip Revision, Hard-wired                          */
+  __IOM uint32_t CHIPREV_CLR;                   /**< Part Family and Revision Values                    */
+  uint32_t       RESERVED19[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFGSYSTIC_CLR;                 /**< SysTick clock source                               */
+  uint32_t       RESERVED20[55U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED21[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED22[63U];               /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_CLR;                      /**< Memory System Control                              */
+  uint32_t       RESERVED23[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t DMEM0RETNCTRL_CLR;             /**< DMEM0 Retention Control                            */
+  uint32_t       RESERVED24[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  DMEM0ECCADDR_CLR;              /**< DMEM0 ECC Address                                  */
+  __IOM uint32_t DMEM0ECCCTRL_CLR;              /**< DMEM0 ECC Control                                  */
+  uint32_t       RESERVED25[250U];              /**< Reserved for future use                            */
+  __IOM uint32_t ROOTDATA0_CLR;                 /**< Root Data Register 0                               */
+  __IOM uint32_t ROOTDATA1_CLR;                 /**< Root Data Register 1                               */
+  __IM uint32_t  ROOTLOCKSTATUS_CLR;            /**< Lock Status                                        */
+  uint32_t       RESERVED26[637U];              /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
+  uint32_t       RESERVED27[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CHIPREVHW_TGL;                 /**< Chip Revision, Hard-wired                          */
+  __IOM uint32_t CHIPREV_TGL;                   /**< Part Family and Revision Values                    */
+  uint32_t       RESERVED28[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t CFGSYSTIC_TGL;                 /**< SysTick clock source                               */
+  uint32_t       RESERVED29[55U];               /**< Reserved for future use                            */
+  uint32_t       RESERVED30[1U];                /**< Reserved for future use                            */
+  uint32_t       RESERVED31[63U];               /**< Reserved for future use                            */
+  __IOM uint32_t CTRL_TGL;                      /**< Memory System Control                              */
+  uint32_t       RESERVED32[1U];                /**< Reserved for future use                            */
+  __IOM uint32_t DMEM0RETNCTRL_TGL;             /**< DMEM0 Retention Control                            */
+  uint32_t       RESERVED33[1U];                /**< Reserved for future use                            */
+  __IM uint32_t  DMEM0ECCADDR_TGL;              /**< DMEM0 ECC Address                                  */
+  __IOM uint32_t DMEM0ECCCTRL_TGL;              /**< DMEM0 ECC Control                                  */
+  uint32_t       RESERVED34[250U];              /**< Reserved for future use                            */
+  __IOM uint32_t ROOTDATA0_TGL;                 /**< Root Data Register 0                               */
+  __IOM uint32_t ROOTDATA1_TGL;                 /**< Root Data Register 1                               */
+  __IM uint32_t  ROOTLOCKSTATUS_TGL;            /**< Lock Status                                        */
+} SYSCFG_TypeDef;
+/** @} End of group EFM32PG22_SYSCFG */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_TIMER TIMER
+ * @{
+ * @brief EFM32PG22 TIMER Register Declaration.
+ *****************************************************************************/
+
+/** TIMER CC Register Group Declaration. */
+typedef struct {
+  __IOM uint32_t CFG;                                /**< CC Channel Configuration Register                  */
+  __IOM uint32_t CTRL;                               /**< CC Channel Control Register                        */
+  __IOM uint32_t OC;                                 /**< OC Channel Value Register                          */
+  uint32_t       RESERVED0[1U];                      /**< Reserved for future use                            */
+  __IOM uint32_t OCB;                                /**< OC Channel Value Buffer Register                   */
+  __IM uint32_t  ICF;                                /**< IC Channel Value Register                          */
+  __IM uint32_t  ICOF;                               /**< IC Channel Value Overflow Register                 */
+  uint32_t       RESERVED1[1U];                      /**< Reserved for future use                            */
+} TIMER_CC_TypeDef;
+
+/** TIMER Register Declaration. */
+typedef struct {
+  __IM uint32_t    IPVERSION;                   /**< IP version ID                                      */
+  __IOM uint32_t   CFG;                         /**< Configuration Register                             */
+  __IOM uint32_t   CTRL;                        /**< Control Register                                   */
+  __IOM uint32_t   CMD;                         /**< Command Register                                   */
+  __IM uint32_t    STATUS;                      /**< Status Register                                    */
+  __IOM uint32_t   IF;                          /**< Interrupt Flag Register                            */
+  __IOM uint32_t   IEN;                         /**< Interrupt Enable Register                          */
+  __IOM uint32_t   TOP;                         /**< Counter Top Value Register                         */
+  __IOM uint32_t   TOPB;                        /**< Counter Top Value Buffer Register                  */
+  __IOM uint32_t   CNT;                         /**< Counter Value Register                             */
+  uint32_t         RESERVED0[1U];               /**< Reserved for future use                            */
+  __IOM uint32_t   LOCK;                        /**< TIMER Configuration Lock Register                  */
+  __IOM uint32_t   EN;                          /**< module en                                          */
+  uint32_t         RESERVED1[11U];              /**< Reserved for future use                            */
+  TIMER_CC_TypeDef CC[3U];                      /**< Compare/Capture Channel                            */
+  uint32_t         RESERVED2[8U];               /**< Reserved for future use                            */
+  __IOM uint32_t   DTCFG;                       /**< DTI Configuration Register                         */
+  __IOM uint32_t   DTTIMECFG;                   /**< DTI Time Configuration Register                    */
+  __IOM uint32_t   DTFCFG;                      /**< DTI Fault Configuration Register                   */
+  __IOM uint32_t   DTCTRL;                      /**< DTI Control Register                               */
+  __IOM uint32_t   DTOGEN;                      /**< DTI Output Generation Enable Register              */
+  __IM uint32_t    DTFAULT;                     /**< DTI Fault Register                                 */
+  __IOM uint32_t   DTFAULTC;                    /**< DTI Fault Clear Register                           */
+  __IOM uint32_t   DTLOCK;                      /**< DTI Configuration Lock Register                    */
+  uint32_t         RESERVED3[960U];             /**< Reserved for future use                            */
+  __IM uint32_t    IPVERSION_SET;               /**< IP version ID                                      */
+  __IOM uint32_t   CFG_SET;                     /**< Configuration Register                             */
+  __IOM uint32_t   CTRL_SET;                    /**< Control Register                                   */
+  __IOM uint32_t   CMD_SET;                     /**< Command Register                                   */
+  __IM uint32_t    STATUS_SET;                  /**< Status Register                                    */
+  __IOM uint32_t   IF_SET;                      /**< Interrupt Flag Register                            */
+  __IOM uint32_t   IEN_SET;                     /**< Interrupt Enable Register                          */
+  __IOM uint32_t   TOP_SET;                     /**< Counter Top Value Register                         */
+  __IOM uint32_t   TOPB_SET;                    /**< Counter Top Value Buffer Register                  */
+  __IOM uint32_t   CNT_SET;                     /**< Counter Value Register                             */
+  uint32_t         RESERVED4[1U];               /**< Reserved for future use                            */
+  __IOM uint32_t   LOCK_SET;                    /**< TIMER Configuration Lock Register                  */
+  __IOM uint32_t   EN_SET;                      /**< module en                                          */
+  uint32_t         RESERVED5[11U];              /**< Reserved for future use                            */
+  TIMER_CC_TypeDef CC_SET[3U];                  /**< Compare/Capture Channel                            */
+  uint32_t         RESERVED6[8U];               /**< Reserved for future use                            */
+  __IOM uint32_t   DTCFG_SET;                   /**< DTI Configuration Register                         */
+  __IOM uint32_t   DTTIMECFG_SET;               /**< DTI Time Configuration Register                    */
+  __IOM uint32_t   DTFCFG_SET;                  /**< DTI Fault Configuration Register                   */
+  __IOM uint32_t   DTCTRL_SET;                  /**< DTI Control Register                               */
+  __IOM uint32_t   DTOGEN_SET;                  /**< DTI Output Generation Enable Register              */
+  __IM uint32_t    DTFAULT_SET;                 /**< DTI Fault Register                                 */
+  __IOM uint32_t   DTFAULTC_SET;                /**< DTI Fault Clear Register                           */
+  __IOM uint32_t   DTLOCK_SET;                  /**< DTI Configuration Lock Register                    */
+  uint32_t         RESERVED7[960U];             /**< Reserved for future use                            */
+  __IM uint32_t    IPVERSION_CLR;               /**< IP version ID                                      */
+  __IOM uint32_t   CFG_CLR;                     /**< Configuration Register                             */
+  __IOM uint32_t   CTRL_CLR;                    /**< Control Register                                   */
+  __IOM uint32_t   CMD_CLR;                     /**< Command Register                                   */
+  __IM uint32_t    STATUS_CLR;                  /**< Status Register                                    */
+  __IOM uint32_t   IF_CLR;                      /**< Interrupt Flag Register                            */
+  __IOM uint32_t   IEN_CLR;                     /**< Interrupt Enable Register                          */
+  __IOM uint32_t   TOP_CLR;                     /**< Counter Top Value Register                         */
+  __IOM uint32_t   TOPB_CLR;                    /**< Counter Top Value Buffer Register                  */
+  __IOM uint32_t   CNT_CLR;                     /**< Counter Value Register                             */
+  uint32_t         RESERVED8[1U];               /**< Reserved for future use                            */
+  __IOM uint32_t   LOCK_CLR;                    /**< TIMER Configuration Lock Register                  */
+  __IOM uint32_t   EN_CLR;                      /**< module en                                          */
+  uint32_t         RESERVED9[11U];              /**< Reserved for future use                            */
+  TIMER_CC_TypeDef CC_CLR[3U];                  /**< Compare/Capture Channel                            */
+  uint32_t         RESERVED10[8U];              /**< Reserved for future use                            */
+  __IOM uint32_t   DTCFG_CLR;                   /**< DTI Configuration Register                         */
+  __IOM uint32_t   DTTIMECFG_CLR;               /**< DTI Time Configuration Register                    */
+  __IOM uint32_t   DTFCFG_CLR;                  /**< DTI Fault Configuration Register                   */
+  __IOM uint32_t   DTCTRL_CLR;                  /**< DTI Control Register                               */
+  __IOM uint32_t   DTOGEN_CLR;                  /**< DTI Output Generation Enable Register              */
+  __IM uint32_t    DTFAULT_CLR;                 /**< DTI Fault Register                                 */
+  __IOM uint32_t   DTFAULTC_CLR;                /**< DTI Fault Clear Register                           */
+  __IOM uint32_t   DTLOCK_CLR;                  /**< DTI Configuration Lock Register                    */
+  uint32_t         RESERVED11[960U];            /**< Reserved for future use                            */
+  __IM uint32_t    IPVERSION_TGL;               /**< IP version ID                                      */
+  __IOM uint32_t   CFG_TGL;                     /**< Configuration Register                             */
+  __IOM uint32_t   CTRL_TGL;                    /**< Control Register                                   */
+  __IOM uint32_t   CMD_TGL;                     /**< Command Register                                   */
+  __IM uint32_t    STATUS_TGL;                  /**< Status Register                                    */
+  __IOM uint32_t   IF_TGL;                      /**< Interrupt Flag Register                            */
+  __IOM uint32_t   IEN_TGL;                     /**< Interrupt Enable Register                          */
+  __IOM uint32_t   TOP_TGL;                     /**< Counter Top Value Register                         */
+  __IOM uint32_t   TOPB_TGL;                    /**< Counter Top Value Buffer Register                  */
+  __IOM uint32_t   CNT_TGL;                     /**< Counter Value Register                             */
+  uint32_t         RESERVED12[1U];              /**< Reserved for future use                            */
+  __IOM uint32_t   LOCK_TGL;                    /**< TIMER Configuration Lock Register                  */
+  __IOM uint32_t   EN_TGL;                      /**< module en                                          */
+  uint32_t         RESERVED13[11U];             /**< Reserved for future use                            */
+  TIMER_CC_TypeDef CC_TGL[3U];                  /**< Compare/Capture Channel                            */
+  uint32_t         RESERVED14[8U];              /**< Reserved for future use                            */
+  __IOM uint32_t   DTCFG_TGL;                   /**< DTI Configuration Register                         */
+  __IOM uint32_t   DTTIMECFG_TGL;               /**< DTI Time Configuration Register                    */
+  __IOM uint32_t   DTFCFG_TGL;                  /**< DTI Fault Configuration Register                   */
+  __IOM uint32_t   DTCTRL_TGL;                  /**< DTI Control Register                               */
+  __IOM uint32_t   DTOGEN_TGL;                  /**< DTI Output Generation Enable Register              */
+  __IM uint32_t    DTFAULT_TGL;                 /**< DTI Fault Register                                 */
+  __IOM uint32_t   DTFAULTC_TGL;                /**< DTI Fault Clear Register                           */
+  __IOM uint32_t   DTLOCK_TGL;                  /**< DTI Configuration Lock Register                    */
+} TIMER_TypeDef;
+/** @} End of group EFM32PG22_TIMER */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_ULFRCO ULFRCO
+ * @{
+ * @brief EFM32PG22 ULFRCO Register Declaration.
+ *****************************************************************************/
+
+/** ULFRCO Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP version                                         */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  uint32_t       RESERVED1[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED2[1017U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP version                                         */
+  uint32_t       RESERVED3[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED5[1017U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP version                                         */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  uint32_t       RESERVED7[2U];                 /**< Reserved for future use                            */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  uint32_t       RESERVED8[1017U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP version                                         */
+  uint32_t       RESERVED9[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  uint32_t       RESERVED10[2U];                /**< Reserved for future use                            */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+} ULFRCO_TypeDef;
+/** @} End of group EFM32PG22_ULFRCO */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_USART USART
+ * @{
+ * @brief EFM32PG22 USART Register Declaration.
+ *****************************************************************************/
+
+/** USART Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IPVERSION                                          */
+  __IOM uint32_t EN;                            /**< USART Enable                                       */
+  __IOM uint32_t CTRL;                          /**< Control Register                                   */
+  __IOM uint32_t FRAME;                         /**< USART Frame Format Register                        */
+  __IOM uint32_t TRIGCTRL;                      /**< USART Trigger Control register                     */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  __IM uint32_t  STATUS;                        /**< USART Status Register                              */
+  __IOM uint32_t CLKDIV;                        /**< Clock Control Register                             */
+  __IM uint32_t  RXDATAX;                       /**< RX Buffer Data Extended Register                   */
+  __IM uint32_t  RXDATA;                        /**< RX Buffer Data Register                            */
+  __IM uint32_t  RXDOUBLEX;                     /**< RX Buffer Double Data Extended Register            */
+  __IM uint32_t  RXDOUBLE;                      /**< RX FIFO Double Data Register                       */
+  __IM uint32_t  RXDATAXP;                      /**< RX Buffer Data Extended Peek Register              */
+  __IM uint32_t  RXDOUBLEXP;                    /**< RX Buffer Double Data Extended Peek R...           */
+  __IOM uint32_t TXDATAX;                       /**< TX Buffer Data Extended Register                   */
+  __IOM uint32_t TXDATA;                        /**< TX Buffer Data Register                            */
+  __IOM uint32_t TXDOUBLEX;                     /**< TX Buffer Double Data Extended Register            */
+  __IOM uint32_t TXDOUBLE;                      /**< TX Buffer Double Data Register                     */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  __IOM uint32_t IRCTRL;                        /**< IrDA Control Register                              */
+  __IOM uint32_t I2SCTRL;                       /**< I2S Control Register                               */
+  __IOM uint32_t TIMING;                        /**< Timing Register                                    */
+  __IOM uint32_t CTRLX;                         /**< Control Register Extended                          */
+  __IOM uint32_t TIMECMP0;                      /**< Timer Compare 0                                    */
+  __IOM uint32_t TIMECMP1;                      /**< Timer Compare 1                                    */
+  __IOM uint32_t TIMECMP2;                      /**< Timer Compare 2                                    */
+  uint32_t       RESERVED0[997U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_SET;                        /**< USART Enable                                       */
+  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
+  __IOM uint32_t FRAME_SET;                     /**< USART Frame Format Register                        */
+  __IOM uint32_t TRIGCTRL_SET;                  /**< USART Trigger Control register                     */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_SET;                    /**< USART Status Register                              */
+  __IOM uint32_t CLKDIV_SET;                    /**< Clock Control Register                             */
+  __IM uint32_t  RXDATAX_SET;                   /**< RX Buffer Data Extended Register                   */
+  __IM uint32_t  RXDATA_SET;                    /**< RX Buffer Data Register                            */
+  __IM uint32_t  RXDOUBLEX_SET;                 /**< RX Buffer Double Data Extended Register            */
+  __IM uint32_t  RXDOUBLE_SET;                  /**< RX FIFO Double Data Register                       */
+  __IM uint32_t  RXDATAXP_SET;                  /**< RX Buffer Data Extended Peek Register              */
+  __IM uint32_t  RXDOUBLEXP_SET;                /**< RX Buffer Double Data Extended Peek R...           */
+  __IOM uint32_t TXDATAX_SET;                   /**< TX Buffer Data Extended Register                   */
+  __IOM uint32_t TXDATA_SET;                    /**< TX Buffer Data Register                            */
+  __IOM uint32_t TXDOUBLEX_SET;                 /**< TX Buffer Double Data Extended Register            */
+  __IOM uint32_t TXDOUBLE_SET;                  /**< TX Buffer Double Data Register                     */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t IRCTRL_SET;                    /**< IrDA Control Register                              */
+  __IOM uint32_t I2SCTRL_SET;                   /**< I2S Control Register                               */
+  __IOM uint32_t TIMING_SET;                    /**< Timing Register                                    */
+  __IOM uint32_t CTRLX_SET;                     /**< Control Register Extended                          */
+  __IOM uint32_t TIMECMP0_SET;                  /**< Timer Compare 0                                    */
+  __IOM uint32_t TIMECMP1_SET;                  /**< Timer Compare 1                                    */
+  __IOM uint32_t TIMECMP2_SET;                  /**< Timer Compare 2                                    */
+  uint32_t       RESERVED1[997U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_CLR;                        /**< USART Enable                                       */
+  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
+  __IOM uint32_t FRAME_CLR;                     /**< USART Frame Format Register                        */
+  __IOM uint32_t TRIGCTRL_CLR;                  /**< USART Trigger Control register                     */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_CLR;                    /**< USART Status Register                              */
+  __IOM uint32_t CLKDIV_CLR;                    /**< Clock Control Register                             */
+  __IM uint32_t  RXDATAX_CLR;                   /**< RX Buffer Data Extended Register                   */
+  __IM uint32_t  RXDATA_CLR;                    /**< RX Buffer Data Register                            */
+  __IM uint32_t  RXDOUBLEX_CLR;                 /**< RX Buffer Double Data Extended Register            */
+  __IM uint32_t  RXDOUBLE_CLR;                  /**< RX FIFO Double Data Register                       */
+  __IM uint32_t  RXDATAXP_CLR;                  /**< RX Buffer Data Extended Peek Register              */
+  __IM uint32_t  RXDOUBLEXP_CLR;                /**< RX Buffer Double Data Extended Peek R...           */
+  __IOM uint32_t TXDATAX_CLR;                   /**< TX Buffer Data Extended Register                   */
+  __IOM uint32_t TXDATA_CLR;                    /**< TX Buffer Data Register                            */
+  __IOM uint32_t TXDOUBLEX_CLR;                 /**< TX Buffer Double Data Extended Register            */
+  __IOM uint32_t TXDOUBLE_CLR;                  /**< TX Buffer Double Data Register                     */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t IRCTRL_CLR;                    /**< IrDA Control Register                              */
+  __IOM uint32_t I2SCTRL_CLR;                   /**< I2S Control Register                               */
+  __IOM uint32_t TIMING_CLR;                    /**< Timing Register                                    */
+  __IOM uint32_t CTRLX_CLR;                     /**< Control Register Extended                          */
+  __IOM uint32_t TIMECMP0_CLR;                  /**< Timer Compare 0                                    */
+  __IOM uint32_t TIMECMP1_CLR;                  /**< Timer Compare 1                                    */
+  __IOM uint32_t TIMECMP2_CLR;                  /**< Timer Compare 2                                    */
+  uint32_t       RESERVED2[997U];               /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IPVERSION                                          */
+  __IOM uint32_t EN_TGL;                        /**< USART Enable                                       */
+  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
+  __IOM uint32_t FRAME_TGL;                     /**< USART Frame Format Register                        */
+  __IOM uint32_t TRIGCTRL_TGL;                  /**< USART Trigger Control register                     */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  __IM uint32_t  STATUS_TGL;                    /**< USART Status Register                              */
+  __IOM uint32_t CLKDIV_TGL;                    /**< Clock Control Register                             */
+  __IM uint32_t  RXDATAX_TGL;                   /**< RX Buffer Data Extended Register                   */
+  __IM uint32_t  RXDATA_TGL;                    /**< RX Buffer Data Register                            */
+  __IM uint32_t  RXDOUBLEX_TGL;                 /**< RX Buffer Double Data Extended Register            */
+  __IM uint32_t  RXDOUBLE_TGL;                  /**< RX FIFO Double Data Register                       */
+  __IM uint32_t  RXDATAXP_TGL;                  /**< RX Buffer Data Extended Peek Register              */
+  __IM uint32_t  RXDOUBLEXP_TGL;                /**< RX Buffer Double Data Extended Peek R...           */
+  __IOM uint32_t TXDATAX_TGL;                   /**< TX Buffer Data Extended Register                   */
+  __IOM uint32_t TXDATA_TGL;                    /**< TX Buffer Data Register                            */
+  __IOM uint32_t TXDOUBLEX_TGL;                 /**< TX Buffer Double Data Extended Register            */
+  __IOM uint32_t TXDOUBLE_TGL;                  /**< TX Buffer Double Data Register                     */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t IRCTRL_TGL;                    /**< IrDA Control Register                              */
+  __IOM uint32_t I2SCTRL_TGL;                   /**< I2S Control Register                               */
+  __IOM uint32_t TIMING_TGL;                    /**< Timing Register                                    */
+  __IOM uint32_t CTRLX_TGL;                     /**< Control Register Extended                          */
+  __IOM uint32_t TIMECMP0_TGL;                  /**< Timer Compare 0                                    */
+  __IOM uint32_t TIMECMP1_TGL;                  /**< Timer Compare 1                                    */
+  __IOM uint32_t TIMECMP2_TGL;                  /**< Timer Compare 2                                    */
+} USART_TypeDef;
+/** @} End of group EFM32PG22_USART */
+
+/**************************************************************************//**
+ * @defgroup EFM32PG22_WDOG WDOG
+ * @{
+ * @brief EFM32PG22 WDOG Register Declaration.
+ *****************************************************************************/
+
+/** WDOG Register Declaration. */
+typedef struct {
+  __IM uint32_t  IPVERSION;                     /**< IP Version Register                                */
+  __IOM uint32_t EN;                            /**< Enable Register                                    */
+  __IOM uint32_t CFG;                           /**< Configuration Register                             */
+  __IOM uint32_t CMD;                           /**< Command Register                                   */
+  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS;                        /**< Status Register                                    */
+  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
+  __IOM uint32_t LOCK;                          /**< Lock Register                                      */
+  __IM uint32_t  SYNCBUSY;                      /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_SET;                 /**< IP Version Register                                */
+  __IOM uint32_t EN_SET;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG_SET;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
+  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
+  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t LOCK_SET;                      /**< Lock Register                                      */
+  __IM uint32_t  SYNCBUSY_SET;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED3[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version Register                                */
+  __IOM uint32_t EN_CLR;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG_CLR;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
+  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
+  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t LOCK_CLR;                      /**< Lock Register                                      */
+  __IM uint32_t  SYNCBUSY_CLR;                  /**< Synchronization Busy Register                      */
+  uint32_t       RESERVED5[1014U];              /**< Reserved for future use                            */
+  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version Register                                */
+  __IOM uint32_t EN_TGL;                        /**< Enable Register                                    */
+  __IOM uint32_t CFG_TGL;                       /**< Configuration Register                             */
+  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
+  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
+  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
+  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
+  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
+  __IOM uint32_t LOCK_TGL;                      /**< Lock Register                                      */
+  __IM uint32_t  SYNCBUSY_TGL;                  /**< Synchronization Busy Register                      */
+} WDOG_TypeDef;
+/** @} End of group EFM32PG22_WDOG */
+
 
 /**************************************************************************//**
  * @defgroup EFM32PG22C200F512IM40_Peripheral_Base EFM32PG22C200F512IM40 Peripheral Memory Map
@@ -907,397 +3893,6 @@ typedef enum IRQn{
 #define CRYPTOACC_PKCTRL        ((CRYPTOACC_PKCTRL_TypeDef *) CRYPTOACC_PKCTRL_BASE)      /**< CRYPTOACC_PKCTRL base pointer */
 #define DEVINFO                 ((DEVINFO_TypeDef *) DEVINFO_BASE)                        /**< DEVINFO base pointer */
 /** @} End of group EFM32PG22C200F512IM40_Peripheral_Declaration */
-
-/**************************************************************************//**
- * @defgroup EFM32PG22C200F512IM40_Peripheral_Parameters EFM32PG22C200F512IM40 Peripheral Parameters
- * @{
- * @brief Device peripheral parameter values
- *****************************************************************************/
-
-/* Common peripheral register block offsets. */
-#define PER_REG_BLOCK_SET_OFFSET             0x1000UL  /**< Offset to SET register block */
-#define PER_REG_BLOCK_CLR_OFFSET             0x2000UL  /**< Offset to CLEAR register block */
-#define PER_REG_BLOCK_TGL_OFFSET             0x3000UL  /**< Offset to TOGGLE register block */
-#define MSC_CDA_PRESENT                      0x0UL     /**>  */
-#define MSC_FDIO_WIDTH                       0x40UL    /**> None */
-#define MSC_FLASHADDRBITS                    0x13UL    /**> None */
-#define MSC_FLASHBLOCKADDRBITS               0x13UL    /**> None */
-#define MSC_FLASH_BLOCK_INFO_PCOUNT          0x6UL     /**> None */
-#define MSC_INFOADDRBITS                     0x10UL    /**> None */
-#define MSC_INFOBLOCKADDRBITS                0x10UL    /**> None */
-#define MSC_INFO_PSIZE_BITS                  0xDUL     /**> None */
-#define MSC_MAIN_PSIZE_BITS                  0xDUL     /**> None */
-#define MSC_MTP_PRESENT                      0x1UL     /**>  */
-#define MSC_REDUNDANCY                       0x2UL     /**> None */
-#define MSC_UD_IN_MTP_PAGE                   0x0UL     /**>  */
-#define MSC_YADDRBITS                        0x6UL     /**>  */
-#define SYSROM_WORDS                         0x600UL   /**> Number of words in ROM */
-#define SYSROM_ROM_SIZE_BYTES                0x1800UL  /**> Number of bytes in ROM */
-#define DMEM_BANK0_SIZE                      0x6000UL  /**> Bank0 Size */
-#define DMEM_BANK1_SIZE                      0x2000UL  /**> Bank1 Size */
-#define DMEM_BANK2_SIZE                      0x0UL     /**> Bank2 Size */
-#define DMEM_BANK3_SIZE                      0x0UL     /**> Bank3 Size */
-#define DMEM_BANK4_SIZE                      0x0UL     /**> Bank4 Size */
-#define DMEM_BANK5_SIZE                      0x0UL     /**> Bank5 Size */
-#define DMEM_BANK6_SIZE                      0x0UL     /**> Bank6 Size */
-#define DMEM_BANK7_SIZE                      0x0UL     /**> Bank7 Size */
-#define DMEM_NUM_BANKS                       0x2UL     /**> Number of Banks */
-#define DMEM_SIZE                            0x8000UL  /**> Total size */
-#define LFXO_NO_CTUNE                        0x0UL     /**> CTUNE Not Present */
-#define LFXO_CTUNE                           0x1UL     /**> CTUNE Present */
-#define ICACHE0_AHB_LITE                     0x0UL     /**> AHB Lite */
-#define ICACHE0_CACHEABLE_SIZE               0x200UL   /**> Cache Size */
-#define ICACHE0_CACHEABLE_START              0x12UL    /**> Cache Start */
-#define ICACHE0_DEFAULT_OFF                  0x1UL     /**> Default off */
-#define ICACHE0_FLASH_SIZE                   0x80000UL /**> Flash size */
-#define ICACHE0_FLASH_START                  0x0UL     /**> Flash start */
-#define ICACHE0_LOOPCACHE_MEM_ADDR_BITS      0x3UL     /**> Loopcache Memory Address bits */
-#define ICACHE0_LOOPCACHE_STICKINESS_BITS    0x4UL     /**> Loopcache Stickiness bits */
-#define ICACHE0_PARITY_BITS                  0x1UL     /**> Use Parity */
-#define ICACHE0_PC_BITS                      0x20UL    /**> Performance Counter bits */
-#define ICACHE0_PIPE_STAGE                   0x1UL     /**> Pipeline Stage */
-#define ICACHE0_RAM_ADDR_BITS                0x0UL     /**> RAM Address bits */
-#define ICACHE0_RAM_DATA_BITS                0x0UL     /**> RAM Data bits */
-#define ICACHE0_SET_BITS                     0x5UL     /**> Set bits */
-#define ICACHE0_USE_HREADY_GATING            0x1UL     /**> Use HREADY gating */
-#define ICACHE0_USE_IDLE_GATING              0x1UL     /**> Use IDLE gating */
-#define ICACHE0_USE_LOOPCACHE                0x1UL     /**> Use Loopcache */
-#define ICACHE0_WAY_BITS                     0x1UL     /**> Way bits */
-#define ICACHE0_WORDS_PER_BLOCK              0x0UL     /**> Words Per Block */
-#define ICACHE0_WPB_BITS                     0x1UL     /**> Words Per Block bits */
-#define ICACHE0_WPL_BITS                     0x3UL     /**> Words Per Line bits */
-#define PRS_ASYNC_CH_NUM                     0xCUL     /**> None */
-#define PRS_PRSSEL_WIDTH                     0x4UL     /**> New Param */
-#define PRS_SPRSSEL_WIDTH                    0x2UL     /**> New Param */
-#define PRS_SYNC_CH_NUM                      0x4UL     /**> None */
-#define GPIO_MODE_WIDTH                      0x4UL     /**> Mode Width */
-#define GPIO_NUM_EM4_WU                      0xCUL     /**> New Param */
-#define GPIO_NUM_EVEN_PA                     0x5UL     /**> Num of even pins port A */
-#define GPIO_NUM_EVEN_PB                     0x3UL     /**> Num of even pins port B */
-#define GPIO_NUM_EVEN_PC                     0x4UL     /**> Num of even pins port C */
-#define GPIO_NUM_EVEN_PD                     0x2UL     /**> Num of even pins port D */
-#define GPIO_NUM_EXT_INT                     0xCUL     /**> New Param */
-#define GPIO_NUM_EXT_INT_L                   0x8UL     /**> New Param */
-#define GPIO_NUM_EXT_INT_U                   0x4UL     /**> New Param */
-#define GPIO_NUM_EXT_INT_U_ZERO              0x0UL     /**> New Param */
-#define GPIO_NUM_ODD_PA                      0x4UL     /**> Num of odd pins port A */
-#define GPIO_NUM_ODD_PB                      0x2UL     /**> Num of odd pins port B */
-#define GPIO_NUM_ODD_PC                      0x4UL     /**> Num of odd pins port C */
-#define GPIO_NUM_ODD_PD                      0x2UL     /**> Num of odd pins port D */
-#define GPIO_PINSEL_WIDTH                    0x4UL     /**> Route config pin select width */
-#define GPIO_PORTSEL_WIDTH                   0x2UL     /**> Route config port select width */
-#define GPIO_PORT_A_WIDTH                    0x9UL     /**> Port A Width */
-#define GPIO_PORT_A_WIDTH_ZERO               0x0UL     /**> Port A Width is Zero */
-#define GPIO_PORT_A_WL                       0x8UL     /**> New Param */
-#define GPIO_PORT_A_WU                       0x1UL     /**> New Param */
-#define GPIO_PORT_A_WU_ZERO                  0x0UL     /**> New Param */
-#define GPIO_PORT_B_WIDTH                    0x5UL     /**> Port B Width */
-#define GPIO_PORT_B_WIDTH_ZERO               0x0UL     /**> Port B Width is Zero */
-#define GPIO_PORT_B_WL                       0x5UL     /**> New Param */
-#define GPIO_PORT_B_WU                       0x0UL     /**> New Param */
-#define GPIO_PORT_B_WU_ZERO                  0x1UL     /**> New Param */
-#define GPIO_PORT_C_WIDTH                    0x8UL     /**> Port C Width */
-#define GPIO_PORT_C_WIDTH_ZERO               0x0UL     /**> Port C Width is Zero */
-#define GPIO_PORT_C_WL                       0x8UL     /**> New Param */
-#define GPIO_PORT_C_WU                       0x0UL     /**> New Param */
-#define GPIO_PORT_C_WU_ZERO                  0x1UL     /**> New Param */
-#define GPIO_PORT_D_WIDTH                    0x4UL     /**> Port D Width */
-#define GPIO_PORT_D_WIDTH_ZERO               0x0UL     /**> Port D Width is Zero */
-#define GPIO_PORT_D_WL                       0x4UL     /**> New Param */
-#define GPIO_PORT_D_WU                       0x0UL     /**> New Param */
-#define GPIO_PORT_D_WU_ZERO                  0x1UL     /**> New Param */
-#define GPIO_SLEWRATE_WIDTH                  0x3UL     /**> Slew Rate Width Param */
-#define LDMA_CH_BITS                         0x5UL     /**> New Param */
-#define LDMA_CH_NUM                          0x8UL     /**> New Param */
-#define LDMA_FIFO_BITS                       0x5UL     /**> New Param */
-#define LDMA_FIFO_DEPTH                      0x10UL    /**> New Param */
-#define LDMAXBAR_CH_BITS                     0x5UL     /**> None */
-#define LDMAXBAR_CH_NUM                      0x8UL     /**> None */
-#define LDMAXBAR_SIGSEL_W                    0x4UL     /**> New Param */
-#define LDMAXBAR_SOURCESEL_W                 0x6UL     /**> New Param */
-#define TIMER0_CC_NUM                        0x3UL     /**> Number of Compare/Capture Channels */
-#define TIMER0_CNTWIDTH                      0x20UL    /**> Counter Width */
-#define TIMER0_DTI                           0x1UL     /**> Dead-time insertion enabled */
-#define TIMER0_DTI_CC_NUM                    0x3UL     /**> Number of DTI Channels */
-#define TIMER0_NO_DTI                        0x0UL     /**>  */
-#define TIMER1_CC_NUM                        0x3UL     /**> Number of Compare/Capture Channels */
-#define TIMER1_CNTWIDTH                      0x10UL    /**> Counter Width */
-#define TIMER1_DTI                           0x1UL     /**> Dead-time insertion enabled */
-#define TIMER1_DTI_CC_NUM                    0x3UL     /**> Number of DTI Channels */
-#define TIMER1_NO_DTI                        0x0UL     /**>  */
-#define TIMER2_CC_NUM                        0x3UL     /**> Number of Compare/Capture Channels */
-#define TIMER2_CNTWIDTH                      0x10UL    /**> Counter Width */
-#define TIMER2_DTI                           0x1UL     /**> Dead-time insertion enabled */
-#define TIMER2_DTI_CC_NUM                    0x3UL     /**> Number of DTI Channels */
-#define TIMER2_NO_DTI                        0x0UL     /**>  */
-#define TIMER3_CC_NUM                        0x3UL     /**> Number of Compare/Capture Channels */
-#define TIMER3_CNTWIDTH                      0x10UL    /**> Counter Width */
-#define TIMER3_DTI                           0x1UL     /**> Dead-time insertion enabled */
-#define TIMER3_DTI_CC_NUM                    0x3UL     /**> Number of DTI Channels */
-#define TIMER3_NO_DTI                        0x0UL     /**>  */
-#define TIMER4_CC_NUM                        0x3UL     /**> Number of Compare/Capture Channels */
-#define TIMER4_CNTWIDTH                      0x10UL    /**> Counter Width */
-#define TIMER4_DTI                           0x1UL     /**> Dead-time insertion enabled */
-#define TIMER4_DTI_CC_NUM                    0x3UL     /**> Number of DTI Channels */
-#define TIMER4_NO_DTI                        0x0UL     /**>  */
-#define USART0_AUTOTX_REG                    0x1UL     /**> None */
-#define USART0_AUTOTX_REG_B                  0x0UL     /**> None */
-#define USART0_AUTOTX_TRIGGER                0x1UL     /**> None */
-#define USART0_AUTOTX_TRIGGER_B              0x0UL     /**> New Param */
-#define USART0_CLK_PRS                       0x1UL     /**> None */
-#define USART0_CLK_PRS_B                     0x0UL     /**> New Param */
-#define USART0_FLOW_CONTROL                  0x1UL     /**> None */
-#define USART0_FLOW_CONTROL_B                0x0UL     /**> New Param */
-#define USART0_I2S                           0x1UL     /**> None */
-#define USART0_I2S_B                         0x0UL     /**> New Param */
-#define USART0_IRDA_AVAILABLE                0x1UL     /**> None */
-#define USART0_IRDA_AVAILABLE_B              0x0UL     /**> New Param */
-#define USART0_MVDIS_FUNC                    0x1UL     /**> None */
-#define USART0_MVDIS_FUNC_B                  0x0UL     /**> New Param */
-#define USART0_RX_PRS                        0x1UL     /**> None */
-#define USART0_RX_PRS_B                      0x0UL     /**> New Param */
-#define USART0_SC_AVAILABLE                  0x1UL     /**> None */
-#define USART0_SC_AVAILABLE_B                0x0UL     /**> New Param */
-#define USART0_SYNC_AVAILABLE                0x1UL     /**> None */
-#define USART0_SYNC_AVAILABLE_B              0x0UL     /**> New Param */
-#define USART0_SYNC_LATE_SAMPLE              0x1UL     /**> None */
-#define USART0_SYNC_LATE_SAMPLE_B            0x0UL     /**> New Param */
-#define USART0_TIMER                         0x1UL     /**> New Param */
-#define USART0_TIMER_B                       0x0UL     /**> New Param */
-#define USART1_AUTOTX_REG                    0x1UL     /**> None */
-#define USART1_AUTOTX_REG_B                  0x0UL     /**> None */
-#define USART1_AUTOTX_TRIGGER                0x1UL     /**> None */
-#define USART1_AUTOTX_TRIGGER_B              0x0UL     /**> New Param */
-#define USART1_CLK_PRS                       0x1UL     /**> None */
-#define USART1_CLK_PRS_B                     0x0UL     /**> New Param */
-#define USART1_FLOW_CONTROL                  0x1UL     /**> None */
-#define USART1_FLOW_CONTROL_B                0x0UL     /**> New Param */
-#define USART1_I2S                           0x1UL     /**> None */
-#define USART1_I2S_B                         0x0UL     /**> New Param */
-#define USART1_IRDA_AVAILABLE                0x1UL     /**> None */
-#define USART1_IRDA_AVAILABLE_B              0x0UL     /**> New Param */
-#define USART1_MVDIS_FUNC                    0x1UL     /**> None */
-#define USART1_MVDIS_FUNC_B                  0x0UL     /**> New Param */
-#define USART1_RX_PRS                        0x1UL     /**> None */
-#define USART1_RX_PRS_B                      0x0UL     /**> New Param */
-#define USART1_SC_AVAILABLE                  0x1UL     /**> None */
-#define USART1_SC_AVAILABLE_B                0x0UL     /**> New Param */
-#define USART1_SYNC_AVAILABLE                0x1UL     /**> None */
-#define USART1_SYNC_AVAILABLE_B              0x0UL     /**> New Param */
-#define USART1_SYNC_LATE_SAMPLE              0x1UL     /**> None */
-#define USART1_SYNC_LATE_SAMPLE_B            0x0UL     /**> New Param */
-#define USART1_TIMER                         0x1UL     /**> New Param */
-#define USART1_TIMER_B                       0x0UL     /**> New Param */
-#define BURTC_CNTWIDTH                       0x20UL    /**> None */
-#define BURTC_PRECNT_WIDTH                   0xFUL     /**>  */
-#define I2C1_DELAY                           0x7D0UL   /**> Delay cell selection */
-#define I2C1_DELAY_CHAIN_NUM                 0x2UL     /**> Number of delay chain */
-#define SYSCFG_CHIP_FAMILY                   0x34UL    /**> CHIP Family */
-#define SYSCFG_DEMODRAM_INST_COUNT           0x1UL     /**>  */
-#define SYSCFG_FRCRAM_INST_COUNT             0x1UL     /**>  */
-#define SYSCFG_RAM0_INST_COUNT               0x2UL     /**> None */
-#define SYSCFG_SEQRAM_INST_COUNT             0x2UL     /**> None */
-#define SYSCFG_SWINT_NUM                     0x4UL     /**> Software interupts */
-#define DCDC_DCDCMODE_WIDTH                  0x1UL     /**> Mode register width */
-#define DCDC_DRVSPEED_WIDTH                  0x2UL     /**> Drive Speed bitfield width */
-#define DCDC_IPKVAL_WIDTH                    0x4UL     /**> Peak Current Setting bitfield Width */
-#define DCDC_VCMPIBIAS_WIDTH                 0x2UL     /**> VCMP ibias bitfield width */
-#define PDM_FIFO_LEN                         0x4UL     /**> New Param */
-#define PDM_NUM_CH                           0x2UL     /**> None */
-#define PDM_CH2_PRESENT_B                    0x1UL     /**> New Param */
-#define PDM_CH3_PRESENT_B                    0x1UL     /**> New Param */
-#define PDM_NUM_CH_WIDTH                     0x1UL     /**> New Param */
-#define PDM_PIPELINE                         0x0UL     /**> None */
-#define PDM_STEREO23_PRESENT_B               0x1UL     /**> New Param */
-#define SMU_NUM_BMPUS                        0x5UL     /**> Number of BMPUs */
-#define SMU_NUM_PPU_PERIPHS                  0x30UL    /**> Number of PPU Peripherals */
-#define SMU_NUM_PPU_PERIPHS_MOD_32           0x10UL    /**> Number of PPU Peripherals (mod 32) */
-#define SMU_NUM_PPU_PERIPHS_SUB_32           0x10UL    /**> Number of PPU peripherals minus 32 */
-#define SMU_PERIPHID_BITS                    0x8UL     /**> Bits used for Peripheral ID */
-#define RTCC_CC_NUM                          0x3UL     /**> None */
-#define LETIMER0_CNT_WIDTH                   0x18UL    /**> Count Width */
-#define IADC0_CONFIGNUM                      0x2UL     /**> CONFIG */
-#define IADC0_FULLRANGEUNIPOLAR              0x0UL     /**> FULLRANGEUNIPOLAR */
-#define IADC0_SCANBYTES                      0x1UL     /**> SCANBYTES */
-#define IADC0_ENTRIES                        0x10UL    /**> ENTRIES */
-#define I2C0_DELAY                           0x3E8UL   /**> Delay cell selection */
-#define I2C0_DELAY_CHAIN_NUM                 0x2UL     /**> Number of delay chain */
-#define WDOG0_PCNUM                          0x2UL     /**> None */
-#define AMUXCP0_AMUXCPNUM                    0x0UL     /**> AMUXCPNUM */
-#define EUART0_USE_AS_LEUART                 0x1UL     /**> LEUART instace */
-#define EUART0_USE_AS_UART                   0x0UL     /**> UART instance */
-#define RDMEM_FRC_BANK0_SIZE                 0x1000UL  /**> FRC_RAM_BANK0_SIZE */
-#define RDMEM_FRC_BANK1_SIZE                 0x0UL     /**> FRC_RAM_BANK1_SIZE */
-#define RDMEM_FRC_BANK2_SIZE                 0x0UL     /**> FRC_RAM_BANK2_SIZE */
-#define RDMEM_FRC_BANK3_SIZE                 0x0UL     /**> FRC_RAM_BANK3_SIZE */
-#define RDMEM_FRC_BANK4_SIZE                 0x0UL     /**> FRC_RAM_BANK4_SIZE */
-#define RDMEM_FRC_BANK5_SIZE                 0x0UL     /**> FRC_RAM_BANK5_SIZE */
-#define RDMEM_FRC_BANK6_SIZE                 0x0UL     /**> FRC_RAM_BANK6_SIZE */
-#define RDMEM_FRC_BANK7_SIZE                 0x0UL     /**> FRC_RAM_BANK7_SIZE */
-#define RDMEM_FRC_NUM_BANK                   0x1UL     /**> FRC_NUM_BANK */
-#define RDMEM_FRC_RAMADDRBITS                0xCUL     /**> FRC RAM ADDRBITS */
-#define RDMEM_FRC_RAMADDRMINBITS             0xCUL     /**> FRC RAM address bits for one bank */
-#define RDMEM_FRC_RAMECCADDR_WIDTH           0x20UL    /**> FRC RAM ECC Address width */
-#define RDMEM_FRC_RAM_BWE_WIDTH              0x27UL    /**> FRCRAM BWE width */
-#define RDMEM_FRC_RAM_DATA_WIDTH             0x27UL    /**> FRC_RAM_DATA_WIDTH */
-#define RDMEM_FRC_RAM_ECC_EN                 0x1UL     /**> FRC RAM ECCEN */
-#define RDMEM_FRC_RAM_TOTAL_SIZE             0x1000UL  /**> FRC_RAM_TOTAL_SIZE */
-#define RDMEM_SEQ_BANK0_SIZE                 0x2000UL  /**> SEQ_RAM_BANK0_SIZE */
-#define RDMEM_SEQ_BANK1_SIZE                 0x2000UL  /**> SEQ_RAM_BANK1_SIZE */
-#define RDMEM_SEQ_BANK2_SIZE                 0x0UL     /**> SEQ_RAM_BANK2_SIZE */
-#define RDMEM_SEQ_BANK3_SIZE                 0x0UL     /**> SEQ_RAM_BANK3_SIZE */
-#define RDMEM_SEQ_BANK4_SIZE                 0x0UL     /**> SEQ_RAM_BANK4_SIZE */
-#define RDMEM_SEQ_BANK5_SIZE                 0x0UL     /**> SEQ_RAM_BANK5_SIZE */
-#define RDMEM_SEQ_BANK6_SIZE                 0x0UL     /**> SEQ_RAM_BANK6_SIZE */
-#define RDMEM_SEQ_BANK7_SIZE                 0x0UL     /**> SEQ_RAM_BANK7_SIZE */
-#define RDMEM_SEQ_NUM_BANK                   0x2UL     /**> SEQ_NUM_BANK */
-#define RDMEM_SEQ_RAMADDRBITS                0xEUL     /**> SEQ RAM ADDRBITS */
-#define RDMEM_SEQ_RAMADDRMINBITS             0xDUL     /**> SEQ RAM address bits for one bank */
-#define RDMEM_SEQ_RAMECCADDR_WIDTH           0x20UL    /**> SEQ RAM ECC Address width */
-#define RDMEM_SEQ_RAM_BWE_WIDTH              0x27UL    /**> SEQRAM BWE width */
-#define RDMEM_SEQ_RAM_DATA_WIDTH             0x27UL    /**> SEQ_RAM_DATA_WIDTH */
-#define RDMEM_SEQ_RAM_ECC_EN                 0x1UL     /**> SEQ RAM ECCEN */
-#define RDMEM_SEQ_RAM_TOTAL_SIZE             0x4000UL  /**> SEQ_RAM_TOTAL_SIZE */
-
-/* Instance macros for I2C */
-#define I2C(n)                         (((n) == 0) ? I2C0   \
-                                        : ((n) == 1) ? I2C1 \
-                                        : 0x0UL)
-#define I2C_NUM(ref)                   (((ref) == I2C0) ? 0   \
-                                        : ((ref) == I2C1) ? 1 \
-                                        : -1)
-#define I2C_DELAY(n)                   (((n) == 0) ? I2C0_DELAY   \
-                                        : ((n) == 1) ? I2C1_DELAY \
-                                        : 0x0UL)
-#define I2C_DELAY_CHAIN_NUM(n)         (((n) == 0) ? I2C0_DELAY_CHAIN_NUM   \
-                                        : ((n) == 1) ? I2C1_DELAY_CHAIN_NUM \
-                                        : 0x0UL)
-
-/* Instance macros for TIMER */
-#define TIMER(n)                       (((n) == 0) ? TIMER0   \
-                                        : ((n) == 1) ? TIMER1 \
-                                        : ((n) == 2) ? TIMER2 \
-                                        : ((n) == 3) ? TIMER3 \
-                                        : ((n) == 4) ? TIMER4 \
-                                        : 0x0UL)
-#define TIMER_NUM(ref)                 (((ref) == TIMER0) ? 0   \
-                                        : ((ref) == TIMER1) ? 1 \
-                                        : ((ref) == TIMER2) ? 2 \
-                                        : ((ref) == TIMER3) ? 3 \
-                                        : ((ref) == TIMER4) ? 4 \
-                                        : -1)
-#define TIMER_CC_NUM(n)                (((n) == 0) ? TIMER0_CC_NUM   \
-                                        : ((n) == 1) ? TIMER1_CC_NUM \
-                                        : ((n) == 2) ? TIMER2_CC_NUM \
-                                        : ((n) == 3) ? TIMER3_CC_NUM \
-                                        : ((n) == 4) ? TIMER4_CC_NUM \
-                                        : 0x0UL)
-#define TIMER_CNTWIDTH(n)              (((n) == 0) ? TIMER0_CNTWIDTH   \
-                                        : ((n) == 1) ? TIMER1_CNTWIDTH \
-                                        : ((n) == 2) ? TIMER2_CNTWIDTH \
-                                        : ((n) == 3) ? TIMER3_CNTWIDTH \
-                                        : ((n) == 4) ? TIMER4_CNTWIDTH \
-                                        : 0x0UL)
-#define TIMER_DTI(n)                   (((n) == 0) ? TIMER0_DTI   \
-                                        : ((n) == 1) ? TIMER1_DTI \
-                                        : ((n) == 2) ? TIMER2_DTI \
-                                        : ((n) == 3) ? TIMER3_DTI \
-                                        : ((n) == 4) ? TIMER4_DTI \
-                                        : 0x0UL)
-#define TIMER_DTI_CC_NUM(n)            (((n) == 0) ? TIMER0_DTI_CC_NUM   \
-                                        : ((n) == 1) ? TIMER1_DTI_CC_NUM \
-                                        : ((n) == 2) ? TIMER2_DTI_CC_NUM \
-                                        : ((n) == 3) ? TIMER3_DTI_CC_NUM \
-                                        : ((n) == 4) ? TIMER4_DTI_CC_NUM \
-                                        : 0x0UL)
-#define TIMER_NO_DTI(n)                (((n) == 0) ? TIMER0_NO_DTI   \
-                                        : ((n) == 1) ? TIMER1_NO_DTI \
-                                        : ((n) == 2) ? TIMER2_NO_DTI \
-                                        : ((n) == 3) ? TIMER3_NO_DTI \
-                                        : ((n) == 4) ? TIMER4_NO_DTI \
-                                        : 0x0UL)
-
-/* Instance macros for USART */
-#define USART(n)                       (((n) == 0) ? USART0   \
-                                        : ((n) == 1) ? USART1 \
-                                        : 0x0UL)
-#define USART_NUM(ref)                 (((ref) == USART0) ? 0   \
-                                        : ((ref) == USART1) ? 1 \
-                                        : -1)
-#define USART_AUTOTX_REG(n)            (((n) == 0) ? USART0_AUTOTX_REG   \
-                                        : ((n) == 1) ? USART1_AUTOTX_REG \
-                                        : 0x0UL)
-#define USART_AUTOTX_REG_B(n)          (((n) == 0) ? USART0_AUTOTX_REG_B   \
-                                        : ((n) == 1) ? USART1_AUTOTX_REG_B \
-                                        : 0x0UL)
-#define USART_AUTOTX_TRIGGER(n)        (((n) == 0) ? USART0_AUTOTX_TRIGGER   \
-                                        : ((n) == 1) ? USART1_AUTOTX_TRIGGER \
-                                        : 0x0UL)
-#define USART_AUTOTX_TRIGGER_B(n)      (((n) == 0) ? USART0_AUTOTX_TRIGGER_B   \
-                                        : ((n) == 1) ? USART1_AUTOTX_TRIGGER_B \
-                                        : 0x0UL)
-#define USART_CLK_PRS(n)               (((n) == 0) ? USART0_CLK_PRS   \
-                                        : ((n) == 1) ? USART1_CLK_PRS \
-                                        : 0x0UL)
-#define USART_CLK_PRS_B(n)             (((n) == 0) ? USART0_CLK_PRS_B   \
-                                        : ((n) == 1) ? USART1_CLK_PRS_B \
-                                        : 0x0UL)
-#define USART_FLOW_CONTROL(n)          (((n) == 0) ? USART0_FLOW_CONTROL   \
-                                        : ((n) == 1) ? USART1_FLOW_CONTROL \
-                                        : 0x0UL)
-#define USART_FLOW_CONTROL_B(n)        (((n) == 0) ? USART0_FLOW_CONTROL_B   \
-                                        : ((n) == 1) ? USART1_FLOW_CONTROL_B \
-                                        : 0x0UL)
-#define USART_I2S(n)                   (((n) == 0) ? USART0_I2S   \
-                                        : ((n) == 1) ? USART1_I2S \
-                                        : 0x0UL)
-#define USART_I2S_B(n)                 (((n) == 0) ? USART0_I2S_B   \
-                                        : ((n) == 1) ? USART1_I2S_B \
-                                        : 0x0UL)
-#define USART_IRDA_AVAILABLE(n)        (((n) == 0) ? USART0_IRDA_AVAILABLE   \
-                                        : ((n) == 1) ? USART1_IRDA_AVAILABLE \
-                                        : 0x0UL)
-#define USART_IRDA_AVAILABLE_B(n)      (((n) == 0) ? USART0_IRDA_AVAILABLE_B   \
-                                        : ((n) == 1) ? USART1_IRDA_AVAILABLE_B \
-                                        : 0x0UL)
-#define USART_MVDIS_FUNC(n)            (((n) == 0) ? USART0_MVDIS_FUNC   \
-                                        : ((n) == 1) ? USART1_MVDIS_FUNC \
-                                        : 0x0UL)
-#define USART_MVDIS_FUNC_B(n)          (((n) == 0) ? USART0_MVDIS_FUNC_B   \
-                                        : ((n) == 1) ? USART1_MVDIS_FUNC_B \
-                                        : 0x0UL)
-#define USART_RX_PRS(n)                (((n) == 0) ? USART0_RX_PRS   \
-                                        : ((n) == 1) ? USART1_RX_PRS \
-                                        : 0x0UL)
-#define USART_RX_PRS_B(n)              (((n) == 0) ? USART0_RX_PRS_B   \
-                                        : ((n) == 1) ? USART1_RX_PRS_B \
-                                        : 0x0UL)
-#define USART_SC_AVAILABLE(n)          (((n) == 0) ? USART0_SC_AVAILABLE   \
-                                        : ((n) == 1) ? USART1_SC_AVAILABLE \
-                                        : 0x0UL)
-#define USART_SC_AVAILABLE_B(n)        (((n) == 0) ? USART0_SC_AVAILABLE_B   \
-                                        : ((n) == 1) ? USART1_SC_AVAILABLE_B \
-                                        : 0x0UL)
-#define USART_SYNC_AVAILABLE(n)        (((n) == 0) ? USART0_SYNC_AVAILABLE   \
-                                        : ((n) == 1) ? USART1_SYNC_AVAILABLE \
-                                        : 0x0UL)
-#define USART_SYNC_AVAILABLE_B(n)      (((n) == 0) ? USART0_SYNC_AVAILABLE_B   \
-                                        : ((n) == 1) ? USART1_SYNC_AVAILABLE_B \
-                                        : 0x0UL)
-#define USART_SYNC_LATE_SAMPLE(n)      (((n) == 0) ? USART0_SYNC_LATE_SAMPLE   \
-                                        : ((n) == 1) ? USART1_SYNC_LATE_SAMPLE \
-                                        : 0x0UL)
-#define USART_SYNC_LATE_SAMPLE_B(n)    (((n) == 0) ? USART0_SYNC_LATE_SAMPLE_B   \
-                                        : ((n) == 1) ? USART1_SYNC_LATE_SAMPLE_B \
-                                        : 0x0UL)
-#define USART_TIMER(n)                 (((n) == 0) ? USART0_TIMER   \
-                                        : ((n) == 1) ? USART1_TIMER \
-                                        : 0x0UL)
-#define USART_TIMER_B(n)               (((n) == 0) ? USART0_TIMER_B   \
-                                        : ((n) == 1) ? USART1_TIMER_B \
-                                        : 0x0UL)
-
-/** @} End of group EFM32PG22C200F512IM40_Peripheral_Parameters  */
 
 /** @} End of group EFM32PG22C200F512IM40 */
 /** @}} End of group Parts */

@@ -36,60 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_LFXO LFXO
- * @{
- * @brief EFM32PG22 LFXO Register Declaration.
- *****************************************************************************/
-
-/** LFXO Register Declaration. */
-typedef struct {
-  __IM uint32_t  IPVERSION;                     /**< LFXO IP version                                    */
-  __IOM uint32_t CTRL;                          /**< LFXO Control Register                              */
-  __IOM uint32_t CFG;                           /**< LFXO Configuration Register                        */
-  uint32_t       RESERVED0[1U];                 /**< Reserved for future use                            */
-  __IM uint32_t  STATUS;                        /**< LFXO Status Register                               */
-  __IOM uint32_t CAL;                           /**< LFXO Calibration Register                          */
-  __IOM uint32_t IF;                            /**< Interrupt Flag Register                            */
-  __IOM uint32_t IEN;                           /**< Interrupt Enable Register                          */
-  __IM uint32_t  SYNCBUSY;                      /**< LFXO Sync Busy Register                            */
-  __IOM uint32_t LOCK;                          /**< Configuration Lock Register                        */
-  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_SET;                 /**< LFXO IP version                                    */
-  __IOM uint32_t CTRL_SET;                      /**< LFXO Control Register                              */
-  __IOM uint32_t CFG_SET;                       /**< LFXO Configuration Register                        */
-  uint32_t       RESERVED2[1U];                 /**< Reserved for future use                            */
-  __IM uint32_t  STATUS_SET;                    /**< LFXO Status Register                               */
-  __IOM uint32_t CAL_SET;                       /**< LFXO Calibration Register                          */
-  __IOM uint32_t IF_SET;                        /**< Interrupt Flag Register                            */
-  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable Register                          */
-  __IM uint32_t  SYNCBUSY_SET;                  /**< LFXO Sync Busy Register                            */
-  __IOM uint32_t LOCK_SET;                      /**< Configuration Lock Register                        */
-  uint32_t       RESERVED3[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_CLR;                 /**< LFXO IP version                                    */
-  __IOM uint32_t CTRL_CLR;                      /**< LFXO Control Register                              */
-  __IOM uint32_t CFG_CLR;                       /**< LFXO Configuration Register                        */
-  uint32_t       RESERVED4[1U];                 /**< Reserved for future use                            */
-  __IM uint32_t  STATUS_CLR;                    /**< LFXO Status Register                               */
-  __IOM uint32_t CAL_CLR;                       /**< LFXO Calibration Register                          */
-  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag Register                            */
-  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable Register                          */
-  __IM uint32_t  SYNCBUSY_CLR;                  /**< LFXO Sync Busy Register                            */
-  __IOM uint32_t LOCK_CLR;                      /**< Configuration Lock Register                        */
-  uint32_t       RESERVED5[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_TGL;                 /**< LFXO IP version                                    */
-  __IOM uint32_t CTRL_TGL;                      /**< LFXO Control Register                              */
-  __IOM uint32_t CFG_TGL;                       /**< LFXO Configuration Register                        */
-  uint32_t       RESERVED6[1U];                 /**< Reserved for future use                            */
-  __IM uint32_t  STATUS_TGL;                    /**< LFXO Status Register                               */
-  __IOM uint32_t CAL_TGL;                       /**< LFXO Calibration Register                          */
-  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag Register                            */
-  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable Register                          */
-  __IM uint32_t  SYNCBUSY_TGL;                  /**< LFXO Sync Busy Register                            */
-  __IOM uint32_t LOCK_TGL;                      /**< Configuration Lock Register                        */
-} LFXO_TypeDef;
-/** @} End of group EFM32PG22_LFXO */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_LFXO
  * @{
  * @defgroup EFM32PG22_LFXO_BitFields LFXO Bit Fields

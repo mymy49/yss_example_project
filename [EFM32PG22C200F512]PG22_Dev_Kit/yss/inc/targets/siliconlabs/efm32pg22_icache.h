@@ -36,60 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_ICACHE ICACHE
- * @{
- * @brief EFM32PG22 ICACHE Register Declaration.
- *****************************************************************************/
-
-/** ICACHE Register Declaration. */
-typedef struct {
-  __IM uint32_t  IPVERSION;                     /**< IP Version                                         */
-  __IOM uint32_t CTRL;                          /**< Control Register                                   */
-  __IM uint32_t  PCHITS;                        /**< Performance Counter Hits                           */
-  __IM uint32_t  PCMISSES;                      /**< Performance Counter Misses                         */
-  __IM uint32_t  PCAHITS;                       /**< Performance Counter Advanced Hits                  */
-  __IM uint32_t  STATUS;                        /**< Status Register                                    */
-  __IOM uint32_t CMD;                           /**< Command Register                                   */
-  __IOM uint32_t LPMODE;                        /**< Low Power Mode                                     */
-  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
-  uint32_t       RESERVED0[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_SET;                 /**< IP Version                                         */
-  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
-  __IM uint32_t  PCHITS_SET;                    /**< Performance Counter Hits                           */
-  __IM uint32_t  PCMISSES_SET;                  /**< Performance Counter Misses                         */
-  __IM uint32_t  PCAHITS_SET;                   /**< Performance Counter Advanced Hits                  */
-  __IM uint32_t  STATUS_SET;                    /**< Status Register                                    */
-  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
-  __IOM uint32_t LPMODE_SET;                    /**< Low Power Mode                                     */
-  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
-  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version                                         */
-  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
-  __IM uint32_t  PCHITS_CLR;                    /**< Performance Counter Hits                           */
-  __IM uint32_t  PCMISSES_CLR;                  /**< Performance Counter Misses                         */
-  __IM uint32_t  PCAHITS_CLR;                   /**< Performance Counter Advanced Hits                  */
-  __IM uint32_t  STATUS_CLR;                    /**< Status Register                                    */
-  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
-  __IOM uint32_t LPMODE_CLR;                    /**< Low Power Mode                                     */
-  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
-  uint32_t       RESERVED2[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version                                         */
-  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
-  __IM uint32_t  PCHITS_TGL;                    /**< Performance Counter Hits                           */
-  __IM uint32_t  PCMISSES_TGL;                  /**< Performance Counter Misses                         */
-  __IM uint32_t  PCAHITS_TGL;                   /**< Performance Counter Advanced Hits                  */
-  __IM uint32_t  STATUS_TGL;                    /**< Status Register                                    */
-  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
-  __IOM uint32_t LPMODE_TGL;                    /**< Low Power Mode                                     */
-  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
-} ICACHE_TypeDef;
-/** @} End of group EFM32PG22_ICACHE */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_ICACHE
  * @{
  * @defgroup EFM32PG22_ICACHE_BitFields ICACHE Bit Fields

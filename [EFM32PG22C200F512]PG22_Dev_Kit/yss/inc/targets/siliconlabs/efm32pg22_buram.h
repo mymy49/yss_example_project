@@ -36,29 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_BURAM BURAM
- * @{
- * @brief EFM32PG22 BURAM Register Declaration.
- *****************************************************************************/
-
-/** BURAM RET Register Group Declaration. */
-typedef struct {
-  __IOM uint32_t REG;                                /**< Retention Register                                 */
-} BURAM_RET_TypeDef;
-
-/** BURAM Register Declaration. */
-typedef struct {
-  BURAM_RET_TypeDef RET[32U];                   /**< RetentionReg                                       */
-  uint32_t          RESERVED0[992U];            /**< Reserved for future use                            */
-  BURAM_RET_TypeDef RET_SET[32U];               /**< RetentionReg                                       */
-  uint32_t          RESERVED1[992U];            /**< Reserved for future use                            */
-  BURAM_RET_TypeDef RET_CLR[32U];               /**< RetentionReg                                       */
-  uint32_t          RESERVED2[992U];            /**< Reserved for future use                            */
-  BURAM_RET_TypeDef RET_TGL[32U];               /**< RetentionReg                                       */
-} BURAM_TypeDef;
-/** @} End of group EFM32PG22_BURAM */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_BURAM
  * @{
  * @defgroup EFM32PG22_BURAM_BitFields BURAM Bit Fields

@@ -54,9 +54,10 @@ void initSystemTime(void)
 {
 #ifndef YSS_DRV_TIMER_NOT_SUPPORT
 	YSS_TIMER.enableClock();
-	YSS_TIMER.initSystemTime();
+	YSS_TIMER.initializeAsSystemRuntime();
 	gOverFlowCnt = YSS_TIMER.getOverFlowCount();
 	YSS_TIMER.setUpdateIsr(isr);
+	YSS_TIMER.enableUpdateInterrupt();
 	YSS_TIMER.enableInterrupt();
 	YSS_TIMER.start();
 #endif

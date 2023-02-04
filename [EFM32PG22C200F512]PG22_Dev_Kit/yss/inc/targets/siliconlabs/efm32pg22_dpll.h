@@ -36,56 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_DPLL DPLL
- * @{
- * @brief EFM32PG22 DPLL Register Declaration.
- *****************************************************************************/
-
-/** DPLL Register Declaration. */
-typedef struct {
-  __IM uint32_t  IPVERSION;                     /**< IP Version                                         */
-  __IOM uint32_t EN;                            /**< Enable                                             */
-  __IOM uint32_t CFG;                           /**< Config                                             */
-  __IOM uint32_t CFG1;                          /**< Config1                                            */
-  __IOM uint32_t IF;                            /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN;                           /**< Interrupt Enable                                   */
-  __IM uint32_t  STATUS;                        /**< Status                                             */
-  uint32_t       RESERVED0[2U];                 /**< Reserved for future use                            */
-  __IOM uint32_t LOCK;                          /**< Lock                                               */
-  uint32_t       RESERVED1[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_SET;                 /**< IP Version                                         */
-  __IOM uint32_t EN_SET;                        /**< Enable                                             */
-  __IOM uint32_t CFG_SET;                       /**< Config                                             */
-  __IOM uint32_t CFG1_SET;                      /**< Config1                                            */
-  __IOM uint32_t IF_SET;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_SET;                       /**< Interrupt Enable                                   */
-  __IM uint32_t  STATUS_SET;                    /**< Status                                             */
-  uint32_t       RESERVED2[2U];                 /**< Reserved for future use                            */
-  __IOM uint32_t LOCK_SET;                      /**< Lock                                               */
-  uint32_t       RESERVED3[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version                                         */
-  __IOM uint32_t EN_CLR;                        /**< Enable                                             */
-  __IOM uint32_t CFG_CLR;                       /**< Config                                             */
-  __IOM uint32_t CFG1_CLR;                      /**< Config1                                            */
-  __IOM uint32_t IF_CLR;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_CLR;                       /**< Interrupt Enable                                   */
-  __IM uint32_t  STATUS_CLR;                    /**< Status                                             */
-  uint32_t       RESERVED4[2U];                 /**< Reserved for future use                            */
-  __IOM uint32_t LOCK_CLR;                      /**< Lock                                               */
-  uint32_t       RESERVED5[1014U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version                                         */
-  __IOM uint32_t EN_TGL;                        /**< Enable                                             */
-  __IOM uint32_t CFG_TGL;                       /**< Config                                             */
-  __IOM uint32_t CFG1_TGL;                      /**< Config1                                            */
-  __IOM uint32_t IF_TGL;                        /**< Interrupt Flag                                     */
-  __IOM uint32_t IEN_TGL;                       /**< Interrupt Enable                                   */
-  __IM uint32_t  STATUS_TGL;                    /**< Status                                             */
-  uint32_t       RESERVED6[2U];                 /**< Reserved for future use                            */
-  __IOM uint32_t LOCK_TGL;                      /**< Lock                                               */
-} DPLL_TypeDef;
-/** @} End of group EFM32PG22_DPLL */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_DPLL
  * @{
  * @defgroup EFM32PG22_DPLL_BitFields DPLL Bit Fields

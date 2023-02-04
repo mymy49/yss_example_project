@@ -36,29 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_LDMAXBAR LDMAXBAR
- * @{
- * @brief EFM32PG22 LDMAXBAR Register Declaration.
- *****************************************************************************/
-
-/** LDMAXBAR CH Register Group Declaration. */
-typedef struct {
-  __IOM uint32_t REQSEL;                             /**< Channel Peripheral Request Select Reg...           */
-} LDMAXBAR_CH_TypeDef;
-
-/** LDMAXBAR Register Declaration. */
-typedef struct {
-  LDMAXBAR_CH_TypeDef CH[8U];                   /**< DMA Channel Registers                              */
-  uint32_t            RESERVED0[1016U];         /**< Reserved for future use                            */
-  LDMAXBAR_CH_TypeDef CH_SET[8U];               /**< DMA Channel Registers                              */
-  uint32_t            RESERVED1[1016U];         /**< Reserved for future use                            */
-  LDMAXBAR_CH_TypeDef CH_CLR[8U];               /**< DMA Channel Registers                              */
-  uint32_t            RESERVED2[1016U];         /**< Reserved for future use                            */
-  LDMAXBAR_CH_TypeDef CH_TGL[8U];               /**< DMA Channel Registers                              */
-} LDMAXBAR_TypeDef;
-/** @} End of group EFM32PG22_LDMAXBAR */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_LDMAXBAR
  * @{
  * @defgroup EFM32PG22_LDMAXBAR_BitFields LDMAXBAR Bit Fields

@@ -22,11 +22,16 @@
 #include <drv/peripheral.h>
 #include <yss/instance.h>
 #include <config.h>
+#include <targets/siliconlabs/efm32pg22_cmu.h>
 
-static uint32_t  getFrequency(void)
+static uint32_t  getApb0Frequency(void)
 {
-	return DEFAULT_CLOCK_SPEED;
-//	return clock.getSystemClockFrequency();
+	return clock.getApb0Frequency();
+}
+
+static uint32_t  getApb1Frequency(void)
+{
+	return clock.getApb1Frequency();
 }
 
 #if defined(TIM0_ENABLE) && defined(TIMER0)
@@ -44,15 +49,21 @@ static void enableInterruptTim0(bool en)
 	nvic.unlock();
 }
 
-static const Drv::Config gDrvTimer0Config
+static const Timer::Config gTimer0config = 
+{
+	TIMER0,
+	Timer::BIT_32
+};
+
+static const Drv::Config gDrvTimer0Config = 
 {
 	enableTimer0Clock,		//void (*clockFunc)(bool en);
 	enableInterruptTim0,	//void (*nvicFunc)(bool en);
 	0,						//void (*resetFunc)(void);
-	getFrequency			//uint32_t (*getClockFunc)(void);
+	getApb0Frequency		//uint32_t (*getClockFunc)(void);
 };
 
-Timer timer0(TIMER0, gDrvTimer0Config);
+Timer timer0(gTimer0config, gDrvTimer0Config);
 
 extern "C"
 {
@@ -86,7 +97,7 @@ static const Drv::Config gDrvTimer1Config
 	enableTimer1Clock,		//void (*clockFunc)(bool en);
 	enableInterruptTim1,	//void (*nvicFunc)(bool en);
 	0,						//void (*resetFunc)(void);
-	getFrequency			//uint32_t (*getClockFunc)(void);
+	getApb0Frequency		//uint32_t (*getClockFunc)(void);
 };
 
 Timer timer1(TIMER1, gDrvTimer1Config);
@@ -123,7 +134,7 @@ static const Drv::Config gDrvTimer2Config
 	enableTimer2Clock,		//void (*clockFunc)(bool en);
 	enableInterruptTim2,	//void (*nvicFunc)(bool en);
 	0,						//void (*resetFunc)(void);
-	getFrequency			//uint32_t (*getClockFunc)(void);
+	getApb0Frequency		//uint32_t (*getClockFunc)(void);
 };
 
 Timer timer2(TIMER2, gDrvTimer2Config);
@@ -160,7 +171,7 @@ static const Drv::Config gDrvTimer3Config
 	enableTimer3Clock,		//void (*clockFunc)(bool en);
 	enableInterruptTim3,	//void (*nvicFunc)(bool en);
 	0,						//void (*resetFunc)(void);
-	getFrequency			//uint32_t (*getClockFunc)(void);
+	getApb0Frequency		//uint32_t (*getClockFunc)(void);
 };
 
 Timer timer3(TIMER3, gDrvTimer3Config);
@@ -197,7 +208,7 @@ static const Drv::Config gDrvTimer4Config
 	enableTimer4Clock,		//void (*clockFunc)(bool en);
 	enableInterruptTim4,	//void (*nvicFunc)(bool en);
 	0,						//void (*resetFunc)(void);
-	getFrequency			//uint32_t (*getClockFunc)(void);
+	getApb1Frequency		//uint32_t (*getClockFunc)(void);
 };
 
 Timer timer4(TIMER4, gDrvTimer4Config);

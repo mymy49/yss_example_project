@@ -36,68 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_GPCRC GPCRC
- * @{
- * @brief EFM32PG22 GPCRC Register Declaration.
- *****************************************************************************/
-
-/** GPCRC Register Declaration. */
-typedef struct {
-  __IM uint32_t  IPVERSION;                     /**< IP Version ID                                      */
-  __IOM uint32_t EN;                            /**< CRC Enable                                         */
-  __IOM uint32_t CTRL;                          /**< Control Register                                   */
-  __IOM uint32_t CMD;                           /**< Command Register                                   */
-  __IOM uint32_t INIT;                          /**< CRC Init Value                                     */
-  __IOM uint32_t POLY;                          /**< CRC Polynomial Value                               */
-  __IOM uint32_t INPUTDATA;                     /**< Input 32-bit Data Register                         */
-  __IOM uint32_t INPUTDATAHWORD;                /**< Input 16-bit Data Register                         */
-  __IOM uint32_t INPUTDATABYTE;                 /**< Input 8-bit Data Register                          */
-  __IM uint32_t  DATA;                          /**< CRC Data Register                                  */
-  __IM uint32_t  DATAREV;                       /**< CRC Data Reverse Register                          */
-  __IM uint32_t  DATABYTEREV;                   /**< CRC Data Byte Reverse Register                     */
-  uint32_t       RESERVED0[1012U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_SET;                 /**< IP Version ID                                      */
-  __IOM uint32_t EN_SET;                        /**< CRC Enable                                         */
-  __IOM uint32_t CTRL_SET;                      /**< Control Register                                   */
-  __IOM uint32_t CMD_SET;                       /**< Command Register                                   */
-  __IOM uint32_t INIT_SET;                      /**< CRC Init Value                                     */
-  __IOM uint32_t POLY_SET;                      /**< CRC Polynomial Value                               */
-  __IOM uint32_t INPUTDATA_SET;                 /**< Input 32-bit Data Register                         */
-  __IOM uint32_t INPUTDATAHWORD_SET;            /**< Input 16-bit Data Register                         */
-  __IOM uint32_t INPUTDATABYTE_SET;             /**< Input 8-bit Data Register                          */
-  __IM uint32_t  DATA_SET;                      /**< CRC Data Register                                  */
-  __IM uint32_t  DATAREV_SET;                   /**< CRC Data Reverse Register                          */
-  __IM uint32_t  DATABYTEREV_SET;               /**< CRC Data Byte Reverse Register                     */
-  uint32_t       RESERVED1[1012U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_CLR;                 /**< IP Version ID                                      */
-  __IOM uint32_t EN_CLR;                        /**< CRC Enable                                         */
-  __IOM uint32_t CTRL_CLR;                      /**< Control Register                                   */
-  __IOM uint32_t CMD_CLR;                       /**< Command Register                                   */
-  __IOM uint32_t INIT_CLR;                      /**< CRC Init Value                                     */
-  __IOM uint32_t POLY_CLR;                      /**< CRC Polynomial Value                               */
-  __IOM uint32_t INPUTDATA_CLR;                 /**< Input 32-bit Data Register                         */
-  __IOM uint32_t INPUTDATAHWORD_CLR;            /**< Input 16-bit Data Register                         */
-  __IOM uint32_t INPUTDATABYTE_CLR;             /**< Input 8-bit Data Register                          */
-  __IM uint32_t  DATA_CLR;                      /**< CRC Data Register                                  */
-  __IM uint32_t  DATAREV_CLR;                   /**< CRC Data Reverse Register                          */
-  __IM uint32_t  DATABYTEREV_CLR;               /**< CRC Data Byte Reverse Register                     */
-  uint32_t       RESERVED2[1012U];              /**< Reserved for future use                            */
-  __IM uint32_t  IPVERSION_TGL;                 /**< IP Version ID                                      */
-  __IOM uint32_t EN_TGL;                        /**< CRC Enable                                         */
-  __IOM uint32_t CTRL_TGL;                      /**< Control Register                                   */
-  __IOM uint32_t CMD_TGL;                       /**< Command Register                                   */
-  __IOM uint32_t INIT_TGL;                      /**< CRC Init Value                                     */
-  __IOM uint32_t POLY_TGL;                      /**< CRC Polynomial Value                               */
-  __IOM uint32_t INPUTDATA_TGL;                 /**< Input 32-bit Data Register                         */
-  __IOM uint32_t INPUTDATAHWORD_TGL;            /**< Input 16-bit Data Register                         */
-  __IOM uint32_t INPUTDATABYTE_TGL;             /**< Input 8-bit Data Register                          */
-  __IM uint32_t  DATA_TGL;                      /**< CRC Data Register                                  */
-  __IM uint32_t  DATAREV_TGL;                   /**< CRC Data Reverse Register                          */
-  __IM uint32_t  DATABYTEREV_TGL;               /**< CRC Data Byte Reverse Register                     */
-} GPCRC_TypeDef;
-/** @} End of group EFM32PG22_GPCRC */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_GPCRC
  * @{
  * @defgroup EFM32PG22_GPCRC_BitFields GPCRC Bit Fields

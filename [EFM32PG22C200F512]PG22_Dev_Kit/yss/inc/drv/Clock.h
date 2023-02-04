@@ -178,7 +178,8 @@ class Clock : public Mutex
 // 추후 절전 시퀀스 등에 대한 확장을 위해 앞으로 ClockBase 를 상속 받도록 수정할 예정
 class ClockBase : public Mutex
 {
-
+public :
+	virtual uint32_t getCoreClockFrequency(void) = 0;
 };
 
 #if defined(EFM32PG22)
@@ -187,4 +188,7 @@ class ClockBase : public Mutex
 #endif	
 
 #endif
+
+// 주의 사항
+// yss OS에서 micro second를 정상적으로 사용하기 위해서 반드시 Timer의 클럭은 MHz 단위로 사용해야 합니다. 
 

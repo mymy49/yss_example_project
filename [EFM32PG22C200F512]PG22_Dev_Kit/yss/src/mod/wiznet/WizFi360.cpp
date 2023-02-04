@@ -46,6 +46,7 @@ WizFi360::WizFi360(void)
 WizFi360::~WizFi360(void)
 {
 	clearApInformation();
+	thread::remove(mId);
 }
 
 error WizFi360::initialize(void)
@@ -469,22 +470,6 @@ error WizFi360::close(void)
 	
 	mCommand = CMD::CLOSE;
 	rt = sendCommand("AT+CIPCLOSE");
-	if(rt != Error::NONE)
-		return rt;
-	
-	rt = waitUntilComplete(5000);
-	if(rt != Error::NONE)
-		return rt;
-	
-	return Error::NONE;
-}
-
-error WizFi360::aaa(void)
-{
-	error rt;
-	
-	mCommand = CMD::DISCONNECT;
-	rt = sendCommand("+IPD,10:8080");
 	if(rt != Error::NONE)
 		return rt;
 	

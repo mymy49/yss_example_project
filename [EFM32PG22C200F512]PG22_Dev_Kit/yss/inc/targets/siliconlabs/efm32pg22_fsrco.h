@@ -36,24 +36,6 @@
 * @{
 ******************************************************************************/
 /**************************************************************************//**
- * @defgroup EFM32PG22_FSRCO FSRCO
- * @{
- * @brief EFM32PG22 FSRCO Register Declaration.
- *****************************************************************************/
-
-/** FSRCO Register Declaration. */
-typedef struct {
-  __IM uint32_t IPVERSION;                      /**< IP Version                                         */
-  uint32_t      RESERVED0[1023U];               /**< Reserved for future use                            */
-  __IM uint32_t IPVERSION_SET;                  /**< IP Version                                         */
-  uint32_t      RESERVED1[1023U];               /**< Reserved for future use                            */
-  __IM uint32_t IPVERSION_CLR;                  /**< IP Version                                         */
-  uint32_t      RESERVED2[1023U];               /**< Reserved for future use                            */
-  __IM uint32_t IPVERSION_TGL;                  /**< IP Version                                         */
-} FSRCO_TypeDef;
-/** @} End of group EFM32PG22_FSRCO */
-
-/**************************************************************************//**
  * @addtogroup EFM32PG22_FSRCO
  * @{
  * @defgroup EFM32PG22_FSRCO_BitFields FSRCO Bit Fields

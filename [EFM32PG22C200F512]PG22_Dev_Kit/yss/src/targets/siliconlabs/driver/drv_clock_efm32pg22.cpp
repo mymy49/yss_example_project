@@ -22,42 +22,71 @@
 #include <drv/peripheral.h>
 #include <drv/Clock.h>
 #include <yss/reg.h>
+#include <targets/siliconlabs/efm32pg22_hfxo.h>
+#include <targets/siliconlabs/efm32pg22_cmu.h>
+#include <targets/siliconlabs/efm32pg22_emu.h>
+#include <targets/siliconlabs/efm32pg22_hfrco.h>
+#include <targets/siliconlabs/efm32pg22_dpll.h>
 
 void Clock::initialize(void)
 {
 	mHfxoFrequency = 0;
-
-	// 주변 장치 클럭으로 FSRCO 클럭 사용
-	CMU->EM01GRPACLKCTRL = CMU_EM01GRPACLKCTRL_CLKSEL_FSRCO;
-	CMU->EM01GRPBCLKCTRL = CMU_EM01GRPBCLKCTRL_CLKSEL_FSRCO;
 }
 
-error Clock::enableHfxo(HfxoConfig config, bool en)
+error Clock::enableHfxo(uint16_t capacitorValue, uint16_t biasCurrent, uint32_t frequency)
 {
-	mHfxoFrequency = config.frequency;
-	setThreeFieldData(HFXO0->XTALCTRL,	_HFXO_XTALCTRL_CTUNEXIANA_MASK, config.capacitorValue / 80, _HFXO_XTALCTRL_CTUNEXIANA_SHIFT,
-										_HFXO_XTALCTRL_CTUNEXOANA_MASK,	config.capacitorValue / 80, _HFXO_XTALCTRL_CTUNEXOANA_SHIFT,
-										_HFXO_XTALCTRL_COREBIASANA_MASK, config.biasCurrent / 10, _HFXO_XTALCTRL_COREBIASANA_SHIFT);
+	mHfxoFrequency = frequency;
+	setThreeFieldData(HFXO0->XTALCTRL,	_HFXO_XTALCTRL_CTUNEXIANA_MASK, capacitorValue / 80, _HFXO_XTALCTRL_CTUNEXIANA_SHIFT,
+										_HFXO_XTALCTRL_CTUNEXOANA_MASK,	capacitorValue / 80, _HFXO_XTALCTRL_CTUNEXOANA_SHIFT,
+										_HFXO_XTALCTRL_COREBIASANA_MASK, biasCurrent / 10, _HFXO_XTALCTRL_COREBIASANA_SHIFT);
 
-	setBitData(HFXO0->CTRL, en, _HFXO_CTRL_FORCEEN_SHIFT);
-	
+	setBitData(HFXO0->CTRL, true, _HFXO_CTRL_FORCEEN_SHIFT);
+
 	for(uint32_t i=0;i<1000000;i++)
 	{
 		if(getBitData(HFXO0->STATUS, _HFXO_STATUS_RDY_SHIFT))
 			return Error::NONE;
 	}
-	
+
 	return Error::TIMEOUT;
 }
 
-void Clock::enableApb0Clock(uint32_t position, bool en)
+void Clock::enableApb0Clock(uint32_t position, bool enable)
 {
-	setBitData(CMU->CLKEN0, en, position);
+	setBitData(CMU->CLKEN0, enable, position);
 }
 
-void Clock::enableApb1Clock(uint32_t position, bool en)
+bool Clock::getApb0ClockEnabled(uint32_t position)
 {
-	setBitData(CMU->CLKEN1, en, position);
+	return getBitData(CMU->CLKEN0, position);
+}
+
+uint32_t Clock::getApb0Frequency(void)
+{
+	uint32_t clk = getCoreClockFrequency();
+	
+	clk /= getBitData(CMU->SYSCLKCTRL, _CMU_SYSCLKCTRL_PCLKPRESC_SHIFT) + 1;
+
+	return clk;
+}
+
+void Clock::enableApb1Clock(uint32_t position, bool enable)
+{
+	setBitData(CMU->CLKEN1, enable, position);
+}
+
+bool Clock::getApb1ClockEnabled(uint32_t position)
+{
+	return getBitData(CMU->CLKEN1, position);
+}
+
+uint32_t Clock::getApb1Frequency(void)
+{
+	uint32_t clk = getCoreClockFrequency();
+	
+	clk /= getBitData(CMU->SYSCLKCTRL, _CMU_SYSCLKCTRL_PCLKPRESC_SHIFT) + 1;
+
+	return clk;
 }
 
 static const struct HfrcoCalTableElement{
@@ -100,7 +129,7 @@ static const struct HfrcoCalTableElement{
 error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 {
 	uint64_t clk;
-	
+
 	switch(dpllref)
 	{
 	case DPLLREF::DISABLED :
@@ -122,6 +151,9 @@ error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 		return Error::WRONG_CONFIG;
 	}
 
+	n--;
+	m--;
+
 	if(n <= 300 || n >= 4096 || m >= 4096)
 		return Error::WRONG_CONFIG;
 
@@ -141,18 +173,21 @@ error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 			return Error::WRONG_CLOCK_FREQUENCY;
 	}
 	
-	enableApb0Clock(_CMU_CLKEN0_HFRCO0_SHIFT, true);
-	for(uint32_t i=0;i<HFRCOCALTABLE_ENTRIES;i++)
+	// DPLL을 활성화 시키기 전에, HFRCO0의 교정 값이 미리 설정되어 있어야 함.
+	if(!getApb0ClockEnabled(_CMU_CLKEN0_HFRCO0_SHIFT) || !getBitData(HFRCO0->STATUS, _HFRCO_STATUS_RDY_SHIFT))
 	{
-		if(gHfrcoCalTable[i].minFreq <= clk && gHfrcoCalTable[i].maxFreq >= clk)
+		enableApb0Clock(_CMU_CLKEN0_HFRCO0_SHIFT, true);
+		HFRCO0->CTRL_SET = _HFRCO_CTRL_FORCEEN_MASK;
+		for(uint32_t i=0;i<HFRCOCALTABLE_ENTRIES;i++)
 		{
-			HFRCO0->CAL = gHfrcoCalTable[i].value;
+			if(gHfrcoCalTable[i].minFreq <= clk && gHfrcoCalTable[i].maxFreq >= clk)
+			{
+				HFRCO0->CAL = gHfrcoCalTable[i].value;
+			}
 		}
 	}
-	HFRCO0->CTRL_SET = _HFRCO_CTRL_FORCEEN_MASK;
 
 	enableApb0Clock(_CMU_CLKEN0_DPLL0_SHIFT, true);
-
 	setFieldData(CMU->DPLLREFCLKCTRL, _CMU_DPLLREFCLKCTRL_MASK, dpllref, _CMU_DPLLREFCLKCTRL_CLKSEL_SHIFT);
 	setTwoFieldData(DPLL0->CFG1, _DPLL_CFG1_N_MASK, n, _DPLL_CFG1_N_SHIFT, _DPLL_CFG1_M_MASK, m, _DPLL_CFG1_M_SHIFT);	
 	DPLL0->EN_SET = _DPLL_EN_EN_MASK;
@@ -164,6 +199,55 @@ error Clock::enableDpll(uint8_t dpllref, uint16_t n, uint16_t m)
 	}
 	
 	return Error::TIMEOUT;
+}
+
+error Clock::setSysclk(uint8_t sysclkSel, uint8_t hclkDiv, uint8_t pclkDiv)
+{
+	hclkDiv--;
+	pclkDiv--;
+
+	if(hclkDiv > 15 || pclkDiv > 1)
+		return Error::WRONG_CONFIG;
+
+	setThreeFieldData(CMU->SYSCLKCTRL,	_CMU_SYSCLKCTRL_HCLKPRESC_MASK, hclkDiv, _CMU_SYSCLKCTRL_HCLKPRESC_SHIFT,
+										_CMU_SYSCLKCTRL_PCLKPRESC_MASK, pclkDiv, _CMU_SYSCLKCTRL_PCLKPRESC_SHIFT,
+										_CMU_SYSCLKCTRL_CLKSEL_MASK, sysclkSel, _CMU_SYSCLKCTRL_CLKSEL_SHIFT);
+
+	return Error::NONE;
+}
+
+uint32_t Clock::getCoreClockFrequency(void)
+{
+	uint64_t clk = 0, n, m;
+
+	switch(getFieldData(CMU->SYSCLKCTRL, _CMU_SYSCLKCTRL_CLKSEL_MASK, _CMU_SYSCLKCTRL_CLKSEL_SHIFT))
+	{
+	case 1 : // FSRCO
+		clk = 20000000;
+		break;
+	
+	case 2 : // HFRCODPLL
+		if(getApb0ClockEnabled(_CMU_CLKEN0_DPLL0_SHIFT) && getBitData(DPLL0->STATUS, _DPLL_STATUS_RDY_SHIFT))
+		{
+			n = getFieldData(DPLL0->CFG1, _DPLL_CFG1_N_MASK, _DPLL_CFG1_N_SHIFT) + 1;
+			m = getFieldData(DPLL0->CFG1, _DPLL_CFG1_M_MASK, _DPLL_CFG1_M_SHIFT) + 1;
+			clk = mHfxoFrequency * n / m;
+		}
+		else if(getApb0ClockEnabled(_CMU_CLKEN0_HFRCO0_SHIFT) && getBitData(HFRCO0->STATUS, _HFRCO_STATUS_RDY_SHIFT))
+		{
+			clk = getFieldData(HFRCO0->CAL, _HFRCO_CAL_FREQRANGE_MASK, _HFRCO_CAL_FREQRANGE_SHIFT);
+//			clk = 
+		}
+		break;
+
+	default :
+		return 0;
+	}
+	
+	m = getFieldData(CMU->SYSCLKCTRL, _CMU_SYSCLKCTRL_HCLKPRESC_MASK, _CMU_SYSCLKCTRL_HCLKPRESC_SHIFT) + 1;
+	clk /= m;
+		
+	return clk;
 }
 
 #endif

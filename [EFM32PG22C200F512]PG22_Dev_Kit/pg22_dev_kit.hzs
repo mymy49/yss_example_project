@@ -44,24 +44,6 @@
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app;inc"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app;src"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;drv"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;targets"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;targets;siliconlabs"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;targets;st_gigadevice"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;yss"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;scheduler"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;system"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;siliconlabs"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;siliconlabs;driver"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;siliconlabs;instance"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;siliconlabs;msp"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;stm32_gd32"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;stm32_gd32;driver"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets;stm32_gd32;instance"/>
-  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;util"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;System Files"/>
  </Project>
  <Register1>
@@ -112,13 +94,13 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="0" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="34" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="0" top="18" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="21" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="app/inc/config.h" selected="0" top="21" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="27" y="88" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/drv/Timer.h" useBinaryEdit="0" left="0" path="../../yss/inc/drv/mcu.h" selected="0" top="18" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="44" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/msp_default.cpp" selected="0" top="31" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="35" y="60" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/driver/drv_timer_efm32pg22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/drv/peripheral.h" selected="0" top="48" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="20" y="65" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/drv/peripheral.h" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/em_device.h" selected="0" top="45" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/targets/siliconlabs/em_device.h" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/efm32pg22c200f512im40.h" selected="0" top="1279" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="47" y="3871" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/targets/siliconlabs/em_device.h" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/efm32pg22c200f512im40.h" selected="0" top="3856" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="24" y="260" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/yss/instance.h" selected="0" top="239" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Nvic.h" selected="0" top="15" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="12" y="28" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/stm32_gd32/msp/msp_stm32f1xx.cpp" selected="0" top="0" codecName="Default"/>
@@ -132,7 +114,7 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="19" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/CMSIS_5/CMSIS/Core/Include/core_cm33.h" selected="0" top="18" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="55" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/scheduler/yss_context_switching.s" selected="0" top="42" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="72" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/system/yss_init.cpp" selected="0" top="48" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="39" y="58" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/driver/drv_timer_efm32pg22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Timer.h" selected="0" top="54" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="58" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/driver/drv_timer_efm32pg22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/drv/Timer.h" selected="0" top="54" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="27" y="524" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/efm32pg22_timer.h" selected="0" top="508" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="147" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/util/yss_runtime.cpp" selected="0" top="125" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/stm32_gd32/driver/drv_exti_stm32_gd32f1_f4_f7.cpp" selected="0" top="33" codecName="Default"/>
@@ -141,11 +123,15 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/class_clock_efm32pg22.h" selected="0" top="25" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="102" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/driver/drv_clock_efm32pg22.cpp" selected="0" top="86" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="18" y="39" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/driver/drv_clock_efm32pg22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/yss/reg.h" selected="0" top="30" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="4" y="29" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" selected="1" top="24" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="37" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" selected="0" top="9" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="581" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../yss/src/scheduler/yss_scheduler.cpp" selected="0" top="544" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="8" y="155" useTextEdit="1" openedFrom="/home/mymy49/library/yss/src/targets/siliconlabs/msp/msp_EFM32PG22.cpp" useBinaryEdit="0" left="0" path="../../yss/inc/targets/siliconlabs/efm32pg22_dcdc.h" selected="0" top="139" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="63" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFM32PG/Source/EFM32PG_Startup.s" selected="0" top="48" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="83" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="/usr/share/crossworks_for_arm_4.8/source/thumb_crt0.s" selected="0" top="68" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="32" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/drv/Uart.h" selected="0" top="15" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[EFM32PG22C200F512]PG22_Dev_Kit/yss/inc/drv/Uart.h" useBinaryEdit="0" left="0" path="yss/inc/drv/mcu.h" selected="0" top="54" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="yss/inc/drv/peripheral.h" selected="0" top="39" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="59" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[EFM32PG22C200F512]PG22_Dev_Kit/app/src/main.cpp" useBinaryEdit="0" left="0" path="yss/src/targets/siliconlabs/driver/drv_timer_efm32pg22.cpp" selected="1" top="41" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
