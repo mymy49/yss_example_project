@@ -60,6 +60,8 @@ typedef NRF_GPIO_Type		YSS_GPIO_Peri;
 
 #elif defined(EFM32PG22)
 
+typedef GPIO_TypeDef		YSS_GPIO_Peri;
+#define TargetHeaderFile	<targets/siliconlabs/class_gpio_efm32pg22.h>
 #else
 
 #include <targets/st_gigadevice/define_gpio_gd32f1.h>
@@ -115,9 +117,25 @@ class Gpio : public Drv
 	uint32_t getPeripheralAddress(void);
 };
 #elif defined(EFM32PG22) // 추후 앞으로 이 방식을 사용할 예정
+
+class Gpio;
+
 class GpioBase : public Drv
 {
 public :
+	struct AltFunc
+	{
+		YSS_GPIO_Peri *port;
+		uint8_t pin;
+		uint8_t func;
+	};
+
+	struct Pin
+	{
+		Gpio *port;
+		uint8_t pin;
+	};
+
 	// 아래 멤버 함수들을 상속 받는 곳에서 다시 선언하고 구현해야함
 
 	// 설정된 핀의 출력값을 제어한다.
@@ -130,12 +148,12 @@ public :
 
 	bool getInputData(uint8_t pin);
 
+	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
 	GpioBase(const Drv::Config drvConfig) : Drv(drvConfig) {}
 };
 
-#if defined(EFM32PG22)
-#include <targets/siliconlabs/class_gpio_efm32pg22.h>
-#endif
+#include TargetHeaderFile
+
 #endif
 
 #endif

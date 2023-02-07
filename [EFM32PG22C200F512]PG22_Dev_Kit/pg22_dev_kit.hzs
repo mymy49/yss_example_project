@@ -43,6 +43,7 @@
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app;src"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;common"/>
+  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;System Files"/>
  </Project>
  <Register1>
@@ -93,7 +94,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="24" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="1" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="1" top="18" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

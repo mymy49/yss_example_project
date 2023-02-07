@@ -30,7 +30,7 @@ Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
 	mTxDma = &config.txDma;
 	mTxDmaInfo = config.txDmaInfo;
-	mPeri = config.peri;
+	mDev = config.dev;
 	mRcvBuf = 0;
 	mTail = 0;
 	mHead = 0;
@@ -49,14 +49,14 @@ error Uart::initializeAsTransmitterOnly(int32_t baud)
 	fra &= 0xf;
 	
 	// 장치 비활성화
-	setBitData(mPeri[UART_REG::CR1], false, 13);
+	setBitData(mDev[UART_REG::CR1], false, 13);
 	
 	// 보레이트 설정
-	setTwoFieldData(mPeri[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
+	setTwoFieldData(mDev[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
 	
 	// TX En, 장치 En
-	mPeri[UART_REG::CR3] = USART_CR3_EIE_Msk;
-	mPeri[UART_REG::CR1] = USART_CR1_TE_Msk | USART_CR1_UE_Msk;
+	mDev[UART_REG::CR3] = USART_CR3_EIE_Msk;
+	mDev[UART_REG::CR1] = USART_CR1_TE_Msk | USART_CR1_UE_Msk;
 
 	return Error::NONE;
 }
@@ -75,14 +75,14 @@ error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBuffe
 	fra &= 0xf;
 	
 	// 장치 비활성화
-	setBitData(mPeri[UART_REG::CR1], false, 13);
+	setBitData(mDev[UART_REG::CR1], false, 13);
 	
 	// 보레이트 설정
-	setTwoFieldData(mPeri[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
+	setTwoFieldData(mDev[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
 	
 	// TX En, RX En, Rxnei En, 장치 En
-	mPeri[UART_REG::CR3] = USART_CR3_EIE_Msk;
-	mPeri[UART_REG::CR1] = USART_CR1_TE_Msk | USART_CR1_RE_Msk | USART_CR1_RXNEIE_Msk | USART_CR1_UE_Msk;
+	mDev[UART_REG::CR3] = USART_CR3_EIE_Msk;
+	mDev[UART_REG::CR1] = USART_CR1_TE_Msk | USART_CR1_RE_Msk | USART_CR1_RXNEIE_Msk | USART_CR1_UE_Msk;
 
 	return Error::NONE;
 }
@@ -97,11 +97,11 @@ error Uart::changeBaudrate(int32_t baud)
 	fra = 16 * (clk % baud) / baud;
 	fra &= 0xf;
 
-	mPeri[UART_REG::CR1] &= ~USART_CR1_UE_Msk;
+	mDev[UART_REG::CR1] &= ~USART_CR1_UE_Msk;
 	
-	setTwoFieldData(mPeri[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
+	setTwoFieldData(mDev[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
 
-	mPeri[UART_REG::CR1] |= USART_CR1_UE_Msk;
+	mDev[UART_REG::CR1] |= USART_CR1_UE_Msk;
 
 	return Error::NONE;
 }
@@ -115,23 +115,23 @@ error Uart::send(void *src, int32_t  size)
 
 	mTxDma->lock();
 
-	setBitData(mPeri[UART_REG::CR3], true, USART_CR3_DMAT_Pos);	// TX DMA 활성화
+	setBitData(mDev[UART_REG::CR3], true, USART_CR3_DMAT_Pos);	// TX DMA 활성화
 
-	mPeri[UART_REG::ICR] = USART_ICR_TCCF_Msk;
+	mDev[UART_REG::ICR] = USART_ICR_TCCF_Msk;
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], false, USART_CR1_RE_Pos);	// RX 비활성화
+		setBitData(mDev[UART_REG::CR1], false, USART_CR1_RE_Pos);	// RX 비활성화
 	
 	result = mTxDma->send(mTxDmaInfo, src, size);
 
 	if(result == Error::NONE)
-		while (!(mPeri[UART_REG::ISR] & USART_ISR_TC_Msk))
+		while (!(mDev[UART_REG::ISR] & USART_ISR_TC_Msk))
 			thread::yield();
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], true, USART_CR1_RE_Pos);	// RX 활성화
+		setBitData(mDev[UART_REG::CR1], true, USART_CR1_RE_Pos);	// RX 활성화
 	
-	setBitData(mPeri[UART_REG::CR3], false, USART_CR3_DMAT_Pos);		// TX DMA 비활성화
+	setBitData(mDev[UART_REG::CR3], false, USART_CR3_DMAT_Pos);		// TX DMA 비활성화
 
 	mTxDma->unlock();
 
@@ -141,15 +141,15 @@ error Uart::send(void *src, int32_t  size)
 void Uart::send(int8_t data)
 {
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], false, USART_CR1_RE_Pos);	// RX 비활성화
+		setBitData(mDev[UART_REG::CR1], false, USART_CR1_RE_Pos);	// RX 비활성화
 
-	mPeri[UART_REG::ICR] = USART_ICR_TCCF_Msk;
-	mPeri[UART_REG::TDR] = data;
-	while (~mPeri[UART_REG::ISR] & USART_ISR_TC)
+	mDev[UART_REG::ICR] = USART_ICR_TCCF_Msk;
+	mDev[UART_REG::TDR] = data;
+	while (~mDev[UART_REG::ISR] & USART_ISR_TC)
 		thread::yield();
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], true, USART_CR1_RE_Pos);	// RX 활성화
+		setBitData(mDev[UART_REG::CR1], true, USART_CR1_RE_Pos);	// RX 활성화
 }
 
 void Uart::setCallbackForFrameError(void (*callback)(void))
@@ -159,7 +159,7 @@ void Uart::setCallbackForFrameError(void (*callback)(void))
 
 void Uart::isr(void)
 {
-	uint32_t sr = mPeri[UART_REG::ISR];
+	uint32_t sr = mDev[UART_REG::ISR];
 
 	if(sr & (USART_ISR_FE_Msk | USART_ISR_ORE_Msk | USART_ISR_NE_Msk))
 	{
@@ -169,11 +169,11 @@ void Uart::isr(void)
 		if(sr & USART_ISR_ORE_Msk)
 			__NOP();
 
-		mPeri[UART_REG::RDR];
-		mPeri[UART_REG::ICR] = USART_ICR_FECF_Msk | USART_ICR_ORECF_Msk | USART_ICR_NCF_Msk;
+		mDev[UART_REG::RDR];
+		mDev[UART_REG::ICR] = USART_ICR_FECF_Msk | USART_ICR_ORECF_Msk | USART_ICR_NCF_Msk;
 	}
 	else
-		push(mPeri[UART_REG::RDR]);
+		push(mDev[UART_REG::RDR]);
 }
 
 #endif

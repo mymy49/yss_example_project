@@ -20,6 +20,8 @@
 
 #include <util/CommandLineInterface.h>
 #include <drv/Gpio.h>
+#include <drv/Uart.h>
+#include <drv/Exti.h>
 #include <yss/error.h>
 
 #ifndef YSS_DRV_UART_UNSUPPORTED

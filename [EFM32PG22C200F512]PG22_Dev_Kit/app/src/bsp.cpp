@@ -25,13 +25,13 @@ FunctionQueue functionQueue(16);
 
 void initBoard(void)
 {
-	// USART2 초기화
-	//using namespace define::gpio;
-	//gpioA.setAsAltFunc(2, altfunc::PA2_USART2_TX);
+	// USART0 초기화
+	gpioA.setAsAltFunc(5, Gpio::ALTFUNC::UART0_TX, Gpio::ALTTYPE::PUSHPULL_ALT);
+	gpioA.setAsAltFunc(6, Gpio::ALTFUNC::UART0_RX, Gpio::ALTTYPE::INPUT_ALT);
 	
-	//uart2.enableClock();
-	//uart2.initialize(9600, 256);
-	//uart2.enableInterrupt();
+	uart0.enableClock();
+	uart0.initialize(115200, 256);
+	uart0.enableInterrupt();
 
 	// ADC 초기화
 	//gpioA.setAsAnalog(0);

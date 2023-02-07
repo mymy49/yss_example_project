@@ -21,8 +21,6 @@
 
 #include <yss/error.h>
 
-typedef GPIO_TypeDef		YSS_GPIO_Peri;
-
 class Gpio : public GpioBase
 {
 public:
@@ -37,11 +35,24 @@ public:
 	enum OTYPE
 	{
 		PUSHPULL = 4,
-		PUSHPULL_USING_ALTERNATE = 5,
 		OPEN_DRAIN = 8,
 		OPEN_DRAIN_WITH_PULLUP = 10,
-		OPEN_DRAIN_USING_ALTERNATE = 12,
-		OPEN_DRAIN_USING_ALTERNATE_WITH_PULLUP = 14
+	};
+
+	enum ALTFUNC
+	{
+		UART0_RX = 0,
+		UART0_TX,
+		UART1_RX,
+		UART1_TX,
+	};
+
+	enum ALTTYPE
+	{
+		INPUT_ALT = 1,
+		PUSHPULL_ALT = 5,
+		OPEN_DRAIN_ALT = 12,
+		OPEN_DRAIN_WITH_PULLUP_ALT = 14
 	};
 
 	struct Config
@@ -60,6 +71,8 @@ public:
 	// uint8_t otype
 	//		출력핀의 출력 타입을 설정한다. enum OTYPE을 사용한다.
 	error setAsOutput(uint8_t pin, uint8_t otype = OTYPE::PUSHPULL);
+
+	error setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype = ALTTYPE::PUSHPULL_ALT);
 
 	void setAsInput(uint8_t pin);
 

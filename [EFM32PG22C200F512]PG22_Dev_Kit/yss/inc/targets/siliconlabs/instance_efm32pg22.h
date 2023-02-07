@@ -61,4 +61,14 @@
 	#endif
 #endif
 
+#if defined(USART_PRESENT)
+	#if USART_COUNT >= 1
+		extern Uart uart0;
+	#endif
+
+	#if USART_COUNT >= 2
+		extern Uart uart1;
+	#endif
+#endif
+
 #endif

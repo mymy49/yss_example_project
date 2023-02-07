@@ -16,14 +16,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#if defined(NRF52840_XXAA)
+#include <drv/mcu.h>
+
+#if defined(EFM32PG22)
 
 #include <drv/peripheral.h>
 #include <drv/Uart.h>
 #include <yss/reg.h>
 #include <yss/thread.h>
 #include <util/Timeout.h>
-#include <targets/nordic/nrf52840_bitfields.h>
+#include <targets/siliconlabs/efm32pg22_usart.h>
 
 Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
@@ -36,21 +38,51 @@ Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 
 error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBufferSize)
 {
+	uint32_t clk = getClockFrequency(), div;
+
 	mRcvBuf = (int8_t*)receiveBuffer;
 	mRcvBufSize = receiveBufferSize;
 		
 	// 장치 비활성화
-	mDev->ENABLE = 0;
+	mDev->EN_SET = _USART_EN_EN_MASK;
 
 	// 보레이트 설정
-	mDev->BAUDRATE = (int32_t )(268.435456f * (float)baud);
+	div = 256 * (clk / (baud * 4) - 1) / 8;
+	if(div < 0xFFFFF)
+	{
+		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 3, _USART_CTRL_OVS_SHIFT);
+		goto next;
+	}
+
+	div = 256 * (clk / (baud * 6) - 1) / 8;
+	if(div < 0xFFFFF)
+	{
+		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 2, _USART_CTRL_OVS_SHIFT);
+		goto next;
+	}
+
+	div = 256 * (clk / (baud * 8) - 1) / 8;
+	if(div < 0xFFFFF)
+	{
+		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 1, _USART_CTRL_OVS_SHIFT);
+		goto next;
+	}
+
+	div = 256 * (clk / (baud * 16) - 1) / 8;
+	if(div < 0xFFFFF)
+	{
+		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 1, _USART_CTRL_OVS_SHIFT);
+		goto next;
+	}
+
+	return Error::WRONG_CONFIG;
+
+next:
+	setFieldData(mDev->CLKDIV, _USART_CLKDIV_DIV_MASK, div, _USART_CLKDIV_DIV_SHIFT);
 	
 	// TX En, RX En, Rxnei En, 장치 En
-	mDev->INTENSET = UART_INTENSET_RXDRDY_Msk;
-	mDev->TASKS_STARTRX = 1;
-	mDev->TASKS_STARTTX = 1;
-	mDev->ENABLE = UART_ENABLE_ENABLE_Enabled;
-	
+	mDev->CMD = _USART_CMD_RXEN_MASK | _USART_CMD_TXEN_MASK;
+
 	return Error::NONE;
 }
 
@@ -59,50 +91,30 @@ error Uart::send(void *src, int32_t  size)
 	error result;
 	int8_t *data = (int8_t*)src;
 	
-	if(mOneWireModeFlag)
-		mDev->TASKS_STOPRX = 1;
-
 	for(uint32_t i=0;i<size;i++)
 	{
-		mDev->EVENTS_TXDRDY = 0;
-		mDev->TXD = *data++;
+		mDev->IF_CLR = 0xFFFF;
+		mDev->TXDATA = *data++;
 
-		while(!mDev->EVENTS_TXDRDY)
+		while(~mDev->IF & _USART_IF_TXC_MASK)
 			thread::yield();
 	}
 
-	mDev->EVENTS_TXDRDY = 0;
-
 	return Error::NONE;
-error_handler :
-	if(mOneWireModeFlag)
-		mDev->TASKS_STARTRX = 1;
-	
-	return result;
 }
 
 void Uart::send(int8_t data)
 {
-	if(mOneWireModeFlag)
-		mDev->TASKS_STOPRX = 1;
+	mDev->IF_CLR = 0xFFFF;
+	mDev->TXDATA = data;
 
-	while(!mDev->EVENTS_TXDRDY)
+	while(~mDev->IF & _USART_IF_TXC_MASK)
 		thread::yield();
-	mDev->EVENTS_TXDRDY = 0;
-	
-	mDev->TXD = data;
-
-	while(!mDev->EVENTS_TXDRDY)
-		thread::yield();
-
-	if(mOneWireModeFlag)
-		mDev->TASKS_STARTRX = 1;
 }
 
 void Uart::isr(void)
 {
-	push(mDev->RXD);
-	mDev->EVENTS_RXDRDY = 0;
+	
 }
 
 #endif

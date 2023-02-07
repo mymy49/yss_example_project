@@ -17,7 +17,7 @@
 
 #include "../inc/cli_led.h"
 
-#if !(defined(YSS_DRV_UART_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED))
+#if !(defined(YSS_DRV_UART_UNSUPPORTED) || defined(YSS_DRV_GPIO_UNSUPPORTED) || defined(YSS_DRV_EXTI_UNSUPPORTED))
 
 #include <std_ext/malloc.h>
 #include <string.h>

@@ -61,8 +61,9 @@
 
 // ###################### 주변 장치 활성화 ######################
 // UART 활성화
-//#define UART1_ENABLE
-#define UART2_ENABLE
+#define UART0_ENABLE
+#define UART1_ENABLE
+//#define UART2_ENABLE
 //#define UART3_ENABLE
 //#define UART4_ENABLE
 //#define UART5_ENABLE
@@ -122,20 +123,20 @@
 //#define LTDC_ENABLE
 
 // SPI 활성화
-#define SPI1_ENABLE
-#define SPI2_ENABLE
-#define SPI3_ENABLE
-#define SPI4_ENABLE
-#define SPI5_ENABLE
-#define SPI6_ENABLE
+//#define SPI1_ENABLE
+//#define SPI2_ENABLE
+//#define SPI3_ENABLE
+//#define SPI4_ENABLE
+//#define SPI5_ENABLE
+//#define SPI6_ENABLE
 
 // CAN 활성화
-#define CAN1_ENABLE
-#define CAN2_ENABLE
+//#define CAN1_ENABLE
+//#define CAN2_ENABLE
 
 // ADC 활성화
-#define ADC1_ENABLE
-#define ADC2_ENABLE
+//#define ADC1_ENABLE
+//#define ADC2_ENABLE
 //#define ADC3_ENABLE
 
 // DAC 활성화

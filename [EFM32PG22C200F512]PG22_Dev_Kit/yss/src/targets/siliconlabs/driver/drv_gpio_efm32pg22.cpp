@@ -56,5 +56,59 @@ void Gpio::setOutput(uint8_t pin, bool data)
 	setBitData(mDev->P[mPort].DOUT, data, pin);
 }
 
+#define _GPIO_PIN_MASK		_GPIO_USART_RXROUTE_PIN_MASK
+#define _GPIO_PIN_SHIFT		_GPIO_USART_RXROUTE_PIN_SHIFT
+#define _GPIO_PORT_MASK		_GPIO_USART_RXROUTE_PORT_MASK
+#define _GPIO_PORT_SHIFT	_GPIO_USART_RXROUTE_PORT_SHIFT
+
+error Gpio::setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype)
+{
+	if(pin >= mPinCount)
+		return Error::WRONG_CONFIG;
+
+	switch(altFunc)
+	{
+	case ALTFUNC::UART0_RX :
+		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
+		setTwoFieldData(mDev->USARTROUTE[0].RXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
+														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		break;
+
+	case ALTFUNC::UART0_TX :
+		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
+		setTwoFieldData(mDev->USARTROUTE[0].TXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
+														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		break;
+
+case ALTFUNC::UART1_RX :
+		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
+		setTwoFieldData(mDev->USARTROUTE[1].RXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
+														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		break;
+
+	case ALTFUNC::UART1_TX :
+		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
+		setTwoFieldData(mDev->USARTROUTE[1].TXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
+														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		break;
+	
+	default :
+		return Error::WRONG_CONFIG;
+	}
+
+	if(pin < 7)
+	{
+		pin *= 4;
+		setFieldData(mDev->P[mPort].MODEL, _GPIO_P_MODEL_MODE0_MASK << pin, alttype, pin);
+	}
+	else
+	{
+		pin *= 4;
+		setFieldData(mDev->P[mPort].MODEH, _GPIO_P_MODEH_MODE0_MASK << pin, alttype, pin);
+	}
+
+	return Error::NONE;
+}
+
 #endif
 

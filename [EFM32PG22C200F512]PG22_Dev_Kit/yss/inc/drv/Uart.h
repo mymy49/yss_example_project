@@ -29,6 +29,10 @@ typedef volatile uint32_t	YSS_USART_Peri;
 
 typedef NRF_UART_Type		YSS_USART_Peri;
 
+#elif defined(EFM32PG22)
+
+typedef USART_TypeDef		YSS_USART_Peri;
+
 #else
 
 #include <stdint.h>
@@ -44,36 +48,7 @@ typedef volatile uint32_t	YSS_USART_Peri;
 
 class Uart : public Drv
 {
-	YSS_USART_Peri *mPeri;
-	int8_t *mRcvBuf;
-	int32_t  mRcvBufSize;
-	int32_t  mTail, mHead;
-	bool mOneWireModeFlag;
-	void (*mCallbackForFrameError)(void);
-
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
-	Dma *mTxDma;
-	Dma::DmaInfo mTxDmaInfo;
-#endif
-
   public:
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
-	struct Config
-	{
-		YSS_USART_Peri *peri;
-		Dma &txDma;
-		Dma::DmaInfo txDmaInfo;
-	};
-#else
-	struct Config
-	{
-		YSS_USART_Peri *peri;
-	};
-#endif
-
-	Uart(const Drv::Config drvConfig, const Config config);
-	Uart(YSS_USART_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void), uint32_t (*getClockFreq)(void));
-	
 	// UART 장치를 송신 전용으로 초기화 한다.
 	// 
 	// 반환
@@ -175,8 +150,40 @@ class Uart : public Drv
 	void setOneWireMode(bool en);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
+#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+	struct Config
+	{
+		YSS_USART_Peri *dev;
+		Dma &txDma;
+		Dma::DmaInfo txDmaInfo;
+	};
+#else
+	struct Config
+	{
+		YSS_USART_Peri *dev;
+	};
+#endif	
+
+	Uart(const Drv::Config drvConfig, const Config config);
+
+	Uart(YSS_USART_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void), uint32_t (*getClockFreq)(void));
+
 	void push(int8_t data);
+
 	void isr(void);
+
+private:
+	YSS_USART_Peri *mDev;
+	int8_t *mRcvBuf;
+	int32_t  mRcvBufSize;
+	int32_t  mTail, mHead;
+	bool mOneWireModeFlag;
+	void (*mCallbackForFrameError)(void);
+
+#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+	Dma *mTxDma;
+	Dma::DmaInfo mTxDmaInfo;
+#endif
 };
 
 #endif
@@ -200,3 +207,4 @@ class Uart : public Drv
 //		- getWaitUntilReceive()를 호출하면 호출한 시점에서 수신이 있기 까지 리턴되지 않는다.
 //		- 리턴이 있을 때 마다 수신 데이터를 처리한다.
 //		- 호출한 시점부터 수신된 바이트가 발생할 때까지 리턴되지 않으므로 루프상의 처리에 주의해야 한다.
+

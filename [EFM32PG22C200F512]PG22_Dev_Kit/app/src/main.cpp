@@ -21,10 +21,20 @@
 #include <bsp.h>
 #include <dev/led.h>
 
+void thread_sendUart(void)
+{
+	while(1)
+	{
+		uart0.send("Hello World!!\n\r", sizeof("Hello World!!\n\r"));
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	initYss();
 	initBoard();
+
+	thread::add(thread_sendUart, 512);
 
 	while(1)
 	{
