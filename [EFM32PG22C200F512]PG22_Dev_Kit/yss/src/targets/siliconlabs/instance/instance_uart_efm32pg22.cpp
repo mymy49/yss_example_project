@@ -62,7 +62,7 @@ Uart uart0(gDrvUart0Config, gUart0Config);
 
 extern "C"
 {
-	void UARTE0_UART0_IRQHandler(void)
+	void USART0_RX_IRQHandler(void)
 	{
 		uart0.isr();
 	}
@@ -103,7 +103,7 @@ Uart uart1(gDrvUart1Config, gUart1Config);
 
 extern "C"
 {
-	void USART1_IRQHandler(void)
+	void USART1_RX_IRQHandler(void)
 	{
 		uart1.isr();
 	}

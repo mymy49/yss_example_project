@@ -82,6 +82,7 @@ next:
 	
 	// TX En, RX En, Rxnei En, 장치 En
 	mDev->CMD = _USART_CMD_RXEN_MASK | _USART_CMD_TXEN_MASK;
+	mDev->IEN_SET = _USART_IEN_RXDATAV_MASK;
 
 	return Error::NONE;
 }
@@ -114,7 +115,8 @@ void Uart::send(int8_t data)
 
 void Uart::isr(void)
 {
-	
+	push(mDev->RXDATA);
+//	mDev->EVENTS_RXDRDY = 0;
 }
 
 #endif

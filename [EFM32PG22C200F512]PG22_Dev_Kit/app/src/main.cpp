@@ -29,12 +29,24 @@ void thread_sendUart(void)
 	}
 }
 
+void thread_receiveUart(void)
+{
+	uint8_t data;
+
+	while(1)
+	{
+		data = uart0.getWaitUntilReceive();
+		debug_printf("0x%02X = '%c'\n\r", data, data);
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	initYss();
 	initBoard();
 
 	thread::add(thread_sendUart, 512);
+	thread::add(thread_receiveUart, 512);
 
 	while(1)
 	{
