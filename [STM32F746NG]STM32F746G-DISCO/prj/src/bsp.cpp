@@ -20,9 +20,13 @@
 #include <yss.h>
 #include <bsp.h>
 #include <mod/sdram/MT48LC4M32B2B5_6A.h>
+#include <mod/rgb_tft_lcd/RK043FN48H.h>
+
+void initTftLcd(void);
 
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart1);
+//RK043FN48H lcd;
 
 void initBoard(void)
 {
@@ -52,6 +56,60 @@ void initBoard(void)
 
 	// LED 초기화
 	led::init();
+
+	// TFT LCD 초기화
+	initTftLcd();
+}
+
+void initTftLcd(void)
+{
+	using namespace define::gpio::altfunc;
+	
+	Gpio::AltFunc lcdPort[28] =
+	{
+		{GPIOJ, 6, PJ6_LCD_R7},
+		{GPIOJ, 5, PJ5_LCD_R6},
+		{GPIOJ, 4, PJ4_LCD_R5},
+		{GPIOJ, 3, PJ3_LCD_R4},
+		{GPIOJ, 2, PJ2_LCD_R3},
+		{GPIOJ, 1, PJ1_LCD_R2},
+		{GPIOJ, 0, PJ0_LCD_R1},
+		{GPIOI, 15, PI15_LCD_R0},
+
+		{GPIOK, 2, PK2_LCD_G7},
+		{GPIOK, 1, PK1_LCD_G6},
+		{GPIOK, 0, PK0_LCD_G5},
+		{GPIOJ, 11, PJ11_LCD_G4},
+		{GPIOJ, 10, PJ10_LCD_G3},
+		{GPIOJ, 9, PJ9_LCD_G2},
+		{GPIOJ, 8, PJ8_LCD_G1},
+		{GPIOJ, 7, PJ7_LCD_G0},
+
+		{GPIOK, 6, PK6_LCD_B7},
+		{GPIOK, 5, PK5_LCD_B6},
+		{GPIOK, 4, PK4_LCD_B5},
+		{GPIOG, 12, PG12_LCD_B4},
+		{GPIOJ, 15, PJ15_LCD_B3},
+		{GPIOJ, 14, PJ14_LCD_B2},
+		{GPIOJ, 13, PJ13_LCD_B1},
+		{GPIOE, 4, PE4_LCD_B0},
+
+		{GPIOI, 9, PI9_LCD_VSYNC},
+		{GPIOI, 10, PI10_LCD_HSYNC},
+		{GPIOK, 7, PK7_LCD_DE},
+		{GPIOI, 14, PI14_LCD_CLK}
+	};
+
+	using namespace define::gpio;
+	gpioA.setPackageAsAltFunc(lcdPort, 28, ospeed::FAST, otype::PUSH_PULL);
+
+	// LCD DISP 핀 활성화
+	//gpioI.setAsOutput(12);
+	//gpioI.setOutput(12, true);
+
+	//ltdc.enableClock();
+	//ltdc.init(lcd.getSpecification());
+	//ltdc.enableInterrupt();
 }
 
 void initSdram(void)
