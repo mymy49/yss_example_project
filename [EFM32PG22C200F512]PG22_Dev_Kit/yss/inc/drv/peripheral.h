@@ -29,6 +29,10 @@
 
 #include <targets/st_gigadevice/stm32f4xx.h>
 
+#elif defined(STM32F4_N)
+
+#include <targets/st_gigadevice/stm32f4xx.h>
+
 #elif defined(STM32F7)
 
 #include <targets/st_gigadevice/stm32f7xx.h>

@@ -16,63 +16,57 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_SDRAM__H_
-#define YSS_DRV_SDRAM__H_
+#include <drv/mcu.h>
 
-#include "mcu.h"
+#if defined(EFM32PG22)
 
-#if defined(STM32F7) || defined(STM32F4) || defined(GD32F4)
+#include <drv/peripheral.h>
+#include <yss/instance.h>
+#include <config.h>
+#include <targets/siliconlabs/efm32pg22_cmu.h>
 
-#include <targets/st_gigadevice/define_sdram_stm32_gd32f4_f7.h>
-
-typedef volatile uint32_t	YSS_SPI_Peri;
-
-#else
-
-#define YSS_DRV_SDRAM_UNSUPPORTED
-
-#endif
-
-#ifndef YSS_DRV_SDRAM_UNSUPPORTED
-
-#include "Drv.h"
-#include <stdint.h>
-
-class Sdram : public Drv
+static uint32_t getClockFreqeuncy(void)
 {
-  public:
-	struct Specification
-	{
-		uint8_t columnAddress;
-		uint8_t rowAddress;
-		uint8_t dbusWidth;
-		uint8_t internalBank;
-		uint8_t casLatency;
-		uint32_t maxFrequency;
-		uint32_t tMrd;
-		uint32_t tXsr;
-		uint32_t tRas;
-		uint32_t tRc;
-		uint32_t tWr;
-		uint32_t tRp;
-		uint32_t tRcd;
-		uint32_t tOh;
-		uint32_t tAc;
-		uint32_t tRefresh;
-		uint16_t numOfRow;
-		bool writeProtection;
-		bool burstRead;
-		uint16_t mode;
-	};
+	return clock.getApb0Frequency();
+}
 
-	Sdram(const Drv::Config drvConfig);
-	bool initialize(uint8_t bank, const Specification &spec, uint32_t freq);
+#if PDM_COUNT >= 1 && defined(PDM0_ENABLE)
+static void enableClockPdm0(bool en)
+{
+	clock.lock();
+	clock.enableApb0Clock(_CMU_CLKEN0_PDM_SHIFT, en);
+	clock.unlock();
+}
 
-  private:
-	Specification *mSpec;
-	uint32_t (*mGetClockFrequencyFunc)(void);
+static void enableInterruptPdm0(bool en)
+{
+	nvic.lock();
+	nvic.enableInterrupt(PDM_IRQn, en);
+	nvic.unlock();
+}
+
+static const Drv::Setup gDrvPdm0Setup
+{
+	enableClockPdm0,		//void (*clockFunc)(bool en);
+	enableInterruptPdm0,	//void (*nvicFunc)(bool en);
+	0,						//void (*resetFunc)(void);
+	getClockFreqeuncy		//uint32_t (*getClockFunc)(void);
 };
 
+static const Pdm::Setup gPdm0Setup
+{
+	PDM,			//YSS_PDM_Peri *dev;
+};
+
+Pdm pdm0(gDrvPdm0Setup, gPdm0Setup);
+
+extern "C"
+{
+	void PDM_IRQHandler(void)
+	{
+		pdm0.isr();
+	}
+}
 #endif
 
 #endif

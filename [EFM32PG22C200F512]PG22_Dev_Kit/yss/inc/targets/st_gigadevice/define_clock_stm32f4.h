@@ -21,134 +21,135 @@
 
 namespace define
 {
-namespace clock
-{
-namespace pll
-{
-namespace src
-{
-enum
-{
-	HSI = 0,
-	HSE = 1
-};
-}
+	namespace clock
+	{
+		namespace pll
+		{
+			namespace src
+			{
+				enum
+				{
+					HSI = 0,
+					HSE = 1
+				};
+			}
 
-namespace pdiv
-{
-enum
-{
-	DIV2 = 0,
-	DIV4 = 1,
-	DIV6 = 2,
-	DIV8 = 3
-};
-}
+			namespace pdiv
+			{
+				enum
+				{
+					DIV2 = 0,
+					DIV4 = 1,
+					DIV6 = 2,
+					DIV8 = 3
+				};
+			}
 
-namespace qdiv
-{
-enum
-{
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7,
-	DIV8 = 8,
-	DIV9 = 9,
-	DIV10 = 10,
-	DIV11 = 11,
-	DIV12 = 12,
-	DIV13 = 13,
-	DIV14 = 14,
-	DIV15 = 15
-};
-}
+			namespace qdiv
+			{
+				enum
+				{
+					DIV2 = 2,
+					DIV3 = 3,
+					DIV4 = 4,
+					DIV5 = 5,
+					DIV6 = 6,
+					DIV7 = 7,
+					DIV8 = 8,
+					DIV9 = 9,
+					DIV10 = 10,
+					DIV11 = 11,
+					DIV12 = 12,
+					DIV13 = 13,
+					DIV14 = 14,
+					DIV15 = 15
+				};
+			}
 
-namespace rdiv
-{
-enum
-{
-	DIV2 = 2,
-	DIV3 = 3,
-	DIV4 = 4,
-	DIV5 = 5,
-	DIV6 = 6,
-	DIV7 = 7
-};
-}
+			namespace rdiv
+			{
+				enum
+				{
+					DIV2 = 2,
+					DIV3 = 3,
+					DIV4 = 4,
+					DIV5 = 5,
+					DIV6 = 6,
+					DIV7 = 7
+				};
+			}
+		}
 
-}
+		namespace usbclk
+		{
+			namespace src
+			{
+				enum
+				{
+					MAIN_PLL = 0,
+					SAI_PLL = 1,
+				};
+			}
+		}
 
-namespace usbclk
-{
-namespace src
-{
-enum
-{
-	MAIN_PLL = 0,
-	SAI_PLL = 1,
-};
-}
-}
+		namespace sysclk
+		{
+			namespace src
+			{
+				enum
+				{
+					HSI = 0,
+					HSE = 1,
+					PLL = 2,
+#if defined(STM32F446xx)
+					PLL_R = 3,
+#endif
+				};
+			}
+		}
 
-namespace sysclk
-{
-namespace src
-{
-enum
-{
-	HSI = 0,
-	HSE = 1,
-	PLL = 2
-};
-}
-}
+		namespace divisionFactor
+		{
+			namespace ahb
+			{
+				enum
+				{
+					NO_DIV = 0,
+					DIV2 = 0x8,
+					DIV4 = 0x9,
+					DIV8 = 0xa,
+					DIV16 = 0xb,
+					DIV64 = 0xc,
+					DIV128 = 0xd,
+					DIV256 = 0xe,
+					DIV512 = 0xf
+				};
+			}
 
-namespace divisionFactor
-{
-namespace ahb
-{
-enum
-{
-	NO_DIV = 0,
-	DIV2 = 0x8,
-	DIV4 = 0x9,
-	DIV8 = 0xa,
-	DIV16 = 0xb,
-	DIV64 = 0xc,
-	DIV128 = 0xd,
-	DIV256 = 0xe,
-	DIV512 = 0xf
-};
-}
+			namespace apb
+			{
+				enum
+				{
+					NO_DIV = 0,
+					DIV2 = 0x4,
+					DIV4 = 0x5,
+					DIV8 = 0x6,
+					DIV16 = 0x7,
+				};
+			}
 
-namespace apb
-{
-enum
-{
-	NO_DIV = 0,
-	DIV2 = 0x4,
-	DIV4 = 0x5,
-	DIV8 = 0x6,
-	DIV16 = 0x7,
-};
-}
-
-namespace ltdc
-{
-enum
-{
-	DIV2 = 0,
-	DIV4 = 1,
-	DIV8 = 2,
-	DIV16 = 3,
-};
-}
-
-}
-}
+			namespace ltdc
+			{
+				enum
+				{
+					DIV2 = 0,
+					DIV4 = 1,
+					DIV8 = 2,
+					DIV16 = 3,
+				};
+			}
+		}
+	}
 }
 
 #endif

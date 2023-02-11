@@ -145,4 +145,6 @@
 // RTC 활성화
 //#define RTC_ENABLE
 
+// PDM 활성화
+#define PDM0_ENABLE
 #endif

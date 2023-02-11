@@ -54,6 +54,16 @@
 #define YSS_USART6_IRQHandler		USART5_IRQHandler
 #endif
 
+static uint32_t getApb1ClockFrequency(void)
+{
+	return clock.getApb1ClockFrequency();
+}
+
+static uint32_t getApb2ClockFrequency(void)
+{
+	return clock.getApb2ClockFrequency();
+}
+
 #if defined(USART1) && defined(UART1_ENABLE)
 static void enableUart1Clock(bool en)
 {

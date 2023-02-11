@@ -16,64 +16,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV_SDRAM__H_
-#define YSS_DRV_SDRAM__H_
+#ifndef YSS_CLASS_FLASH_STM32_GD32F4_F7__H_
+#define YSS_CLASS_FLASH_STM32_GD32F4_F7__H_
 
-#include "mcu.h"
+#include <yss/error.h>
 
-#if defined(STM32F7) || defined(STM32F4) || defined(GD32F4)
-
-#include <targets/st_gigadevice/define_sdram_stm32_gd32f4_f7.h>
-
-typedef volatile uint32_t	YSS_SPI_Peri;
-
-#else
-
-#define YSS_DRV_SDRAM_UNSUPPORTED
-
-#endif
-
-#ifndef YSS_DRV_SDRAM_UNSUPPORTED
-
-#include "Drv.h"
-#include <stdint.h>
-
-class Sdram : public Drv
+class Flash : public FlashBase
 {
-  public:
-	struct Specification
-	{
-		uint8_t columnAddress;
-		uint8_t rowAddress;
-		uint8_t dbusWidth;
-		uint8_t internalBank;
-		uint8_t casLatency;
-		uint32_t maxFrequency;
-		uint32_t tMrd;
-		uint32_t tXsr;
-		uint32_t tRas;
-		uint32_t tRc;
-		uint32_t tWr;
-		uint32_t tRp;
-		uint32_t tRcd;
-		uint32_t tOh;
-		uint32_t tAc;
-		uint32_t tRefresh;
-		uint16_t numOfRow;
-		bool writeProtection;
-		bool burstRead;
-		uint16_t mode;
-	};
+public:
 
-	Sdram(const Drv::Config drvConfig);
-	bool initialize(uint8_t bank, const Specification &spec, uint32_t freq);
+	void erase(uint16_t sector);
 
-  private:
-	Specification *mSpec;
-	uint32_t (*mGetClockFrequencyFunc)(void);
+	void *program(void *des, void *src, uint32_t size);
+
+	void *program(uint32_t sector, void *src, uint32_t size);
+
+	uint32_t getAddress(uint16_t sector);
+
+	void setLatency(uint32_t frequency, uint8_t vcc);
+
+	void enablePrefetch(bool en = true);
+
+#if defined(STM32F4_N)
+	void enableDataCache(bool en = true);
+
+	void enableInstructionCache(bool en = true);
+#endif
 };
 
 #endif
-
-#endif
-

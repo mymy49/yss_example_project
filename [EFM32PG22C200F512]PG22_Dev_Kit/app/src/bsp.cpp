@@ -25,13 +25,41 @@ FunctionQueue functionQueue(16);
 
 void initBoard(void)
 {
+	using namespace define::gpio;
+
 	// USART0 초기화
-	gpioA.setAsAltFunc(5, Gpio::ALTFUNC::UART0_TX, Gpio::ALTTYPE::PUSHPULL_ALT);
-	gpioA.setAsAltFunc(6, Gpio::ALTFUNC::UART0_RX, Gpio::ALTTYPE::INPUT_ALT);
+	gpioA.setAsAltFunc(5, altfunc::UART0_TX, alttype::PUSHPULL);
+	gpioA.setAsAltFunc(6, altfunc::UART0_RX, alttype::INPUT);
 	
 	uart0.enableClock();
 	uart0.initialize(115200, 256);
 	uart0.enableInterrupt();
+
+	// PDM 초기화
+	gpioC.setAsOutput(7);
+	gpioC.setOutput(7, true);
+	gpioB.setAsAltFunc(0, altfunc::PDM_CLK, alttype::PUSHPULL);
+	gpioB.setAsAltFunc(1, altfunc::PDM_DAT0, alttype::INPUT);
+	
+	using namespace define::pdm;
+	Pdm::Configuration pdmConfig =
+	{
+		chClkPol::NORMAL,		//uint8_t ch0ClkPol;		// 채널0 클럭 엣지 설정
+		chClkPol::NORMAL,		//uint8_t ch1ClkPol;		// 채널1 클럭 엣지 설정
+		stereoMode::CH01ENABLE,	//uint8_t stereoMode;		// 스테레오 모드 설정
+		fifoLevel::FOUR,		//uint8_t fifoLevel;		// FIFO 사용 길이 설정
+		dataFormat::LEFT16,		//uint8_t dataFormat;		// 데이터 포멧 설정
+		numOfCh::TWO,			//uint8_t numOfCh;			// 채널 개수 설정
+		filterOrder::FIFTH,		//uint8_t filterOrder;		// Filter Order 설정
+		delayMuxSel::ONE,		//uint8_t delayMuxSel;		// Data Delay Buffer Mux 설정
+		1000000					//uint32_t clkFreq;			// Clock 주파수 설정
+	};
+
+	pdm0.enableClock();
+	pdm0.initialize(pdmConfig, 128);
+	pdm0.enableInterrupt();
+
+	pdm0.start();
 
 	// ADC 초기화
 	//gpioA.setAsAnalog(0);

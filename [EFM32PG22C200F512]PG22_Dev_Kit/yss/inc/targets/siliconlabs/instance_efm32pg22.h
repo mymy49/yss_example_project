@@ -71,4 +71,10 @@
 	#endif
 #endif
 
+#if defined(PDM_PRESENT)
+	#if PDM_COUNT >= 1
+		extern Pdm pdm0;
+	#endif
+#endif
+
 #endif

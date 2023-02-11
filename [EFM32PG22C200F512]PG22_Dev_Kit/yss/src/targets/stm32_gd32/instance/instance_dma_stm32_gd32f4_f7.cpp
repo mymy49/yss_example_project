@@ -18,7 +18,7 @@
 
 #include <yss/instance.h>
 
-#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7)
+#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7) || defined(STM32F4_N)
 
 #include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
 

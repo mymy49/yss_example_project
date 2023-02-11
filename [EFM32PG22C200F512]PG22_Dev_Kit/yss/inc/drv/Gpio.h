@@ -61,7 +61,14 @@ typedef NRF_GPIO_Type		YSS_GPIO_Peri;
 #elif defined(EFM32PG22)
 
 typedef GPIO_TypeDef		YSS_GPIO_Peri;
-#define TargetHeaderFile	<targets/siliconlabs/class_gpio_efm32pg22.h>
+#define GpioTargetHeaderFile	<targets/siliconlabs/class_gpio_efm32pg22.h>
+
+#elif defined(STM32F4_N)
+
+#include <drv/peripheral.h>
+typedef GPIO_TypeDef			YSS_GPIO_Peri;
+#define GpioTargetHeaderFile	<targets/st_gigadevice/class_gpio_stm32_gd32f4_f7.h>
+
 #else
 
 #include <targets/st_gigadevice/define_gpio_gd32f1.h>
@@ -116,7 +123,7 @@ class Gpio : public Drv
 
 	uint32_t getPeripheralAddress(void);
 };
-#elif defined(EFM32PG22) // 추후 앞으로 이 방식을 사용할 예정
+#elif defined(EFM32PG22) || defined(STM32F4_N) // 추후 앞으로 이 방식을 사용할 예정
 
 class Gpio;
 
@@ -152,7 +159,7 @@ public :
 	GpioBase(const Drv::Config drvConfig) : Drv(drvConfig) {}
 };
 
-#include TargetHeaderFile
+#include GpioTargetHeaderFile
 
 #endif
 

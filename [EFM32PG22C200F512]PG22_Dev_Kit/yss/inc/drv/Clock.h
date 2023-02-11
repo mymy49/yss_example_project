@@ -25,8 +25,13 @@
 #include <targets/st_gigadevice/ec_clock_stm32f1 .h>
 #include <targets/st_gigadevice/define_clock_stm32f1.h>
 #elif defined(STM32F4)
+#define IncludeSubClassHeader	<targets/st_gigadevice/class_clock_stm32_gd32f4_f7.h>
 #include <targets/st_gigadevice/ec_clock_stm32f4.h>
 #include <targets/st_gigadevice/define_clock_stm32f4.h>
+#elif defined(STM32F4_N)
+#define IncludeSubClassHeader	<targets/st_gigadevice/class_clock_stm32_gd32f4_f7.h>
+//#include <targets/st_gigadevice/ec_clock_stm32f4.h>
+//#include <targets/st_gigadevice/define_clock_stm32f4.h>
 #elif defined(STM32F7)
 #define PLL_P_USE
 #define PLL_Q_USE
@@ -63,7 +68,7 @@
 #define PLL_R_USE
 #include <targets/st_gigadevice/define_clock_stm32g4.h>
 #elif defined(EFM32PG22)
-
+#define IncludeSubClassHeader	<targets/siliconlabs/class_clock_efm32pg22.h>
 #else
 #define YSS_DRV_CLOCK_UNSUPPORTED
 #endif
@@ -71,7 +76,7 @@
 #include <yss/Mutex.h>
 #include <yss/error.h>
 
-#if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
+#if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(NRF52840_XXAA)
 class Clock : public Mutex
 {
 #if defined(EFM32PG22)
@@ -175,7 +180,7 @@ class Clock : public Mutex
 	void setVoltageScale(uint8_t scale);
 #endif
 };
-#elif defined(EFM32PG22)
+#elif defined(EFM32PG22) || defined(STM32F4) || defined(STM32F4_N)
 // 추후 절전 시퀀스 등에 대한 확장을 위해 앞으로 ClockBase 를 상속 받도록 수정할 예정
 class ClockBase : public Mutex
 {
@@ -183,9 +188,8 @@ public :
 	virtual uint32_t getCoreClockFrequency(void) = 0;
 };
 
-#if defined(EFM32PG22)
-#include <targets/siliconlabs/class_clock_efm32pg22.h>
-#endif
+#include IncludeSubClassHeader
+
 #endif	
 
 #endif

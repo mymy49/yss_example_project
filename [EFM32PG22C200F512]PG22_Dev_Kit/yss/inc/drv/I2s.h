@@ -118,7 +118,7 @@ class I2s : public Drv
 
 	void flush(void);
 
-	// 인터럽트 벡터에서 호출하는 함수이다.
+	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
 	void isr(void);
 
   private :

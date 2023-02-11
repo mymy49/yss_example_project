@@ -21,32 +21,39 @@
 #include <bsp.h>
 #include <dev/led.h>
 
-void thread_sendUart(void)
+triggerId gTriggerId;
+
+void trigger_handleMic(void)
 {
-	while(1)
+	uint32_t count = pdm0.getCount();
+	uint32_t *data = pdm0.getCurrentBuffer();
+
+	for(uint32_t i=0;i<count;i++)
 	{
-		uart0.send("Hello World!!\n\r", sizeof("Hello World!!\n\r"));
+		debug_printf("%d\n", (int32_t)*data++ >> 16);
 	}
+
+	pdm0.releaseBuffer(count);
 }
 
-void thread_receiveUart(void)
+void isr_timer1(void)
 {
-	uint8_t data;
-
-	while(1)
-	{
-		data = uart0.getWaitUntilReceive();
-		debug_printf("0x%02X = '%c'\n\r", data, data);
-	}
+	trigger::run(gTriggerId);
 }
 
 int main(int argc, char *argv[])
 {
 	initYss();
 	initBoard();
+	
+	gTriggerId = trigger::add(trigger_handleMic, 512);
 
-	thread::add(thread_sendUart, 512);
-	thread::add(thread_receiveUart, 512);
+	timer1.enableClock();
+	timer1.initialize(1000);
+	timer1.enableUpdateInterrupt();
+	timer1.setUpdateIsr(isr_timer1);
+	timer1.enableInterrupt();
+	timer1.start();
 
 	while(1)
 	{

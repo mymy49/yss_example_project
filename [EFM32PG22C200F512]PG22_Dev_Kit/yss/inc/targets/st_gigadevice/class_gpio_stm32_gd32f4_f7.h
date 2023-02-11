@@ -16,21 +16,42 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_CLASS_GPIO_EFM32PG22__H_
-#define YSS_CLASS_GPIO_EFM32PG22__H_
+#ifndef YSS_CLASS_GPIO_STM32_GD32F4_F7__H_
+#define YSS_CLASS_GPIO_STM32_GD32F4_F7__H_
 
 #include <yss/error.h>
-#include "define_efm32pg22.h"
 
 class Gpio : public GpioBase
 {
 public:
 	enum PORT
 	{
-		PORTA = 0,
-		PORTB,
-		PORTC,
-		PORTD
+		A = 0,
+		B,
+		C,
+		D
+	};
+
+	enum OTYPE
+	{
+		PUSHPULL = 4,
+		OPEN_DRAIN = 8,
+		OPEN_DRAIN_WITH_PULLUP = 10,
+	};
+
+	enum ALTFUNC
+	{
+#if defined(STM32F446xx)
+#include "altfunc_gpio_stm32f446xx.h"
+#endif
+	};
+
+	enum ALTTYPE
+	{
+		INPUT_ALT = 1,
+		PUSHPULL_ALT = 5,
+		OPEN_DRAIN_ALT = 12,
+		OPEN_DRAIN_WITH_PULLUP_ALT = 14
 	};
 
 	struct Config
@@ -48,9 +69,9 @@ public:
 	//		출력으로 변경할 핀의 번호를 설정한다.
 	// uint8_t otype
 	//		출력핀의 출력 타입을 설정한다. enum OTYPE을 사용한다.
-	error setAsOutput(uint8_t pin, uint8_t otype = define::gpio::otype::PUSHPULL);
+	error setAsOutput(uint8_t pin, uint8_t otype = OTYPE::PUSHPULL);
 
-	error setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype = define::gpio::alttype::PUSHPULL);
+	error setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype = ALTTYPE::PUSHPULL_ALT);
 
 	void setAsInput(uint8_t pin);
 

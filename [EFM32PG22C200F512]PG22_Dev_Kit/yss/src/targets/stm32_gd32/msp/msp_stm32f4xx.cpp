@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(STM32F4)
+#if defined(STM32F4) || defined(STM32F4_N)
 
 #include <config.h>
 
@@ -54,7 +54,7 @@ void __WEAK initSystem(void)
 		192,						// uint16_t n
 		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
 		pll::qdiv::DIV4,			// uint8_t qDiv
-#elif defined(STM32F429xx)
+#elif defined(STM32F429xx) || defined (STM32F446xx)
 		288,						// uint16_t n
 		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
 		pll::qdiv::DIV6,			// uint8_t qDiv
@@ -78,7 +78,7 @@ void __WEAK initSystem(void)
 
 #if defined(STM32F411xE)
 	flash.setLatency(96000000, 33);
-#elif defined(STM32F429xx)
+#elif defined(STM32F429xx) || defined (STM32F446xx)
 	flash.setLatency(144000000, 33);
 #endif
 	clock.setSysclk(
