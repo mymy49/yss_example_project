@@ -34,6 +34,10 @@ typedef NRF_TIMER_Type		YSS_TIMER_Dev;
 #include <targets/siliconlabs/efm32pg22_timer.h>
 typedef TIMER_TypeDef		YSS_TIMER_Dev;
 
+#elif defined(STM32F4_N)
+
+typedef TIM_TypeDef			YSS_TIMER_Dev;
+
 #else
 
 typedef volatile uint32_t YSS_TIMER_Dev;
@@ -47,30 +51,20 @@ typedef volatile uint32_t YSS_TIMER_Dev;
 class Timer : public Drv
 {
 public:
-	enum BIT
-	{
-		BIT_16,
-		BIT_32
-	};
-
-	struct Config
-	{
-		YSS_TIMER_Dev *dev;
-		uint8_t bit;
-	};
-
-	Timer(YSS_TIMER_Dev *config, const Drv::Config drvConfig);
-	Timer(Config dev, const Drv::Config drvConfig);
-
 	void initialize(uint32_t freq);
+
 	void initialize(uint32_t psc, uint32_t arr);
+
 	void initializeAsSystemRuntime(void);
 
 	void setUpdateIsr(void (*isr)(void));
+
 	void enableUpdateInterrupt(bool en = true);
+
 	void setOnePulse(bool en);
 
 	void start(void);
+
 	void stop(void);
 
 	uint32_t getClockFreq(void);
@@ -83,6 +77,23 @@ public:
 	uint32_t getCounterValue(void);
 
 	uint32_t getOverFlowCount(void);
+
+	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
+	enum BIT
+	{
+		BIT_16,
+		BIT_32
+	};
+
+	struct Setup
+	{
+		YSS_TIMER_Dev *dev;
+		uint8_t bit;
+	};
+
+	Timer(YSS_TIMER_Dev *config, const Drv::Config drvConfig);
+
+	Timer(const Drv::Setup drvSetup, const Setup setup);
 
 	void isrUpdate(void);
 

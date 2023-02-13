@@ -47,12 +47,18 @@
 #include <drv/Crc32.h>
 #include <drv/I2s.h>
 #include <drv/Radio.h>
+#include <drv/Pdm.h>
 
 // CLOCK
 extern Clock clock;
 
 // NVIC
 extern Nvic nvic;
+
+// EXTI
+#ifndef YSS_DRV_EXTI_UNSUPPORTED
+extern Exti exti;
+#endif
 
 #if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
 

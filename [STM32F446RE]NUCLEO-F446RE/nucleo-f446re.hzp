@@ -1,11 +1,11 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="nucleo-f411re" target="8" version="2">
-  <project Name="nucleo-f411re">
+<solution Name="nucleo-f446re" target="8" version="2">
+  <project Name="nucleo-f446re">
     <configuration
       CMSIS_CORE="Yes"
       Name="Common"
       Placement="Flash"
-      Target="STM32F411RE"
+      Target="STM32F446RE"
       arm_architecture="v7EM"
       arm_core_type="Cortex-M4"
       arm_fp_abi="Soft"
@@ -16,19 +16,19 @@
       arm_linker_process_stack_size="2048"
       arm_linker_stack_size="2048"
       arm_simulator_memory_simulation_filename="$(TargetsDir)/STM32/STM32SimulatorMemory$(HostDLL)"
-      arm_simulator_memory_simulation_parameter="STM32F411RE;0x80000;0x20000"
+      arm_simulator_memory_simulation_parameter="STM32F446RE;0x80000;0x20000"
       arm_target_loader_applicable_loaders="Flash"
       arm_target_loader_default_loader="Flash"
       arm_target_trace_interface_type="None"
       c_user_include_directories="$(TargetsDir)/STM32/include;$(ProjectDir)/prj/inc;$(ProjectDir)/yss/inc;$(HomeDir)/library/yss_example_project/common/inc"
-      debug_register_definition_file="$(TargetsDir)/STM32/STM32F411_Peripherals.xml"
+      debug_register_definition_file="$(TargetsDir)/STM32/STM32F446_Peripherals.xml"
       gcc_cplusplus_language_standard="gnu++11"
-      linker_memory_map_file="$(TargetsDir)/STM32/STM32F411RE_MemoryMap.xml"
+      linker_memory_map_file="$(TargetsDir)/STM32/STM32F446RE_MemoryMap.xml"
       linker_printf_fmt_level="int"
       linker_printf_fp_enabled="Float"
       linker_scanf_fmt_level="int"
       linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
-      macros="DeviceVectorsFile=STM32F411xE.vec"
+      macros="DeviceVectorsFile=STM32F446xx.vec"
       project_directory=""
       project_type="Executable"
       property_groups_file_path="$(TargetsDir)/STM32/propertyGroups.xml"

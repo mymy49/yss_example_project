@@ -61,7 +61,7 @@ typedef NRF_GPIO_Type		YSS_GPIO_Peri;
 #elif defined(EFM32PG22)
 
 typedef GPIO_TypeDef		YSS_GPIO_Peri;
-#define TargetHeaderFile	<targets/siliconlabs/class_gpio_efm32pg22.h>
+#define GpioTargetHeaderFile	<targets/siliconlabs/class_gpio_efm32pg22.h>
 
 #elif defined(STM32F4_N)
 
@@ -156,7 +156,7 @@ public :
 	bool getInputData(uint8_t pin);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-	GpioBase(const Drv::Config drvConfig) : Drv(drvConfig) {}
+	GpioBase(const Drv::Setup drvSetup) : Drv(drvSetup) {}
 };
 
 #include GpioTargetHeaderFile

@@ -18,7 +18,7 @@
 
 #include <yss/instance.h>
 
-#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined (STM32F0)
+#if defined(GD32F4) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined (STM32F0) 
 
 #if defined(GPIOA)
 Gpio gpioA((YSS_GPIO_Peri*)GPIOA, 0, 0, define::gpio::exti::PORTA);
@@ -54,6 +54,172 @@ Gpio gpioH((YSS_GPIO_Peri*)GPIOH, 0, 0, define::gpio::exti::PORTH);
 
 #if defined(GPIOI)
 Gpio gpioI((YSS_GPIO_Peri*)GPIOI, 0, 0, define::gpio::exti::PORTI);
+#endif
+
+#elif defined(STM32F4_N)
+
+using namespace define::gpio;
+
+#if defined(GPIOA)
+const static Drv::Setup gDrvSetupGpioA =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioA =
+{
+	GPIOA,		//YSS_GPIO_Peri *dev;
+	exti::PORTA	//uint8_t port;
+};
+
+Gpio gpioA(gDrvSetupGpioA, gConfigGpioA);
+#endif
+
+#if defined(GPIOB)
+const static Drv::Setup gDrvSetupGpioB =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioB =
+{
+	GPIOB,		//YSS_GPIO_Peri *dev;
+	exti::PORTB	//uint8_t port;
+};
+
+Gpio gpioB(gDrvSetupGpioB, gConfigGpioB);
+#endif
+
+#if defined(GPIOC)
+const static Drv::Setup gDrvSetupGpioC =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioC =
+{
+	GPIOC,		//YSS_GPIO_Peri *dev;
+	exti::PORTC	//uint8_t port;
+};
+
+Gpio gpioC(gDrvSetupGpioC, gConfigGpioC);
+#endif
+
+#if defined(GPIOD)
+const static Drv::Setup gDrvSetupGpioD =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioD =
+{
+	GPIOD,		//YSS_GPIO_Peri *dev;
+	exti::PORTD	//uint8_t port;
+};
+
+Gpio gpioD(gDrvSetupGpioD, gConfigGpioD);
+#endif
+
+#if defined(GPIOE)
+const static Drv::Setup gDrvSetupGpioE =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioE =
+{
+	GPIOE,		//YSS_GPIO_Peri *dev;
+	exti::PORTE	//uint8_t port;
+};
+
+Gpio gpioE(gDrvSetupGpioE, gConfigGpioE);
+#endif
+
+#if defined(GPIOF)
+const static Drv::Setup gDrvSetupGpioF =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioF =
+{
+	GPIOF,		//YSS_GPIO_Peri *dev;
+	exti::PORTF	//uint8_t port;
+};
+
+Gpio gpioF(gDrvSetupGpioF, gConfigGpioF);
+#endif
+
+#if defined(GPIOG)
+const static Drv::Setup gDrvSetupGpioG =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioG =
+{
+	GPIOG,		//YSS_GPIO_Peri *dev;
+	exti::PORTG	//uint8_t port;
+};
+
+Gpio gpioG(gDrvSetupGpioG, gConfigGpioG);
+#endif
+
+#if defined(GPIOH)
+const static Drv::Setup gDrvSetupGpioH =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioH =
+{
+	GPIOH,		//YSS_GPIO_Peri *dev;
+	exti::PORTH	//uint8_t port;
+};
+
+Gpio gpioH(gDrvSetupGpioH, gConfigGpioH);
+#endif
+
+#if defined(GPIOI)
+const static Drv::Setup gDrvSetupGpioI =
+{
+	0,	//void (*clockFunc)(bool en);
+	0,	//void (*nvicFunc)(bool en);
+	0,	//void (*resetFunc)(void);
+	0	//uint32_t (*getClockFunc)(void);
+};
+
+const static Gpio::Setup gConfigGpioI =
+{
+	GPIOI,		//YSS_GPIO_Peri *dev;
+	exti::PORTI	//uint8_t port;
+};
+
+Gpio gpioI(gDrvSetupGpioI, gConfigGpioI);
 #endif
 
 #endif

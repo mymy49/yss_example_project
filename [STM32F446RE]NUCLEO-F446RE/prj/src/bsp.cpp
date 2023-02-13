@@ -20,36 +20,36 @@
 #include <yss.h>
 #include <bsp.h>
 
-//FunctionQueue functionQueue(16);
-//CommandLineInterface cli(uart2);
+FunctionQueue functionQueue(16);
+CommandLineInterface cli(uart2);
 
 void initBoard(void)
 {
-	//// USART2 초기화
-	//using namespace define::gpio;
-	//gpioA.setAsAltFunc(2, altfunc::PA2_USART2_TX);
-	//gpioA.setAsAltFunc(3, altfunc::PA3_USART2_RX);
+	// USART2 초기화
+	using namespace define::gpio;
+	gpioA.setAsAltFunc(2, altfunc::PA2_USART2_TX);
+	gpioA.setAsAltFunc(3, altfunc::PA3_USART2_RX);
 	
-	//uart2.enableClock();
-	//uart2.initialize(9600, 256);
-	//uart2.enableInterrupt();
+	uart2.enableClock();
+	uart2.initialize(9600, 256);
+	uart2.enableInterrupt();
 
-	//// ADC 초기화
-	//gpioA.setAsAnalog(0);
-	//gpioA.setAsAnalog(1);
-	//gpioA.setAsAnalog(4);
+	// ADC 초기화
+	gpioA.setAsAnalog(0);
+	gpioA.setAsAnalog(1);
+	gpioA.setAsAnalog(4);
 
-	//adc1.enableClock();
-	//adc1.initialize();
+	adc1.enableClock();
+	adc1.initialize();
 	
-	//using namespace define::adc;
-	//adc1.add(0, lpfLv::LV10, bit::BIT16);
-	//adc1.add(1, lpfLv::LV10, bit::BIT16);
-	//adc1.add(4, lpfLv::LV10, bit::BIT16);
+	using namespace define::adc;
+	adc1.add(0, lpfLv::LV10, bit::BIT16);
+	adc1.add(1, lpfLv::LV10, bit::BIT16);
+	adc1.add(4, lpfLv::LV10, bit::BIT16);
 
-	//adc1.enableInterrupt();
+	adc1.enableInterrupt();
 
-	//// LED 초기화
-	//led::init();
+	// LED 초기화
+	led::init();
 }
 

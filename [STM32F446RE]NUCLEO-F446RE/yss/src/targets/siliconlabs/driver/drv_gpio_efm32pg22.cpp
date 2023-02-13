@@ -63,38 +63,53 @@ void Gpio::setOutput(uint8_t pin, bool data)
 
 error Gpio::setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype)
 {
+	using namespace define::gpio;
+	volatile uint32_t *des;
+
 	if(pin >= mPinCount)
 		return Error::WRONG_CONFIG;
 
 	switch(altFunc)
 	{
-	case ALTFUNC::UART0_RX :
+	case altfunc::UART0_RX :
 		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
-		setTwoFieldData(mDev->USARTROUTE[0].RXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
-														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		des = &mDev->USARTROUTE[0].RXROUTE;
 		break;
 
-	case ALTFUNC::UART0_TX :
+	case altfunc::UART0_TX :
 		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
-		setTwoFieldData(mDev->USARTROUTE[0].TXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
-														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		des = &mDev->USARTROUTE[0].TXROUTE;
 		break;
 
-case ALTFUNC::UART1_RX :
+	case altfunc::UART1_RX :
 		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
-		setTwoFieldData(mDev->USARTROUTE[1].RXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
-														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		des = &mDev->USARTROUTE[1].RXROUTE;
 		break;
 
-	case ALTFUNC::UART1_TX :
+	case altfunc::UART1_TX :
 		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
-		setTwoFieldData(mDev->USARTROUTE[1].TXROUTE,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
-														_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
+		des = &mDev->USARTROUTE[1].TXROUTE;
 		break;
 	
+	case altfunc::PDM_CLK :
+		mDev->PDMROUTE.ROUTEEN |= _GPIO_PDM_ROUTEEN_CLKPEN_MASK;
+		des = &mDev->PDMROUTE.CLKROUTE;
+		break;
+
+	case altfunc::PDM_DAT0:
+		des = &mDev->PDMROUTE.DAT0ROUTE;
+		break;
+
+	case altfunc::PDM_DAT1:
+		des = &mDev->PDMROUTE.DAT1ROUTE;
+		break;
+
 	default :
 		return Error::WRONG_CONFIG;
 	}
+
+	setTwoFieldData(*des,	_GPIO_PIN_MASK, pin, _GPIO_PIN_SHIFT,
+							_GPIO_PORT_MASK, mPort, _GPIO_PORT_SHIFT);
 
 	if(pin < 7)
 	{

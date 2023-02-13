@@ -16,54 +16,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_DRV__H_
-#define YSS_DRV__H_
+#include <drv/mcu.h>
 
-#include <yss/Mutex.h>
+#if defined(EFM32PG22)
 
-class Drv : public Mutex
+#include <drv/peripheral.h>
+#include <yss/instance.h>
+#include <config.h>
+#include <targets/siliconlabs/efm32pg22_cmu.h>
+
+static uint32_t getClockFreqeuncy(void)
 {
-  public:
-	struct Config
-	{
-		void (*clockFunc)(bool en);
-		void (*nvicFunc)(bool en);
-		void (*resetFunc)(void);
-		uint32_t (*getClockFunc)(void);
-	};
-	
-	// 앞으로 Config 대신에 Setup을 사용할 예정
-	struct Setup
-	{
-		void (*clockFunc)(bool en);
-		void (*nvicFunc)(bool en);
-		void (*resetFunc)(void);
-		uint32_t (*getClockFunc)(void);
-	};
+	return clock.getApb0Frequency();
+}
 
-	void enableClock(bool en = true);
+#if PDM_COUNT >= 1 && defined(PDM0_ENABLE)
+static void enableClockPdm0(bool en)
+{
+	clock.lock();
+	clock.enableApb0Clock(_CMU_CLKEN0_PDM_SHIFT, en);
+	clock.unlock();
+}
 
-	void enableInterrupt(bool en = true);
+static void enableInterruptPdm0(bool en)
+{
+	nvic.lock();
+	nvic.enableInterrupt(PDM_IRQn, en);
+	nvic.unlock();
+}
 
-	void reset(void);
-
-	uint32_t getClockFrequency(void);
-	
-	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-	Drv(void (*clockFunc)(bool en), void (*nvicFunc)(bool en), void (*resetFunc)(void) = 0);
-
-	Drv(const Config &config);
-
-	Drv(const Setup &setup);
-
-	Drv(void);
-
-private :
-	void (*mClockFunc)(bool en);
-	void (*mNvicFunc)(bool en);
-	void (*mResetFunc)(void);
-	uint32_t (*mGetClockFunc)(void);
+static const Drv::Setup gDrvPdm0Setup
+{
+	enableClockPdm0,		//void (*clockFunc)(bool en);
+	enableInterruptPdm0,	//void (*nvicFunc)(bool en);
+	0,						//void (*resetFunc)(void);
+	getClockFreqeuncy		//uint32_t (*getClockFunc)(void);
 };
+
+static const Pdm::Setup gPdm0Setup
+{
+	PDM,			//YSS_PDM_Peri *dev;
+};
+
+Pdm pdm0(gDrvPdm0Setup, gPdm0Setup);
+
+extern "C"
+{
+	void PDM_IRQHandler(void)
+	{
+		pdm0.isr();
+	}
+}
+#endif
 
 #endif
 

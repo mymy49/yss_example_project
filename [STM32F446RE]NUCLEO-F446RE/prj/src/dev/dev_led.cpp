@@ -24,13 +24,13 @@ namespace led
 {
 	void init(void)
 	{
-		//gpioA.setAsOutput(5);
-		//setOn(false);
+		gpioA.setAsOutput(5);
+		setOn(false);
 	}
 
 	void setOn(bool en)
 	{
-		//gpioA.setOutput(5, en);
+		gpioA.setOutput(5, en);
 	}
 }
 

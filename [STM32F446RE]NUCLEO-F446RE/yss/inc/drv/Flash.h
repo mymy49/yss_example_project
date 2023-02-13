@@ -80,8 +80,9 @@ class FlashBase : public Drv
 	uint32_t getAddress(uint16_t sector);
 };
 
+#if !defined(YSS_DRV_FLASH_UNSUPPORTED)
 #include FlashTargetHeaderFile
-
+#endif
 #endif
 
 #endif

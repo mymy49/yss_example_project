@@ -145,32 +145,72 @@
 	extern DmaChannel16 dmaChannel16;
 #endif
 
-#if defined(GPIO_PRESENT)
-	#if defined(GPIO_PA_INDEX)
-		extern Gpio gpioA;
-	#endif
-
-	#if defined(GPIO_PB_INDEX)
-		extern Gpio gpioB;
-	#endif
-
-	#if defined(GPIO_PC_INDEX)
-		extern Gpio gpioC;
-	#endif
-
-	#if defined(GPIO_PD_INDEX)
-		extern Gpio gpioD;
-	#endif
+#if defined(GPIOA)
+	extern Gpio gpioA;
 #endif
 
-#if defined(USART_PRESENT)
-	#if USART_COUNT >= 1
-		extern Uart uart0;
-	#endif
+#if defined(GPIOB)
+	extern Gpio gpioB;
+#endif
 
-	#if USART_COUNT >= 2
-		extern Uart uart1;
-	#endif
+#if defined(GPIOC)
+	extern Gpio gpioC;
+#endif
+
+#if defined(GPIOD)
+	extern Gpio gpioD;
+#endif
+
+#if defined(GPIOE)
+	extern Gpio gpioE;
+#endif
+
+#if defined(GPIOF)
+	extern Gpio gpioF;
+#endif
+
+#if defined(GPIOG)
+	extern Gpio gpioG;
+#endif
+
+#if defined(GPIOH)
+	extern Gpio gpioH;
+#endif
+
+#if defined(USART1)
+	extern Uart uart1;
+#endif
+
+#if defined(USART2)
+	extern Uart uart2;
+#endif
+
+#if defined(USART3)
+	extern Uart uart3;
+#endif
+
+#if defined(UART4)
+	extern Uart uart4;
+#endif
+
+#if defined(UART5)
+	extern Uart uart5;
+#endif
+
+#if defined(USART6)
+	extern Uart uart6;
+#endif
+
+#if defined(ADC1)
+extern Adc adc1;
+#endif
+
+#if defined(ADC2)
+extern Adc adc2;
+#endif
+
+#if defined(ADC3)
+extern Adc adc3;
 #endif
 
 #endif

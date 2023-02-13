@@ -18,17 +18,21 @@
 
 #include <drv/mcu.h>
 
-#if defined(EFM32PG22)
+#if defined(STM32F4_N)
 
 #include <drv/peripheral.h>
 #include <drv/Uart.h>
-#include <yss/reg.h>
 #include <yss/thread.h>
-#include <util/Timeout.h>
-#include <targets/siliconlabs/efm32pg22_usart.h>
+#include <yss/reg.h>
+
+#if defined(STM32F446xx)
+#include <targets/st_gigadevice/define_stm32f446xx.h>
+#endif
 
 Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
+	mTxDma = &config.txDma;
+	mTxDmaInfo = config.txDmaInfo;
 	mDev = config.dev;
 	mRcvBuf = 0;
 	mTail = 0;
@@ -38,85 +42,85 @@ Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 
 error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBufferSize)
 {
-	uint32_t clk = getClockFrequency(), div;
+	int32_t  man, fra, buf;
+	int32_t  clk = Drv::getClockFrequency() >> 4;
 
 	mRcvBuf = (int8_t*)receiveBuffer;
 	mRcvBufSize = receiveBufferSize;
-		
+
+	man = clk / baud;
+	man &= 0xfff;
+	fra = 16 * (clk % baud) / baud;
+	fra &= 0xf;
+	
 	// 장치 비활성화
-	mDev->EN_SET = _USART_EN_EN_MASK;
-
+	setBitData(mDev->CR1, false, 13);
+	
 	// 보레이트 설정
-	div = 256 * (clk / (baud * 4) - 1) / 8;
-	if(div < 0xFFFFF)
-	{
-		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 3, _USART_CTRL_OVS_SHIFT);
-		goto next;
-	}
-
-	div = 256 * (clk / (baud * 6) - 1) / 8;
-	if(div < 0xFFFFF)
-	{
-		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 2, _USART_CTRL_OVS_SHIFT);
-		goto next;
-	}
-
-	div = 256 * (clk / (baud * 8) - 1) / 8;
-	if(div < 0xFFFFF)
-	{
-		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 1, _USART_CTRL_OVS_SHIFT);
-		goto next;
-	}
-
-	div = 256 * (clk / (baud * 16) - 1) / 8;
-	if(div < 0xFFFFF)
-	{
-		setFieldData(mDev->CTRL, _USART_CTRL_OVS_MASK, 1, _USART_CTRL_OVS_SHIFT);
-		goto next;
-	}
-
-	return Error::WRONG_CONFIG;
-
-next:
-	setFieldData(mDev->CLKDIV, _USART_CLKDIV_DIV_MASK, div, _USART_CLKDIV_DIV_SHIFT);
+	setTwoFieldData(mDev->BRR, 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
 	
 	// TX En, RX En, Rxnei En, 장치 En
-	mDev->CMD = _USART_CMD_RXEN_MASK | _USART_CMD_TXEN_MASK;
-	mDev->IEN_SET = _USART_IEN_RXDATAV_MASK;
+	mDev->CR1 = 0x202C;
 
 	return Error::NONE;
 }
 
 error Uart::send(void *src, int32_t  size)
 {
-	error result;
-	int8_t *data = (int8_t*)src;
+	bool result;
+
+	if(mTxDma == 0)
+		return Error::DMA;
+
+	mTxDma->lock();
+
+	setBitData(mDev->CR3, true, 7);		// TX DMA 활성화
+
+	mDev->SR = ~USART_SR_TC;
+
+	if(mOneWireModeFlag)
+		setBitData(mDev->CR1, false, 2);	// RX 비활성화
 	
-	for(uint32_t i=0;i<size;i++)
-	{
-		mDev->IF_CLR = 0xFFFF;
-		mDev->TXDATA = *data++;
+	result = mTxDma->send(mTxDmaInfo, src, size);
 
-		while(~mDev->IF & _USART_IF_TXC_MASK)
+	if(result == Error::NONE)
+		while (!(mDev->SR & USART_SR_TC))
 			thread::yield();
-	}
 
-	return Error::NONE;
+	if(mOneWireModeFlag)
+		setBitData(mDev->CR1, true, 2);	// RX 활성화
+
+	setBitData(mDev->CR3, false, 7);		// TX DMA 비활성화
+
+	mTxDma->unlock();
+
+	return result;
 }
 
 void Uart::send(int8_t data)
 {
-	mDev->IF_CLR = 0xFFFF;
-	mDev->TXDATA = data;
+	if(mOneWireModeFlag)
+		setBitData(mDev->CR1, false, 2);	// RX 비활성화
 
-	while(~mDev->IF & _USART_IF_TXC_MASK)
+	mDev->SR = ~USART_SR_TC;
+	mDev->DR = data;
+	while (~mDev->SR & USART_SR_TC)
 		thread::yield();
+
+	if(mOneWireModeFlag)
+		setBitData(mDev->CR1, true, 2);	// RX 활성화
 }
 
 void Uart::isr(void)
 {
-	push(mDev->RXDATA);
-//	mDev->EVENTS_RXDRDY = 0;
+	uint32_t sr = mDev->SR;
+
+	push(mDev->DR);
+
+	if (sr & (1 << 3))
+	{
+		flush();
+	}
 }
 
 #endif

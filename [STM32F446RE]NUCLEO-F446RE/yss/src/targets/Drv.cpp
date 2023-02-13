@@ -33,6 +33,14 @@ Drv::Drv(const Config &config)
 	mGetClockFunc = config.getClockFunc;
 }
 
+Drv::Drv(const Setup &setup)
+{
+	mClockFunc = setup.clockFunc;
+	mNvicFunc = setup.nvicFunc;
+	mResetFunc = setup.resetFunc;
+	mGetClockFunc = setup.getClockFunc;
+}
+
 Drv::Drv(void)
 {
 	mClockFunc = 0;
