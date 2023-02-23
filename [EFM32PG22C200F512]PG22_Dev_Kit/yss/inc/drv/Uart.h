@@ -33,6 +33,10 @@ typedef NRF_UART_Type		YSS_USART_Peri;
 
 typedef USART_TypeDef		YSS_USART_Peri;
 
+#elif defined(STM32F4_N)
+
+typedef USART_TypeDef		YSS_USART_Peri;
+
 #else
 
 #include <stdint.h>

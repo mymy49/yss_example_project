@@ -22,13 +22,14 @@
 #include <drv/peripheral.h>
 #include <drv/Timer.h>
 #include <yss/reg.h>
+#include <targets/siliconlabs/efm32pg22_timer.h>
 
 static uint32_t gDivider = 1;
 
-Timer::Timer(Timer::Config config, const Drv::Config drvConfig) : Drv(drvConfig)
+Timer::Timer(const Drv::Setup drvSetup, const Setup setup) : Drv(drvSetup)
 {
-	mDev = config.dev;
-	mBit = config.bit;
+	mDev = setup.dev;
+	mBit = setup.bit;
 	mIsrUpdate = 0;
 }
 
@@ -66,11 +67,6 @@ void Timer::initialize(uint32_t freq)
 {
 	uint32_t clk = getClockFrequency();
 	uint32_t psc = 1024, top;
-
-	if(mBit == BIT::BIT_32)
-		top = 0xFFFFFFFF;
-	else
-		top = 0xFFFF;
 	
 	top = clk / freq;
 	while(psc)
@@ -83,7 +79,7 @@ void Timer::initialize(uint32_t freq)
 		}
 		psc--;
 	}
-	
+
 	setFieldData(mDev->CFG, _TIMER_CFG_PRESC_MASK, psc, _TIMER_CFG_PRESC_SHIFT);
 	mDev->EN_SET = TIMER_EN_EN;
 	mDev->TOP = clk / freq - 1;

@@ -16,32 +16,43 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_CLASS_FLASH_STM32_GD32F4_F7__H_
-#define YSS_CLASS_FLASH_STM32_GD32F4_F7__H_
+// GD32F103xb 계열에서 유효한 설정이 담긴 참고용 파일이다.
+// 해당 파일을 사용자 프로젝트의 include 경로에 복사하고 config.h로 변경한다.
 
-#include <yss/error.h>
+#ifndef YSS_CONFIG__H_
+#define YSS_CONFIG__H_
 
-class Flash : public FlashBase
-{
-public:
+// ####################### 외부 크리스탈 클럭 주파수 설정 #######################
+#define HSE_CLOCK_FREQ 38400000
 
-	void erase(uint16_t sector);
+// ####################### 스케줄러 설정 #######################
+// 내부 ms 를 만들 시계의 타이머 설정 (timer1 ~ timer14)
+#define YSS_TIMER timer0
 
-	void *program(void *des, void *src, uint32_t size);
+// 쓰레드당 할당 받는 Systick Clock의 수
+#define THREAD_GIVEN_CLOCK 20000
 
-	void *program(uint32_t sector, void *src, uint32_t size);
+// 최대 등록 가능한 쓰레드의 수
+#define MAX_THREAD 10
 
-	uint32_t getAddress(uint16_t sector);
+// ####################### KEY 설정 #######################
+// 최대 KEY 생성 가능 갯수 설정 (0 ~ ), 0일 경우 기능 꺼짐
+#define NUM_OF_YSS_KEY 1
 
-	void setLatency(uint32_t frequency, uint8_t vcc);
+// ###################### 주변 장치 활성화 ######################
+// UART 활성화
+#define UART0_ENABLE
+#define UART1_ENABLE
 
-	void enablePrefetch(bool en = true);
+// TIMER 활성화
+#define TIM0_ENABLE
+//#define TIM1_ENABLE
+//#define TIM2_ENABLE
+//#define TIM3_ENABLE
+//#define TIM4_ENABLE
 
-#if defined(STM32F4_N)
-	void enableDataCache(bool en = true);
+// PDM 활성화
+#define PDM0_ENABLE
 
-	void enableInstructionCache(bool en = true);
 #endif
-};
 
-#endif

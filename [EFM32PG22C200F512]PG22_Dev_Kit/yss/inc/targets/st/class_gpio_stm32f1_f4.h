@@ -16,49 +16,25 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef YSS_CLASS_GPIO_STM32_GD32F4_F7__H_
-#define YSS_CLASS_GPIO_STM32_GD32F4_F7__H_
+#ifndef YSS_CLASS_GPIO_STM32F1_F4__H_
+#define YSS_CLASS_GPIO_STM32F1_F4__H_
 
 #include <yss/error.h>
+#include <drv/mcu.h>
+
+#if defined(STM32F446xx)
+
+#include "define_stm32f446xx.h"
+
+#endif
 
 class Gpio : public GpioBase
 {
 public:
-	enum PORT
-	{
-		A = 0,
-		B,
-		C,
-		D
-	};
-
-	enum OTYPE
-	{
-		PUSHPULL = 4,
-		OPEN_DRAIN = 8,
-		OPEN_DRAIN_WITH_PULLUP = 10,
-	};
-
-	enum ALTFUNC
-	{
-#if defined(STM32F446xx)
-#include "altfunc_gpio_stm32f446xx.h"
-#endif
-	};
-
-	enum ALTTYPE
-	{
-		INPUT_ALT = 1,
-		PUSHPULL_ALT = 5,
-		OPEN_DRAIN_ALT = 12,
-		OPEN_DRAIN_WITH_PULLUP_ALT = 14
-	};
-
-	struct Config
+	struct Setup
 	{
 		YSS_GPIO_Peri *dev;
-		uint8_t port;
-		uint8_t pinCount;
+		uint8_t exti;
 	};
 	
 	// 핀을 출력으로 설정한다.
@@ -69,20 +45,30 @@ public:
 	//		출력으로 변경할 핀의 번호를 설정한다.
 	// uint8_t otype
 	//		출력핀의 출력 타입을 설정한다. enum OTYPE을 사용한다.
-	error setAsOutput(uint8_t pin, uint8_t otype = OTYPE::PUSHPULL);
+	error setAsOutput(uint8_t pin, uint8_t ospeed = define::gpio::ospeed::MID, uint8_t otype = define::gpio::otype::PUSH_PULL);
 
-	error setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype = ALTTYPE::PUSHPULL_ALT);
+	void setPackageAsAltFunc(AltFunc *altport, uint8_t numOfPort, uint8_t ospeed, uint8_t otype);
 
-	void setAsInput(uint8_t pin);
+	error setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t ospeed = define::gpio::ospeed::MID, uint8_t otype = define::gpio::otype::PUSH_PULL);
+
+	void setAsInput(uint8_t pin, uint8_t pullUpDown = define::gpio::pupd::NONE);
+
+	void setAsAnalog(uint8_t pin);
 
 	void setOutput(uint8_t pin, bool data);
+
+	void setPullUpDown(uint8_t pin, uint8_t pupd);
+
+	void setExti(uint8_t pin);
 	
+	bool getInputData(uint8_t pin);
+
 	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
-	Gpio(const Drv::Config drvConfig, const Config config);
+	Gpio(const Drv::Setup drvSetup, const Setup setup);
 
 private:
 	YSS_GPIO_Peri *mDev;
-	uint8_t mPort, mPinCount;
+	uint8_t mExti;
 };
 
 #endif

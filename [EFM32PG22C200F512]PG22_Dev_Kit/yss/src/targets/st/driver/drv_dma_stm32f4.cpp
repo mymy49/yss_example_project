@@ -23,7 +23,7 @@
 #include <drv/Dma.h>
 #include <yss/reg.h>
 #include <yss/thread.h>
-#include <targets/st_gigadevice/define_stm32f446xx.h>
+#include <targets/st/bitfield_stm32f446xx.h>
 
 Dma::Dma(const Drv::Config drvConfig, const Config dmaConfig) : Drv(drvConfig)
 {
@@ -359,7 +359,7 @@ void DmaChannel4::isr(void)
 	uint32_t sr = getFieldData(mDma->LISR, 0x3F << 22, 22);
 	volatile uint32_t *reg = &mPeri->NDTR;
 
-	mDma->LIFCR = (sr & 0x3F) << 21;	// 인터럽트 플래그 클리어
+	mDma->LIFCR = (sr & 0x3F) << 22;	// 인터럽트 플래그 클리어
 
 	if (checkError(sr))
 		mErrorFlag = true;

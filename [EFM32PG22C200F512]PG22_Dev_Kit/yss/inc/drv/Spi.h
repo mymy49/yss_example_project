@@ -19,12 +19,16 @@
 #ifndef YSS_DRV_SPI__H_
 #define YSS_DRV_SPI__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 #include <stdint.h>
 
 #if defined(GD32F1) || defined(GD32F4) || defined(STM32F1) || defined(STM32F4) || defined(STM32F0)
 
 typedef volatile uint32_t	YSS_SPI_Peri;
+
+#elif defined(STM32F4_N)
+
+typedef SPI_TypeDef			YSS_SPI_Peri;
 
 #else
 
@@ -67,7 +71,7 @@ class Spi : public Drv
 
 	struct Config
 	{
-		YSS_SPI_Peri *peri;
+		YSS_SPI_Peri *dev;
 		Dma &txDma;
 		Dma::DmaInfo txDmaInfo;
 		Dma &rxDma;
@@ -148,7 +152,7 @@ class Spi : public Drv
 	void isr(void);
 
   private:
-	YSS_SPI_Peri *mPeri;
+	YSS_SPI_Peri *mDev;
 	Dma *mTxDma, *mRxDma;
 	Dma::DmaInfo mTxDmaInfo, mRxDmaInfo;
 	const Specification *mLastSpec;

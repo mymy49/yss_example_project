@@ -18,11 +18,10 @@
 
 #include <drv/peripheral.h>
 
-#if defined(STM32F1)
+#if defined(STM32F1_N)
 
 #include <config.h>
-#include <targets/st_gigadevice/rcc_stm32_gd32f1.h>
-#include <targets/st_gigadevice/gpio_stm32_gd32f1.h>
+#include <targets/st/define_stm32f103xb.h>
 #include <yss/instance.h>
 
 extern "C"
@@ -84,11 +83,15 @@ void __WEAK initSystem(void)
 	clock.enableApb2Clock(RCC_APB2ENR_IOPCEN_Pos);
 	clock.enableApb2Clock(RCC_APB2ENR_IOPDEN_Pos);
 	clock.enableApb2Clock(RCC_APB2ENR_IOPEEN_Pos);
+#if defined(RCC_APB2ENR_IOPFEN_Pos)
 	clock.enableApb2Clock(RCC_APB2ENR_IOPFEN_Pos);
+#endif
+#if defined(RCC_APB2ENR_IOPGEN_Pos)
 	clock.enableApb2Clock(RCC_APB2ENR_IOPGEN_Pos);
+#endif
 	
 	// SWD 단자 외의 JTAG단자는 일반 포트로 전환
-	AFIO[GPIO_REG::MAPR] |= AFIO_MAPR_SWJ_CFG_NOJNTRST;
+	AFIO->MAPR |= AFIO_MAPR_SWJ_CFG_NOJNTRST;
 }
 
 void initDma(void)

@@ -21,7 +21,15 @@
 
 #include <yss/reg.h>
 
-#if defined(STM32F103x6) || defined(STM32F103xB) || defined(STM32F103xE) || defined(STM32F103xG) || \
+#if defined(STM32F103xB)
+
+#ifndef STM32F1_N
+#define STM32F1_N
+#define DEFAULT_CLOCK_SPEED 8000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+#endif
+
+#elif defined(STM32F103x6) || defined(STM32F103xE) || defined(STM32F103xG) || \
 	defined(STM32F10X_MD)
 #ifndef STM32F1
 #define STM32F1

@@ -25,11 +25,11 @@
 #include <targets/siliconlabs/efm32pg22_gpio.h>
 #include <targets/siliconlabs/efm32pg22_gpio_port.h>
 
-Gpio::Gpio(const Drv::Config drvConfig, const Config config) : GpioBase(drvConfig)
+Gpio::Gpio(const Drv::Setup drvSetup, const Setup setup) : GpioBase(drvSetup)
 {
-	mDev = config.dev;
-	mPort = config.port;
-	mPinCount = config.pinCount;
+	mDev = setup.dev;
+	mPort = setup.port;
+	mPinCount = setup.pinCount;
 }
 
 error Gpio::setAsOutput(uint8_t pin, uint8_t otype)

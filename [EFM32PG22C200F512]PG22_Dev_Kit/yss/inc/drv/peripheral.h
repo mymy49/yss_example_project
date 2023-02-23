@@ -25,6 +25,10 @@
 
 #include <targets/st_gigadevice/stm32f1xx.h>
 
+#elif defined(STM32F1_N)
+
+#include <targets/st/stm32f1xx.h>
+
 #elif defined(STM32F4)
 
 #include <targets/st_gigadevice/stm32f4xx.h>
@@ -40,6 +44,10 @@
 #elif defined(STM32G4)
 
 #include <targets/st_gigadevice/stm32g4xx.h>
+
+#elif defined(GD32F10X_MD)
+
+#include <targets/st/stm32f103xb.h>
 
 #elif defined(GD32F1)
 
@@ -66,8 +74,6 @@
 #include <targets/siliconlabs/em_device.h>
 
 #else
-
-//inline void NVIC_SetPriority(uint8_t val1, uint8_t val2) {}
 
 typedef volatile int IRQn_Type;
 

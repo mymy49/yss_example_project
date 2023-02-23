@@ -1079,7 +1079,9 @@ typedef struct
 #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
 #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
 #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+#define I2S2                ((SPI_TypeDef *) SPI2_BASE)
 #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+#define I2S3                ((SPI_TypeDef *) SPI3_BASE)
 #define SPDIFRX             ((SPDIFRX_TypeDef *) SPDIFRX_BASE)
 #define USART2              ((USART_TypeDef *) USART2_BASE)
 #define USART3              ((USART_TypeDef *) USART3_BASE)
@@ -1107,6 +1109,7 @@ typedef struct
 #define ADC                  ADC123_COMMON
 #define SDIO                ((SDIO_TypeDef *) SDIO_BASE)
 #define SPI1                ((SPI_TypeDef *) SPI1_BASE)
+#define I2S1                ((SPI_TypeDef *) SPI1_BASE)
 #define SPI4                ((SPI_TypeDef *) SPI4_BASE)
 #define SYSCFG              ((SYSCFG_TypeDef *) SYSCFG_BASE)
 #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)

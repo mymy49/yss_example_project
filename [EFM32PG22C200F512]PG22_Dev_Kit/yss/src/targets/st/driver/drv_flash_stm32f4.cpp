@@ -21,7 +21,7 @@
 #if defined(STM32F4_N)
 
 #if defined(STM32F4_N)
-#include <targets/st_gigadevice/define_stm32f446xx.h>
+#include <targets/st/bitfield_stm32f446xx.h>
 #endif
 
 #include <drv/Flash.h>

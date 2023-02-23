@@ -24,14 +24,14 @@
 #if defined(STM32F1)
 #include <targets/st_gigadevice/ec_clock_stm32f1 .h>
 #include <targets/st_gigadevice/define_clock_stm32f1.h>
+#elif defined(STM32F1_N)
+#define IncludeSubClassHeader	<targets/st/class_clock_stm32f1.h>
 #elif defined(STM32F4)
 #define IncludeSubClassHeader	<targets/st_gigadevice/class_clock_stm32_gd32f4_f7.h>
 #include <targets/st_gigadevice/ec_clock_stm32f4.h>
 #include <targets/st_gigadevice/define_clock_stm32f4.h>
 #elif defined(STM32F4_N)
-#define IncludeSubClassHeader	<targets/st_gigadevice/class_clock_stm32_gd32f4_f7.h>
-//#include <targets/st_gigadevice/ec_clock_stm32f4.h>
-//#include <targets/st_gigadevice/define_clock_stm32f4.h>
+#define IncludeSubClassHeader	<targets/st/class_clock_stm32f4.h>
 #elif defined(STM32F7)
 #define PLL_P_USE
 #define PLL_Q_USE
@@ -180,7 +180,7 @@ class Clock : public Mutex
 	void setVoltageScale(uint8_t scale);
 #endif
 };
-#elif defined(EFM32PG22) || defined(STM32F4) || defined(STM32F4_N)
+#elif defined(EFM32PG22) || defined(STM32F4) || defined(STM32F4_N) || defined(STM32F1_N)
 // 추후 절전 시퀀스 등에 대한 확장을 위해 앞으로 ClockBase 를 상속 받도록 수정할 예정
 class ClockBase : public Mutex
 {

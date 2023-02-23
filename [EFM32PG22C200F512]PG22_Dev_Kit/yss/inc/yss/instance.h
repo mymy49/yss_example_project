@@ -55,6 +55,11 @@ extern Clock clock;
 // NVIC
 extern Nvic nvic;
 
+// EXTI
+#ifndef YSS_DRV_EXTI_UNSUPPORTED
+extern Exti exti;
+#endif
+
 #if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
 
 // ADC
@@ -674,10 +679,19 @@ extern I2s i2s3;
 extern Radio radio;
 #endif
 #endif
+
 #elif defined(STM32F4_N)
-#include <targets/st_gigadevice/instance_stm32f446xx.h>
+
+#include <targets/st/instance_stm32f446xx.h>
+
 #elif defined(EFM32PG22)
+
 #include <targets/siliconlabs/instance_efm32pg22.h>
+
+#elif defined(STM32F1_N)
+
+#include <targets/st/instance_stm32f103xx.h>
+
 #endif
 
 #endif

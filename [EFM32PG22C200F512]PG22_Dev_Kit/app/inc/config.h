@@ -16,15 +16,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// GD32F103xb 계열에서 유효한 설정이 담긴 참고용 파일이다.
+// 해당 파일을 사용자 프로젝트의 include 경로에 복사하고 config.h로 변경한다.
+
 #ifndef YSS_CONFIG__H_
 #define YSS_CONFIG__H_
 
+// ####################### 외부 크리스탈 클럭 주파수 설정 #######################
 #define HSE_CLOCK_FREQ 38400000
 
-#define YSS_USE_DEFAULT_MSP true
-
 // ####################### 스케줄러 설정 #######################
-
 // 내부 ms 를 만들 시계의 타이머 설정 (timer1 ~ timer14)
 #define YSS_TIMER timer0
 
@@ -34,27 +35,6 @@
 // 최대 등록 가능한 쓰레드의 수
 #define MAX_THREAD 10
 
-// ####################### GUI 설정 #######################
-// GUI library Enable (true, false)
-#define USE_GUI			false
-
-// Touch Event Enable (true, false)
-#define USE_EVENT		false
-
-#define RGB_REVERSE		true
-
-// Stack Size of Touch Event handler (Byte)
-#define TOUCH_EVENT_HANDLER_STACK_SIZE 4096
-
-// Depth of Touch Event Memory ( 32 ~ 256 )
-#define TOUCH_EVENT_MEMORY_DEPTH 128
-
-// Frame Buffer of LCD output (Rgb565, Rgb888, Argb1555)
-#define YSS_FRAME_BUFFER Rgb565
-
-// Frame Buffer of GUI Frame (Rgb565, Rgb888, Argb1555)
-#define YSS_GUI_FRAME_BUFFER Rgb565
-
 // ####################### KEY 설정 #######################
 // 최대 KEY 생성 가능 갯수 설정 (0 ~ ), 0일 경우 기능 꺼짐
 #define NUM_OF_YSS_KEY 1
@@ -63,88 +43,16 @@
 // UART 활성화
 #define UART0_ENABLE
 #define UART1_ENABLE
-//#define UART2_ENABLE
-//#define UART3_ENABLE
-//#define UART4_ENABLE
-//#define UART5_ENABLE
-//#define UART6_ENABLE
-//#define UART7_ENABLE
-//#define UART8_ENABLE
-
-// PWM 활성화
-//#define PWM1_ENABLE
-//#define PWM2_ENABLE
-//#define PWM3_ENABLE
-//#define PWM4_ENABLE
-//#define PWM5_ENABLE
-//#define PWM6_ENABLE
-//#define PWM7_ENABLE
-//#define PWM8_ENABLE
-//#define PWM9_ENABLE
-//#define PWM10_ENABLE
-//#define PWM11_ENABLE
-//#define PWM12_ENABLE
-//#define PWM13_ENABLE
-//#define PWM14_ENABLE
 
 // TIMER 활성화
 #define TIM0_ENABLE
 #define TIM1_ENABLE
 #define TIM2_ENABLE
-#define TIM3_ENABLE
-#define TIM4_ENABLE
-//#define TIM5_ENABLE
-//#define TIM6_ENABLE
-//#define TIM7_ENABLE
-//#define TIM8_ENABLE
-//#define TIM9_ENABLE
-//#define TIM10_ENABLE
-//#define TIM11_ENABLE
-//#define TIM12_ENABLE
-//#define TIM13_ENABLE
-//#define TIM14_ENABLE
-
-// I2C 활성화
-//#define I2C1_ENABLE
-//#define I2C2_ENABLE
-//#define I2C3_ENABLE
-//#define I2C4_ENABLE
-
-// Quad SPI 활성화
-//#define QUADSPI_ENABLE
-
-// SDMMC 활성화
-//#define SDMMC_ENABLE
-
-// SDRAM 활성화
-//#define SDRAM_ENABLE
-
-// LTDC 활성화
-//#define LTDC_ENABLE
-
-// SPI 활성화
-//#define SPI1_ENABLE
-//#define SPI2_ENABLE
-//#define SPI3_ENABLE
-//#define SPI4_ENABLE
-//#define SPI5_ENABLE
-//#define SPI6_ENABLE
-
-// CAN 활성화
-//#define CAN1_ENABLE
-//#define CAN2_ENABLE
-
-// ADC 활성화
-//#define ADC1_ENABLE
-//#define ADC2_ENABLE
-//#define ADC3_ENABLE
-
-// DAC 활성화
-//#define DAC_ENABLE
-
-// RTC 활성화
-//#define RTC_ENABLE
+//#define TIM3_ENABLE
+//#define TIM4_ENABLE
 
 // PDM 활성화
 #define PDM0_ENABLE
+
 #endif
+

@@ -22,7 +22,7 @@
 #include <drv/mcu.h>
 
 #if defined(STM32F4_N)
-#include "define_clock_stm32f4.h"
+#include "define_stm32f446xx.h"
 #endif
 
 #if defined(STM32F429xx)
@@ -35,9 +35,25 @@
 #define SAIPLL_Q_USE
 #define SAIPLL_R_USE
 #elif defined(STM32F446xx)
+#define PLL_USE
 #define PLL_P_USE
 #define PLL_Q_USE
 #define PLL_R_USE
+
+#define I2SPLL_USE
+#define I2SPLL_P_USE
+#define I2SPLL_Q_USE
+#define I2SPLL_R_USE
+#define GET_I2S1_FREQ_USE
+#define GET_I2S2_FREQ_USE
+#define SET_I2S_CKIN_FREQ_USE
+
+#define SAIPLL_USE
+#define SAIPLL_P_USE
+#define SAIPLL_Q_USE
+#define GET_SAI1_FREQ_USE
+#define GET_SAI2_FREQ_USE
+//#define SET_I2S_CKIN_FREQ_USE
 #endif
 
 class Clock : public ClockBase
@@ -66,7 +82,8 @@ public:
 	uint32_t getAhbClockFrequency(void);
 	uint32_t getApb1ClockFrequency(void);
 	uint32_t getApb2ClockFrequency(void);
-	
+
+#if defined(PLL_USE)
 	bool enableMainPll(uint8_t pllsrc, uint8_t m, uint16_t n, uint8_t pllPdiv, uint8_t qDiv, uint8_t rDiv);
 #if defined(PLL_P_USE)
 	uint32_t getMainPllPFrequency(void);
@@ -77,30 +94,63 @@ public:
 #if defined(PLL_R_USE)
 	uint32_t getMainPllRFrequency(void);
 #endif
+#endif
 
 	// I2SPLL 관련
-#if defined(STM32F7) || defined(STM32F429xx) || defined(STM32F4_N)
-	bool enableI2sPll(uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
+#if defined(I2SPLL_USE)
+
+	bool enableI2sPll(uint16_t n, uint8_t m, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
+
+#if defined(SET_I2S_CKIN_FREQ_USE)
+	uint32_t setI2sCkinClockFrequency(void);
+#endif
+
+#if defined(GET_I2S1_FREQ_USE)
+	void setI2s1ClockSource(uint8_t src);
+	uint32_t getI2s1ClockFrequency(void);
+#endif
+
+#if defined(GET_I2S2_FREQ_USE)
+	void setI2s2ClockSource(uint8_t src);
+	uint32_t getI2s2ClockFrequency(void);
+#endif
+
 #if defined(I2SPLL_P_USE)
 	uint32_t getI2sPllPFrequency(void);
 #endif
+
 #if defined(I2SPLL_Q_USE)
 	uint32_t getI2sPllQFrequency(void);
 #endif
+
 #if defined(I2SPLL_R_USE)
 	uint32_t getI2sPllRFrequency(void);
 #endif
 #endif
 
 	// SAIPLL 관련
-#if defined(GD32F4) || defined(STM32F429xx) || defined(STM32F7)
+#if defined(SAIPLL_USE)
+
 	bool enableSaiPll(uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv);
+
+#if defined(GET_SAI1_FREQ_USE)
+	void setSai1ClockSource(uint8_t src);
+	uint32_t getSai1ClockFrequency(void);
+#endif
+
+#if defined(GET_SAI2_FREQ_USE)
+	void setSai2ClockSource(uint8_t src);
+	uint32_t getSai2ClockFrequency(void);
+#endif
+
 #if defined(SAIPLL_P_USE)
 	uint32_t getSaiPllPFrequency(void);
 #endif
+
 #if defined(SAIPLL_Q_USE)
 	uint32_t getSaiPllQFrequency(void);
 #endif
+
 #if defined(SAIPLL_R_USE)
 	uint32_t getSaiPllRFrequency(void);
 #endif
@@ -121,7 +171,6 @@ public:
 	virtual uint32_t getCoreClockFrequency(void); // virtual 0
 
 private:
-	uint32_t mHfxoFrequency;
 };
 
 #endif

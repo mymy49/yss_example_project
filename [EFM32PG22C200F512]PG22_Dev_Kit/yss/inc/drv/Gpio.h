@@ -19,7 +19,7 @@
 #ifndef YSS_DRV_GPIO__H_
 #define YSS_DRV_GPIO__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 #include <stdint.h>
 
 #if defined(GD32F1) || defined(STM32F1)
@@ -67,7 +67,13 @@ typedef GPIO_TypeDef		YSS_GPIO_Peri;
 
 #include <drv/peripheral.h>
 typedef GPIO_TypeDef			YSS_GPIO_Peri;
-#define GpioTargetHeaderFile	<targets/st_gigadevice/class_gpio_stm32_gd32f4_f7.h>
+#define GpioTargetHeaderFile	<targets/st/class_gpio_stm32f1_f4.h>
+
+#elif defined(STM32F1_N)
+
+#include <drv/peripheral.h>
+typedef GPIO_TypeDef			YSS_GPIO_Peri;
+#define GpioTargetHeaderFile	<targets/st/class_gpio_stm32f1_f4.h>
 
 #else
 
@@ -123,7 +129,7 @@ class Gpio : public Drv
 
 	uint32_t getPeripheralAddress(void);
 };
-#elif defined(EFM32PG22) || defined(STM32F4_N) // 추후 앞으로 이 방식을 사용할 예정
+#elif defined(EFM32PG22) || defined(STM32F4_N) || defined(STM32F1_N) // 추후 앞으로 이 방식을 사용할 예정
 
 class Gpio;
 
@@ -156,7 +162,7 @@ public :
 	bool getInputData(uint8_t pin);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-	GpioBase(const Drv::Config drvConfig) : Drv(drvConfig) {}
+	GpioBase(const Drv::Setup drvSetup) : Drv(drvSetup) {}
 };
 
 #include GpioTargetHeaderFile

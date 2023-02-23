@@ -46,41 +46,65 @@ void __WEAK initSystem(void)
 
 	using namespace define::clock;
 	
-	// Main PLL 설정
+#if defined(STM32F429xx)
+	clock.setLtdcDivisionFactor(divisionFactor::ltdc::DIV8);
+
 	clock.enableMainPll(
 		pll::src::HSE,				// uint8_t src
 		HSE_CLOCK_FREQ / 1000000,	// uint8_t m
-#if defined(STM32F411xE)
-		192,						// uint16_t n
-		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
-		pll::qdiv::DIV4,			// uint8_t qDiv
-#elif defined(STM32F429xx) || defined (STM32F446xx)
 		288,						// uint16_t n
 		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
 		pll::qdiv::DIV6,			// uint8_t qDiv
-#endif
-		0
+		pll::rdiv::DIV7				// uint8_t rDiv	
 	);
-	
-#if defined(STM32F429xx)
-	clock.setLtdcDivisionFactor(divisionFactor::ltdc::DIV8);
-#endif
 
-	// SAI PLL 설정
-#if defined(STM32F429xx)
 	clock.enableSaiPll(
 		192,				// uint16_t n
 		0,					// uint8_t pDiv <- 사용되지 않음
 		pll::qdiv::DIV15,	// uint8_t qDiv SAI Clock
 		pll::rdiv::DIV7		// uint8_t rDiv TFT-LCD Clock
 	);
+
+	flash.setLatency(144000000, 33);
+#elif defined(STM32F446xx)
+	clock.enableMainPll(
+		pll::src::HSE,				// uint8_t src
+		HSE_CLOCK_FREQ / 1000000,	// uint8_t m
+		288,						// uint16_t n
+		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
+		pll::qdiv::DIV6,			// uint8_t qDiv
+		pll::rdiv::DIV7				// uint8_t rDiv	
+	);
+
+	clock.enableSaiPll(
+		192,				// uint16_t n
+		pll::pdiv::DIV8,	// uint8_t pDiv SAI Clock
+		pll::qdiv::DIV15,	// uint8_t qDiv SAI Clock
+		pll::rdiv::DIV7		// uint8_t rDiv <- 사용되지 않음
+	);
+
+	clock.enableI2sPll(
+		192,						// uint16_t n
+		HSE_CLOCK_FREQ / 1000000,	// uint16_t m
+		pll::pdiv::DIV8,			// uint8_t pDiv
+		pll::qdiv::DIV15,			// uint8_t qDiv
+		pll::rdiv::DIV7				// uint8_t rDiv	
+	);
+
+	flash.setLatency(144000000, 33);
+#elif defined(STM32F411xE)
+	clock.enableMainPll(
+		pll::src::HSE,				// uint8_t src
+		HSE_CLOCK_FREQ / 1000000,	// uint8_t m
+		192,						// uint16_t n
+		pll::pdiv::DIV2,			// uint8_t pDiv Sysclk
+		pll::qdiv::DIV4,			// uint8_t qDiv
+		pll::rdiv::DIV7				// uint8_t rDiv	
+	);
+
+	flash.setLatency(96000000, 33);
 #endif
 
-#if defined(STM32F411xE)
-	flash.setLatency(96000000, 33);
-#elif defined(STM32F429xx) || defined (STM32F446xx)
-	flash.setLatency(144000000, 33);
-#endif
 	clock.setSysclk(
 		sysclk::src::PLL,				// uint8_t sysclkSrc;
 		divisionFactor::ahb::NO_DIV,	// uint8_t ahb;

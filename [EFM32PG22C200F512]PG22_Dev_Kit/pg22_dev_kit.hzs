@@ -94,7 +94,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="1" top="18" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="35" useTextEdit="1" openedFrom="" useBinaryEdit="0" left="0" path="app/src/main.cpp" selected="1" top="9" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

@@ -23,7 +23,7 @@
 #include <targets/siliconlabs/efm32pg22_cmu.h>
 
 #if defined(GPIO_PA_INDEX)
-const static Drv::Config gDrvConfigGpioA =
+const static Drv::Setup gDrvSetupGpioA =
 {
 	0,	//void (*clockFunc)(bool en);
 	0,	//void (*nvicFunc)(bool en);
@@ -31,18 +31,18 @@ const static Drv::Config gDrvConfigGpioA =
 	0	//uint32_t (*getClockFunc)(void);
 };
 
-const static Gpio::Config gConfigGpioA =
+const static Gpio::Setup gSetupGpioA =
 {
 	GPIO,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTA,	//uint8_t port;
 	GPIO_PA_COUNT	//uint8_t pinCount;
 };
 
-Gpio gpioA(gDrvConfigGpioA, gConfigGpioA);
+Gpio gpioA(gDrvSetupGpioA, gSetupGpioA);
 #endif
 
 #if defined(GPIO_PB_INDEX)
-const static Drv::Config gDrvConfigGpioB =
+const static Drv::Setup gDrvSetupGpioB =
 {
 	0,	//void (*clockFunc)(bool en);
 	0,	//void (*nvicFunc)(bool en);
@@ -50,18 +50,18 @@ const static Drv::Config gDrvConfigGpioB =
 	0	//uint32_t (*getClockFunc)(void);
 };
 
-const static Gpio::Config gConfigGpioB =
+const static Gpio::Setup gSetupGpioB =
 {
 	GPIO,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTB,	//uint8_t port;
 	GPIO_PB_COUNT	//uint8_t pinCount;
 };
 
-Gpio gpioB(gDrvConfigGpioB, gConfigGpioB);
+Gpio gpioB(gDrvSetupGpioB, gSetupGpioB);
 #endif
 
 #if defined(GPIO_PC_INDEX)
-const static Drv::Config gDrvConfigGpioC =
+const static Drv::Setup gDrvSetupGpioC =
 {
 	0,	//void (*clockFunc)(bool en);
 	0,	//void (*nvicFunc)(bool en);
@@ -69,18 +69,18 @@ const static Drv::Config gDrvConfigGpioC =
 	0	//uint32_t (*getClockFunc)(void);
 };
 
-const static Gpio::Config gConfigGpioC =
+const static Gpio::Setup gSetupGpioC =
 {
 	GPIO,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTC,	//uint8_t port;
 	GPIO_PC_COUNT	//uint8_t pinCount;
 };
 
-Gpio gpioC(gDrvConfigGpioC, gConfigGpioC);
+Gpio gpioC(gDrvSetupGpioC, gSetupGpioC);
 #endif
 
 #if defined(GPIO_PD_INDEX)
-const static Drv::Config gDrvConfigGpioD =
+const static Drv::Setup gDrvSetupGpioD =
 {
 	0,	//void (*clockFunc)(bool en);
 	0,	//void (*nvicFunc)(bool en);
@@ -88,14 +88,14 @@ const static Drv::Config gDrvConfigGpioD =
 	0	//uint32_t (*getClockFunc)(void);
 };
 
-const static Gpio::Config gConfigGpioD =
+const static Gpio::Setup gSetupGpioD =
 {
 	GPIO,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTD,	//uint8_t port;
 	GPIO_PD_COUNT	//uint8_t pinCount;
 };
 
-Gpio gpioD(gDrvConfigGpioD, gConfigGpioD);
+Gpio gpioD(gDrvSetupGpioD, gSetupGpioD);
 #endif
 
 #endif

@@ -22,9 +22,11 @@
 #include "mcu.h"
 
 #if defined(EFM32PG22)
-typedef PDM_TypeDef		YSS_PDM_Peri;
+typedef PDM_TypeDef				YSS_PDM_Peri;
 #else
+typedef volatile uint32_t		YSS_PDM_Peri;
 #define YSS_DRV_PDM_UNSUPPORTED
+typedef volatile uint32_t	YSS_PDM_Peri;
 #endif
 
 #include "Drv.h"
@@ -44,7 +46,8 @@ public:
 		uint8_t numOfCh;		// 채널 개수 설정
 		uint8_t filterOrder;	// Filter Order 설정
 		uint8_t delayMuxSel;	// Data Delay Buffer Mux 설정
-		uint32_t clkFreq;		// Clock 주파수 설정
+		uint32_t sampleRate;	// Sample Rate 주파수 설정
+		uint8_t downSampleRate;	// Down Sampling Rate 설정
 	};
 
 	error initialize(Configuration config, uint32_t *receiveBuffer, int32_t  receiveBufferLength);

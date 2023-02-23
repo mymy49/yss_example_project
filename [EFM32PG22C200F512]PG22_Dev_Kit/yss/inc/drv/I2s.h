@@ -25,6 +25,10 @@
 
 typedef volatile uint32_t	YSS_I2S_Peri;
 
+#elif defined(STM32F4_N)
+
+typedef SPI_TypeDef			YSS_I2S_Peri;
+
 #else
 
 #define YSS_DRV_I2S_UNSUPPORTED
@@ -49,7 +53,6 @@ class I2s : public Drv
 
 	struct Specification
 	{
-		bool asynchronousStartEanble;
 		uint8_t dataBit;
 		uint8_t chlen;
 		uint8_t standard;
@@ -84,6 +87,8 @@ class I2s : public Drv
 	//		발생한 error를 반환한다.
 	error initializeReceiverAsSub(const Specification &spec);
 
+	error initializeTransmitterAsSub(const Specification &spec);
+
 	void enable(bool en = true);
 
 	// 설정된 전송 버퍼를 DMA로 시작부터 끝까지 전송하면 자동으로 전송 버퍼의 시작으로
@@ -110,13 +115,17 @@ class I2s : public Drv
 	// transferAsCircularMode() 함수를 통해 전송중인 데이터를 중단한다.
 	void stop(void);
 
-	uint32_t getCount(void);
+	uint32_t getTxCount(void);
+
+	uint32_t getRxCount(void);
 
 	void* getCurrrentBuffer(void);
 
 	void releaseBuffer(uint32_t count);
 
 	void flush(void);
+
+	void setFrameErrorIsr(void (*isr)(void));
 
 	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
 	void isr(void);
@@ -127,6 +136,7 @@ class I2s : public Drv
 	uint8_t *mDataBuffer, mDataSize;
 	int32_t mLastTransferIndex, mTransferBufferSize, mLastCheckCount;
 	const Dma::DmaInfo *mTxDmaInfo, *mRxDmaInfo;
+	void (*mFrameErrorIsr)(void);
 };
 
 #endif

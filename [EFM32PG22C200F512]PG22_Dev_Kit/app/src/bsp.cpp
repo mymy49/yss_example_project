@@ -52,11 +52,12 @@ void initBoard(void)
 		numOfCh::TWO,			//uint8_t numOfCh;			// 채널 개수 설정
 		filterOrder::FIFTH,		//uint8_t filterOrder;		// Filter Order 설정
 		delayMuxSel::ONE,		//uint8_t delayMuxSel;		// Data Delay Buffer Mux 설정
-		1000000					//uint32_t clkFreq;			// Clock 주파수 설정
+		44100,					//uint32_t clkFreq;			// Clock 주파수 설정
+		16						//uint8_t downSampleRate;	// Down Sampling Rate 설정
 	};
 
 	pdm0.enableClock();
-	pdm0.initialize(pdmConfig, 128);
+	pdm0.initialize(pdmConfig, 512);
 	pdm0.enableInterrupt();
 
 	pdm0.start();

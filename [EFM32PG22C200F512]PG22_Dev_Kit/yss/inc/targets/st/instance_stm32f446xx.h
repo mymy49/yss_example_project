@@ -19,7 +19,7 @@
 #ifndef YSS_INSTANCE_STM32F446__H_
 #define YSS_INSTANCE_STM32F446__H_
 
-#include "stm32f446xx.h"
+#include <targets/st/stm32f446xx.h>
 
 #if defined(TIM1)
 	extern Timer timer1;
@@ -81,59 +81,59 @@
 	extern Flash flash;
 #endif
 
-#if defined(DMA1_Stream0) || defined(DMA1_Channel1) || defined(DMA1_CHANNEL1)
+#if defined(DMA1_Stream0)
 	extern DmaChannel1 dmaChannel1;
 #endif
 
-#if defined(DMA1_Stream1) || defined(DMA1_Channel2) || defined(DMA1_CHANNEL2)
+#if defined(DMA1_Stream1)
 	extern DmaChannel2 dmaChannel2;
 #endif
 
-#if defined(DMA1_Stream2) || defined(DMA1_Channel3) || defined(DMA1_CHANNEL3)
+#if defined(DMA1_Stream2)
 	extern DmaChannel3 dmaChannel3;
 #endif
 
-#if defined(DMA1_Stream3) || defined(DMA1_Channel4) || defined(DMA1_CHANNEL4)
+#if defined(DMA1_Stream3)
 	extern DmaChannel4 dmaChannel4;
 #endif
 
-#if defined(DMA1_Stream4) || defined(DMA1_Channel5) || defined(DMA1_CHANNEL5)
+#if defined(DMA1_Stream4)
 	extern DmaChannel5 dmaChannel5;
 #endif
 
-#if defined(DMA1_Stream5) || defined(DMA1_Channel6) || defined(DMA1_CHANNEL6)
+#if defined(DMA1_Stream5)
 	extern DmaChannel6 dmaChannel6;
 #endif
 
-#if defined(DMA1_Stream6) || defined(DMA1_Channel7) || defined(DMA1_CHANNEL7)
+#if defined(DMA1_Stream6)
 	extern DmaChannel7 dmaChannel7;
 #endif
 
-#if defined(DMA1_Stream7) || defined(DMA2_Channel1) || defined(DMA2_CHANNEL1)
+#if defined(DMA1_Stream7)
 	extern DmaChannel8 dmaChannel8;
 #endif
 
-#if defined(DMA2_Stream0) || defined(DMA2_Channel2) || defined(DMA2_CHANNEL2)
+#if defined(DMA2_Stream0)
 	extern DmaChannel9 dmaChannel9;
 #endif
 
-#if defined(DMA2_Stream1) || defined(DMA2_Channel3) || defined(DMA2_CHANNEL3)
+#if defined(DMA2_Stream1)
 	extern DmaChannel10 dmaChannel10;
 #endif
 
-#if defined(DMA2_Stream2) || defined(DMA2_Channel4) || defined(DMA2_CHANNEL4)
+#if defined(DMA2_Stream2)
 	extern DmaChannel11 dmaChannel11;
 #endif
 
-#if defined(DMA2_Stream3) || defined(DMA2_Channel5) || defined(DMA2_CHANNEL5)
+#if defined(DMA2_Stream3)
 	extern DmaChannel12 dmaChannel12;
 #endif
 
-#if defined(DMA2_Stream4) || defined(DMA2_Channel6) || defined(DMA2_CHANNEL6)
+#if defined(DMA2_Stream4)
 	extern DmaChannel13 dmaChannel13;
 #endif
 
-#if defined(DMA2_Stream5) || defined(DMA2_Channel7) || defined(DMA2_CHANNEL7)
+#if defined(DMA2_Stream5)
 	extern DmaChannel14 dmaChannel14;
 #endif
 
@@ -145,32 +145,123 @@
 	extern DmaChannel16 dmaChannel16;
 #endif
 
-#if defined(GPIO_PRESENT)
-	#if defined(GPIO_PA_INDEX)
-		extern Gpio gpioA;
-	#endif
-
-	#if defined(GPIO_PB_INDEX)
-		extern Gpio gpioB;
-	#endif
-
-	#if defined(GPIO_PC_INDEX)
-		extern Gpio gpioC;
-	#endif
-
-	#if defined(GPIO_PD_INDEX)
-		extern Gpio gpioD;
-	#endif
+#if defined(GPIOA)
+	extern Gpio gpioA;
 #endif
 
-#if defined(USART_PRESENT)
-	#if USART_COUNT >= 1
-		extern Uart uart0;
-	#endif
+#if defined(GPIOB)
+	extern Gpio gpioB;
+#endif
 
-	#if USART_COUNT >= 2
-		extern Uart uart1;
-	#endif
+#if defined(GPIOC)
+	extern Gpio gpioC;
+#endif
+
+#if defined(GPIOD)
+	extern Gpio gpioD;
+#endif
+
+#if defined(GPIOE)
+	extern Gpio gpioE;
+#endif
+
+#if defined(GPIOF)
+	extern Gpio gpioF;
+#endif
+
+#if defined(GPIOG)
+	extern Gpio gpioG;
+#endif
+
+#if defined(GPIOH)
+	extern Gpio gpioH;
+#endif
+
+#if defined(USART1)
+	extern Uart uart1;
+#endif
+
+#if defined(USART2)
+	extern Uart uart2;
+#endif
+
+#if defined(USART3)
+	extern Uart uart3;
+#endif
+
+#if defined(UART4)
+	extern Uart uart4;
+#endif
+
+#if defined(UART5)
+	extern Uart uart5;
+#endif
+
+#if defined(USART6)
+	extern Uart uart6;
+#endif
+
+#if defined(ADC1)
+extern Adc adc1;
+#endif
+
+#if defined(ADC2)
+extern Adc adc2;
+#endif
+
+#if defined(ADC3)
+extern Adc adc3;
+#endif
+
+#if defined(SPI1)
+extern I2s i2s1;
+#endif
+
+#if defined(SPI2)
+extern I2s i2s2;
+#endif
+
+#if defined(SPI3)
+extern I2s i2s3;
+#endif
+
+#if defined(SAI1)
+extern Sai sai1A;
+extern Sai sai1B;
+#endif
+
+#if defined(SAI2)
+extern Sai sai2A;
+extern Sai sai2B;
+#endif
+
+#if defined(I2C1)
+extern I2c i2c1;
+#endif
+
+#if defined(I2C2)
+extern I2c i2c2;
+#endif
+
+#if defined(I2C3)
+extern I2c i2c3;
+#endif
+
+#if defined(SPI1)
+extern Spi spi1;
+#endif
+
+#if defined(SPI2)
+extern Spi spi2;
+#endif
+
+#if defined(SPI3)
+extern Spi spi3;
+#endif
+
+#if defined(SPI4)
+extern Spi spi4;
 #endif
 
 #endif
+

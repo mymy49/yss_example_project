@@ -25,6 +25,7 @@
 #include <yss/reg.h>
 #include <yss/thread.h>
 #include <util/Timeout.h>
+#include <math.h>
 #include <targets/siliconlabs/efm32pg22_pdm.h>
 
 Pdm::Pdm(const Drv::Setup drvSetup, const Setup setup) : Drv(drvSetup)
@@ -36,8 +37,9 @@ Pdm::Pdm(const Drv::Setup drvSetup, const Setup setup) : Drv(drvSetup)
 
 error Pdm::initialize(Configuration config, uint32_t *receiveBuffer, int32_t  receiveBufferLength)
 {
-	uint32_t pres = getClockFrequency() / config.clkFreq;
-	
+	uint32_t pres = getClockFrequency() / (config.sampleRate * config.downSampleRate) - 1;
+	uint8_t gain = 31 - (1 + (uint32_t)(log10f(pow((float)config.downSampleRate, 5)) / log10f(2)));
+
 	if(pres > 1023)
 		return Error::WRONG_CLOCK_FREQUENCY;
 	
@@ -59,6 +61,9 @@ error Pdm::initialize(Configuration config, uint32_t *receiveBuffer, int32_t  re
 
 	mDev->EN_SET = _PDM_EN_EN_MASK;
 	mDev->IEN_SET = _PDM_IEN_DVL_MASK;
+
+	setFieldData(mDev->CTRL, _PDM_CTRL_DSR_MASK, config.downSampleRate, _PDM_CTRL_DSR_SHIFT);
+	setFieldData(mDev->CTRL, _PDM_CTRL_GAIN_MASK, gain, _PDM_CTRL_GAIN_SHIFT);
 
 	mRcvBuf = receiveBuffer;
 	mRcvBufLen = receiveBufferLength;
