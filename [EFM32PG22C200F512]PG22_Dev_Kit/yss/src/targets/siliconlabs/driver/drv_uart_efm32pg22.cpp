@@ -95,8 +95,6 @@ error Uart::send(void *src, int32_t  size)
 	int8_t *data = (int8_t*)src;
 	uint8_t ch;
 
-	//for(uint32_t i=0;i<size;i++)
-	//	send(data[i]);	
 	while(1)
 	{
 		for(ch=0;ch<8;ch++)
@@ -109,8 +107,11 @@ error Uart::send(void *src, int32_t  size)
 
 sending:
 	mDmaChannelList[ch]->transfer(*(Dma::DmaInfo*)mTxDmaInfo, src, size);
-	
 	mDmaChannelList[ch]->unlock();
+
+	while(~mDev->STATUS & _USART_STATUS_TXC_MASK)
+		thread::yield();
+
 	return Error::NONE;
 }
 

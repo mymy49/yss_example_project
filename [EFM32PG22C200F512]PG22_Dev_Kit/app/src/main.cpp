@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	initYss();
 	initBoard();
 	
-	gTriggerId = trigger::add(trigger_handleMic, 512);
+	gTriggerId = trigger::add(trigger_handleMic, 1024);
 
 	timer1.enableClock();
 	timer1.initialize(1000);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	timer1.enableInterrupt();
 	timer1.start();
 
-	thread::add(thread_sendHelloWorld, 512);
+	thread::add(thread_sendHelloWorld, 1024);
 
 	while(1)
 	{
