@@ -19,7 +19,7 @@
 #ifndef YSS_DRV_UART__H_
 #define YSS_DRV_UART__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 
 #if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
 
@@ -154,17 +154,19 @@ class Uart : public Drv
 	void setOneWireMode(bool en);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
 	struct Config
 	{
 		YSS_USART_Peri *dev;
 		Dma &txDma;
 		Dma::DmaInfo txDmaInfo;
 	};
-#else
+#elif defined(EFM32PG22)
 	struct Config
 	{
 		YSS_USART_Peri *dev;
+		Dma **dmaChannelList;
+		const Dma::DmaInfo *txDmaInfo;
 	};
 #endif	
 
@@ -184,9 +186,12 @@ private:
 	bool mOneWireModeFlag;
 	void (*mCallbackForFrameError)(void);
 
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
 	Dma *mTxDma;
 	Dma::DmaInfo mTxDmaInfo;
+#elif defined(EFM32PG22)
+	Dma **mDmaChannelList;
+	const Dma::DmaInfo *mTxDmaInfo;
 #endif
 };
 

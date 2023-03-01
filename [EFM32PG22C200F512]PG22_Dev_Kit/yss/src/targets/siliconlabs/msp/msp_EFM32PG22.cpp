@@ -56,6 +56,9 @@ void __WEAK initSystem(void)
 
 void initDma(void)
 {
+	dmaChannel1.enableClock();
+	dmaChannel1.init();
+	dmaChannel1.enableInterrupt();
 }
 
 extern "C"

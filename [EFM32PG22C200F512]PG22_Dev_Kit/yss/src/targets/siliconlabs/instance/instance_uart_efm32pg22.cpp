@@ -24,6 +24,9 @@
 #include <yss/instance.h>
 #include <config.h>
 #include <targets/siliconlabs/efm32pg22_cmu.h>
+#include <targets/siliconlabs/efm32pg22_ldma.h>
+#include <targets/siliconlabs/efm32pg22_ldmaxbar_defines.h>
+#include <targets/siliconlabs/define_efm32pg22.h>
 
 static uint32_t getClockFreqeuncy(void)
 {
@@ -53,9 +56,27 @@ static const Drv::Config gDrvUart0Config
 	getClockFreqeuncy		//uint32_t (*getClockFunc)(void);
 };
 
+static const Dma::DmaInfo gUart0TxDmaInfo = 
+{
+	(define::dma::dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
+	(define::dma::size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
+	(define::dma::srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
+	(define::dma::reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
+	(define::dma::blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
+	(define::dma::structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
+	_LDMA_CH_CTRL_DONEIEN_MASK,
+	0,								// uint32_t controlRegister2
+	0x80000000 |					// uint32_t controlRegister3
+	LDMAXBAR_CH_REQSEL_SOURCESEL_USART0 |
+	LDMAXBAR_CH_REQSEL_SIGSEL_USART0TXEMPTY,
+	(void*)&USART0_S->TXDATA			//void *dataRegister;
+};
+
 static const Uart::Config gUart0Config
 {
-	USART0,			//YSS_SPI_Peri *peri;
+	USART0_S,				//YSS_SPI_Peri *peri;
+	dmaChannelList,		//Dma *dmaChannelList;
+	&gUart0TxDmaInfo	//Dma::DmaInfo txDmaInfo;
 };
 
 Uart uart0(gDrvUart0Config, gUart0Config);
@@ -72,14 +93,14 @@ extern "C"
 
 
 #if USART_COUNT >= 2 && defined(UART1_ENABLE)
-static void setUart1ClockEn(bool en)
+static void enableClockUart1(bool en)
 {
 	clock.lock();
 	clock.enableApb0Clock(_CMU_CLKEN0_USART1_SHIFT, en);
 	clock.unlock();
 }
 
-static void setUart1IntEn(bool en)
+static void enableInterruptUart1(bool en)
 {
 	nvic.lock();
 	nvic.enableInterrupt(USART1_RX_IRQn, en);
@@ -88,15 +109,33 @@ static void setUart1IntEn(bool en)
 
 static const Drv::Config gDrvUart1Config
 {
-	setUart1ClockEn,	//void (*clockFunc)(bool en);
-	setUart1IntEn,		//void (*nvicFunc)(bool en);
-	0,					//void (*resetFunc)(void);
-	getClockFreqeuncy	//uint32_t (*getClockFunc)(void);
+	enableClockUart1,		//void (*clockFunc)(bool en);
+	enableInterruptUart1,	//void (*nvicFunc)(bool en);
+	0,						//void (*resetFunc)(void);
+	getClockFreqeuncy		//uint32_t (*getClockFunc)(void);
+};
+
+static const Dma::DmaInfo gUart1TxDmaInfo = 
+{
+	(define::dma::dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
+	(define::dma::size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
+	(define::dma::srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
+	(define::dma::reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
+	(define::dma::blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
+	(define::dma::structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
+	_LDMA_CH_CTRL_DONEIEN_MASK,
+	0,								// uint32_t controlRegister2
+	0x80000000 |					// uint32_t controlRegister3
+	LDMAXBAR_CH_REQSEL_SOURCESEL_USART1 |
+	LDMAXBAR_CH_REQSEL_SIGSEL_USART1TXEMPTY,
+	(void*)&USART1_S->TXDATA			//void *dataRegister;
 };
 
 static const Uart::Config gUart1Config
 {
-	USART1	//YSS_SPI_Peri *dev;
+	USART1_S,				//YSS_SPI_Peri *peri;
+	dmaChannelList,		//Dma *dmaChannelList;
+	&gUart1TxDmaInfo	//Dma::DmaInfo txDmaInfo;
 };
 
 Uart uart1(gDrvUart1Config, gUart1Config);

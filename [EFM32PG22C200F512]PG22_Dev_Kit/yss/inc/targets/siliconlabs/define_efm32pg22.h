@@ -142,7 +142,80 @@ namespace define
 				Insert_number_between_0_to_1023 = 1023
 			};
 		}
-		
+	}
+
+	namespace dma
+	{
+		namespace dstinc
+		{
+			enum
+			{
+				ONE = 0,
+				TWO,
+				FOUR,
+				NONE
+			};
+		}
+
+		namespace size
+		{
+			enum
+			{
+				BYTE = 0,
+				HALFWORD,
+				WORD
+			};
+		}
+
+		namespace srcinc
+		{
+			enum
+			{
+				ONE = 0,
+				TWO,
+				FOUR,
+				NONE
+			};
+		}
+
+		namespace reqmode
+		{
+			enum
+			{
+				BLOCK = 0,
+				ALL
+			};
+		}
+
+		namespace blocksize
+		{
+			enum
+			{
+				UNIT1 = 0,
+				UNIT2,
+				UNIT3,
+				UNIT4,
+				UNIT6,
+				UNIT16,
+				UNIT32,
+				UNIT64,
+				UNIT128,
+				UNIT256,
+				UNIT512,
+				UNIT1024,
+				ALL
+			};
+		}
+
+		namespace structtype
+		{
+			enum
+			{
+				TRANSFER = 0,
+				SYNCHRONIZE,
+				WRITE
+			};
+		}
 	}
 }
 #endif

@@ -95,9 +95,12 @@ error Dma::transfer(DmaInfo &dmaInfo, void *data, int32_t  size)
 
 	while (!mCompleteFlag && !mErrorFlag)
 		thread::yield();
-
-	return !mErrorFlag;
-}
+	
+	if(mErrorFlag)
+		return Error::DMA;
+	else
+		return Error::NONE;
+}					
 
 error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 {

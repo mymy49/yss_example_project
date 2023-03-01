@@ -64,10 +64,12 @@
 #if defined(USART_PRESENT)
 	#if USART_COUNT >= 1
 		extern Uart uart0;
+		extern Spi spi0;
 	#endif
 
 	#if USART_COUNT >= 2
 		extern Uart uart1;
+		extern Spi spi1;
 	#endif
 #endif
 
@@ -77,4 +79,15 @@
 	#endif
 #endif
 
+extern DmaChannel1 dmaChannel1;
+extern DmaChannel2 dmaChannel2;
+extern DmaChannel3 dmaChannel3;
+extern DmaChannel4 dmaChannel4;
+extern DmaChannel5 dmaChannel5;
+extern DmaChannel6 dmaChannel6;
+extern DmaChannel7 dmaChannel7;
+extern DmaChannel8 dmaChannel8;
+extern Dma *dmaChannelList[8];
+
 #endif
+

@@ -41,6 +41,14 @@ void isr_timer1(void)
 	trigger::run(gTriggerId);
 }
 
+void thread_sendHelloWorld(void)
+{
+	while(1)
+	{
+		uart0.send("hello world!!\n\r", sizeof("hello world!!\n\r")); 
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	initYss();
@@ -54,6 +62,8 @@ int main(int argc, char *argv[])
 	timer1.setUpdateIsr(isr_timer1);
 	timer1.enableInterrupt();
 	timer1.start();
+
+	thread::add(thread_sendHelloWorld, 512);
 
 	while(1)
 	{

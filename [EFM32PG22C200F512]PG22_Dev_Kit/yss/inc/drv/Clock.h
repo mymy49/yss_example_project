@@ -19,7 +19,7 @@
 #ifndef YSS_DRV_CLOCK__H_
 #define YSS_DRV_CLOCK__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 
 #if defined(STM32F1)
 #include <targets/st_gigadevice/ec_clock_stm32f1 .h>

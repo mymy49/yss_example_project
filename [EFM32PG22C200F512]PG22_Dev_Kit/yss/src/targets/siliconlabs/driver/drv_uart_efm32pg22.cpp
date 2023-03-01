@@ -30,6 +30,8 @@
 Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
 	mDev = config.dev;
+	mDmaChannelList = config.dmaChannelList;
+	mTxDmaInfo = config.txDmaInfo;
 	mRcvBuf = 0;
 	mTail = 0;
 	mHead = 0;
@@ -91,16 +93,24 @@ error Uart::send(void *src, int32_t  size)
 {
 	error result;
 	int8_t *data = (int8_t*)src;
-	
-	for(uint32_t i=0;i<size;i++)
-	{
-		mDev->IF_CLR = 0xFFFF;
-		mDev->TXDATA = *data++;
+	uint8_t ch;
 
-		while(~mDev->IF & _USART_IF_TXC_MASK)
-			thread::yield();
+	//for(uint32_t i=0;i<size;i++)
+	//	send(data[i]);	
+	while(1)
+	{
+		for(ch=0;ch<8;ch++)
+		{
+			if(mDmaChannelList[ch]->check())
+				goto sending;
+		}
+		thread::yield();
 	}
 
+sending:
+	mDmaChannelList[ch]->transfer(*(Dma::DmaInfo*)mTxDmaInfo, src, size);
+	
+	mDmaChannelList[ch]->unlock();
 	return Error::NONE;
 }
 
@@ -116,7 +126,6 @@ void Uart::send(int8_t data)
 void Uart::isr(void)
 {
 	push(mDev->RXDATA);
-//	mDev->EVENTS_RXDRDY = 0;
 }
 
 #endif

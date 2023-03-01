@@ -40,6 +40,9 @@
 #define NUM_OF_YSS_KEY 1
 
 // ###################### 주변 장치 활성화 ######################
+// 주의 
+// 1. UART와 SPI는 실제 동일한 장치지만 OS 구조상 별도의 장치로 표현한다. 그러므로 동일한 번호의 UART, SPI는 동시에 활성화 되지 못한다.
+
 // UART 활성화
 #define UART0_ENABLE
 #define UART1_ENABLE
@@ -53,6 +56,10 @@
 
 // PDM 활성화
 #define PDM0_ENABLE
+
+// SPI 활성화
+//#define SPI0_ENABLE
+//#define SPI1_ENABLE
 
 #endif
 
