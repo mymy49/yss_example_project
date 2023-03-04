@@ -48,6 +48,7 @@
 #include <drv/I2s.h>
 #include <drv/Radio.h>
 #include <drv/Pdm.h>
+#include <drv/Pbus.h>
 
 // CLOCK
 extern Clock clock;
@@ -680,9 +681,17 @@ extern Radio radio;
 #endif
 #endif
 
-#elif defined(STM32F4_N)
+#elif defined(STM32F446xx)
 
 #include <targets/st/instance_stm32f446xx.h>
+
+#elif defined(STM32F429xx)
+
+#include <targets/st/instance_stm32f429xx.h>
+
+#elif defined(STM32F767xx)
+
+#include <targets/st/instance_stm32f767xx.h>
 
 #elif defined(EFM32PG22)
 

@@ -28,12 +28,12 @@ void initBoard(void)
 	using namespace define::gpio;
 
 	// USART0 초기화
-	gpioA.setAsAltFunc(5, altfunc::UART0_TX, alttype::PUSHPULL);
-	gpioA.setAsAltFunc(6, altfunc::UART0_RX, alttype::INPUT);
+	gpioA.setAsAltFunc(5, altfunc::UART1_TX, alttype::PUSHPULL);
+	gpioA.setAsAltFunc(6, altfunc::UART1_RX, alttype::INPUT);
 	
-	uart0.enableClock();
-	uart0.initialize(115200, 256);
-	uart0.enableInterrupt();
+	uart1.enableClock();
+	uart1.initialize(115200, 256);
+	uart1.enableInterrupt();
 
 	// PDM 초기화
 	gpioC.setAsOutput(7);
@@ -59,21 +59,16 @@ void initBoard(void)
 	pdm0.enableClock();
 	pdm0.initialize(pdmConfig, 512);
 	pdm0.enableInterrupt();
-
 	pdm0.start();
-
-	// ADC 초기화
-	//gpioA.setAsAnalog(0);
-
-	//adc1.enableClock();
-	//adc1.init();
 	
-	//using namespace define::adc;
-	//adc1.add(0, lpfLv::LV10, bit::BIT16);
-	//adc1.add(1, lpfLv::LV10, bit::BIT16);
-	//adc1.add(4, lpfLv::LV10, bit::BIT16);
+	// SPI0 초기화
+	gpioC.setAsAltFunc(0, altfunc::SPI0_MOSI);
+	gpioC.setAsAltFunc(1, altfunc::SPI0_MISO, alttype::INPUT);
+	gpioC.setAsAltFunc(2, altfunc::SPI0_SCK);
 
-	//adc1.enableInterrupt();
+	spi0.enableClock();
+	spi0.initialize();
+	spi0.enableInterrupt();
 
 	// LED 초기화
 	Led::init();

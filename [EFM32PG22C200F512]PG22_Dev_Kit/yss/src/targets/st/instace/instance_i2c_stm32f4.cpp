@@ -25,6 +25,8 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
 #endif
 
 #define YSS_I2C1_EV_IRQHandler		I2C1_EV_IRQHandler

@@ -23,9 +23,9 @@
 
 #if defined(STM32F1) || defined(GD32F1) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F0)
 
-#elif defined(STM32F4_N) || defined(STM32F1_N)
+#elif defined(STM32F4_N) || defined(STM32F1_N) || defined(STM32F7_N)
 
-#define FlashTargetHeaderFile	<targets/st/class_flash_stm32f1_f4.h>
+#define FlashTargetHeaderFile	<targets/st/class_flash_stm32f1_f4_f7.h>
 
 #else
 

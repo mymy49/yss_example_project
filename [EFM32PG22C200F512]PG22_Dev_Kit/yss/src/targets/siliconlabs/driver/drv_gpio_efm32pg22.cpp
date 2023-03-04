@@ -72,35 +72,51 @@ error Gpio::setAsAltFunc(uint8_t pin, uint8_t altFunc, uint8_t alttype)
 	switch(altFunc)
 	{
 	case altfunc::UART0_RX :
+	case altfunc::SPI0_MISO :
 		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
 		des = &mDev->USARTROUTE[0].RXROUTE;
 		break;
 
 	case altfunc::UART0_TX :
+	case altfunc::SPI0_MOSI :
 		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
 		des = &mDev->USARTROUTE[0].TXROUTE;
 		break;
 
+	case altfunc::SPI0_SCK :
+		mDev->USARTROUTE[0].ROUTEEN |= _GPIO_USART_ROUTEEN_CLKPEN_MASK;
+		des = &mDev->USARTROUTE[0].CLKROUTE;
+		break;
+
 	case altfunc::UART1_RX :
+	case altfunc::SPI1_MISO :
 		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_RXPEN_MASK;
 		des = &mDev->USARTROUTE[1].RXROUTE;
 		break;
 
 	case altfunc::UART1_TX :
+	case altfunc::SPI1_MOSI :
 		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_TXPEN_MASK;
 		des = &mDev->USARTROUTE[1].TXROUTE;
 		break;
 	
+	case altfunc::SPI1_SCK :
+		mDev->USARTROUTE[1].ROUTEEN |= _GPIO_USART_ROUTEEN_CLKPEN_MASK;
+		des = &mDev->USARTROUTE[1].CLKROUTE;
+		break;
+
 	case altfunc::PDM_CLK :
 		mDev->PDMROUTE.ROUTEEN |= _GPIO_PDM_ROUTEEN_CLKPEN_MASK;
 		des = &mDev->PDMROUTE.CLKROUTE;
 		break;
 
-	case altfunc::PDM_DAT0:
+	case altfunc::PDM_DAT0 :
+		mDev->PDMROUTE.ROUTEEN |= _GPIO_PDM_DAT0ROUTE_MASK;
 		des = &mDev->PDMROUTE.DAT0ROUTE;
 		break;
 
-	case altfunc::PDM_DAT1:
+	case altfunc::PDM_DAT1 :
+		mDev->PDMROUTE.ROUTEEN |= _GPIO_PDM_DAT1ROUTE_MASK;
 		des = &mDev->PDMROUTE.DAT1ROUTE;
 		break;
 

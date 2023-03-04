@@ -25,6 +25,8 @@
   ******************************************************************************
   */
 
+#ifndef __BITFIELD_STM32F103xB_H
+#define __BITFIELD_STM32F103xB_H
 
 /** @addtogroup CMSIS
   * @{
@@ -34,9 +36,6 @@
   * @{
   */
     
-#ifndef __DEFINE_STM32F103xB_H
-#define __DEFINE_STM32F103xB_H
-
   /** @addtogroup Peripheral_Registers_Bits_Definition
   * @{
   */

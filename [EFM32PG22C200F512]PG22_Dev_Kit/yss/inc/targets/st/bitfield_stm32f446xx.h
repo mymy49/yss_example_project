@@ -23,6 +23,9 @@
   ******************************************************************************
   */
 
+#ifndef __BITFIELD_STM32F767xx_H
+#define __BITFIELD_STM32F767xx_H
+
   /** @addtogroup Exported_constants
   * @{
   */
@@ -14286,4 +14289,6 @@
 /**
   * @}
   */
+
+#endif
 

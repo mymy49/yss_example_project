@@ -55,6 +55,12 @@ namespace define
 				PDM_CLK,
 				PDM_DAT0,
 				PDM_DAT1,
+				SPI0_SCK,
+				SPI0_MISO,
+				SPI0_MOSI,
+				SPI1_SCK,
+				SPI1_MISO,
+				SPI1_MOSI,
 			};
 		}
 	}
@@ -214,6 +220,40 @@ namespace define
 				TRANSFER = 0,
 				SYNCHRONIZE,
 				WRITE
+			};
+		}
+	}
+
+	namespace spi
+	{
+		namespace mode
+		{
+			enum
+			{
+				MODE0 = 0,
+				MODE2,
+				MODE1,
+				MODE3
+			};
+		}
+
+		namespace bit
+		{
+			enum
+			{
+				BIT4 = 1,
+				BIT5,
+				BIT6,
+				BIT7,
+				BIT8,
+				BIT9,
+				BIT10,
+				BIT11,
+				BIT12,
+				BIT13,
+				BIT14,
+				BIT15,
+				BIT16,
 			};
 		}
 	}

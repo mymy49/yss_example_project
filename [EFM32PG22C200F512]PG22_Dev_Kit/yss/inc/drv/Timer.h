@@ -33,7 +33,7 @@ typedef NRF_TIMER_Type		YSS_TIMER_Dev;
 
 typedef TIMER_TypeDef		YSS_TIMER_Dev;
 
-#elif defined(STM32F4_N)
+#elif defined(STM32F4_N) || defined(STM32F7_N)
 
 typedef TIM_TypeDef			YSS_TIMER_Dev;
 

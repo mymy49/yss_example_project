@@ -21,7 +21,7 @@
 
 #include "mcu.h"
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F7) || defined(STM32F4) || defined(GD32F4) || defined(STM32F4_N)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F7) || defined(STM32F4) || defined(GD32F4) || defined(STM32F4_N) || defined(STM32F7_N)
 
 #define EXTI_COUNT		16
 

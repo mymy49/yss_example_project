@@ -29,6 +29,8 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#elif defined(STM32F429xx)	
+#include <targets/st/bitfield_stm32f429xx.h>
 #endif
 
 I2s::I2s(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
@@ -129,7 +131,7 @@ error I2s::initializeReceiverAsSub(const Specification &spec)
 	setBitData(mPeri->I2SCFGR, false, SPI_I2SCFGR_I2SE_Pos);	// I2S 비활성화
 	
 	mPeri->I2SPR = 2;
-	mPeri->I2SCFGR = false << SPI_I2SCFGR_ASTRTEN_Pos | chlen << SPI_I2SCFGR_CHLEN_Pos | dataBit << SPI_I2SCFGR_DATLEN_Pos | 0 << SPI_I2SCFGR_CKPOL_Pos | standard << SPI_I2SCFGR_I2SSTD_Pos | 1 << SPI_I2SCFGR_I2SCFG_Pos | 1 << SPI_I2SCFGR_I2SMOD_Pos;
+	mPeri->I2SCFGR = chlen << SPI_I2SCFGR_CHLEN_Pos | dataBit << SPI_I2SCFGR_DATLEN_Pos | 0 << SPI_I2SCFGR_CKPOL_Pos | standard << SPI_I2SCFGR_I2SSTD_Pos | 1 << SPI_I2SCFGR_I2SCFG_Pos | 1 << SPI_I2SCFGR_I2SMOD_Pos;
 	mPeri->CR2 = SPI_CR2_RXDMAEN_Msk | SPI_CR2_ERRIE_Msk;
 
 	setBitData(mPeri->I2SCFGR, true, SPI_I2SCFGR_I2SE_Pos);	// I2S 활성화

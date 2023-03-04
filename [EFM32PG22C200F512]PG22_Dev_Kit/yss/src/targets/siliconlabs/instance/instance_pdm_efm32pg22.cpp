@@ -55,7 +55,7 @@ static const Drv::Setup gDrvPdm0Setup
 
 static const Pdm::Setup gPdm0Setup
 {
-	PDM,			//YSS_PDM_Peri *dev;
+	PDM_S,			//YSS_PDM_Peri *dev;
 };
 
 Pdm pdm0(gDrvPdm0Setup, gPdm0Setup);

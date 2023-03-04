@@ -37,7 +37,7 @@
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #endif
 
-#elif defined(STM32F411xE) || defined(STM32F429xx)
+#elif defined(STM32F411xE)
 
 #ifndef STM32F4
 #define STM32F4
@@ -45,7 +45,7 @@
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #endif
 
-#elif defined(STM32F446xx)
+#elif defined(STM32F446xx) || defined(STM32F429xx)
 
 #ifndef STM32F4_N
 #define STM32F4_N
@@ -59,6 +59,14 @@
 #define DEFAULT_CLOCK_SPEED 16000000
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #define STM32F7
+#endif
+
+#elif defined(STM32F767xx)
+
+#ifndef STM32F7_N
+#define DEFAULT_CLOCK_SPEED 16000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+#define STM32F7_N
 #endif
 
 #elif defined(STM32G431xx) || defined(STM32G441xx) || \

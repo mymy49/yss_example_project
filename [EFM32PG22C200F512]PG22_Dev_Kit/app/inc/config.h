@@ -41,7 +41,7 @@
 
 // ###################### 주변 장치 활성화 ######################
 // UART 활성화
-#define UART0_ENABLE
+//#define UART0_ENABLE
 #define UART1_ENABLE
 
 // TIMER 활성화
@@ -53,6 +53,10 @@
 
 // PDM 활성화
 #define PDM0_ENABLE
+
+// SPI 활성화
+#define SPI0_ENABLE
+//#define SPI1_ENABLE
 
 #endif
 

@@ -16,14 +16,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/mcu.h>
+#include <drv/peripheral.h>
 
 #if defined(STM32F4_N)
 
-#include <drv/peripheral.h>
 #include <drv/Clock.h>
 #include <yss/reg.h>
+
+#if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#include <targets/st/define_stm32f446xx.h>
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
+#include <targets/st/define_stm32f429xx.h>
+#endif
 
 static uint32_t gHseFreq __attribute__((section(".non_init")));
 static const uint32_t gPpreDiv[8] = {1, 1, 1, 1, 2, 4, 8, 16};
@@ -83,6 +89,60 @@ static uint32_t gI2sCkinFreq __attribute__((section(".non_init")));
 #define SAIPLL_P_MAX			3
 #define SAIPLL_Q_MIN			2
 #define SAIPLL_Q_MAX			15
+#elif defined(STM32F429xx)
+// HSE
+#define HSI_FREQ				16000000
+#define HSE_MIN_FREQ			1000000
+#define HSE_MAX_FREQ			50000000
+
+#define AHB_MAX_FREQ			180000000
+#define APB1_MAX_FREQ			45000000
+#define APB2_MAX_FREQ			90000000
+
+// Main PLL
+#define PLL_VCO_MIN_FREQ		100000000
+#define PLL_VCO_MAX_FREQ		432000000
+#define PLL_P_MAX_FREQ			180000000
+#define PLL_Q_MAX_FREQ			75000000
+#define PLL_R_MAX_FREQ			180000000
+#define PLL_M_MIN				2
+#define PLL_M_MAX				63
+#define PLL_N_MIN				50
+#define PLL_N_MAX				432
+#define PLL_P_MAX				3
+#define PLL_Q_MIN				2
+#define PLL_Q_MAX				15
+#define PLL_R_MIN				2
+#define PLL_R_MAX				7
+
+#define I2SPLL_VCO_MIN_FREQ		100000000
+#define I2SPLL_VCO_MAX_FREQ		432000000
+#define I2SPLL_P_MAX_FREQ		216000000
+#define I2SPLL_Q_MAX_FREQ		216000000
+#define I2SPLL_R_MAX_FREQ		216000000
+#define I2SPLL_N_MIN			50
+#define I2SPLL_N_MAX			432
+#define I2SPLL_M_MIN			2
+#define I2SPLL_M_MAX			63
+#define I2SPLL_P_MAX			3
+#define I2SPLL_Q_MIN			2
+#define I2SPLL_Q_MAX			15
+#define I2SPLL_R_MIN			2
+#define I2SPLL_R_MAX			7
+
+#define SAIPLL_VCO_MIN_FREQ		100000000
+#define SAIPLL_VCO_MAX_FREQ		432000000
+#define SAIPLL_P_MAX_FREQ		216000000
+#define SAIPLL_Q_MAX_FREQ		216000000
+#define SAIPLL_R_MAX_FREQ		216000000
+#define SAIPLL_N_MIN			50
+#define SAIPLL_N_MAX			432
+#define SAIPLL_P_MAX			3
+#define SAIPLL_Q_MIN			2
+#define SAIPLL_Q_MAX			15
+#define SAIPLL_R_MIN			2
+#define SAIPLL_R_MAX			7
+
 #endif
 
 bool Clock::enableHse(uint32_t hseHz, bool useOsc)
@@ -131,7 +191,7 @@ bool Clock::enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint
 #endif
 
 #if defined(PLL_R_USE)
-	if (PLL_R_MIN > qDiv || qDiv > PLL_R_MAX)
+	if (PLL_R_MIN > rDiv || rDiv > PLL_R_MAX)
 		goto error;
 #endif
 
@@ -153,7 +213,11 @@ bool Clock::enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint
 	}
 	
 	buf = getFieldData(RCC->CFGR, RCC_CFGR_SWS_Msk, RCC_CFGR_SWS_Pos);
+#if defined(STM32F429xx)
+	if (RCC->CR & RCC_CR_PLLRDY_Msk && buf  == sysclk::src::PLL)
+#elif defined(STM32F446xx)
 	if (RCC->CR & RCC_CR_PLLRDY_Msk && (buf  == sysclk::src::PLL || buf  == sysclk::src::PLL_R))
+#endif
 		goto error;
 
 	vco = vco / m * n;
@@ -181,7 +245,7 @@ bool Clock::enableMainPll(uint8_t src, uint8_t m, uint16_t n, uint8_t pDiv, uint
 	if (r > PLL_R_MAX_FREQ)
 		goto error;
 #else
-	rDiv = getFieldData(RCC->PLLCFGR, RCC_PLLCFGR_PLLR_Msk, RCC_PLLCFGR_PLLR_Pos);
+	rDiv = 0;
 #endif
 	RCC->PLLCFGR = (qDiv << RCC_PLLCFGR_PLLQ_Pos) | (src << RCC_PLLCFGR_PLLSRC_Pos) | (pDiv << RCC_PLLCFGR_PLLP_Pos) | (n << RCC_PLLCFGR_PLLN_Pos) | m;
 	RCC->CR |= RCC_CR_PLLON_Msk;
@@ -395,10 +459,8 @@ void Clock::setLtdcDivisionFactor(uint8_t div)
 
 uint32_t Clock::getLtdcClockFrequency(void)
 {
-#if defined(GD32F4) || defined(STM32F4)
-	uint32_t div = getFieldData(RCC[RCC_REG::DCKCFGR], RCC_DCKCFGR_PLLSAIDIVR_Msk, RCC_DCKCFGR_PLLSAIDIVR_Pos);
-#elif defined(STM32F7)
-	uint32_t div = getFieldData(RCC[RCC_REG::DCKCFGR1], RCC_DCKCFGR1_PLLSAIDIVR_Msk, RCC_DCKCFGR1_PLLSAIDIVR_Pos);
+#if defined(STM32F429xx)
+	uint32_t div = getFieldData(RCC->DCKCFGR, RCC_DCKCFGR_PLLSAIDIVR_Msk, RCC_DCKCFGR_PLLSAIDIVR_Pos);
 #endif
 	return getSaiPllRFrequency() / (2 << div);
 }
@@ -468,7 +530,7 @@ bool Clock::enableSaiPll(uint16_t n, uint8_t pDiv, uint8_t qDiv, uint8_t rDiv)
 
 #if defined(SAIPLL_R_USE)
 	r = vco / rDiv;
-	if (saipll::R_MAX_FREQ < r)
+	if (SAIPLL_R_MAX_FREQ < r)
 		goto error;
 #else
 	rDiv = 0;
@@ -501,15 +563,44 @@ uint32_t Clock::getI2sClockFrequency(void)
 }
 #endif
 
+#if defined(GET_SAI1A_FREQ_USE)
+	void setSai1AClockSource(uint8_t src)
+	{
+#if defined(STM32F429xx)
+		setFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1ASRC_Msk, src, RCC_DCKCFGR_SAI1ASRC_Pos);
+#endif
+	}
+
+	uint32_t getSai1AClockFrequency(void);
+#endif
+
+#if defined(GET_SAI1B_FREQ_USE)
+	void setSai1BClockSource(uint8_t src)
+	{
+#if defined(STM32F429xx)
+		setFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1BSRC_Msk, src, RCC_DCKCFGR_SAI1BSRC_Pos);
+#endif
+	}
+	uint32_t getSai1BClockFrequency(void);
+#endif
+
 #if defined(GET_SAI1_FREQ_USE)
 	void Clock::setSai1ClockSource(uint8_t src)
 	{
+#if defined(STM32F446xx)
 		setFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1SRC_Msk, src, RCC_DCKCFGR_SAI1SRC_Pos);
+#elif defined(STM32F429xx)
+		setFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1ASRC_Msk, src, RCC_DCKCFGR_SAI1ASRC_Pos);
+#endif
 	}
 
 	uint32_t Clock::getSai1ClockFrequency(void)
 	{
+#if defined(STM32F446xx)
 		switch(getFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1SRC_Msk, RCC_DCKCFGR_SAI1SRC_Pos))
+#elif defined(STM32F429xx)
+		switch(getFieldData(RCC->DCKCFGR, RCC_DCKCFGR_SAI1ASRC_Msk, RCC_DCKCFGR_SAI1ASRC_Pos))
+#endif
 		{
 		case 0 : // PLLI2S_R
 			return getI2sPllRFrequency();

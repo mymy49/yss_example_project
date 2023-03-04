@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(STM32F4_N)
+#if defined(STM32F4_N) || defined(STM32F7_N)
 
 #include <drv/peripheral.h>
 #include <yss/instance.h>
@@ -27,12 +27,18 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
+#elif defined(STM32F767xx)
+#include <targets/st/bitfield_stm32f767xx.h>
 #endif
 
-#if defined(STM32F4) || defined(STM32F7) || defined(STM32F4_N)
+#if defined(STM32F4) || defined(STM32F7) || defined(STM32F4_N) || defined(STM32F7_N)
 #define TIM1_UP_IRQHandler		TIM1_UP_TIM10_IRQHandler
 #define TIM1_UP_IRQn			TIM1_UP_TIM10_IRQn
 #define	TIM6_IRQn				TIM6_DAC_IRQn
+
+#define TIM6_IRQHandler			TIM6_DAC_IRQHandler
 #endif
 
 static const uint32_t gPpreDiv[8] = {1, 1, 1, 1, 2, 4, 8, 16};

@@ -33,7 +33,7 @@ const static Drv::Setup gDrvSetupGpioA =
 
 const static Gpio::Setup gSetupGpioA =
 {
-	GPIO,			//YSS_GPIO_Peri *dev;
+	GPIO_S,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTA,	//uint8_t port;
 	GPIO_PA_COUNT	//uint8_t pinCount;
 };
@@ -52,7 +52,7 @@ const static Drv::Setup gDrvSetupGpioB =
 
 const static Gpio::Setup gSetupGpioB =
 {
-	GPIO,			//YSS_GPIO_Peri *dev;
+	GPIO_S,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTB,	//uint8_t port;
 	GPIO_PB_COUNT	//uint8_t pinCount;
 };
@@ -71,7 +71,7 @@ const static Drv::Setup gDrvSetupGpioC =
 
 const static Gpio::Setup gSetupGpioC =
 {
-	GPIO,			//YSS_GPIO_Peri *dev;
+	GPIO_S,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTC,	//uint8_t port;
 	GPIO_PC_COUNT	//uint8_t pinCount;
 };
@@ -90,7 +90,7 @@ const static Drv::Setup gDrvSetupGpioD =
 
 const static Gpio::Setup gSetupGpioD =
 {
-	GPIO,			//YSS_GPIO_Peri *dev;
+	GPIO_S,			//YSS_GPIO_Peri *dev;
 	Gpio::PORTD,	//uint8_t port;
 	GPIO_PD_COUNT	//uint8_t pinCount;
 };

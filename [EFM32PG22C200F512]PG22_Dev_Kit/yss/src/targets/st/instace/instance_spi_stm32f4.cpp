@@ -16,7 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <drv/mcu.h>
+#include <drv/peripheral.h>
 
 #if defined(STM32F4_N)
 
@@ -26,6 +26,8 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
 #endif
 
 #if defined(STM32F4_N)
@@ -251,13 +253,13 @@ static const Dma::DmaInfo gSpi2RxDmaInfo =
 	DMA_SxCR_EN_Msk,
 	0,															// uint32_t controlRegister2
 	0,															// uint32_t controlRegister3
-	(void*)&SPI2->DR],											//void *dataRegister;
+	(void*)&SPI2->DR,											//void *dataRegister;
 #endif
 };
 
 static const Spi::Config gSpi2Config = 
 {
-	(volatile uint32_t*)SPI2,	//YSS_SPI_Peri *peri;
+	SPI2,			//YSS_SPI_Peri *peri;
 	dmaChannel5,	//Dma &txDma;
 	gSpi2TxDmaInfo,	//Dma::DmaInfo txDmaInfo;
 	dmaChannel4,	//Dma &rxDma;
@@ -547,7 +549,7 @@ static const Dma::DmaInfo gSpi5RxDmaInfo =
 
 static const Spi::Config gSpi5Config
 {
-	(volatile uint32_t*)SPI5,	//YSS_SPI_Peri *peri;
+	SPI5,			//YSS_SPI_Peri *peri;
 	dmaChannel13,	//Dma &txDma;
 	gSpi5TxDmaInfo,	//Dma::DmaInfo txDmaInfo;
 	dmaChannel12,	//Dma &rxDma;

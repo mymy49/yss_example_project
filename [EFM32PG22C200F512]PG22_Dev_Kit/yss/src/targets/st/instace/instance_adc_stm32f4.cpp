@@ -29,6 +29,11 @@
 #define ADC1_IRQn		ADC_IRQn
 #define ADC2_IRQn		ADC_IRQn
 #define ADC3_IRQn		ADC_IRQn
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
+#define ADC1_IRQn		ADC_IRQn
+#define ADC2_IRQn		ADC_IRQn
+#define ADC3_IRQn		ADC_IRQn
 #endif
 
 #if defined(__SEGGER_LINKER)

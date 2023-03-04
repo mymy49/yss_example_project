@@ -33,7 +33,12 @@ static uint32_t getClockFreqeuncy(void)
 	return clock.getApb0Frequency();
 }
 
+using namespace define::dma;
+
 #if USART_COUNT >= 1 && defined(UART0_ENABLE)
+#if defined(SPI0_ENABLE) && defined(UART0_ENABLE)
+#error "SPI0과 UART0은 동시에 활성화 될 수 없습니다."
+#endif
 static void enableClockUart0(bool en)
 {
 	clock.lock();
@@ -58,12 +63,12 @@ static const Drv::Config gDrvUart0Config
 
 static const Dma::DmaInfo gUart0TxDmaInfo = 
 {
-	(define::dma::dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
-	(define::dma::size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
-	(define::dma::srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
-	(define::dma::reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
-	(define::dma::blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
-	(define::dma::structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
+	(dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
+	(size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
+	(srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
+	(reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
+	(blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
+	(structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
 	_LDMA_CH_CTRL_DONEIEN_MASK,
 	0,								// uint32_t controlRegister2
 	0x80000000 |					// uint32_t controlRegister3
@@ -93,6 +98,9 @@ extern "C"
 
 
 #if USART_COUNT >= 2 && defined(UART1_ENABLE)
+#if defined(SPI1_ENABLE) && defined(UART1_ENABLE)
+#error "SPI0과 UART0은 동시에 활성화 될 수 없습니다."
+#endif
 static void enableClockUart1(bool en)
 {
 	clock.lock();
@@ -117,12 +125,12 @@ static const Drv::Config gDrvUart1Config
 
 static const Dma::DmaInfo gUart1TxDmaInfo = 
 {
-	(define::dma::dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
-	(define::dma::size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
-	(define::dma::srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
-	(define::dma::reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
-	(define::dma::blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
-	(define::dma::structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
+	(dstinc::NONE << _LDMA_CH_CTRL_DSTINC_SHIFT) |	// uint32_t controlRegister1
+	(size::BYTE << _LDMA_CH_CTRL_SIZE_SHIFT) |
+	(srcinc::ONE << _LDMA_CH_CTRL_SRCINC_SHIFT) |	
+	(reqmode::BLOCK << _LDMA_CH_CTRL_REQMODE_SHIFT) |	
+	(blocksize::UNIT2 << _LDMA_CH_CTRL_BLOCKSIZE_SHIFT) |	
+	(structtype::TRANSFER << _LDMA_CH_CTRL_STRUCTTYPE_SHIFT) |
 	_LDMA_CH_CTRL_DONEIEN_MASK,
 	0,								// uint32_t controlRegister2
 	0x80000000 |					// uint32_t controlRegister3

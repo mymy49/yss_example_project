@@ -52,7 +52,7 @@ static void enableInterruptTim0(bool en)
 
 static const Timer::Setup gTimer0Setup = 
 {
-	TIMER0,
+	TIMER0_S,
 	Timer::BIT_32
 };
 
@@ -70,7 +70,7 @@ extern "C"
 {
 void TIMER0_IRQHandler(void)
 {
-	TIMER0->IF_CLR = _TIMER_IF_OF_MASK;
+	TIMER0_S->IF_CLR = _TIMER_IF_OF_MASK;
 	timer0.isrUpdate();
 }
 }
@@ -95,7 +95,7 @@ static void enableInterruptTim1(bool en)
 
 static const Timer::Setup gTimer1Setup = 
 {
-	TIMER1,
+	TIMER1_S,
 	Timer::BIT_16
 };
 
@@ -113,7 +113,7 @@ extern "C"
 {
 void TIMER1_IRQHandler(void)
 {
-	TIMER1->IF_CLR = _TIMER_IF_OF_MASK;
+	TIMER1_S->IF_CLR = _TIMER_IF_OF_MASK;
 	timer1.isrUpdate();
 }
 }
@@ -138,7 +138,7 @@ static void enableInterruptTim2(bool en)
 
 static const Timer::Setup gTimer2Setup = 
 {
-	TIMER2,
+	TIMER2_S,
 	Timer::BIT_16
 };
 
@@ -156,7 +156,7 @@ extern "C"
 {
 void TIMER2_IRQHandler(void)
 {
-	TIMER2->IF_CLR = _TIMER_IF_OF_MASK;
+	TIMER2_S->IF_CLR = _TIMER_IF_OF_MASK;
 	timer2.isrUpdate();
 }
 }
@@ -181,7 +181,7 @@ static void enableInterruptTim3(bool en)
 
 static const Timer::Setup gTimer3Setup = 
 {
-	TIMER3,
+	TIMER3_S,
 	Timer::BIT_16
 };
 
@@ -199,7 +199,7 @@ extern "C"
 {
 void TIMER3_IRQHandler(void)
 {
-	TIMER3->IF_CLR = _TIMER_IF_OF_MASK;
+	TIMER3_S->IF_CLR = _TIMER_IF_OF_MASK;
 	timer3.isrUpdate();
 }
 }
@@ -224,7 +224,7 @@ static void enableInterruptTim4(bool en)
 
 static const Timer::Setup gTimer4Setup = 
 {
-	TIMER4,
+	TIMER4_S,
 	Timer::BIT_16
 };
 
@@ -242,7 +242,7 @@ extern "C"
 {
 void TIMER4_IRQHandler(void)
 {
-	TIMER4->IF_CLR = _TIMER_IF_OF_MASK;
+	TIMER4_S->IF_CLR = _TIMER_IF_OF_MASK;
 	timer4.isrUpdate();
 }
 }

@@ -45,7 +45,7 @@ error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBuffe
 	mRcvBuf = (int8_t*)receiveBuffer;
 	mRcvBufSize = receiveBufferSize;
 		
-	// 장치 비활성화
+	// 장치 활성화
 	mDev->EN_SET = _USART_EN_EN_MASK;
 
 	// 보레이트 설정
@@ -107,11 +107,8 @@ error Uart::send(void *src, int32_t  size)
 
 sending:
 	mDmaChannelList[ch]->transfer(*(Dma::DmaInfo*)mTxDmaInfo, src, size);
+	
 	mDmaChannelList[ch]->unlock();
-
-	while(~mDev->STATUS & _USART_STATUS_TXC_MASK)
-		thread::yield();
-
 	return Error::NONE;
 }
 

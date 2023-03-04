@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(STM32F4_N)
+#if defined(STM32F4_N) || defined(STM32F7_N)
 
 #include <drv/peripheral.h>
 #include <drv/Timer.h>
@@ -26,6 +26,8 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/define_stm32f446xx.h>
+#elif defined(STM32F767xx)
+#include <targets/st/define_stm32f767xx.h>
 #endif
 
 Timer::Timer(const Drv::Setup drvSetup, const Setup setup) : Drv(drvSetup)

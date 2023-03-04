@@ -45,9 +45,16 @@ void thread_sendHelloWorld(void)
 {
 	while(1)
 	{
-		uart0.send("hello world!!\n\r", sizeof("hello world!!\n\r")); 
+		uart1.send("hello world!!\n\r", sizeof("hello world!!\n\r")); 
 	}
 }
+
+static const Spi::Specification gLcdSpec =
+{
+	define::spi::mode::MODE0,	//uint8_t mode;
+	10000000,					//uint32_t maxFreq;
+	define::spi::bit::BIT8		//uint8_t bit;
+};
 
 int main(int argc, char *argv[])
 {
@@ -64,6 +71,13 @@ int main(int argc, char *argv[])
 	timer1.start();
 
 	thread::add(thread_sendHelloWorld, 1024);
+
+	spi0.setSpecification(gLcdSpec);
+
+	while(1)
+	{
+		spi0.send('A');
+	}
 
 	while(1)
 	{

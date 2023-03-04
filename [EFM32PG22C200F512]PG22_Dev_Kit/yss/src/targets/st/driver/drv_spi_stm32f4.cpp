@@ -28,6 +28,8 @@
 
 #if defined(STM32F446xx)
 #include <targets/st/bitfield_stm32f446xx.h>
+#elif defined(STM32F429xx)
+#include <targets/st/bitfield_stm32f429xx.h>
 #endif
 
 Spi::Spi(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
@@ -40,12 +42,12 @@ Spi::Spi(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 	mLastSpec = 0;
 }
 
-bool Spi::setSpecification(const Specification &spec)
+error Spi::setSpecification(const Specification &spec)
 {
 	uint32_t reg, buf;
 
 	if (mLastSpec == &spec)
-		return true;
+		return Error::NONE;
 	mLastSpec = &spec;
 
 	uint32_t mod;
@@ -72,7 +74,7 @@ bool Spi::setSpecification(const Specification &spec)
 	else if (div <= 256)
 		div = 7;
 	else
-		return false;
+		return Error::WRONG_CONFIG;
 	
 	using namespace define::spi;
 
@@ -94,7 +96,7 @@ bool Spi::setSpecification(const Specification &spec)
 	mDev->CR1 = reg;
 	mDev->DR;
 
-	return true;
+	return Error::NONE;
 }
 
 error Spi::initialize(void)

@@ -154,7 +154,7 @@ class Uart : public Drv
 	void setOneWireMode(bool en);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0) || defined(STM32F4_N)
 	struct Config
 	{
 		YSS_USART_Peri *dev;
@@ -186,7 +186,7 @@ private:
 	bool mOneWireModeFlag;
 	void (*mCallbackForFrameError)(void);
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0) || defined(STM32F4_N)
 	Dma *mTxDma;
 	Dma::DmaInfo mTxDmaInfo;
 #elif defined(EFM32PG22)

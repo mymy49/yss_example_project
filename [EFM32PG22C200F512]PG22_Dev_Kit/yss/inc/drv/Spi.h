@@ -30,6 +30,10 @@ typedef volatile uint32_t	YSS_SPI_Peri;
 
 typedef SPI_TypeDef			YSS_SPI_Peri;
 
+#elif defined(EFM32PG22)
+
+typedef USART_TypeDef		YSS_SPI_Peri;
+
 #else
 
 typedef volatile uint32_t	YSS_SPI_Peri;
@@ -37,8 +41,6 @@ typedef volatile uint32_t	YSS_SPI_Peri;
 #define YSS_DRV_SPI_UNSUPPORTED
 
 #endif
-
-#include <targets/common/drv_spi_common.h>
 
 #include "Drv.h"
 #include "Dma.h"
@@ -69,23 +71,12 @@ class Spi : public Drv
 		BIT16 = 12,
 	};
 
-	struct Config
-	{
-		YSS_SPI_Peri *dev;
-		Dma &txDma;
-		Dma::DmaInfo txDmaInfo;
-		Dma &rxDma;
-		Dma::DmaInfo rxDmaInfo;
-	};
-
 	struct Specification
 	{
 		int8_t mode;
 		int32_t  maxFreq;
 		int8_t bit;
 	};
-
-	Spi(const Drv::Config drvConfig, const Config config);
 
 	// SPI 장치를 마스터로 초기화 한다. 초기화만 했을 뿐, 장치는 활성화 되어 있지 않다.
 	// 
@@ -99,7 +90,7 @@ class Spi : public Drv
 	// 
 	// 반환
 	//		에러를 반환한다.
-	bool setSpecification(const Specification &spec);
+	error setSpecification(const Specification &spec);
 	
 	// SPI 장치를 활성화/비활성화 시킨다.
 	// 정상적인 전송을 위해 enable(true)를 하기 전에 setSpecification()를 사용하여 타겟 장치에 맞는 
@@ -149,12 +140,40 @@ class Spi : public Drv
 
 	// 인터럽트 벡터에서 호출되는 함수이다.
 	// 사용자 임의의 호출은 금지한다.
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0) || defined(STM32F4_N)
+	struct Config
+	{
+		YSS_SPI_Peri *dev;
+		Dma &txDma;
+		Dma::DmaInfo txDmaInfo;
+		Dma &rxDma;
+		Dma::DmaInfo rxDmaInfo;
+	};
+#elif defined(EFM32PG22)
+	struct Setup
+	{
+		YSS_SPI_Peri *dev;
+		Dma **dmaChannelList;
+		const Dma::DmaInfo *txDmaInfo;
+		const Dma::DmaInfo *rxDmaInfo;
+	};
+#endif
+
+	Spi(const Drv::Config drvConfig, const Config config);
+	Spi(const Drv::Setup drvSetup, const Setup setup);
+
 	void isr(void);
 
   private:
 	YSS_SPI_Peri *mDev;
 	Dma *mTxDma, *mRxDma;
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0) || defined(STM32F4_N)
 	Dma::DmaInfo mTxDmaInfo, mRxDmaInfo;
+#elif defined(EFM32PG22)
+	Dma **mDmaChannelList;
+	const Dma::DmaInfo *mTxDmaInfo;
+	const Dma::DmaInfo *mRxDmaInfo;
+#endif
 	const Specification *mLastSpec;
 	uint8_t mRxData;
 	threadId  mThreadId;
