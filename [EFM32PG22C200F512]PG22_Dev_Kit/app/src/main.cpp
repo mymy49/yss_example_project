@@ -58,7 +58,7 @@ static const Spi::Specification gLcdSpec =
 
 int main(int argc, char *argv[])
 {
-	initYss();
+	initializeYss();
 	initBoard();
 	
 	gTriggerId = trigger::add(trigger_handleMic, 1024);

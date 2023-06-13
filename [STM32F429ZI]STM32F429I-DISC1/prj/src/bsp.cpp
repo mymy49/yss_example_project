@@ -58,7 +58,7 @@ void initBoard(void)
 	gpioF.setAsAltFunc(9, altfunc::PF9_SPI5_MOSI, ospeed::FAST, otype::PUSH_PULL); // MOSI
 
 	spi5.enableClock();
-	spi5.initialize();
+	spi5.initializeAsMain();
 	spi5.enableInterrupt();
 	
 	// TFT LCD 초기화
@@ -139,12 +139,12 @@ void initLcd(void)
 	setSystemTftLcd(lcd);
 
 	ltdc.enableClock();
-	ltdc.init(lcd.getSpec());
+	ltdc.initialize(lcd.getSpec());
 	ltdc.enableInterrupt();
 
 	// DMA2D 초기화
 	dma2d.enableClock();
-	dma2d.init();
+	dma2d.initialize();
 	dma2d.enableInterrupt();
 }
 
@@ -196,7 +196,7 @@ void initSdram(void)
 	gpioA.setPackageAsAltFunc(sdramPort, 38, define::gpio::ospeed::FAST, define::gpio::otype::PUSH_PULL);
 
 	clock.enableSdram();
-	sdram.init(define::sdram::bank::BANK2, IS42S16400J_7TL);
+	sdram.initialize(define::sdram::bank::BANK2, IS42S16400J_7TL, 180000000);
 }
 
 void initSystem(void)

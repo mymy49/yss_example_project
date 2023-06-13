@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,12 +66,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -97,12 +98,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -130,12 +131,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -173,31 +174,31 @@ namespace Dump
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
 			
 		default :
-			result = Error::WRONG_SIZE;
+			result = error::WRONG_SIZE;
 			goto error_handler;
 			break;
 		}
 		peripheral->unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 error_handler :
 		switch(result)
 		{
-		case Error::WRONG_SIZE :
+		case error::WRONG_SIZE :
 			sprintf(str, "\n\rError!! : The data size(%d) is not valid.\n\r", size);
 			break;
 
-		case Error::UNKNOWN :
+		case error::UNKNOWN :
 			sprintf(str, "\n\rError!! : The data type \"%s\" is not valid string.\n\r", cvar);
 			break;
 
-		case Error::WRONG_FORMAT :
+		case error::WRONG_FORMAT :
 			sprintf(str, "\n\rError!! : When The data size is %d, It is not support float data type.\n\r", size);
 			break;
 		}

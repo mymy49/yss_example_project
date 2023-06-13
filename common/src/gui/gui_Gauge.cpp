@@ -31,6 +31,8 @@
 
 #define calculateToRadian(x)	(x / 180.f * 3.141592654f)
 
+Mutex Gauge::mMutex;
+
 Gauge::Gauge(void)
 {
 	mBg = new YssSysFrameBuffer();
@@ -126,9 +128,11 @@ void Gauge::paint(void)
 
 void Gauge::setTopValue(float value)
 {
+	mMutex.lock();
 	mTopValue = value;
 	paint();
 	update();
+	mMutex.unlock();
 }
 
 void Gauge::setTitle(const char *str)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,10 +30,10 @@ WiznetSocket::WiznetSocket(void)
 	mRxBufferSize = mHead = mTail = 0;
 }
 
-error WiznetSocket::init(iEthernet &obj, uint8_t socketNumber, uint16_t rxBufferSize)
+error WiznetSocket::initialize(iEthernet &obj, uint8_t socketNumber, uint16_t rxBufferSize)
 {
 	if(socketNumber >= obj.getSocketLength())
-		return Error::OUT_OF_RANGE;
+		return error::OUT_OF_RANGE;
 
 	mPeri = &obj;
 	mPeri->lock();
@@ -47,7 +48,7 @@ error WiznetSocket::init(iEthernet &obj, uint8_t socketNumber, uint16_t rxBuffer
 
 		mRxBuffer = new int8_t[rxBufferSize];
 		if(mRxBuffer == 0)
-			return Error::MALLOC_FAILED;
+			return error::MALLOC_FAILED;
 		mRxBufferSize = rxBufferSize;
 		mHead = mTail = 0;
 
@@ -57,19 +58,19 @@ error WiznetSocket::init(iEthernet &obj, uint8_t socketNumber, uint16_t rxBuffer
 
 		mStatusFlag |= INITIALIZATION;
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 	else
 	{
 		mPeri->unlock();
-		return Error::NOT_INITIALIZED;
+		return error::NOT_INITIALIZED;
 	}
 }
 
 error WiznetSocket::connectToHost(const Host &host)
 {
 	if(~mStatusFlag & INITIALIZATION)
-		return Error::NOT_INITIALIZED;
+		return error::NOT_INITIALIZED;
 
 	uint8_t status;
 
@@ -79,7 +80,7 @@ error WiznetSocket::connectToHost(const Host &host)
 	if(mPeri->setSocketMode(mSocketNumber, TCP, 0) == false)
 	{
 		mPeri->unlock();
-		return Error::OUT_OF_RANGE;
+		return error::OUT_OF_RANGE;
 	}
 
 	mPeri->setSocketPort(mSocketNumber, host.port);
@@ -111,20 +112,20 @@ error WiznetSocket::connectToHost(const Host &host)
 		mPeri->unlock();
 
 		if(status == SOCKET_ESTABLISHED)
-			return Error::NONE;
+			return error::ERROR_NONE;
 		else if(status == SOCKET_CONNECT_REQUEST_SENT)
-			return Error::NONE;
+			return error::ERROR_NONE;
 
 		thread::delay(500);
 	}
 	
-	return Error::TIMEOUT;
+	return error::TIMEOUT;
 }
 
 error WiznetSocket::waitUntilConnect(uint32_t timeout)
 {
 	if(~mStatusFlag & INITIALIZATION)
-		return Error::NOT_INITIALIZED;
+		return error::NOT_INITIALIZED;
 
 	Timeout tout(timeout);
 	uint8_t status;
@@ -136,22 +137,22 @@ error WiznetSocket::waitUntilConnect(uint32_t timeout)
 		mPeri->unlock();
 
 		if(status == SOCKET_ESTABLISHED)
-			return Error::NONE;
+			return error::ERROR_NONE;
 		else if(status == 0)
-			return Error::UNKNOWN;
+			return error::UNKNOWN;
 		
 		thread::delay(100);
 	}
 
-	return Error::TIMEOUT;
+	return error::TIMEOUT;
 }
 
 error WiznetSocket::sendData(void *src, uint32_t size)
 {
 	if(~mStatusFlag & INITIALIZATION)
-		return Error::NOT_INITIALIZED;
+		return error::NOT_INITIALIZED;
 	else if(~mStatusFlag & CONNECTION)
-		return Error::NOT_CONNECTED;
+		return error::NOT_CONNECTED;
 
 	uint32_t freeBufferSize;
 	int8_t *csrc = (int8_t*)src;
@@ -172,7 +173,7 @@ error WiznetSocket::sendData(void *src, uint32_t size)
 			thread::yield();
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 uint8_t WiznetSocket::getStatus(void)
@@ -200,7 +201,7 @@ uint8_t WiznetSocket::getReceivedByte(void)
 
 error WiznetSocket::getReceivedBytes(void *des, uint16_t size)
 {
-	return Error::NOT_READY;
+	return error::NOT_READY;
 }
 
 void WiznetSocket::isr(uint8_t interrupt)

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,8 +20,8 @@
 #define YSS_INSTANCE__H_
 
 #include <drv/peripheral.h>
-
 #include <drv/Adc.h>
+#include <drv/Sai.h>
 #include <drv/Can.h>
 #include <drv/Capture.h>
 #include <drv/Clock.h>
@@ -38,7 +39,6 @@
 #include <drv/Rtc.h>
 #include <drv/Sdram.h>
 #include <drv/Sdmmc.h>
-#include <drv/Sai.h>
 #include <drv/Spi.h>
 #include <drv/Timer.h>
 #include <drv/Uart.h>
@@ -47,6 +47,21 @@
 #include <drv/Crc32.h>
 #include <drv/I2s.h>
 #include <drv/Radio.h>
+#include <drv/Pdm.h>
+#include <drv/Pbus.h>
+
+// CLOCK
+extern Clock clock;
+
+// NVIC
+extern Nvic nvic;
+
+// EXTI
+#ifndef YSS_DRV_EXTI_UNSUPPORTED
+extern Exti exti;
+#endif
+
+#if defined(STM32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
 
 // ADC
 #ifndef YSS_DRV_ADC_UNSUPPORTED
@@ -74,8 +89,6 @@ extern Can can2;
 #endif
 #endif
 
-// CLOCK
-extern Clock clock;
 
 // DAC
 #ifndef YSS_DRV_DAC_UNSUPPORTED
@@ -258,13 +271,6 @@ extern I2c i2c4;
 #endif
 #endif
 
-#ifndef YSS_DRV_NVIC_UNSUPPORTED
-#if defined(NVIC)
-extern Nvic nvic;
-#endif
-#endif
-
-
 #ifndef YSS_DRV_RTC_UNSUPPORTED
 #if defined(RTC)
 extern Rtc rtc;
@@ -287,11 +293,13 @@ extern Sdmmc sdmmc;
 
 #ifndef YSS_DRV_SAI_UNSUPPORTED
 #if defined(SAI1)
-extern Sai sai1;
+extern Sai sai1A;
+extern Sai sai1B;
 #endif
 
 #if defined(SAI2)
-extern Sai sai2;
+extern Sai sai2A;
+extern Sai sai2B;
 #endif
 #endif
 
@@ -661,12 +669,50 @@ extern I2s i2s1;
 #if defined(I2S2)
 extern I2s i2s2;
 #endif
+
+#if defined(I2S3)
+extern I2s i2s3;
+#endif
 #endif
 
 #if !defined(YSS_DRV_RADIO_UNSUPPORTED)
 #if defined(NRF_RADIO)
 extern Radio radio;
 #endif
+#endif
+
+#elif defined(STM32F446xx)
+
+#include <targets/st/instance_stm32f446xx.h>
+
+#elif defined(STM32F429xx)
+
+#include <targets/st/instance_stm32f429xx.h>
+
+#elif defined(STM32F767xx)
+
+#include <targets/st/instance_stm32f767xx.h>
+
+#elif defined(STM32F746xx)
+
+#include <targets/st/instance_stm32f746xx.h>
+
+#elif defined(EFM32PG22)
+
+#include <targets/siliconlabs/instance_efm32pg22.h>
+
+#elif defined(STM32F1_N) || defined(GD32F1)
+
+#include <targets/st/instance_stm32f103xx.h>
+
+#elif defined(STM32F0_N)
+
+#include <targets/st/instance_stm32f030xx.h>
+
+#elif defined(EFR32BG22)
+
+#include <targets/siliconlabs/instance_efr32bg22.h>
+
 #endif
 
 #endif

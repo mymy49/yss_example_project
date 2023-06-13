@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -65,10 +66,10 @@ error CommandLineInterface::start(void)
 	if(mThreadId < 0)
 	{
 		mThreadId = 0;
-		return Error::FAILED_THREAD_ADDING;
+		return error::FAILED_THREAD_ADDING;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 void CommandLineInterface::stop(void)
@@ -83,14 +84,14 @@ void CommandLineInterface::stop(void)
 error CommandLineInterface::addCommand(const char *cmd, const uint8_t *varType, error (*callback)(Uart *, void *), const char *description)
 {
 	if(mCommandSetCount >= MAX_COMMAND_LINE_COUNT)
-		return Error::INDEX_OVER;
+		return error::INDEX_OVER;
 
 	mCommandSet[mCommandSetCount].cmd = cmd;
 	mCommandSet[mCommandSetCount].callback = callback;
 	mCommandSet[mCommandSetCount].varType = varType;
 	mCommandSet[mCommandSetCount++].description = description;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 void CommandLineInterface::setGreetings(const char *msg)
@@ -201,7 +202,7 @@ void CommandLineInterface::process(void)
 				}
 				if(cmd > 0)
 				{
-					if(mCommandSet[cmd].callback(mPeri, mVariableBuffer) == Error::NONE)
+					if(mCommandSet[cmd].callback(mPeri, mVariableBuffer) == error::ERROR_NONE)
 					{
 						mPeri->lock();
 						mPeri->send("\r\nDone!!\n\r", 10);

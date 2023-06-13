@@ -67,7 +67,7 @@ void initBoard(void)
 	gpioC.setAsAltFunc(2, altfunc::SPI0_SCK);
 
 	spi0.enableClock();
-	spi0.initialize();
+	spi0.initializeAsMain();
 	spi0.enableInterrupt();
 
 	// LED 초기화

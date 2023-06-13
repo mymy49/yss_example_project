@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,7 +61,7 @@
 #define USE_GUI			true
 
 // Touch Event Enable (true, false)
-#define USE_EVENT		true
+#define USE_EVENT		false
 
 // Stack Size of Touch Event handler (Byte)
 #define TOUCH_EVENT_HANDLER_STACK_SIZE 4096
@@ -81,13 +82,13 @@
 // ###################### 주변 장치 활성화 ######################
 // UART 활성화
 #define UART1_ENABLE
-#define UART2_ENABLE
-#define UART3_ENABLE
-#define UART4_ENABLE
-#define UART5_ENABLE
-#define UART6_ENABLE
-#define UART7_ENABLE
-#define UART8_ENABLE
+//#define UART2_ENABLE
+//#define UART3_ENABLE
+//#define UART4_ENABLE
+//#define UART5_ENABLE
+//#define UART6_ENABLE
+//#define UART7_ENABLE
+//#define UART8_ENABLE
 
 // PWM 활성화
 //#define PWM1_ENABLE
@@ -106,20 +107,20 @@
 //#define PWM14_ENABLE
 
 // TIMER 활성화
-#define TIM1_ENABLE
-#define TIM2_ENABLE
-#define TIM3_ENABLE
+//#define TIM1_ENABLE
+//#define TIM2_ENABLE
+//#define TIM3_ENABLE
 #define TIM4_ENABLE
-#define TIM5_ENABLE
-#define TIM6_ENABLE
-#define TIM7_ENABLE
-#define TIM8_ENABLE
-#define TIM9_ENABLE
-#define TIM10_ENABLE
-#define TIM11_ENABLE
-#define TIM12_ENABLE
-#define TIM13_ENABLE
-#define TIM14_ENABLE
+//#define TIM5_ENABLE
+//#define TIM6_ENABLE
+//#define TIM7_ENABLE
+//#define TIM8_ENABLE
+//#define TIM9_ENABLE
+//#define TIM10_ENABLE
+//#define TIM11_ENABLE
+//#define TIM12_ENABLE
+//#define TIM13_ENABLE
+//#define TIM14_ENABLE
 
 // I2C 활성화
 //#define I2C1_ENABLE
@@ -140,16 +141,16 @@
 #define LTDC_ENABLE
 
 // SPI 활성화
-#define SPI1_ENABLE
-#define SPI2_ENABLE
-#define SPI3_ENABLE
-#define SPI4_ENABLE
-#define SPI5_ENABLE
-#define SPI6_ENABLE
+//#define SPI1_ENABLE
+//#define SPI2_ENABLE
+//#define SPI3_ENABLE
+//#define SPI4_ENABLE
+//#define SPI5_ENABLE
+//#define SPI6_ENABLE
 
 // CAN 활성화
-#define CAN1_ENABLE
-#define CAN2_ENABLE
+//#define CAN1_ENABLE
+//#define CAN2_ENABLE
 
 // ADC 활성화
 #define ADC1_ENABLE
@@ -161,5 +162,8 @@
 
 // RTC 활성화
 //#define RTC_ENABLE
+
+// DMA2D 활성화
+#define DMA2D_ENABLE
 
 #endif

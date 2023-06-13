@@ -34,7 +34,7 @@ class Gauge : public Object
 	float mTopValue, mValue;
 	const char *mTitleStr;
 	Font mFont;
-	Mutex mMutex;
+	static Mutex mMutex;
 
 public:
 	Gauge(void);

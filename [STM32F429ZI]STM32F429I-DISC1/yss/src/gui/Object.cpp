@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -22,8 +23,6 @@
 #include <gui/Object.h>
 #include <gui/Frame.h>
 
-Mutex Object::mMutex;
-
 Object::Object(void)
 {
 	mPos.x = 0;
@@ -31,6 +30,8 @@ Object::Object(void)
 	mParent = 0;
 	mFrame = 0;
 	mVisibleFlag = true;
+	mResizeAble = true;
+	mFrameBuffer = new YssSysFrameBuffer();
 }
 
 Object::~Object(void)
@@ -57,12 +58,19 @@ void Object::update(Position beforePos, Size beforeSize, Position currentPos, Si
 		mParent->update(beforePos, beforeSize, currentPos, currentSize);
 }
 
+Size Object::getSize(void)
+{
+	return mFrameBuffer->getSize();
+}
+
 void Object::update(void)
 {
 	if (mFrame)
-		mFrame->update(mPos, mSize);
+	{
+		mFrame->update(mPos, mFrameBuffer->getSize());
+	}
 	else if (mParent)
-		mParent->update(mPos, mSize);
+		mParent->update(mPos, mFrameBuffer->getSize());
 }
 
 void Object::setPosition(Position pos)
@@ -72,11 +80,12 @@ void Object::setPosition(Position pos)
 
 void Object::setPosition(int16_t x, int16_t y)
 {
-	mMutex.lock();
+	Size size = mFrameBuffer->getSize();
+//	mMutex.lock();
 	Position before = mPos;
 	mPos = Position{x, y};
-	update(before, FrameBuffer::mSize, mPos, FrameBuffer::mSize);
-	mMutex.unlock();
+//	mMutex.unlock();
+	update(before, size, mPos, size);
 }
 
 Position Object::getPos(void)
@@ -86,15 +95,16 @@ Position Object::getPos(void)
 
 void Object::setSize(Size size)
 {
-	mMutex.lock();
-	FrameBuffer::setSize(size.width, size.height);
-	paint();
-	update(mPos, mSize, mPos, size);
-	mSize = size;
-	mMutex.unlock();
+	if(mResizeAble)
+	{
+		mFrameBuffer->setSize(size.width, size.height);
+		eventSizeChanged(size);
+		paint();
+		update(mPos, size, mPos, size);
+	}
 }
 
-void Object::setSize(int16_t width, int16_t height)
+void Object::setSize(uint16_t width, uint16_t height)
 {
 	setSize(Size{width, height});
 }
@@ -102,7 +112,7 @@ void Object::setSize(int16_t width, int16_t height)
 void Object::setVisible(bool on)
 {
 	mVisibleFlag = on;
-	update(mPos, FrameBuffer::mSize);
+	update(mPos, mFrameBuffer->getSize());
 }
 
 bool Object::isVisible(void)
@@ -146,6 +156,18 @@ Position Object::getAbsolutePos(void)
 	pos.y = mPos.y;
 
 	return pos;
+}
+
+YssSysFrameBuffer* Object::getFrameBuffer(void)
+{
+	mMutex.lock();
+	mMutex.unlock();
+	return mFrameBuffer;
+}
+
+void Object::eventSizeChanged(Size size)
+{
+
 }
 
 #endif

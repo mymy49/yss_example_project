@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,10 +30,11 @@
 #include <yss/instance.h>
 #include <drv/Timer.h>
 
+#define PREOCCUPY_DEPTH		(MAX_THREAD * 2)
+
 struct Task
 {
 	int32_t *malloc;
-	int32_t *stack;
 	int32_t *sp;
 	int32_t  size;
 	bool able, mallocated, trigger, pending, ready;
@@ -59,13 +61,13 @@ void activeTriggerThread(int32_t  num);
 }
 
 Task gYssThreadList[MAX_THREAD];
-static int16_t gPreoccupyThread[MAX_THREAD];
+static int32_t gPreoccupyThread[PREOCCUPY_DEPTH];
 static int32_t gNumOfThread = 1;
 static int32_t  gCurrentThreadNum;
 static Mutex gMutex;
-static int16_t gPreoccupyThreadHead, gPreoccupyThreadTail;
+static int32_t gPreoccupyThreadHead, gPreoccupyThreadTail;
 
-void initScheduler(void)
+void initializeScheduler(void)
 {
 	gYssThreadList[0].able = true;
 	gYssThreadList[0].mallocated = true;
@@ -110,12 +112,15 @@ threadId add(void (*func)(void *var), void *var, int32_t stackSize)
 		return -1;
 	}
 	gYssThreadList[i].size = stackSize;
-	//memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+
+#if(FILL_THREAD_STACK)
+	memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+#endif
+
 	stackSize >>= 2;
 #if (!defined(__NO_FPU) || defined(__FPU_PRESENT)) && !defined(__SOFTFP__)
-	gYssThreadList[i].stack = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7);
-	sp = &gYssThreadList[i].stack[stackSize-1];
-	gYssThreadList[i].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7) - 1;
+	sp += stackSize;
 	*sp-- = 0x61000000;									// xPSR
 	*sp-- = (int32_t )func;								// PC
 	*sp-- = (int32_t )(void (*)(void))terminateThread;	// LR
@@ -127,9 +132,8 @@ threadId add(void (*func)(void *var), void *var, int32_t stackSize)
 	*sp = 0xC0000000;									// R1
 	gYssThreadList[i].sp = sp;
 #else
-	gYssThreadList[i].stack = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7);
-	sp = (int32_t *)(&gYssThreadList[i].stack[stackSize-1]);
-	gYssThreadList[i].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7) - 1;
+	sp += stackSize;
 	*sp-- = 0x61000000;									// xPSR
 	*sp-- = (int32_t )func;								// PC
 	*sp-- = (int32_t )(void (*)(void))terminateThread;	// LR
@@ -184,12 +188,15 @@ threadId add(void (*func)(void *), void *var, int32_t  stackSize, void *r8, void
 		return -1;
 	}
 	gYssThreadList[i].size = stackSize;
-	//memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+
+#if(FILL_THREAD_STACK)
+	memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+#endif
+
 	stackSize >>= 2;
 #if (!defined(__NO_FPU) || defined(__FPU_PRESENT)) && !defined(__SOFTFP__)
-	gYssThreadList[i].stack = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7);
-	sp = &gYssThreadList[i].stack[stackSize-1];
-	gYssThreadList[i].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7) - 1;
+	sp += stackSize;
 	*sp-- = 0x61000000;									// xPSR
 	*sp-- = (int32_t )func;								// PC
 	*sp-- = (int32_t )(void (*)(void))terminateThread;	// LR
@@ -206,9 +213,8 @@ threadId add(void (*func)(void *), void *var, int32_t  stackSize, void *r8, void
 	*sp = 0xC0000000;									// R1
 	gYssThreadList[i].sp = sp;
 #else
-	gYssThreadList[i].stack = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7);
-	sp = &gYssThreadList[i].stack[stackSize-1];
-	gYssThreadList[i].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[i].malloc & ~0x7) - 1;
+	sp += stackSize;
 	*sp-- = 0x61000000;									// xPSR
 	*sp-- = (int32_t )func;								// PC
 	*sp-- = (int32_t )(void (*)(void))terminateThread;	// LR
@@ -262,7 +268,6 @@ void remove(threadId id)
 			gYssThreadList[id].able = false;
 			gYssThreadList[id].mallocated = false;
 			delete gYssThreadList[id].malloc;
-			gYssThreadList[id].stack = 0;
 			gYssThreadList[id].malloc = 0;
 			gYssThreadList[id].sp = 0;
 			gYssThreadList[id].size = 0;
@@ -363,7 +368,11 @@ void signal(threadId id)
 	__disable_irq();
 	gYssThreadList[id].able = true;
 	gPreoccupyThread[gPreoccupyThreadHead++] = id;
-	if(gPreoccupyThreadHead >= MAX_THREAD)
+	if(gPreoccupyThreadHead >= PREOCCUPY_DEPTH)
+		gPreoccupyThreadHead = 0;
+
+	gPreoccupyThread[gPreoccupyThreadHead++] = gCurrentThreadNum;
+	if(gPreoccupyThreadHead >= PREOCCUPY_DEPTH)
 		gPreoccupyThreadHead = 0;
 	SCB->ICSR = SCB_ICSR_PENDSTSET_Msk;
 	__enable_irq();
@@ -403,7 +412,10 @@ triggerId add(void (*func)(void *), void *var, int32_t stackSize)
 		return -1;
 	}
 	gYssThreadList[i].size = stackSize;
-	//memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+
+#if(FILL_THREAD_STACK)
+	memset(gYssThreadList[i].malloc, 0xaa, stackSize);
+#endif
 
 	gYssThreadList[i].var = var;
 	gYssThreadList[i].lockCnt = 0;
@@ -448,7 +460,6 @@ void remove(triggerId id)
 			gYssThreadList[id].able = false;
 			gYssThreadList[id].mallocated = false;
 			delete gYssThreadList[id].malloc;
-			gYssThreadList[id].stack = 0;
 			gYssThreadList[id].sp = 0;
 			gYssThreadList[id].size = 0;
 			gNumOfThread--;
@@ -466,8 +477,13 @@ void run(triggerId id)
 	{
 		gYssThreadList[id].able = true;
 		gPreoccupyThread[gPreoccupyThreadHead++] = id;
-		if(gPreoccupyThreadHead >= MAX_THREAD)
+		if(gPreoccupyThreadHead >= PREOCCUPY_DEPTH)
 			gPreoccupyThreadHead = 0;
+
+		gPreoccupyThread[gPreoccupyThreadHead++] = gCurrentThreadNum;
+		if(gPreoccupyThreadHead >= PREOCCUPY_DEPTH)
+			gPreoccupyThreadHead = 0;
+
 		SCB->ICSR = SCB_ICSR_PENDSTSET_Msk;
 	}
 	else
@@ -482,9 +498,8 @@ void activeTriggerThread(triggerId id)
 	int32_t  size = gYssThreadList[id].size >> 2, *sp;
 	
 #if (!defined(__NO_FPU) || defined(__FPU_PRESENT)) && !defined(__SOFTFP__)
-	gYssThreadList[id].stack = (int32_t *)((int32_t )gYssThreadList[id].malloc & ~0x7);
-	sp = &gYssThreadList[id].stack[size-1];
-	gYssThreadList[id].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[id].malloc & ~0x7) - 1;
+	sp += size;
 	*sp-- = 0x61000000;								// xPSR
 	*sp-- = (int32_t )gYssThreadList[id].entry;	// PC
 	*sp-- = (int32_t )(void (*)(void))disable;		// LR
@@ -496,9 +511,8 @@ void activeTriggerThread(triggerId id)
 	*sp = 0xC0000000;								// R1
 	gYssThreadList[id].sp = sp;
 #else
-	gYssThreadList[id].stack = (int32_t *)((int32_t )gYssThreadList[id].malloc & ~0x7);
-	sp = &gYssThreadList[id].stack[size-1];
-	gYssThreadList[id].stack = sp;
+	sp = (int32_t *)((int32_t )gYssThreadList[id].malloc & ~0x7) - 1;
+	sp += size;
 	*sp-- = 0x61000000;								// xPSR
 	*sp-- = (int32_t )gYssThreadList[id].entry;	// PC
 	*sp-- = (int32_t )(void (*)(void))disable;		// LR
@@ -574,7 +588,7 @@ repeat:
 		if (gPreoccupyThreadHead != gPreoccupyThreadTail)
 		{
 			gCurrentThreadNum = gPreoccupyThread[gPreoccupyThreadTail++];
-			if(gPreoccupyThreadTail >= MAX_THREAD)
+			if(gPreoccupyThreadTail >= PREOCCUPY_DEPTH)
 				gPreoccupyThreadTail = 0;
 
 			if (!gYssThreadList[gCurrentThreadNum].able)
@@ -585,6 +599,9 @@ repeat:
 		else
 		{
 			gCurrentThreadNum++;
+			if (gCurrentThreadNum >= MAX_THREAD)
+				gCurrentThreadNum = 0;
+
 			while (!gYssThreadList[gCurrentThreadNum].able)
 			{
 				gCurrentThreadNum++;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,11 +44,11 @@ namespace Led
 	error setLedFunction(uint8_t num, void (*func)(bool))
 	{
 		if(num >= gNumOfLed)
-			return Error::INDEX_OVER;
+			return error::INDEX_OVER;
 		
 		setLedOn[num] = func;
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	error callback_setLed(Uart *peripheral, void *var)
@@ -60,7 +61,7 @@ namespace Led
 
 		if(num >= gNumOfLed)
 		{
-			result = Error::INDEX_OVER;
+			result = error::INDEX_OVER;
 			goto error_handler;
 		}
 		
@@ -70,20 +71,20 @@ namespace Led
 			setLedOn[num](false);
 		else
 		{
-			result = Error::UNKNOWN;
+			result = error::UNKNOWN;
 			goto error_handler;
 		}
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 
 error_handler :
 		switch(result)
 		{
-		case Error::INDEX_OVER :
+		case error::INDEX_OVER :
 			sprintf(str, "\n\rError!! : The LED number %d is not valid.", num);
 			break;
 
-		case Error::UNKNOWN :
+		case error::UNKNOWN :
 			sprintf(str, "\n\rError!! : The \"%s\" is not valid string.", cvar);
 			break;
 		}

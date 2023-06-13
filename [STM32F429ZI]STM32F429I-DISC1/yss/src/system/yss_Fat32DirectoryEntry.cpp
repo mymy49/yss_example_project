@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +37,7 @@ Fat32DirectoryEntry::Fat32DirectoryEntry(void)
 	mEntryBuffer = 0;
 }
 
-void Fat32DirectoryEntry::init(Fat32Cluster &cluster, void* sectorBuffer)
+void Fat32DirectoryEntry::initialize(Fat32Cluster &cluster, void* sectorBuffer)
 {
 	mCluster = &cluster;
 	mEntryBuffer = (DirectoryEntry*)sectorBuffer;
@@ -59,11 +60,11 @@ error Fat32DirectoryEntry::moveToNext(void)
 		else
 		{
 			result = mCluster->increaseDataSectorIndex();
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
 			result = mCluster->readDataSector(mEntryBuffer);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
 			mIndex = 0;
@@ -88,18 +89,18 @@ error Fat32DirectoryEntry::moveToNext(void)
 			{
 				num = lfn->order & 0x3F;
 				if(num >= MAX_LFN)
-					return Error::INDEX_OVER;
+					return error::INDEX_OVER;
 
 				memcpy(&mLfn[num-1], lfn, sizeof(LongFileName));
 			}
 		}
 		else if(entry->name[0] == 0x00)
 		{
-			return Error::INDEX_OVER;
+			return error::INDEX_OVER;
 		}
 		else
 		{
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 	}
 }
@@ -109,11 +110,11 @@ error Fat32DirectoryEntry::moveToRoot(void)
 	error result;
 
 	result = mCluster->moveToRoot();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 	
 	result = mCluster->readDataSector(mEntryBuffer);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 
 	mIndex = 0xFFFF;
@@ -126,11 +127,11 @@ error Fat32DirectoryEntry::moveToStart(void)
 	error result;
 
 	result = mCluster->moveToStart();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 	
 	result = mCluster->readDataSector(mEntryBuffer);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 
 	mIndex = 0xFFFF;
@@ -147,7 +148,7 @@ error Fat32DirectoryEntry::moveToEnd(void)
 
 	if(entry->name[0] == 0x00)
 	{
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 	
 	while(true)
@@ -157,11 +158,11 @@ error Fat32DirectoryEntry::moveToEnd(void)
 		else
 		{
 			result = mCluster->readDataSector(mEntryBuffer);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
 			result = mCluster->increaseDataSectorIndex();
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
 			mIndex = 0;
@@ -171,7 +172,7 @@ error Fat32DirectoryEntry::moveToEnd(void)
 
 		if(entry->name[0] == 0x00)
 		{
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 	}
 }
@@ -272,7 +273,7 @@ error Fat32DirectoryEntry::getTargetName(void *des, uint32_t size)
 			if(utf8 == 0)
 			{
 				*cdes = 0;
-				return Error::NONE;
+				return error::ERROR_NONE;
 			}
 			else if(utf8 < 0x80) // 아스키 코드
 			{
@@ -300,7 +301,7 @@ error Fat32DirectoryEntry::getTargetName(void *des, uint32_t size)
 			if(utf8 == 0)
 			{
 				*cdes = 0;
-				return Error::NONE;
+				return error::ERROR_NONE;
 			}
 			else if(utf8 < 0x80) // 아스키 코드
 			{
@@ -332,7 +333,7 @@ error Fat32DirectoryEntry::getTargetName(void *des, uint32_t size)
 			if(utf8 == 0)
 			{
 				*cdes = 0;
-				return Error::NONE;
+				return error::ERROR_NONE;
 			}
 			else if(utf8 < 0x80) // 아스키 코드
 			{
@@ -345,7 +346,7 @@ error Fat32DirectoryEntry::getTargetName(void *des, uint32_t size)
 				if(j+1 == mLfnCount && i == 1)
 				{
 					*cdes = 0;
-					return Error::NONE;
+					return error::ERROR_NONE;
 				}
 			}
 			else // 유니코드
@@ -361,7 +362,7 @@ error Fat32DirectoryEntry::getTargetName(void *des, uint32_t size)
 				if(j+1 == mLfnCount && i == 1)
 				{
 					*cdes = 0;
-					return Error::NONE;
+					return error::ERROR_NONE;
 				}
 			}
 		}
@@ -382,7 +383,7 @@ extractShortName :
 				goto extractShortName;
 
 			*cdes = 0;
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 		else if(utf8 < 0x80) // 아스키 코드
 		{
@@ -408,7 +409,7 @@ extractShortName :
 
 	*cdes = 0;
 	
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 uint32_t Fat32DirectoryEntry::getTargetCluster(void)
@@ -554,13 +555,13 @@ error Fat32DirectoryEntry::append(void)
 	error result;
 
 	result = mCluster->append();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 
 	memset(mEntryBuffer, 0, 512);
 	mIndex = 0;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Fat32DirectoryEntry::insertEntry(uint8_t lfnLen, DirectoryEntry *src)
@@ -574,18 +575,18 @@ error Fat32DirectoryEntry::insertEntry(uint8_t lfnLen, DirectoryEntry *src)
 		if(mIndex > 15)
 		{
 			result = mCluster->writeDataSector(mEntryBuffer);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
 			result = mCluster->increaseDataSectorIndex();
-			if(result == Error::NO_DATA)
+			if(result == error::NO_DATA)
 			{
 				// 마지막 엔트리에서 비워진 다음 섹터가 없다면 클러스터 하나 추가
 				result = append();
-				if(result != Error::NONE)
+				if(result != error::ERROR_NONE)
 					return result;
 			}
-			else if(result != Error::NONE)
+			else if(result != error::ERROR_NONE)
 				return result;
 			else
 			{
@@ -599,18 +600,18 @@ error Fat32DirectoryEntry::insertEntry(uint8_t lfnLen, DirectoryEntry *src)
 	if(mIndex > 15)
 	{
 		result = mCluster->writeDataSector(mEntryBuffer);
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 
 		result = mCluster->increaseDataSectorIndex();
-		if(result == Error::NO_DATA)
+		if(result == error::NO_DATA)
 		{
 			// 마지막 엔트리에서 비워진 다음 섹터가 없다면 클러스터 하나 추가
 			result = append();
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 		}
-		else if(result != Error::NONE)
+		else if(result != error::ERROR_NONE)
 			return result;
 		else
 		{
@@ -621,11 +622,11 @@ error Fat32DirectoryEntry::insertEntry(uint8_t lfnLen, DirectoryEntry *src)
 	else
 	{
 		result = mCluster->writeDataSector(mEntryBuffer);
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Fat32DirectoryEntry::prepareInsert(uint32_t &cluster, DirectoryEntry &sfn, uint8_t attribute, const char *name, uint32_t len)
@@ -647,14 +648,14 @@ error Fat32DirectoryEntry::prepareInsert(uint32_t &cluster, DirectoryEntry &sfn,
 		debug_printf("call %d\n", __LINE__);
 #endif
 		result = moveToEnd();
-		if(result == Error::NO_DATA)
+		if(result == error::NO_DATA)
 		{
 			// 마지막 엔트리에서 비워진 데이터가 없다면 클러스터 하나 추가
 #if defined(SD_DEBUG)
 			debug_printf("call %d\n", __LINE__);
 #endif
 			result = append();
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 			{
 #if defined(SD_DEBUG)
 				debug_printf("error %d\n", result);
@@ -662,7 +663,7 @@ error Fat32DirectoryEntry::prepareInsert(uint32_t &cluster, DirectoryEntry &sfn,
 				return result;
 			}
 		}
-		else if(result != Error::NONE)
+		else if(result != error::ERROR_NONE)
 		{
 #if defined(SD_DEBUG)
 			debug_printf("error %d(661)\n", result);
@@ -679,9 +680,9 @@ error Fat32DirectoryEntry::prepareInsert(uint32_t &cluster, DirectoryEntry &sfn,
 	if(cluster == 0)
 	{
 #if defined(SD_DEBUG)
-		debug_printf("error %d\n", Error::NO_FREE_DATA);
+		debug_printf("error %d\n", error::NO_FREE_DATA);
 #endif
-		return Error::NO_FREE_DATA;
+		return error::NO_FREE_DATA;
 	}
 	// Short File Name 데이터 생성
 #if defined(SD_DEBUG)
@@ -715,7 +716,7 @@ error Fat32DirectoryEntry::prepareInsert(uint32_t &cluster, DirectoryEntry &sfn,
 #endif
 	copyStringUtf8ToLfnBuffer(name, len);
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Fat32DirectoryEntry::makeDirectory(const char *name)
@@ -734,7 +735,7 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 	memset(&sfn, 0, sizeof(DirectoryEntry));
 
 	result = prepareInsert(cluster, sfn, DIRECTORY, name, len);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 
 #if defined(SD_DEBUG)
@@ -747,9 +748,9 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 	if(sectorBuffer == 0)
 	{
 #if defined(SD_DEBUG)
-		debug_printf("error %d\n", Error::NEW_FAILED);
+		debug_printf("error %d\n", error::NEW_FAILED);
 #endif
-		return Error::NEW_FAILED;
+		return error::MALLOC_FAILED;
 	}
 #if defined(SD_DEBUG)
 	debug_printf("call %d\n", __LINE__);
@@ -794,7 +795,7 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 	debug_printf("call %d\n", __LINE__);
 #endif
 	result = mCluster->setCluster(cluster);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 	{
 #if defined(SD_DEBUG)
 		debug_printf("error %d\n", result);
@@ -807,7 +808,7 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 	debug_printf("call %d\n", __LINE__);
 #endif
 	mCluster->writeDataSector(sectorBuffer);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 	{
 #if defined(SD_DEBUG)
 		debug_printf("error %d\n", result);
@@ -825,7 +826,7 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 	debug_printf("call %d\n", __LINE__);
 #endif
 	result = mCluster->readDataSector(mEntryBuffer);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 	{
 #if defined(SD_DEBUG)
 		debug_printf("error %d\n", result);
@@ -865,7 +866,7 @@ error Fat32DirectoryEntry::makeFile(const char *name)
 	memset(&sfn, 0, sizeof(DirectoryEntry));
 
 	result = prepareInsert(cluster, sfn, ARCHIVE, name, len);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 	
 	// 생성된 파일의 엔트리 정보를 엔트리 버퍼에 삽입

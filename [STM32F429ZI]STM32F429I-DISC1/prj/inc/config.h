@@ -162,4 +162,10 @@
 // RTC 활성화
 //#define RTC_ENABLE
 
+// DMA2D 활성화
+#define DMA2D_ENABLE
+
+// LTDC 활성화
+#define LTDC_ENABLE
+
 #endif

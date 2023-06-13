@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -23,7 +24,7 @@ FunctionQueue::FunctionQueue(uint16_t depth, int32_t  stackSize)
 {
 	mTaskMaxSize = depth;
 	lockHmalloc();
-	mTaskFunc = (int32_t (**)(FunctionQueue *, void*))hmalloc(4 * depth);
+	mTaskFunc = (error (**)(FunctionQueue *, void*))hmalloc(4 * depth);
 	mVariable = (void **)hmalloc(depth);
 	unlockHmalloc();
 	mThreadId = 0;
@@ -52,10 +53,10 @@ void FunctionQueue::add(error (*func)(FunctionQueue *, void *), void *var)
 	mMutex.unlock();
 }
 
-void FunctionQueue::add(int32_t (*func)(FunctionQueue *))
+void FunctionQueue::add(error (*func)(FunctionQueue *))
 {
 	mMutex.lock();
-	mTaskFunc[mTaskHead] = (int32_t (*)(FunctionQueue *, void *))func;
+	mTaskFunc[mTaskHead] = (error (*)(FunctionQueue *, void *))func;
 	mVariable[mTaskHead] = 0;
 	mTaskHead++;
 	if (mTaskHead >= mTaskMaxSize)
@@ -103,7 +104,7 @@ error FunctionQueue::task(void)
 
 void thread_run(FunctionQueue *task)
 {
-	error result = Error::NONE;
+	error result = error::ERROR_NONE;
 
 	while (1)
 	{
@@ -116,7 +117,7 @@ void thread_run(FunctionQueue *task)
 			result = task->task();
 		}
 
-		if (result != Error::NONE)
+		if (result != error::ERROR_NONE)
 		{
 			task->clear();
 			task->callErrorHandler(result);
@@ -126,14 +127,14 @@ void thread_run(FunctionQueue *task)
 
 error FunctionQueue::start(void)
 {
-	error result = Error::NONE;
+	error result = error::ERROR_NONE;
 
 	mMutex.lock();
-	mError = Error::NONE;
+	mError = error::ERROR_NONE;
 	if (mThreadId == 0)
 		mThreadId = thread::add((void (*)(void *))thread_run, this, mStackSize);
 	if(mThreadId < 0)
-		result = Error::FAILED_THREAD_ADDING;
+		result = error::FAILED_THREAD_ADDING;
 	mMutex.unlock();
 
 	return result;

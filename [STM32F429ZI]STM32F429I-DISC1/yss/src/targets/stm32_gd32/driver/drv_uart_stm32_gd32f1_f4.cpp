@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +30,7 @@ Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
 	mTxDma = &config.txDma;
 	mTxDmaInfo = config.txDmaInfo;
-	mPeri = config.peri;
+	mDev = config.dev;
 	mRcvBuf = 0;
 	mTail = 0;
 	mHead = 0;
@@ -50,15 +51,15 @@ error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBuffe
 	fra &= 0xf;
 	
 	// 장치 비활성화
-	setBitData(mPeri[UART_REG::CR1], false, 13);
+	setBitData(mDev[UART_REG::CR1], false, 13);
 	
 	// 보레이트 설정
-	setTwoFieldData(mPeri[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
+	setTwoFieldData(mDev[UART_REG::BRR], 0xFFF << 4, man, 4, 0xF << 0, fra, 0);
 	
 	// TX En, RX En, Rxnei En, 장치 En
-	mPeri[UART_REG::CR1] = 0x202C;
+	mDev[UART_REG::CR1] = 0x202C;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Uart::send(void *src, int32_t  size)
@@ -66,27 +67,27 @@ error Uart::send(void *src, int32_t  size)
 	bool result;
 
 	if(mTxDma == 0)
-		return Error::DMA;
+		return error::DMA;
 
 	mTxDma->lock();
 
-	setBitData(mPeri[UART_REG::CR3], true, 7);		// TX DMA 활성화
+	setBitData(mDev[UART_REG::CR3], true, 7);		// TX DMA 활성화
 
-	mPeri[UART_REG::SR] = ~USART_SR_TC;
+	mDev[UART_REG::SR] = ~USART_SR_TC;
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], false, 2);	// RX 비활성화
+		setBitData(mDev[UART_REG::CR1], false, 2);	// RX 비활성화
 	
 	result = mTxDma->send(mTxDmaInfo, src, size);
 
-	if(result == Error::NONE)
-		while (!(mPeri[UART_REG::SR] & USART_SR_TC))
+	if(result == error::ERROR_NONE)
+		while (!(mDev[UART_REG::SR] & USART_SR_TC))
 			thread::yield();
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], true, 2);	// RX 활성화
+		setBitData(mDev[UART_REG::CR1], true, 2);	// RX 활성화
 
-	setBitData(mPeri[UART_REG::CR3], false, 7);		// TX DMA 비활성화
+	setBitData(mDev[UART_REG::CR3], false, 7);		// TX DMA 비활성화
 
 	mTxDma->unlock();
 
@@ -96,22 +97,22 @@ error Uart::send(void *src, int32_t  size)
 void Uart::send(int8_t data)
 {
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], false, 2);	// RX 비활성화
+		setBitData(mDev[UART_REG::CR1], false, 2);	// RX 비활성화
 
-	mPeri[UART_REG::SR] = ~USART_SR_TC;
-	mPeri[UART_REG::DR] = data;
-	while (~mPeri[UART_REG::SR] & USART_SR_TC)
+	mDev[UART_REG::SR] = ~USART_SR_TC;
+	mDev[UART_REG::DR] = data;
+	while (~mDev[UART_REG::SR] & USART_SR_TC)
 		thread::yield();
 
 	if(mOneWireModeFlag)
-		setBitData(mPeri[UART_REG::CR1], true, 2);	// RX 활성화
+		setBitData(mDev[UART_REG::CR1], true, 2);	// RX 활성화
 }
 
 void Uart::isr(void)
 {
-	uint32_t sr = mPeri[UART_REG::SR];
+	uint32_t sr = mDev[UART_REG::SR];
 
-	push(mPeri[UART_REG::DR]);
+	push(mDev[UART_REG::DR]);
 
 	if (sr & (1 << 3))
 	{

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,9 +41,9 @@ File::File(sac::FileSystem *fileSystem)
 
 // 새로운 SD 메모리가 장착되면 init()을 먼저 호출해줘야 한다.
 // SD 메모리의 기본 정보를 읽어오고 루트 디렉토리를 찾는다.
-error File::init(void)
+error File::initialize(void)
 {
-	return mFileSystem->init();
+	return mFileSystem->initialize();
 }
 
 // 파일을 오픈하는 함수이다.
@@ -63,7 +64,7 @@ error File::init(void)
 error File::open(const char *fileName, uint8_t mode)
 {
 	if(mOpenFlag)
-		return Error::BUSY;
+		return error::BUSY;
 
 	switch(mode)
 	{
@@ -73,14 +74,14 @@ error File::open(const char *fileName, uint8_t mode)
 	case READ_ONLY :
 		break;
 	default :
-		return Error::UNSUPPORTED_MODE;
+		return error::UNSUPPORTED_MODE;
 	} 
 
 	const char *src = fileName;
 	mOpenMode = mode;
 
 	if(checkFileName(fileName) == false)
-		return Error::WRONG_FILE_NAME;
+		return error::WRONG_FILE_NAME;
 
 	error result;
 	thread::protect();
@@ -97,7 +98,7 @@ error File::open(const char *fileName, uint8_t mode)
 		if(bringOneName(name, &src))
 		{
 			result = enterDirectory(name);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 			{
 				goto error_handler;
 			}
@@ -111,35 +112,35 @@ error File::open(const char *fileName, uint8_t mode)
 			switch(mOpenMode)
 			{
 			case READ_ONLY :
-				if(result != Error::NONE)
+				if(result != error::ERROR_NONE)
 					goto error_handler;
 
 				result = mFileSystem->open();
-				if(result == Error::NONE)
+				if(result == error::ERROR_NONE)
 					mOpenFlag = true;
 				mFileSize = mFileSystem->getFileSize();
 				mBufferCount = 0;
 				break;
 
 			case WRITE_ONLY :
-				if(result == Error::NONE)
+				if(result == error::ERROR_NONE)
 				{
 					result = mFileSystem->open();
-					if(result == Error::NONE)
+					if(result == error::ERROR_NONE)
 						mOpenFlag = true;
 				}
-				else if(result == Error::NOT_EXIST_NAME)
+				else if(result == error::NOT_EXIST_NAME)
 				{
 					result = mFileSystem->makeFile(name);
-					if(result != Error::NONE)
+					if(result != error::ERROR_NONE)
 						goto error_handler;
 
 					result = findFile(name);
-					if(result != Error::NONE)
+					if(result != error::ERROR_NONE)
 						goto error_handler;
 
 					result = mFileSystem->open();
-					if(result == Error::NONE)
+					if(result == error::ERROR_NONE)
 						mOpenFlag = true;
 				}
 				mBufferCount = 0;
@@ -155,7 +156,7 @@ error File::open(const char *fileName, uint8_t mode)
 		src++;
 	}
 
-	result = Error::INDEX_OVER;
+	result = error::INDEX_OVER;
 
 error_handler:
 	thread::unprotect();
@@ -213,15 +214,15 @@ error File::enterDirectory(const char *name)
 	error result;
 
 	if(mOpenFlag)
-		return Error::BUSY;
+		return error::BUSY;
 
 	result = mFileSystem->moveToStart();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 	
 	if(mFileSystem->isDirectory() == false)
 		result = mFileSystem->moveToNextDirectory();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 
 	while(1)
@@ -229,18 +230,18 @@ error File::enterDirectory(const char *name)
 		if(mFileSystem->compareName(name) == false)
 		{
 			result = mFileSystem->enterDirectory();
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 
 		result = mFileSystem->moveToNextDirectory();
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 	}
 	
-	return Error::NOT_EXIST_NAME;
+	return error::NOT_EXIST_NAME;
 }
 
 error File::findFile(const char *name)
@@ -248,29 +249,29 @@ error File::findFile(const char *name)
 	error result;
 
 	result = mFileSystem->moveToStart();
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		return result;
 	
 	if(mFileSystem->isFile() == false)
 		result = mFileSystem->moveToNextFile();
-	if(result == Error::INDEX_OVER)
-		return Error::NOT_EXIST_NAME;
-	else if(result != Error::NONE)
+	if(result == error::INDEX_OVER)
+		return error::NOT_EXIST_NAME;
+	else if(result != error::ERROR_NONE)
 		return result;
 
 	while(1)
 	{
 		if(mFileSystem->compareName(name) == false)
-			return Error::NONE;
+			return error::ERROR_NONE;
 
 		result = mFileSystem->moveToNextFile();
-		if(result == Error::INDEX_OVER)
-			return Error::NOT_EXIST_NAME;
-		else if(result != Error::NONE)
+		if(result == error::INDEX_OVER)
+			return error::NOT_EXIST_NAME;
+		else if(result != error::ERROR_NONE)
 			return result;
 	}
 	
-	return Error::NOT_EXIST_NAME;
+	return error::NOT_EXIST_NAME;
 }
 
 uint32_t File::read(void *des, uint32_t size)
@@ -327,12 +328,12 @@ uint32_t File::read(void *des, uint32_t size)
 			mBufferCount = 512;
 		}
 
-		if(size == 0 || result == Error::INDEX_OVER)
+		if(size == 0 || result == error::INDEX_OVER)
 			return len;
 
-		if(result == Error::NO_DATA)
+		if(result == error::NO_DATA)
 			;
-		else if(result != Error::NONE)
+		else if(result != error::ERROR_NONE)
 			return len;
 	}
 	
@@ -381,7 +382,7 @@ uint32_t File::write(void *src, uint32_t size)
 		if(mBufferCount >= 512)
 		{
 			result = mFileSystem->write(mBuffer);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return 0;
 			mBufferCount = 0;
 		}
@@ -393,7 +394,7 @@ uint32_t File::write(void *src, uint32_t size)
 uint32_t File::getSize(void)
 {
 	if(!mOpenFlag)
-		return Error::FILE_NOT_OPENED;
+		return error::FILE_NOT_OPENED;
 
 	return mFileSize;
 }
@@ -403,7 +404,7 @@ error File::moveToStart(void)
 	error result;
 
 	if(!mOpenFlag)
-		return Error::FILE_NOT_OPENED;
+		return error::FILE_NOT_OPENED;
 	
 	result = mFileSystem->moveToFileStart();
 	mBufferCount = 0;
@@ -417,20 +418,20 @@ error File::moveToEnd(void)
 	error result;
 
 	if(!mOpenFlag)
-		return Error::FILE_NOT_OPENED;
+		return error::FILE_NOT_OPENED;
 
 	moveToStart();
 	
 	for(uint32_t i=0;i<movingSector;i++)
 	{
 		result = mFileSystem->moveToNextSector();
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 	}
 
 	mBufferCount = mFileSize % 512;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error File::moveTo(uint32_t position)
@@ -439,7 +440,7 @@ error File::moveTo(uint32_t position)
 	uint32_t movingSector;
 
 	if(!mOpenFlag)
-		return Error::FILE_NOT_OPENED;
+		return error::FILE_NOT_OPENED;
 
 	if(position > mFileSize)
 		return moveToEnd();
@@ -451,14 +452,14 @@ error File::moveTo(uint32_t position)
 	for(uint32_t i=0;i<movingSector;i++)
 	{
 		result = mFileSystem->moveToNextSector();
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 	}
 
 	result = mFileSystem->read(mBuffer);
 	mBufferCount = 512 - position % 512;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error File::makeFile(const char *fileName)
@@ -466,23 +467,23 @@ error File::makeFile(const char *fileName)
 	error result;
 
 	if(mOpenFlag)
-		return Error::BUSY;
+		return error::BUSY;
 
 	result = findFile(fileName);
-	if(result == Error::NOT_EXIST_NAME)
+	if(result == error::NOT_EXIST_NAME)
 	{
 		result = mFileSystem->makeFile(fileName);
-		if(result != Error::NONE)
+		if(result != error::ERROR_NONE)
 			return result;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error File::close(void)
 {
 	if(!mOpenFlag)
-		return Error::FILE_NOT_OPENED;
+		return error::FILE_NOT_OPENED;
 
 	error result;
 	mOpenFlag = false;
@@ -493,11 +494,11 @@ error File::close(void)
 		if(mBufferCount)
 		{
 			result = mFileSystem->write(mBuffer);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 			mBufferCount = 0;
 			result = mFileSystem->close(mFileSize);
-			if(result != Error::NONE)
+			if(result != error::ERROR_NONE)
 				return result;
 		}
 		break;
@@ -505,8 +506,8 @@ error File::close(void)
 		mFileSystem->close();
 		break;
 	default :
-		return Error::UNSUPPORTED_MODE;
+		return error::UNSUPPORTED_MODE;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }

@@ -48,6 +48,8 @@
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;app;src"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;common"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss"/>
+  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc"/>
+  <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;inc;yss"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;scheduler"/>
   <ProjectSessionItem path="pg22_dev_kit;pg22_dev_kit;Source Files;yss;src;targets"/>
@@ -108,11 +110,11 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="47" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="25" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="89" useTextEdit="1" path="yss/src/targets/common/drv_uart.cpp" left="0" top="71" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="97" useTextEdit="1" path="yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22.cpp" left="0" top="104" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="yss/src/scheduler/yss_Mutex.cpp" left="0" top="48" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="45" useTextEdit="1" path="yss/src/targets/siliconlabs/driver/drv_dma_efm32pg22.cpp" left="0" top="69" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="47" useTextEdit="1" path="app/src/main.cpp" left="0" top="43" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="89" useTextEdit="1" path="yss/src/targets/common/drv_uart.cpp" left="0" top="86" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="97" useTextEdit="1" path="yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22.cpp" left="0" top="97" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="yss/src/scheduler/yss_Mutex.cpp" left="0" top="67" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="9" y="50" useTextEdit="1" path="yss/inc/yss/instance.h" left="0" selected="1" top="18" codecName="UTF-8"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

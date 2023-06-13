@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,23 +9,27 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined (STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1) || \
+#if defined (STM32F1) || defined(STM32F4) || defined(GD32F4) || defined(STM32F7) || defined(STM32L1) || \
 	defined(STM32F0) || defined(STM32G4)
 
+#include <drv/peripheral.h>
 #include <yss/instance.h>
 #include <config.h>
 #include <yss.h>
 #include <targets/st_gigadevice/timer_stm32_gd32.h>
 
-#if defined(GD32F1) || defined (STM32F1)
+#if defined(GD32F1)
+#include <targets/st/define_stm32f103xb.h>
+#elif defined (STM32F1)
 #include <targets/st_gigadevice/rcc_stm32_gd32f1.h>
 #elif defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
 #include <targets/st_gigadevice/rcc_stm32_gd32f4_f7.h>
@@ -37,27 +41,34 @@
 #include <targets/st_gigadevice/rcc_stm32g4.h>
 #endif
 
-#if defined(GD32F1)
-#if defined(__SEGGER_LINKER)
-#define TIM1_UP_IRQHandler		TIMER0_UP_TIMER9_IRQHandler
-#define TIM2_IRQHandler			TIMER1_IRQHandler
-#define TIM3_IRQHandler			TIMER2_IRQHandler
-#define TIM4_IRQHandler			TIMER3_IRQHandler
-#define TIM5_IRQHandler			TIMER4_IRQHandler
-#define TIM6_IRQHandler			TIMER5_IRQHandler
-#define TIM7_IRQHandler			TIMER6_IRQHandler
-#define TIM8_UP_IRQHandler		TIMER7_UP_TIMER12_IRQHandler
-#else
+#if defined(GD32F10X_XD) || defined(GD32F10X_CL)
+#define TIM1_UP_IRQn			TIM1_UP_TIM10_IRQn
+
+#define TIM1_UP_IRQHandler		TIMER1_UP_TIMER10_IRQHandler
+#define TIM2_IRQHandler			TIMER2_IRQHandler
+#define TIM3_IRQHandler			TIMER3_IRQHandler
+#define TIM4_IRQHandler			TIMER4_IRQHandler
+#define TIM5_IRQHandler			TIMER5_IRQHandler
+#define TIM6_IRQHandler			TIMER6_IRQHandler
+#define TIM7_IRQHandler			TIMER7_IRQHandler
+#define TIM8_UP_IRQHandler		TIMER8_UP_TIMER13_IRQHandler
+#elif defined(GD32F10X_HD)
 #define TIM1_UP_IRQHandler		TIMER1_UP_IRQHandler
 #define TIM2_IRQHandler			TIMER2_IRQHandler
 #define TIM3_IRQHandler			TIMER3_IRQHandler
 #define TIM4_IRQHandler			TIMER4_IRQHandler
 #define TIM5_IRQHandler			TIMER5_IRQHandler
 #define TIM6_IRQHandler			TIMER6_IRQHandler
-#endif
-#elif defined(STM32F4) || defined(STM32F7)
-#define TIM1_UP_IRQHandler		TIM1_UP_TIMER10_IRQHandler
+#define TIM7_IRQHandler			TIMER7_IRQHandler
+#define TIM8_UP_IRQHandler		TIMER8_UP_TIMER13_IRQHandler
+#elif defined(GD32F10X_MD)
+#define TIM1_UP_IRQHandler		TIMER1_UP_IRQHandler
+#define TIM2_IRQHandler			TIMER2_IRQHandler
+#define TIM3_IRQHandler			TIMER3_IRQHandler
+#define TIM4_IRQHandler			TIMER4_IRQHandler
 
+#elif defined(STM32F4) || defined(STM32F7)
+#define TIM1_UP_IRQHandler		TIM1_UP_TIM10_IRQHandler
 #define TIM1_UP_IRQn			TIM1_UP_TIM10_IRQn
 #define	TIM6_IRQn				TIM6_DAC_IRQn
 #elif defined(GD32F4)
@@ -84,7 +95,7 @@ static const uint32_t gPpreDiv[8] = {1, 1, 1, 1, 2, 4, 8, 16};
 #if defined (STM32F0)
 uint32_t getApb1TimerClockFrequency(void)
 {
-	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
+	int8_t pre = gPpreDiv[((RCC->CFGR & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
 
 	if(pre > 1)
 		return getApb1ClockFrequency() << 1;
@@ -94,7 +105,7 @@ uint32_t getApb1TimerClockFrequency(void)
 
 uint32_t getApb2TimerClockFrequency(void)
 {
-	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
+	int8_t pre = gPpreDiv[((RCC->CFGR & RCC_CFGR_PPRE_Msk) >> RCC_CFGR_PPRE_Pos)];
 
 	if(pre > 1)
 		return getApb2ClockFrequency() << 1;
@@ -104,22 +115,24 @@ uint32_t getApb2TimerClockFrequency(void)
 #else
 uint32_t getApb1TimerClockFrequency(void)
 {
-	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE1_Msk) >> RCC_CFGR_PPRE1_Pos)];
+	//int8_t pre = gPpreDiv[((RCC->CFGR & RCC_CFGR_PPRE1_Msk) >> RCC_CFGR_PPRE1_Pos)];
 
-	if(pre > 1)
-		return getApb1ClockFrequency() << 1;
-	else
-		return getApb1ClockFrequency();
+	//if(pre > 1)
+	//	return clock.getApb1ClockFrequency() << 1;
+	//else
+	//	return clock.getApb1ClockFrequency();
+	return 0;
 }
 
 uint32_t getApb2TimerClockFrequency(void)
 {
-	int8_t pre = gPpreDiv[((RCC[RCC_REG::CFGR] & RCC_CFGR_PPRE2_Msk) >> RCC_CFGR_PPRE2_Pos)];
+	//int8_t pre = gPpreDiv[((RCC->CFGR & RCC_CFGR_PPRE2_Msk) >> RCC_CFGR_PPRE2_Pos)];
 
-	if(pre > 1)
-		return getApb2ClockFrequency() << 1;
-	else
-		return getApb2ClockFrequency();
+	//if(pre > 1)
+	//	return clock.getApb2ClockFrequency() << 1;
+	//else
+	//	return clock.getApb2ClockFrequency();
+	return 0;
 }
 #endif
 
@@ -127,7 +140,7 @@ uint32_t getApb2TimerClockFrequency(void)
 static void enableTimer1Clock(bool en)
 {
 	clock.lock();
-    clock.enableApb2Clock(11, en);
+    clock.enableApb2Clock(RCC_APB2ENR_TIM1EN_Pos, en);
 	clock.unlock();
 }
 
@@ -159,9 +172,9 @@ extern "C"
 {
 void TIM1_UP_IRQHandler(void)
 {
-	if (TIM1[TIM_REG::DIER] & TIM_DIER_UIE_Msk && TIM1[TIM_REG::SR] & TIM_SR_UIF_Msk)
+	if (TIM1->DIER & TIM_DIER_UIE_Msk && TIM1->SR & TIM_SR_UIF_Msk)
 	{
-		TIM1[TIM_REG::SR] = ~TIM_SR_UIF_Msk;
+		TIM1->SR = ~TIM_SR_UIF_Msk;
 		timer1.isrUpdate();
 	}
 
@@ -332,7 +345,7 @@ void TIM4_IRQHandler(void)
 
 
 
-#if defined(TIM5_ENABLE) && (defined(TIMER5) || defined(TIM5))
+#if defined(TIM5_ENABLE) && defined(TIM5_IRQn)
 static void enableTimer5Clock(bool en)
 {
 	clock.lock();
@@ -383,7 +396,7 @@ void TIM5_IRQHandler(void)
 
 
 
-#if defined(TIM6_ENABLE) && (defined(TIMER6) || defined(TIM6))
+#if defined(TIM6_ENABLE) && defined(TIM6_IRQn)
 static void enableTimer6Clock(bool en)
 {
 	clock.lock();
@@ -438,7 +451,7 @@ void TIM6_IRQHandler(void)
 
 
 
-#if defined(TIM7_ENABLE) && defined(TIMER7)
+#if defined(TIM7_ENABLE) && defined(TIMER7_IRQn)
 static void enableTimer7Clock(bool en)
 {
 	clock.lock();
@@ -488,7 +501,7 @@ void TIMER7_IRQHandler(void)
 
 #endif
 
-#if defined(TIM8_ENABLE) && defined(TIMER8)
+#if defined(TIM8_ENABLE) && defined(TIMER8_UP_TIMER13_IRQn)
 static void enableTimer8Clock(bool en)
 {
 	clock.lock();
@@ -546,7 +559,7 @@ void TIMER8_UP_TIMER13_IRQHandler(void)
 }
 #endif
 
-#if defined(TIM9_ENABLE) && defined(TIMER9)
+#if defined(TIM9_ENABLE) && defined(TIMER1_BRK_TIMER9_IRQn)
 static void enableTimer9Clock(bool en)
 {
 	clock.lock();
@@ -595,7 +608,7 @@ void TIMER1_BRK_TIMER9_IRQHandler(void)
 }
 #endif
 
-#if defined(TIM10_ENABLE) && defined(TIMER10)
+#if defined(TIM10_ENABLE) && defined(TIMER1_UP_TIMER10_IRQn)
 static void enableTimer10Clock(bool en)
 {
 	clock.lock();
@@ -649,7 +662,7 @@ void TIM1_UP_TIM10_IRQHandler(void)
 
 
 
-#if defined(TIM11_ENABLE) && defined(TIMER11)
+#if defined(TIM11_ENABLE) && defined(TIMER1_TRG_COM_TIMER11_IRQn)
 static void enableTimer11Clock(bool en)
 {
 	clock.lock();
@@ -700,7 +713,7 @@ void TIMER1_TRG_COM_TIMER11_IRQHandler(void)
 
 
 
-#if defined(TIM12_ENABLE) && defined(TIMER12)
+#if defined(TIM12_ENABLE) && defined(TIMER8_BRK_TIMER12_IRQn)
 static void enableTimer12Clock(bool en)
 {
 	clock.lock();
@@ -751,7 +764,7 @@ void TIMER7_BRK_TIMER11_IRQHandler(void)
 
 
 
-#if defined(TIM13_ENABLE) && defined(TIMER13)
+#if defined(TIM13_ENABLE) && defined(TIMER8_UP_TIMER13_IRQn)
 static void enableTimer13Clock(bool en)
 {
 	clock.lock();
@@ -804,7 +817,7 @@ void TIM8_UP_TIM13_IRQHandler(void)
 
 
 
-#if defined(TIM14_ENABLE) && defined(TIMER14)
+#if defined(TIM14_ENABLE) && defined(TIMER8_TRG_COM_TIMER14_IRQn)
 static void enableTimer14Clock(bool en)
 {
 	clock.lock();
