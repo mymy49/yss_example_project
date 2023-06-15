@@ -46,12 +46,12 @@ namespace Analog
 	error setAdcChannel(uint8_t num, uint8_t channel, Adc &adc)
 	{
 		if(num >= gNumOfAdc)
-			return Error::INDEX_OVER;
+			return error::INDEX_OVER;
 		
 		gConfig[num].channel = channel;
 		gConfig[num].adc = &adc;
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	error callback_adc(Uart *peripheral, void *var)
@@ -63,7 +63,7 @@ namespace Analog
 
 		if(num >= gNumOfAdc)
 		{
-			result = Error::INDEX_OVER;
+			result = error::INDEX_OVER;
 			goto error_handler;
 		}
 		
@@ -73,12 +73,12 @@ namespace Analog
 		peripheral->send(str, len);
 		peripheral->unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 
 error_handler :
 		switch(result)
 		{
-		case Error::INDEX_OVER :
+		case error::INDEX_OVER :
 			sprintf(str, "\n\rError!! : The ADC channel %d is not valid.", num);
 			break;
 		}

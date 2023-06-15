@@ -42,7 +42,7 @@ namespace Logo
 		gFq->add(Task::displayLogo);
 		gFq->unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	void registerCli(CommandLineInterface &cli)

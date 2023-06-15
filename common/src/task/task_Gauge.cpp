@@ -215,7 +215,7 @@ namespace Task
 		addThread(thread_changeTitle, 2048);
 		unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 }
 

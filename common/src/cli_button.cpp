@@ -98,7 +98,7 @@ namespace Button
 			input = peripheral->getReceivedByte();
 
 			if(input == 'x')
-				return Error::NONE;
+				return error::ERROR_NONE;
 
 			thread::yield();
 		}

@@ -34,9 +34,9 @@ namespace Task
 
 	error calibrateTouchScreen(FunctionQueue *obj)
 	{
-		// gTouch의 값이 설정되어 있지 않다면 교정이 필요 없다고 간주하고 Error::NONE으로 리턴한다.
+		// gTouch의 값이 설정되어 있지 않다면 교정이 필요 없다고 간주하고 error::ERROR_NONE으로 리턴한다.
 		if(gTouch)
-			return Error::NONE;
+			return error::ERROR_NONE;
 
 		PointerEvent *pointerEvent = new PointerEvent(256);
 
@@ -64,7 +64,7 @@ namespace Task
 		delete pointerEvent;
 		unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 }
 

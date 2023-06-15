@@ -42,7 +42,7 @@ namespace Guage
 		gFq->add(Task::displayGauge);
 		gFq->unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	void registerCli(CommandLineInterface &cli)

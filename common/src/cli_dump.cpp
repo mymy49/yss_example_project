@@ -65,12 +65,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -97,12 +97,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -130,12 +130,12 @@ namespace Dump
 			}
 			else if(!strcasecmp(cvar, "FLOAT"))
 			{
-				result = Error::WRONG_FORMAT;
+				result = error::WRONG_FORMAT;
 				goto error_handler;
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
@@ -173,31 +173,31 @@ namespace Dump
 			}
 			else
 			{
-				result = Error::UNKNOWN;
+				result = error::UNKNOWN;
 				goto error_handler;
 			}
 			break;
 			
 		default :
-			result = Error::WRONG_SIZE;
+			result = error::WRONG_SIZE;
 			goto error_handler;
 			break;
 		}
 		peripheral->unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 error_handler :
 		switch(result)
 		{
-		case Error::WRONG_SIZE :
+		case error::WRONG_SIZE :
 			sprintf(str, "\n\rError!! : The data size(%d) is not valid.\n\r", size);
 			break;
 
-		case Error::UNKNOWN :
+		case error::UNKNOWN :
 			sprintf(str, "\n\rError!! : The data type \"%s\" is not valid string.\n\r", cvar);
 			break;
 
-		case Error::WRONG_FORMAT :
+		case error::WRONG_FORMAT :
 			sprintf(str, "\n\rError!! : When The data size is %d, It is not support float data type.\n\r", size);
 			break;
 		}

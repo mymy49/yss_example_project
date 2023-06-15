@@ -43,11 +43,11 @@ namespace Led
 	error setLedFunction(uint8_t num, void (*func)(bool))
 	{
 		if(num >= gNumOfLed)
-			return Error::INDEX_OVER;
+			return error::INDEX_OVER;
 		
 		setLedOn[num] = func;
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	error callback_setLed(Uart *peripheral, void *var)
@@ -60,7 +60,7 @@ namespace Led
 
 		if(num >= gNumOfLed)
 		{
-			result = Error::INDEX_OVER;
+			result = error::INDEX_OVER;
 			goto error_handler;
 		}
 		
@@ -70,20 +70,20 @@ namespace Led
 			setLedOn[num](false);
 		else
 		{
-			result = Error::UNKNOWN;
+			result = error::UNKNOWN;
 			goto error_handler;
 		}
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 
 error_handler :
 		switch(result)
 		{
-		case Error::INDEX_OVER :
+		case error::INDEX_OVER :
 			sprintf(str, "\n\rError!! : The LED number %d is not valid.", num);
 			break;
 
-		case Error::UNKNOWN :
+		case error::UNKNOWN :
 			sprintf(str, "\n\rError!! : The \"%s\" is not valid string.", cvar);
 			break;
 		}

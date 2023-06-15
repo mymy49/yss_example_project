@@ -49,7 +49,7 @@ namespace Task
 		setFrame(frame);
 		unlock();
 
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 }
 
