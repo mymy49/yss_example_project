@@ -196,7 +196,7 @@ void initSdram(void)
 	gpioA.setPackageAsAltFunc(sdramPort, 38, define::gpio::ospeed::FAST, define::gpio::otype::PUSH_PULL);
 
 	clock.enableSdram();
-	sdram.initialize(define::sdram::bank::BANK2, IS42S16400J_7TL, 180000000);
+	sdram.initialize(define::sdram::bank::BANK2, IS42S16400J_7TL, 168000000);
 }
 
 void initSystem(void)
@@ -221,7 +221,7 @@ void initSystem(void)
 		pll::pdiv::DIV2,			// uint8_t pDiv
 		pll::qdiv::DIV4,			// uint8_t qDiv
 #elif defined(STM32F429xx)
-		360,						// uint16_t n Sysclk
+		336,						// uint16_t n Sysclk
 		pll::pdiv::DIV2,			// uint8_t pDiv
 		pll::qdiv::DIV6,			// uint8_t qDiv
 #endif
@@ -243,7 +243,7 @@ void initSystem(void)
 #if defined(STM32F411xE)
 	flash.setLatency(96000000, 33);
 #elif defined(STM32F429xx)
-	flash.setLatency(180000000, 33);
+	flash.setLatency(168000000, 33);
 #endif
 	clock.setSysclk(
 		sysclk::src::PLL,				// uint8_t sysclkSrc;
