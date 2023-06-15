@@ -199,6 +199,12 @@ class Can : public Drv
 	//		J1939Frame으로 생성한 데이터를 반환한다.
 	J1939Frame generateJ1939Frame(uint8_t priority, uint16_t pgn, uint8_t sa, uint8_t count);
 
+	// Error 또는 상태 변화 발생시 호출될 Interrupt Service Routine 함수를 설정한다.
+	//
+	// void (*func)(void)
+	//		ISR 함수를 설정한다.
+	void setIsrForEvent(void (*func)(error code));
+
 	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
 	struct Setup
 	{
@@ -207,6 +213,9 @@ class Can : public Drv
 	
 	// 수신 관련 인터럽트 서비스 루틴
 	void isrRx(void);
+	
+	// 에러 관련 인터럽트 서비스 루틴
+	void isrEvent(void);
 
 	Can(const Drv::Setup drvSetup, const Setup setup);
 
@@ -214,6 +223,8 @@ private :
 	CanFrame *mCanFrame;
 	uint32_t mHead, mTail, mRxBufferDepth;
 	YSS_CAN_TypeDef *mDev;
+
+	void (*mIsrForEvent)(error code);
 
 	void push(CanFrame *frame);
 };
@@ -303,7 +314,7 @@ private :
 					// 그 외 수신 ID에 대한 처리 추가
 					}
 				}
-				else	// 수신 메시지가 표준일 경우
+				else	// 수신 메시지가 확장일 경우
 				{
 					switch(rcvBuf[i].id)
 					{

@@ -42,7 +42,7 @@ error FT5336::initialize(const Config config)
 	thread::delay(100);
 
 	if(getByte(0xa8) != 0x51)
-		return false;
+		return error::FAIL;
 
 	mTriggerId = trigger::add(trigger_handler, this, 512);
 
