@@ -2,7 +2,7 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="533" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="2" filename="../../yss/inc/targets/siliconlabs/pa_conversions_efr32.cpp" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="533" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" group="Breakpoints" type="Breakpoint" state="4" filename="../../yss/inc/targets/siliconlabs/pa_conversions_efr32.cpp" useHWbreakpoint="false"/>
   <Exceptions set="MemManage;UsageFault_Coprocessor;UsageFault_CheckingError;UsageFault_StateError;BusFault;ExceptionEntryReturnFault;HardFault;SecureFault"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
@@ -32,16 +32,6 @@
   <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;app;src;dev"/>
   <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;common"/>
   <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss"/>
-<<<<<<< HEAD
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;inc"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;inc;targets"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;inc;targets;siliconlabs"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;src"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;src;targets"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;src;targets;siliconlabs"/>
-  <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;Source Files;yss;src;targets;siliconlabs;lib"/>
-=======
->>>>>>> main
   <ProjectSessionItem path="bg22_explorer_kit;bg22_explorer_kit;System Files"/>
  </Project>
  <Register1>
@@ -76,51 +66,24 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-<<<<<<< HEAD
-  <SessionOpenFile windowGroup="DockEditLeft" x="18" y="82" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="60" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="21" useTextEdit="1" path="app/inc/dev/led.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="app/inc/bsp.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="73" useTextEdit="1" path="app/src/bsp.cpp" left="0" top="11" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" path="app/src/dev/dev_led.cpp" left="0" top="10" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="53" useTextEdit="1" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFR32/Source/EFR32BG22C224F512IM40_Vectors.s" left="0" top="35" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="56" useTextEdit="1" path="../../yss/src/scheduler/yss_context_switching.s" left="0" top="44" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="116" useTextEdit="1" path="../../yss/src/util/yss_CommandLineInterface.cpp" left="0" top="93" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="52" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_dma_efm32pg22_efr32bg22.cpp" left="0" top="39" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22_efr32bg22.cpp" left="0" top="70" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" path="../../yss/src/targets/common/drv_uart.cpp" left="0" top="8" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="../../yss/src/targets/Drv.cpp" left="0" top="13" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="150" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_uart_efm32pg22_efr32bg22.cpp" left="0" top="107" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="../../yss/src/targets/siliconlabs/msp/msp_EFR32BG22.cpp" left="0" top="6" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="43" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_dma_efm32pg22_efr32bg22.cpp" left="0" top="20" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="54" y="558" useTextEdit="1" path="../../yss/src/scheduler/yss_scheduler.cpp" left="0" top="546" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="33" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/rail.h" left="0" top="19" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" openedFrom="/home/mymy49/library/yss/inc/targets/siliconlabs/rail_chip_specific.h" path="../../yss/inc/targets/siliconlabs/rail_types.h" left="0" top="219" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="18" y="34" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/rail_chip_specific.h" left="0" top="12" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="226" useTextEdit="1" openedFrom="/home/mymy49/library/yss_example_project/[EFR32BG22C224F512IM40]BG22 Explorer Kit/app/src/main.cpp" path="../../yss/inc/targets/siliconlabs/pa_curve_types_efr32.h" left="0" top="190" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="40" useTextEdit="1" path="../../yss/src/targets/siliconlabs/lib/pa_curves_efr32.cpp" left="0" top="28" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="34" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/pa_conversions_efr32.h" left="0" top="9" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="43" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/sl_rail_util_pa_conversions_efr32_config.h" left="0" top="9" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="41" y="53" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/sl_rail_util_pa_config.h" left="0" top="20" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="47" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/pa_curves_efr32.h" left="0" top="1" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="522" useTextEdit="1" path="../../yss/inc/targets/siliconlabs/pa_conversions_efr32.cpp" left="0" top="508" codecName="Default"/>
-=======
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="57" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="53" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="21" useTextEdit="1" path="app/inc/dev/led.h" left="0" top="17" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="app/inc/bsp.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="73" useTextEdit="1" path="app/src/bsp.cpp" left="0" top="69" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" path="app/src/dev/dev_led.cpp" left="0" top="29" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="53" useTextEdit="1" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFR32/Source/EFR32BG22C224F512IM40_Vectors.s" left="0" top="51" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="56" useTextEdit="1" path="../../yss/src/scheduler/yss_context_switching.s" left="0" top="54" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="116" useTextEdit="1" path="../../yss/src/util/yss_CommandLineInterface.cpp" left="0" top="114" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="52" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_dma_efm32pg22_efr32bg22.cpp" left="0" top="50" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22_efr32bg22.cpp" left="0" top="92" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" path="../../yss/src/targets/common/drv_uart.cpp" left="0" top="30" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="../../yss/src/targets/Drv.cpp" left="0" top="59" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="150" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_uart_efm32pg22_efr32bg22.cpp" left="0" top="148" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="../../yss/src/targets/siliconlabs/msp/msp_EFR32BG22.cpp" left="0" top="59" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="43" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_dma_efm32pg22_efr32bg22.cpp" left="0" top="41" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="558" useTextEdit="1" path="../../yss/src/scheduler/yss_scheduler.cpp" left="0" top="556" codecName="Default"/>
->>>>>>> main
+  <SessionOpenFile windowGroup="DockEditLeft" x="28" y="51" useTextEdit="1" path="app/src/main.cpp" left="0" selected="1" top="29" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="21" useTextEdit="1" path="app/inc/dev/led.h" left="0" top="18" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="app/inc/bsp.h" left="0" top="0" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="73" useTextEdit="1" path="app/src/bsp.cpp" left="0" top="71" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="28" useTextEdit="1" path="app/src/dev/dev_led.cpp" left="0" top="25" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="53" useTextEdit="1" path="../../../.rowley_associates_limited/CrossWorks for ARM/v4/packages/targets/EFR32/Source/EFR32BG22C224F512IM40_Vectors.s" left="0" top="51" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="56" useTextEdit="1" path="../../yss/src/scheduler/yss_context_switching.s" left="0" top="54" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="116" useTextEdit="1" path="../../yss/src/util/yss_CommandLineInterface.cpp" left="0" top="114" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="52" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_dma_efm32pg22_efr32bg22.cpp" left="0" top="50" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="94" useTextEdit="1" path="../../yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22_efr32bg22.cpp" left="0" top="92" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="32" useTextEdit="1" path="../../yss/src/targets/common/drv_uart.cpp" left="0" top="30" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="../../yss/src/targets/Drv.cpp" left="0" top="59" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="35" y="150" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_uart_efm32pg22_efr32bg22.cpp" left="45" top="148" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="59" useTextEdit="1" path="../../yss/src/targets/siliconlabs/msp/msp_EFR32BG22.cpp" left="0" top="57" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="43" useTextEdit="1" path="../../yss/src/targets/siliconlabs/instance/instance_dma_efm32pg22_efr32bg22.cpp" left="0" top="41" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="558" useTextEdit="1" path="../../yss/src/scheduler/yss_scheduler.cpp" left="0" top="556" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../../yss/inc/drv/Clock.h" left="0" top="0" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="../../yss/inc/drv/Gpio.h" left="0" top="39" codecName="UTF-8"/>
  </Files>
  <ARMCrossStudioWindow activeProject="bg22_explorer_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
