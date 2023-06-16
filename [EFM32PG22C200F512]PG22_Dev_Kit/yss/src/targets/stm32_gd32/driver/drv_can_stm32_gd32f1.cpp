@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1)
+#if defined(STM32F1)
 
 #include <drv/Can.h>
 #include <yss/thread.h>
@@ -310,7 +310,7 @@ uint8_t Can::getSendErrorCount(void)
 	return (mPeri[CAN_REG::ERR] >> 16);
 }
 
-uint8_t Can::getReceiveErrorCount(void)
+uint8_t Can::getRxErrorCount(void)
 {
 	return (mPeri[CAN_REG::ERR] >> 24);
 }

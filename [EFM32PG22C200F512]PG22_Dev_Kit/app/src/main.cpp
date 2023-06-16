@@ -41,12 +41,27 @@ void isr_timer1(void)
 	trigger::run(gTriggerId);
 }
 
+void thread_sendHelloWorld(void)
+{
+	while(1)
+	{
+		uart1.send("hello world!!\n\r", sizeof("hello world!!\n\r")); 
+	}
+}
+
+static const Spi::Specification gLcdSpec =
+{
+	define::spi::mode::MODE0,	//uint8_t mode;
+	10000000,					//uint32_t maxFreq;
+	define::spi::bit::BIT8		//uint8_t bit;
+};
+
 int main(int argc, char *argv[])
 {
-	initYss();
+	initializeYss();
 	initBoard();
 	
-	gTriggerId = trigger::add(trigger_handleMic, 512);
+	gTriggerId = trigger::add(trigger_handleMic, 1024);
 
 	timer1.enableClock();
 	timer1.initialize(1000);
@@ -54,6 +69,15 @@ int main(int argc, char *argv[])
 	timer1.setUpdateIsr(isr_timer1);
 	timer1.enableInterrupt();
 	timer1.start();
+
+	thread::add(thread_sendHelloWorld, 1024);
+
+	spi0.setSpecification(gLcdSpec);
+
+	while(1)
+	{
+		spi0.send('A');
+	}
 
 	while(1)
 	{

@@ -71,6 +71,6 @@ void initializeBoard(void)
 	//spi0.enableInterrupt();
 
 	// LED 초기화
-	Led::init();
+	led::init();
 }
 

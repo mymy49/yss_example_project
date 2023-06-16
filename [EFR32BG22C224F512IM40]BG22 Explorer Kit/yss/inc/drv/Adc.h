@@ -41,7 +41,7 @@ typedef volatile uint32_t	YSS_ADC_Dev;
 #define YSS_DRV_ADC_MAX_CH	18
 typedef ADC_TypeDef			YSS_ADC_Dev;
 
-#elif defined(STM32F4_N) || defined(STM32F7_N) || defined(STM32F0_N) || defined(STM32F1_N)
+#elif defined(STM32F4_N) || defined(STM32F7_N) || defined(STM32F0_N)
 
 #define YSS_DRV_ADC_MAX_CH	18
 typedef ADC_TypeDef			YSS_ADC_Dev;

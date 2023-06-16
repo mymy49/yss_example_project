@@ -44,7 +44,6 @@ static void enableCan1Interrupt(bool en)
 {
     nvic.lock();
     nvic.enableInterrupt(USB_LP_CAN1_RX0_IRQn, en);
-	nvic.enableInterrupt(CAN1_SCE_IRQn, en);
     nvic.unlock();
 }
 
@@ -75,11 +74,6 @@ extern "C"
 	void USB_LP_CAN1_RX0_IRQHandler(void)
 	{
 		can1.isrRx();
-	}
-
-	void CAN1_SCE_IRQHandler(void)
-	{
-		can1.isrEvent();
 	}
 }
 #endif

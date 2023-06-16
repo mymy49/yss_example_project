@@ -20,7 +20,7 @@
 #include <yss.h>
 #include <bsp.h>
 
-namespace Led
+namespace led
 {
 	void init(void)
 	{

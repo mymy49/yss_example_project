@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,12 +9,12 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
-
 
 #if defined(NRF52840_XXAA)
 
@@ -27,7 +27,7 @@
 
 Uart::Uart(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 {
-	mPeri = config.peri;
+	mDev = config.dev;
 	mRcvBuf = 0;
 	mTail = 0;
 	mHead = 0;
@@ -40,18 +40,18 @@ error Uart::initialize(int32_t  baud, void *receiveBuffer, int32_t  receiveBuffe
 	mRcvBufSize = receiveBufferSize;
 		
 	// 장치 비활성화
-	mPeri->ENABLE = 0;
+	mDev->ENABLE = 0;
 
 	// 보레이트 설정
-	mPeri->BAUDRATE = (int32_t )(268.435456f * (float)baud);
+	mDev->BAUDRATE = (int32_t )(268.435456f * (float)baud);
 	
 	// TX En, RX En, Rxnei En, 장치 En
-	mPeri->INTENSET = UART_INTENSET_RXDRDY_Msk;
-	mPeri->TASKS_STARTRX = 1;
-	mPeri->TASKS_STARTTX = 1;
-	mPeri->ENABLE = UART_ENABLE_ENABLE_Enabled;
+	mDev->INTENSET = UART_INTENSET_RXDRDY_Msk;
+	mDev->TASKS_STARTRX = 1;
+	mDev->TASKS_STARTTX = 1;
+	mDev->ENABLE = UART_ENABLE_ENABLE_Enabled;
 	
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Uart::send(void *src, int32_t  size)
@@ -60,23 +60,23 @@ error Uart::send(void *src, int32_t  size)
 	int8_t *data = (int8_t*)src;
 	
 	if(mOneWireModeFlag)
-		mPeri->TASKS_STOPRX = 1;
+		mDev->TASKS_STOPRX = 1;
 
 	for(uint32_t i=0;i<size;i++)
 	{
-		mPeri->EVENTS_TXDRDY = 0;
-		mPeri->TXD = *data++;
+		mDev->EVENTS_TXDRDY = 0;
+		mDev->TXD = *data++;
 
-		while(!mPeri->EVENTS_TXDRDY)
+		while(!mDev->EVENTS_TXDRDY)
 			thread::yield();
 	}
 
-	mPeri->EVENTS_TXDRDY = 0;
+	mDev->EVENTS_TXDRDY = 0;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 error_handler :
 	if(mOneWireModeFlag)
-		mPeri->TASKS_STARTRX = 1;
+		mDev->TASKS_STARTRX = 1;
 	
 	return result;
 }
@@ -84,25 +84,25 @@ error_handler :
 void Uart::send(int8_t data)
 {
 	if(mOneWireModeFlag)
-		mPeri->TASKS_STOPRX = 1;
+		mDev->TASKS_STOPRX = 1;
 
-	while(!mPeri->EVENTS_TXDRDY)
+	while(!mDev->EVENTS_TXDRDY)
 		thread::yield();
-	mPeri->EVENTS_TXDRDY = 0;
+	mDev->EVENTS_TXDRDY = 0;
 	
-	mPeri->TXD = data;
+	mDev->TXD = data;
 
-	while(!mPeri->EVENTS_TXDRDY)
+	while(!mDev->EVENTS_TXDRDY)
 		thread::yield();
 
 	if(mOneWireModeFlag)
-		mPeri->TASKS_STARTRX = 1;
+		mDev->TASKS_STARTRX = 1;
 }
 
 void Uart::isr(void)
 {
-	push(mPeri->RXD);
-	mPeri->EVENTS_RXDRDY = 0;
+	push(mDev->RXD);
+	mDev->EVENTS_RXDRDY = 0;
 }
 
 #endif

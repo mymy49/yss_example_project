@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,15 +9,16 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <config.h>
 
-#if USE_GUI
+#if USE_GUI && defined(DMA2D_ENABLE)
 
 #include <yss/instance.h>
 
@@ -26,6 +27,7 @@
 #include <gui/Rgb565.h>
 #include <gui/Rgb888.h>
 #include <gui/Bmp888.h>
+#include <gui/Bmp565.h>
 #include <yss/thread.h>
 
 namespace Painter
@@ -42,7 +44,7 @@ inline void swapStartPosition(int16_t &startPos, int16_t &endPos)
 	}
 }
 
-void fill(Rgb888 &obj, RGB888_union color)
+void fill(Rgb888 &obj, Color color)
 {
 	uint32_t fb = (uint32_t)obj.getFrameBuffer();
 
@@ -60,10 +62,11 @@ void fill(Rgb888 &obj, RGB888_union color)
 	using namespace define::dma2d;
 	Dma2d::FillConfig config = 
 	{
-		(void*)fb,			//void *address;
-		*(uint32_t*)&color,	//uint32_t color;
-		colorMode::RGB888,	//uint8_t colorMode;
-		size				//Size size;
+		(void*)fb,				//void *address;
+		color.getRgb888Code(),	//uint32_t color;
+		colorMode::RGB888,		//uint8_t colorMode;
+		0,						//int16_t destinationOffset;
+		size					//Size size;
 	};
 	
 	dma2d.lock();
@@ -72,7 +75,7 @@ void fill(Rgb888 &obj, RGB888_union color)
 	dma2d.unlock();
 }
 
-void fillRectangle(Rgb888 &obj, Position sp, Position ep, RGB888_union color)
+void fillRectangle(Rgb888 &obj, Position sp, Position ep, Color color)
 {
 	uint8_t *desAddr;
 
@@ -115,7 +118,7 @@ void fillRectangle(Rgb888 &obj, Position sp, Position ep, RGB888_union color)
 	//mMutex.unlock();
 }
 
-void fillRectangle(Rgb888 &obj, Position pos, Size size, RGB888_union color)
+void fillRectangle(Rgb888 &obj, Position pos, Size size, Color color)
 {
 	uint8_t *desAddr;
 
@@ -141,10 +144,11 @@ void fillRectangle(Rgb888 &obj, Position pos, Size size, RGB888_union color)
 	using namespace define::dma2d;
 	Dma2d::FillConfig config = 
 	{
-		(void*)desAddr,		//void *address;
-		*(uint32_t*)&color,	//uint32_t color;
-		colorMode::RGB888,	//uint8_t colorMode;
-		size				//Size size;
+		(void*)desAddr,				//void *address;
+		color.getRgb888Code(),		//uint32_t color;
+		colorMode::RGB888,			//uint8_t colorMode;
+		desSize.width - size.width,	//int16_t destinationOffset;
+		size						//Size size;
 	};
 	
 	dma2d.lock();
@@ -153,7 +157,7 @@ void fillRectangle(Rgb888 &obj, Position pos, Size size, RGB888_union color)
 	dma2d.unlock();
 }
 
-uint8_t drawChar(Rgb888 &des, Font *font, uint32_t utf8, Position pos, uint32_t color, uint8_t alpha)
+uint8_t drawChar(Rgb888 &des, Font *font, uint32_t utf8, Position pos, Color color)
 {
 	if (font->setChar(utf8))
 		return 0;
@@ -196,15 +200,16 @@ uint8_t drawChar(Rgb888 &des, Font *font, uint32_t utf8, Position pos, uint32_t 
 	using namespace define::dma2d;
 	Dma2d::DrawCharConfig config = 
 	{
-		(void*)srcAddr,				//void *sourceAddress;
+		(void*)srcAddr,			//void *sourceAddress;
 		(uint16_t)srcOffset,	//uint16_t sourceOffset;
-		colorMode::A4,				//uint8_t sourceColorMode;
+		colorMode::A4,			//uint8_t sourceColorMode;
 
-		(void*)desAddr,				//void *destinationAddress;
+		(void*)desAddr,			//void *destinationAddress;
 		(uint16_t)desOffset,	//uint16_t destinationOffset;
-		colorMode::RGB888,			//uint8_t destinationColorMode;
+		colorMode::RGB888,		//uint8_t destinationColorMode;
 
-		Size{srcSize}				//Size size;
+		Size{srcSize},			//Size size;
+		color.getRgb888Code()	//uint32_t color;
 	};
 	
 	dma2d.lock();
@@ -413,6 +418,63 @@ void draw(Rgb888 &des, const Bmp888 *bmp, Position pos)
 
 	//mMutex.unlock();
 }
+
+void draw(Rgb888 &des, const Bmp565 *bmp, Position pos)
+{
+	uint16_t desOffset, srcOffset, buf;
+	uint8_t *desAddr;
+	uint16_t *srcAddr, width, height;
+	Size desSize, srcSize;
+
+	desSize = des.getSize();
+	srcSize = Size{bmp->width, bmp->height};
+
+	if (pos.x >= desSize.width || pos.y >= desSize.height)
+		return;
+
+	if (pos.x + srcSize.width > desSize.width)
+	{
+		buf = srcSize.width;
+		srcSize.width = desSize.width - pos.x;
+		srcOffset = buf - srcSize.width;
+	}
+	else
+		srcOffset = 0;
+
+	if (pos.y + srcSize.height > desSize.height)
+		srcSize.height = desSize.height - pos.y;
+
+	desOffset = desSize.width - srcSize.width;
+
+	desAddr = (uint8_t *)des.getFrameBuffer();
+	if (desAddr == 0)
+		return;
+	desAddr = &desAddr[pos.y * desSize.width * 3 + pos.x * 3];
+
+	srcAddr = (uint16_t *)bmp->data;
+	if (srcAddr == 0)
+		return;
+
+	using namespace define::dma2d;
+	Dma2d::BlendConfig config = 
+	{
+		(void*)srcAddr,		//void *sourceAddress;
+		(uint16_t)srcOffset,//uint16_t sourceOffset;
+		colorMode::RGB565,	//uint8_t sourceColorMode;
+
+		(void*)desAddr,		//void *destinationAddress;
+		(uint16_t)desOffset,//uint16_t destinationOffset;
+		colorMode::RGB888,	//uint8_t destinationColorMode;
+
+		srcSize	//Size size;
+	};
+	
+	dma2d.lock();
+	dma2d.blend(config);
+	dma2d.waitUntilComplete();
+	dma2d.unlock();
+}
+
 }
 
 #endif

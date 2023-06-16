@@ -72,10 +72,4 @@ J1939Frame Can::generateJ1939Frame(uint8_t priority, uint16_t pgn, uint8_t sa, u
 	return buf;
 }
 
-void Can::setIsrForEvent(void (*func)(error code))
-{
-	mIsrForEvent = func;
-}
-
 #endif
-

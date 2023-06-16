@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,15 +9,16 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(STM32F7) || defined(GD32F4)
+#if defined(STM32F1) || defined(STM32F4) || defined(STM32F7) || defined(GD32F4)
 
 #include <drv/peripheral.h>
 #include <drv/Exti.h>
@@ -34,7 +35,7 @@ error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void))
 	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
 
 	if (pin > 15)
-		return Error::INDEX_OVER;
+		return error::INDEX_OVER;
 
 	mTriggerFlag[pin] = false;
 	mIsr[pin] = func;
@@ -44,7 +45,7 @@ error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, void (*func)(void))
 	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
 	setBitData(peri[EXTI_REG::IMR], true, pin);
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
@@ -52,7 +53,7 @@ error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
 	volatile uint32_t* peri = (volatile uint32_t*)EXTI;
 
 	if (pin > 15)
-		return Error::INDEX_OVER;
+		return error::INDEX_OVER;
 
 	mTriggerFlag[pin] = true;
 	mTriggerNum[pin] = trigger;
@@ -62,7 +63,7 @@ error Exti::add(Gpio &gpio, uint8_t pin, uint8_t mode, int32_t  trigger)
 	setBitData(peri[EXTI_REG::FTSR], (Exti::FALLING & mode) == Exti::FALLING, pin);
 	setBitData(peri[EXTI_REG::IMR], true, pin);
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 void Exti::isr(int32_t  num)

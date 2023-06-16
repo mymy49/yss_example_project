@@ -48,6 +48,7 @@
 #include <drv/I2s.h>
 #include <drv/Radio.h>
 #include <drv/Pdm.h>
+#include <drv/Pbus.h>
 
 // CLOCK
 extern Clock clock;
@@ -60,7 +61,7 @@ extern Nvic nvic;
 extern Exti exti;
 #endif
 
-#if defined(STM32F1) || defined(GD32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
+#if defined(STM32F1) || defined(STM32F0) || defined(STM32F7) || defined(GD32F4) || defined(STM32F4) || defined(NRF52840_XXAA)
 
 // ADC
 #ifndef YSS_DRV_ADC_UNSUPPORTED
@@ -680,17 +681,37 @@ extern Radio radio;
 #endif
 #endif
 
-#elif defined(STM32F4_N)
+#elif defined(STM32F446xx)
 
 #include <targets/st/instance_stm32f446xx.h>
+
+#elif defined(STM32F429xx)
+
+#include <targets/st/instance_stm32f429xx.h>
+
+#elif defined(STM32F767xx)
+
+#include <targets/st/instance_stm32f767xx.h>
+
+#elif defined(STM32F746xx)
+
+#include <targets/st/instance_stm32f746xx.h>
 
 #elif defined(EFM32PG22)
 
 #include <targets/siliconlabs/instance_efm32pg22.h>
 
-#elif defined(STM32F1_N)
+#elif defined(STM32F1_N) || defined(GD32F1)
 
 #include <targets/st/instance_stm32f103xx.h>
+
+#elif defined(STM32F0_N)
+
+#include <targets/st/instance_stm32f030xx.h>
+
+#elif defined(EFR32BG22)
+
+#include <targets/siliconlabs/instance_efr32bg22.h>
 
 #endif
 

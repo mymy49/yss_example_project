@@ -27,7 +27,7 @@
 class TftLcdDriver;
 
 // 이순신 OS의 스케줄러, 뮤텍스와 MCU의 DMA, 외부 인터럽트 등을 활성화 한다.
-void initYss(void);
+void initializeYss(void);
 
 // 사용하는 TFT LCD를 등록한다.
 void setSystemTftLcd(TftLcdDriver &lcd);

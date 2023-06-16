@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,6 +32,7 @@ namespace Task
 	Gauge *gGauge1;
 	Gauge *gGauge2;
 	Gauge *gGauge3;
+	Panel *gPanel;
 
 	static void thread_displayGauge(void)
 	{
@@ -82,6 +84,7 @@ namespace Task
 		gGauge1 = new Gauge;
 		gGauge2 = new Gauge;
 		gGauge3 = new Gauge;
+		gPanel = new Panel;
 
 		frm->setBackgroundColor(0xA0, 0xA5, 0xA8);
 
@@ -109,9 +112,12 @@ namespace Task
 		gGauge3->makeBg();
 		gGauge3->setPosition(gaugePos3);
 
+		gPanel->setSize(100, 100);
+
 		frm->add(gGauge1);
-		frm->add(gGauge2);
-		frm->add(gGauge3);
+		frm->add(gPanel);
+		//frm->add(gGauge2);
+		//frm->add(gGauge3);
 
 		setFrame(frm);
 		gTitleChangeStartFlag = true;
@@ -126,17 +132,17 @@ namespace Task
 				gGauge1->setValue(lastValue1);
 			}
 
-			if(gValue2 != lastValue2)
-			{
-				lastValue2 = gValue2;
-				gGauge2->setValue(lastValue2);
-			}
+			//if(gValue2 != lastValue2)
+			//{
+			//	lastValue2 = gValue2;
+			//	gGauge2->setValue(lastValue2);
+			//}
 
-			if(gValue3 != lastValue3)
-			{
-				lastValue3 = gValue3;
-				gGauge3->setValue(lastValue3);
-			}
+			//if(gValue3 != lastValue3)
+			//{
+			//	lastValue3 = gValue3;
+			//	gGauge3->setValue(lastValue3);
+			//}
 
 			thread::yield();
 		}
@@ -150,37 +156,37 @@ namespace Task
 		
 		while(1)
 		{
-			thread::delay(5000);
+			thread::delay(500);
 			gGauge1->setTitle("値1");
 			gGauge1->makeBg();
-			gGauge2->setTitle("値2");
-			gGauge2->makeBg();
-			gGauge3->setTitle("値3");
-			gGauge3->makeBg();
+			//gGauge2->setTitle("値2");
+			//gGauge2->makeBg();
+			//gGauge3->setTitle("値3");
+			//gGauge3->makeBg();
 			
-			thread::delay(5000);
+			thread::delay(500);
 			gGauge1->setTitle("значення1");
 			gGauge1->makeBg();
-			gGauge2->setTitle("значення2");
-			gGauge2->makeBg();
-			gGauge3->setTitle("значення3");
-			gGauge3->makeBg();
+			//gGauge2->setTitle("значення2");
+			//gGauge2->makeBg();
+			//gGauge3->setTitle("значення3");
+			//gGauge3->makeBg();
 
-			thread::delay(5000);
+			thread::delay(500);
 			gGauge1->setTitle("ค่า1");
 			gGauge1->makeBg();
-			gGauge2->setTitle("ค่า2");
-			gGauge2->makeBg();
-			gGauge3->setTitle("ค่า3");
-			gGauge3->makeBg();
+			//gGauge2->setTitle("ค่า2");
+			//gGauge2->makeBg();
+			//gGauge3->setTitle("ค่า3");
+			//gGauge3->makeBg();
 
-			thread::delay(5000);
+			thread::delay(500);
 			gGauge1->setTitle("Value1");
 			gGauge1->makeBg();
-			gGauge2->setTitle("Value2");
-			gGauge2->makeBg();
-			gGauge3->setTitle("Value3");
-			gGauge3->makeBg();
+			//gGauge2->setTitle("Value2");
+			//gGauge2->makeBg();
+			//gGauge3->setTitle("Value3");
+			//gGauge3->makeBg();
 		}
 	}
 	
@@ -205,6 +211,15 @@ namespace Task
 		}
 	}
 
+	void thread_test(void)
+	{
+		while(1)
+		{
+			thread::delay(10);
+//			gPanel->update();
+		}
+	}
+
 	error displayGauge(FunctionQueue *obj)
 	{
 		lock(); // unlock()을 만날 때까지 외부에서 이 함수를 강제 종료 시키지 못한다.
@@ -212,7 +227,8 @@ namespace Task
 		clearTask();
 		addThread(thread_displayGauge, 2048);
 		addThread(thread_upcountValue, 2048);
-		addThread(thread_changeTitle, 2048);
+//		addThread(thread_changeTitle, 2048);
+		addThread(thread_test, 2048);
 		unlock();
 
 		return error::ERROR_NONE;

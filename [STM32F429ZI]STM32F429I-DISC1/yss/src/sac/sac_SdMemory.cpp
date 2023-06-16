@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -179,7 +180,7 @@ error SdMemory::connect(void)
 
 	// CMD8 (SD메모리가 SD ver 2.0을 지원하는지 확인)
 	result = sendCmd(8, 0x000001AA, RESPONSE_SHORT);
-	if (result != Error::NONE) // 2.7V ~ 3.6V 동작 설정
+	if (result != error::ERROR_NONE) // 2.7V ~ 3.6V 동작 설정
 		goto error;
 	if (getShortResponse() != 0x000001AA)
 		goto error;
@@ -190,7 +191,7 @@ error SdMemory::connect(void)
 	// ACMD41
 	// 지원하는 전원을 확인
 	result = sendAcmd(41, ocr | HCS, RESPONSE_SHORT);
-	if (result != Error::CMD_CRC_FAIL)
+	if (result != error::CMD_CRC_FAIL)
 	{
 		// 실패시 현재 장치는 MMC
 		goto error;
@@ -204,7 +205,7 @@ error SdMemory::connect(void)
 	do
 	{
 		result = sendAcmd(41, ocr | HCS, RESPONSE_SHORT);
-		if (result != Error::CMD_CRC_FAIL)
+		if (result != error::CMD_CRC_FAIL)
 			goto error;
 	} while ((getShortResponse() & BUSY) == 0);
 
@@ -218,12 +219,12 @@ error SdMemory::connect(void)
 
 	// CMD2 (CID를 얻어옴)
 	result = sendCmd(2, 0, RESPONSE_LONG);
-	if (result != Error::NO_RESPONSE_CMD)
+	if (result != error::NO_RESPONSE_CMD)
 		goto error;
 
 	// CMD3 (새로운 RCA 주소와 SD메모리의 상태를 얻어옴)
 	result = sendCmd(3, 0, RESPONSE_SHORT);
-	if (result != Error::NONE)
+	if (result != error::ERROR_NONE)
 		goto error;
 	mRca = getShortResponse() & 0xffff0000;
 
@@ -233,14 +234,14 @@ error SdMemory::connect(void)
 
 	// CID 레지스터 읽어오기
 	result = sendCmd(10, mRca, RESPONSE_LONG);
-	if(result != Error::NO_RESPONSE_CMD)
+	if(result != error::NO_RESPONSE_CMD)
 		goto error;
 
 	getLongResponse(cbuf);
 
 	// CSD 레지스터 읽어오기 
 	result = sendCmd(9, mRca, RESPONSE_LONG);
-	if(result != Error::NO_RESPONSE_CMD)
+	if(result != error::NO_RESPONSE_CMD)
 		goto error;
 
 	getLongResponse(cbuf);
@@ -264,7 +265,7 @@ error SdMemory::connect(void)
 	mConnectedFlag = true;
 	
 	delete cbuf;
-	return Error::NONE;
+	return error::ERROR_NONE;
 
 error:
 	setSdioClockEn(false);
@@ -294,12 +295,12 @@ error SdMemory::sendAcmd(uint8_t cmd, uint32_t arg, uint8_t responseType)
 
 	// CMD55 - 다음 명령을 ACMD로 인식 하도록 사전에 보냄
 	result = sendCmd(55, mRca, RESPONSE_SHORT);
-	if (result != Error::NONE) 
+	if (result != error::ERROR_NONE) 
 		return result;
 
 	*(uint32_t*)(&status) = getShortResponse();
 	if (status.appCmd == 0 || status.readyForData == 0)
-		return Error::NOT_READY;
+		return error::NOT_READY;
 	
 	// 이번에 전송하는 명령을 ACMD로 인식
 	result = sendCmd(cmd, arg, responseType);
@@ -350,7 +351,7 @@ uint32_t SdMemory::getNumOfBlock(void)
 //	if (mDetectPin.port->getData(mDetectPin.pin) == false && mConnectedFlag == false)
 //	{
 //		setPower(true);
-//		if(sdmmc.connect() == Error::NONE)
+//		if(sdmmc.connect() == error::ERROR_NONE)
 //		{
 //			mConnectedFlag = true;
 //			sdmmc.unlock();
@@ -394,7 +395,7 @@ error SdMemory::read(uint32_t block, void *des)
 
 	readyRead(des, 512);
 	result = sendCmd(17, block, RESPONSE_SHORT);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		goto error_handle;
 	result = waitUntilReadComplete();
 	mLastReadTime.reset();
@@ -413,7 +414,7 @@ error SdMemory::write(uint32_t block, void *src)
 
 	readyWrite(src, 512);
 	result = sendCmd(24, block, RESPONSE_SHORT);
-	if(result != Error::NONE)
+	if(result != error::ERROR_NONE)
 		goto error_handle;
 	
 	result = waitUntilWriteComplete();

@@ -19,28 +19,23 @@
 #ifndef YSS_DRV_DMA__H_
 #define YSS_DRV_DMA__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 
-#if defined(STM32F1) || defined(GD32F1)
-typedef volatile uint32_t		YSS_DMA_Peri;
-typedef volatile uint32_t		YSS_DMA_Channel_Peri;
-#include <targets/st_gigadevice/define_dma_stm32_gd32f0_f1.h>
-#include <targets/st_gigadevice/map_dma_stm32_gd32f1.h>
-#elif defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
+#if defined(STM32F4) || defined(GD32F4) || defined(STM32F7)
 typedef volatile uint32_t		YSS_DMA_Peri;
 typedef volatile uint32_t		YSS_DMA_Channel_Peri;
 #include <targets/st_gigadevice/define_dma_stm32_gd32f4_f7.h>
 #include <targets/st_gigadevice/map_dma_stm32_gd32f4_f7.h>
-#elif defined(STM32F0)
-typedef volatile uint32_t		YSS_DMA_Peri;
-typedef volatile uint32_t		YSS_DMA_Channel_Peri;
-#include <targets/st_gigadevice/define_dma_stm32_gd32f4_f7.h>
-#include <targets/st_gigadevice/map_dma_stm32f0.h>
-#elif defined(STM32F4_N)
+#elif defined(STM32F0_N) || defined(GD32F1) || defined(STM32F1_N)
+typedef DMA_TypeDef				YSS_DMA_Peri;
+typedef DMA_Channel_TypeDef		YSS_DMA_Channel_Peri;
+#elif defined(STM32F4_N) || defined(STM32F7_N)
 typedef DMA_TypeDef				YSS_DMA_Peri;
 typedef DMA_Stream_TypeDef		YSS_DMA_Channel_Peri;
-#include <targets/st_gigadevice/define_dma_stm32_gd32f4_f7.h>
-#include <targets/st_gigadevice/map_dma_stm32_gd32f4_f7.h>
+#elif defined(EFM32PG22) || defined(EFR32BG22)
+typedef LDMA_TypeDef				YSS_DMA_Peri;
+typedef LDMA_CH_TypeDef				YSS_DMA_Channel_Peri;
+typedef LDMAXBAR_CH_TypeDef			YSS_DMA_Channel_Src;
 #else
 #define YSS_DRV_DMA_UNSUPPORTED
 typedef volatile uint32_t		YSS_DMA_Peri;
@@ -53,32 +48,29 @@ typedef volatile uint32_t		YSS_DMA_Channel_Peri;
 
 class Dma : public Drv
 {
-  protected :
-	YSS_DMA_Peri *mDma;
-	YSS_DMA_Channel_Peri *mPeri;
-	bool mCompleteFlag, mErrorFlag;
-	int32_t  mRemainSize, mAddr;
-	threadId mThreadId;
-
   public:
 	struct Config
 	{
 		YSS_DMA_Peri *dma;
 		YSS_DMA_Channel_Peri *peri;
+#if defined(EFM32PG22) || defined(EFR32BG22)
+		YSS_DMA_Channel_Src *src;
+		uint8_t channelNumber;
+#endif
 	};
 
 	struct DmaInfo
 	{
-		int32_t  controlRegister1;
-		int32_t  controlRegister2;
-		int32_t  controlRegister3;
+		uint32_t  controlRegister1;
+		uint32_t  controlRegister2;
+		uint32_t  controlRegister3;
 		void *dataRegister;
 	};
 
 	Dma(const Drv::Config drvConfig, const Config dmaConfig);
 	
 	// DMA를 초기화 하는 함수이다.
-	void init(void);
+	void initialize(void);
 
 	// DMA로 데이터를 송신 또는 수신하는 함수이다. 데이터의 전송이 완료되거나 전송중 에러가 발생하면 반환된다.
 	// 아래 send(), receive() 역활과 같은 역할을 한다. 최근 업데이트에서 send()와 receive() 함수의 구분이
@@ -90,9 +82,9 @@ class Dma : public Drv
 	//		DMA 전송 설정 정보이다. 
 	// void *src
 	//		전송할 데이터의 버퍼이다.
-	// int32_t size
-	//		전송할 데이터의 전체 크기이다.
-	error transfer(DmaInfo &dmaInfo, void *data, int32_t  size);
+	// int32_t count
+	//		전송할 데이터의 전체 갯수이다.
+	error transfer(DmaInfo &dmaInfo, void *data, int32_t  count);
 
 	// DMA로 데이터를 송/수신을 준비하는 함수이다. 데이터의 송/수신이 완료되거나 송/수신중 에러가 발생하면 반환된다.
 	// 자체적으로 직접 전송을 시작하지는 않고, 하드웨어가 부가적인 흐름을 만들어야 하는 전송에서 사용된다.
@@ -171,6 +163,17 @@ class Dma : public Drv
 	// 인터럽트 벡터에서 호출되는 함수이다.
 	// 사용자 임의의 호출은 금지한다.
 	virtual void isr(void) = 0;
+
+  protected :
+	YSS_DMA_Peri *mDma;
+	YSS_DMA_Channel_Peri *mPeri;
+#if defined(EFM32PG22) || defined(EFR32BG22)
+	YSS_DMA_Channel_Src *mSrc;
+	uint8_t mChannelNumber;
+#endif
+	bool mCompleteFlag, mErrorFlag;
+	int32_t mRemainSize, mAddr;
+	threadId mThreadId;
 };
 
 class DmaChannel1 : public Dma
@@ -185,7 +188,8 @@ class DmaChannel1 : public Dma
 
 	DmaChannel1(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel2 : public Dma
@@ -200,7 +204,8 @@ class DmaChannel2 : public Dma
 
 	DmaChannel2(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel3 : public Dma
@@ -215,7 +220,8 @@ class DmaChannel3 : public Dma
 
 	DmaChannel3(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel4 : public Dma
@@ -230,7 +236,8 @@ class DmaChannel4 : public Dma
 
 	DmaChannel4(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel5 : public Dma
@@ -245,7 +252,8 @@ class DmaChannel5 : public Dma
 
 	DmaChannel5(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel6 : public Dma
@@ -260,7 +268,8 @@ class DmaChannel6 : public Dma
 
 	DmaChannel6(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel7 : public Dma
@@ -275,7 +284,8 @@ class DmaChannel7 : public Dma
 
 	DmaChannel7(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel8 : public Dma
@@ -290,7 +300,8 @@ class DmaChannel8 : public Dma
 
 	DmaChannel8(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel9 : public Dma
@@ -305,7 +316,8 @@ class DmaChannel9 : public Dma
 
 	DmaChannel9(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel10 : public Dma
@@ -320,7 +332,8 @@ class DmaChannel10 : public Dma
 
 	DmaChannel10(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel11 : public Dma
@@ -335,7 +348,8 @@ class DmaChannel11 : public Dma
 
 	DmaChannel11(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel12 : public Dma
@@ -350,7 +364,8 @@ class DmaChannel12 : public Dma
 
 	DmaChannel12(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel13 : public Dma
@@ -365,7 +380,8 @@ class DmaChannel13 : public Dma
 
 	DmaChannel13(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel14 : public Dma
@@ -380,7 +396,8 @@ class DmaChannel14 : public Dma
 
 	DmaChannel14(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel15 : public Dma
@@ -395,7 +412,8 @@ class DmaChannel15 : public Dma
 
 	DmaChannel15(const Drv::Config drvConfig, const Dma::Config dmaConfig, const Config config);
 
-	void isr(void);
+	virtual void isr(void);
+
 };
 
 class DmaChannel16 : public Dma

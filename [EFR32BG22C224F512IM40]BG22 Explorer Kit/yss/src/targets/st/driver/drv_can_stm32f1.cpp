@@ -41,83 +41,107 @@ Can::Can(const Drv::Setup drvSetup, const Setup setup) : Drv(drvSetup)
 error Can::initialize(Config_t config)
 {
 	uint32_t clk = getClockFrequency(), ts1, ts2, pres;
-	
-	// Baudrate 계산
+
 	clk /= config.baudrate;
 
-	for(uint32_t i=0;i<4;i++)
-	{
-		ts1 = (uint32_t)((float)clk * config.samplePoint);
-		ts2 = clk - ts1;
-
-		switch(i)
-		{
-		case 0 :
-			break;
-		
-		case 1 :
-			ts1++;
+	ts1 = (uint32_t)((float)clk * config.samplePoint);
+	ts2 = clk - ts1;
+	for (pres = ts2; pres > 0; pres--)
+		if (((ts1 % pres) == 0) && ((ts2 % pres) == 0))
 			break;
 
-		case 2 :
-			ts1--;
+	ts1 -= pres;
+	ts1 /= pres;
+	ts2 /= pres;
+
+	if (pres > 1 && pres <= 1024)
+		pres--;
+	else
+		goto retry1;
+
+	if (ts1 > 0 && ts1 <= 16)
+		ts1--;
+	else
+		goto retry1;
+
+	if (ts2 > 0 && ts2 <= 8)
+		ts2--;
+	else
+		goto retry1;
+
+	goto next;
+retry1:
+
+	ts1 = (uint32_t)((float)clk * config.samplePoint);
+	ts1++;
+
+	ts2 = clk - ts1;
+	for (pres = ts2; pres > 0; pres--)
+		if (((ts1 % pres) == 0) && ((ts2 % pres) == 0))
 			break;
-		
-		case 3 :
-			return error::WRONG_CONFIG;
-		}
 
-		for (pres = ts2; pres > 0; pres--)
-			if (((ts1 % pres) == 0) && ((ts2 % pres) == 0))
-				break;
+	ts1 -= pres;
+	ts1 /= pres;
+	ts2 /= pres;
 
-		ts1 = (ts1 - pres) / pres;
-		ts2 /= pres;
+	if (pres > 1 && pres <= 1024)
+		pres--;
+	else
+		goto retry2;
 
-		if (pres > 1 && pres <= 1024)
-			pres--;
-		else
-			continue;
+	if (ts1 > 0 && ts1 <= 16)
+		ts1--;
+	else
+		goto retry2;
 
-		if (0 < ts1 && ts1 <= 16)
-			ts1--;
-		else
-			continue;
+	if (ts2 > 0 && ts2 <= 8)
+		ts2--;
+	else
+		goto retry2;
 
-		if (0 < ts2 && ts2 <= 8)
-			ts2--;
-		else
-			continue;
+	goto next;
+retry2:
+	ts1 = (uint32_t)((float)clk * config.samplePoint);
+	ts1--;
 
-		break;		
-	}
+	ts2 = clk - ts1;
+	for (pres = ts2; pres > 0; pres--)
+		if (((ts1 % pres) == 0) && ((ts2 % pres) == 0))
+			break;
 
-	setFieldData(mDev->MCR, CAN_MCR_INRQ_Msk, CAN_MODE_INIT, CAN_MCR_INRQ_Pos); // CAN init 모드 진입
-	while (getFieldData(mDev->MSR, CAN_MCR_INRQ_Msk, CAN_MCR_INRQ_Pos) != CAN_MODE_INIT)
+	ts1 -= pres;
+	ts1 /= pres;
+	ts2 /= pres;
+
+	if (pres > 1 && pres <= 1024)
+		pres--;
+	else
+		return error::WRONG_CONFIG;
+
+	if (ts1 > 0 && ts1 <= 16)
+		ts1--;
+	else
+		return error::WRONG_CONFIG;
+
+	if (ts2 > 0 && ts2 <= 8)
+		ts2--;
+	else
+		return error::WRONG_CONFIG;
+
+next:
+	setFieldData(mDev->MCR, 0x3 << 0, CAN_MODE_INIT, 0);	// CAN init 모드 진입
+	while (getFieldData(mDev->MSR, 0x3, 0) != CAN_MODE_INIT)
 		thread::yield();
 	
-	setBitData(mDev->MCR, true, CAN_MCR_NART_Pos);
-	setBitData(mDev->BTR, config.enableSilent, CAN_BTR_SILM_Pos); // Silent 통신 모드
-	setBitData(mDev->BTR, config.enableLoopback, CAN_BTR_LBKM_Pos); // Loopback 통신 모드 
+	setBitData(mDev->MCR, true, 4);	// Auto retransmission Disable
 	
-	// Baudrate 설정
-	setThreeFieldData(mDev->BTR,	CAN_BTR_BRP_Msk, pres, CAN_BTR_BRP_Pos, 
-									CAN_BTR_TS1_Msk, ts1, CAN_BTR_TS1_Pos, 
-									CAN_BTR_TS2_Msk, ts2, CAN_BTR_TS2_Pos); 
-	
-	mDev->IER = CAN_IER_FMPIE0_Msk | 
-				CAN_IER_SLKIE_Msk |
-				CAN_IER_WKUIE_Msk |
-				CAN_IER_ERRIE_Msk |
-				CAN_IER_LECIE_Msk |
-				CAN_IER_BOFIE_Msk |
-				CAN_IER_EPVIE_Msk |
-				CAN_IER_EWGIE_Msk |
-				CAN_IER_FOVIE0_Msk;
-			
-	// 인터럽트 상태 레지스터 클리어		
-	mDev->MSR = CAN_MSR_SLAKI_Msk | CAN_MSR_WKUI_Msk | CAN_MSR_ERRI_Msk;
+	//setBitData(mDev->BTR, true, 31);	// Silent 통신 모드
+	//setBitData(mDev->BTR, true, 30);	// Loopback 통신 모드 
 
+	setThreeFieldData(mDev->BTR, 0x3FF << 0, pres, 0, 0xF << 16, ts1, 16, 0x7 << 20, ts2, 20); // Baudrate 설정
+	
+	setBitData(mDev->IER, true, 1); // Fifo0 Pending Interrupt Enable
+	
 	if (mRxBufferDepth != config.rxBufferDepth)
 	{
 		if (mCanFrame)
@@ -134,8 +158,8 @@ error Can::initialize(Config_t config)
 	mHead = 0;
 	mTail = 0;
 	
-	setBitData(mDev->MCR, true, CAN_MCR_ABOM_Pos); // Automatic bus-off recovery 활성화
-	setFieldData(mDev->MCR, CAN_MCR_INRQ_Msk, CAN_MODE_NORMAL, CAN_MCR_INRQ_Pos); // CAN normal 모드 진입
+	setBitData(mDev->MCR, true, 6);	// Automatic bus-off recovery 활성화
+	setFieldData(mDev->MCR, 0x3 << 0, CAN_MODE_NORMAL, 0);	// CAN init 모드 진입
 
 	return error::ERROR_NONE;
 }
@@ -276,7 +300,7 @@ error Can::send(CanFrame packet)
 	*des-- = *src--;
 	*des-- = *src--;
 	*des-- = *src--;
-	*des-- = *src--; // 이 시점에 송신 가능 상태가 되고 버스가 준비되면 전송이 시작됨
+	*des-- = *src--; // 이 시점에 송신이 시작됨
 
 	return error::ERROR_NONE;
 }
@@ -299,35 +323,6 @@ void Can::isrRx(void)
 	push((CanFrame*)src);
 	setBitData(mDev->RF0R, true, 5); // Receive FIFO0 dequeue
 	setBitData(mDev->IER, true, 1); // Fifo0 Pending Interrupt Enable
-}
-
-void Can::isrEvent(void)
-{
-	uint32_t sr = mDev->MSR;
-
-	if(sr)
-	{
-		if(sr & CAN_MSR_SLAKI_Msk)
-		{
-			if(mIsrForEvent)
-				mIsrForEvent(error::SLEEP_ACK_INTERRUP);
-			mDev->MSR = CAN_MSR_SLAKI_Msk;
-		}
-		
-		if(sr & CAN_MSR_WKUI_Msk)
-		{
-			if(mIsrForEvent)
-				mIsrForEvent(error::WAKEUP_INTERRUPT);
-			mDev->MSR = CAN_MSR_WKUI_Msk;
-		}
-
-		if(sr & CAN_MSR_ERRI_Msk)
-		{
-			if(mIsrForEvent)
-				mIsrForEvent(error::ERROR_INTERRUP);
-			mDev->MSR = CAN_MSR_ERRI_Msk;
-		}
-	}
 }
 
 #endif

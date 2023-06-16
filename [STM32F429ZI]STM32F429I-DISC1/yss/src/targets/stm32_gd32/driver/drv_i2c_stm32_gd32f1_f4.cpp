@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,15 +9,16 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4)
+#if defined(STM32F1) || defined(STM32F4)
 
 #include <drv/peripheral.h>
 #include <drv/I2c.h>
@@ -38,7 +39,7 @@ I2c::I2c(const Drv::Config drvConfig, const Config config) : Drv(drvConfig)
 	mDir = TRANSMIT;
 }
 
-bool I2c::init(uint8_t speed)
+error I2c::initializeAsMain(uint8_t speed)
 {
 	uint32_t clk = getClockFrequency(), mod;
 	
@@ -63,7 +64,7 @@ bool I2c::init(uint8_t speed)
 			clk++;
 		break;
 	default:
-		return false;
+		return error::WRONG_CONFIG;
 	}
 
 	// Status Clear
@@ -74,10 +75,10 @@ bool I2c::init(uint8_t speed)
 	setFieldData(mPeri[I2C_REG::CCR], 0xFFF << 0, clk, 0);	// 분주 설정
 	setBitData(mPeri[I2C_REG::CR1], true, 0);				// I2C 활성화
 
-	return true;
+	return error::ERROR_NONE;
 }
 
-bool I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
+error I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
 {
 	uint8_t *data = (uint8_t *)src;
 	uint64_t endingTime = runtime::getMsec() + timeout;
@@ -94,15 +95,15 @@ bool I2c::send(uint8_t addr, void *src, uint32_t size, uint32_t timeout)
 		if (endingTime <= runtime::getMsec())
 		{
 			mPeri[I2C_REG::CR2] &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
-			return false;
+			return error::TIMEOUT;
 		}
 		thread::yield();
 	}
 
-	return true;
+	return error::ERROR_NONE;
 }
 
-bool I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
+error I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 {
 	uint64_t endingTime = runtime::getMsec() + timeout;
 	uint8_t *data = (uint8_t *)des;
@@ -111,7 +112,7 @@ bool I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 	switch (size)
 	{
 	case 0:
-		return true;
+		return error::ERROR_NONE;
 	case 1:
 		setBitData(mPeri[I2C_REG::CR1], false, 10);	// ACK 비활성
 		break;
@@ -134,14 +135,14 @@ bool I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 		if (endingTime <= runtime::getMsec())
 		{
 			mPeri[I2C_REG::CR2] &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
-			return false;
+			return error::TIMEOUT;
 		}
 		thread::yield();
 	}
 	
 	stop();
 
-	return true;
+	return error::TIMEOUT;
 error:
 	mPeri[I2C_REG::CR2] &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
 	stop();

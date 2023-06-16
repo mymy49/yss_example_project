@@ -36,6 +36,9 @@
 // 최대 등록 가능한 쓰레드의 수
 #define MAX_THREAD			16
 
+// 쓰레드의 스택을 0xAA 패턴으로 채우기 (true, false)
+#define FILL_THREAD_STACK			true
+
 // ####################### GUI 설정 #######################
 // GUI library Enable (true, false)
 #define USE_GUI				true
@@ -45,6 +48,9 @@
 #define NUM_OF_YSS_KEY		4
 
 // ###################### 주변 장치 활성화 ######################
+// 주의 
+// 1. TIMER와 PWM은 실제 동일한 장치지만 OS 구조상 별도의 장치로 표현한다. 그러므로 동일한 번호의 PWM과 TIMER는 동시에 활성화 되지 못한다.
+
 // UART 활성화
 //#define UART1_ENABLE
 //#define UART2_ENABLE

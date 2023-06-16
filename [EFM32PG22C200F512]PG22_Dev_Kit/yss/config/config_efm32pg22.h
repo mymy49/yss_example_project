@@ -16,7 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// GD32F103xb 계열에서 유효한 설정이 담긴 참고용 파일이다.
+// EFM32PG22 계열에서 유효한 설정이 담긴 참고용 파일이다.
 // 해당 파일을 사용자 프로젝트의 include 경로에 복사하고 config.h로 변경한다.
 
 #ifndef YSS_CONFIG__H_
@@ -35,14 +35,20 @@
 // 최대 등록 가능한 쓰레드의 수
 #define MAX_THREAD 10
 
+// 쓰레드의 스택을 0xAA 패턴으로 채우기 (true, false)
+#define FILL_THREAD_STACK			true
+
 // ####################### KEY 설정 #######################
 // 최대 KEY 생성 가능 갯수 설정 (0 ~ ), 0일 경우 기능 꺼짐
 #define NUM_OF_YSS_KEY 1
 
 // ###################### 주변 장치 활성화 ######################
+// 주의 
+// 1. UART와 SPI는 실제 동일한 장치지만 OS 구조상 별도의 장치로 표현한다. 그러므로 동일한 번호의 UART, SPI는 동시에 활성화 되지 못한다.
+
 // UART 활성화
-#define UART0_ENABLE
-#define UART1_ENABLE
+//#define UART0_ENABLE
+//#define UART1_ENABLE
 
 // TIMER 활성화
 #define TIM0_ENABLE
@@ -52,7 +58,11 @@
 //#define TIM4_ENABLE
 
 // PDM 활성화
-#define PDM0_ENABLE
+//#define PDM0_ENABLE
+
+// SPI 활성화
+//#define SPI0_ENABLE
+//#define SPI1_ENABLE
 
 #endif
 

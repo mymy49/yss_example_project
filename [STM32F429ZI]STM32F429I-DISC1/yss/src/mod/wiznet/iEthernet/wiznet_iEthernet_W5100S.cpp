@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -147,7 +148,7 @@ W5100S::W5100S(void)
 	}
 }
 
-bool W5100S::init(Config config)
+bool W5100S::initialize(Config config)
 {
 	uint8_t reg;
 	uint32_t buf;
@@ -367,7 +368,7 @@ bool W5100S::setSocketInterruptEnable(uint8_t socketNumber, bool enable)
 error W5100S::sendSocketData(uint8_t socketNumber, void *src, uint16_t count)
 {
 	if(socketNumber > 3)
-		return Error::OUT_OF_RANGE;
+		return error::OUT_OF_RANGE;
 
 	uint8_t *csrc = (uint8_t*)src;
 	uint16_t ptr, dstMask, dstPtr, size;
@@ -396,13 +397,13 @@ error W5100S::sendSocketData(uint8_t socketNumber, void *src, uint16_t count)
 	writeRegister(calculateSocketAddress(socketNumber, ADDR::SOCKET_TX_WRITE_INDEX), &ptr, sizeof(ptr));
 
 	commandBypass(socketNumber, SEND);
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error W5100S::receiveSocketData(uint8_t socketNumber, void *des, uint16_t count)
 {
 	if(socketNumber > 3)
-		return Error::OUT_OF_RANGE;
+		return error::OUT_OF_RANGE;
 
 	uint8_t *cdes = (uint8_t*)des;
 	uint16_t ptr, dstMask, dstPtr, size;
@@ -431,7 +432,7 @@ error W5100S::receiveSocketData(uint8_t socketNumber, void *des, uint16_t count)
 	writeRegister(calculateSocketAddress(socketNumber, ADDR::SOCKET_RX_READ_INDEX), &ptr, sizeof(ptr));
 
 	commandBypass(socketNumber, RECV);
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 uint16_t W5100S::getTxFreeBufferSize(uint8_t socketNumber)

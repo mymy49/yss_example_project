@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F0)
+#if defined(STM32F1) || defined(STM32F0)
 
 #include <drv/peripheral.h>
 #include <targets/st_gigadevice/dma_stm32_gd32f1.h>
@@ -42,14 +42,14 @@ Dma::Dma(const Drv::Config drvConfig, const Config dmaConfig) : Drv(drvConfig)
 	mRemainSize = 0;
 }
 
-void Dma::init(void)
+void Dma::initialize(void)
 {
 }
 
 error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 {
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -57,7 +57,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = (uint32_t)buffer;
 		mAddr = (uint32_t)buffer;
@@ -70,7 +70,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = (uint32_t)buffer;
 		mRemainSize = 0;
@@ -83,7 +83,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 		mPeri[DMA_REG::CCR] = dmaInfo.controlRegister1;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
@@ -91,7 +91,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	uint32_t addr = (uint32_t)src;
 
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -99,7 +99,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = addr;
 		mAddr = addr;
@@ -114,7 +114,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = addr;
 		mRemainSize = 0;
@@ -135,15 +135,15 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	mPeri[DMA_REG::CCR] &= ~DMA_CCR_EN_Msk;
 
 	if(mErrorFlag)
-		return Error::DMA;
+		return error::DMA;
 	else
-		return Error::NONE;
+		return error::ERROR_NONE;
 }
 
 error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 {
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -151,7 +151,7 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (int32_t )dmaInfo.dataRegister;
+		mPeri->CPAR = (int32_t )dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = (int32_t )des;
 		mAddr = (int32_t )des;
@@ -166,7 +166,7 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (int32_t )dmaInfo.dataRegister;
+		mPeri->CPAR = (int32_t )dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = (int32_t )des;
 		mRemainSize = 0;
@@ -181,9 +181,9 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 	mPeri[DMA_REG::CCR] &= ~DMA_CCR_EN_Msk;
 
 	if (mErrorFlag)
-		return Error::DMA;
+		return error::DMA;
 	else
-		return Error::NONE;
+		return error::ERROR_NONE;
 }
 
 void Dma::stop(void)

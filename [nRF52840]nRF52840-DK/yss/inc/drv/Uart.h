@@ -65,7 +65,7 @@ class Uart : public Drv
 #else
 	struct Config
 	{
-		YSS_USART_Peri *peri;
+		YSS_USART_Peri *dev;
 	};
 #endif
 

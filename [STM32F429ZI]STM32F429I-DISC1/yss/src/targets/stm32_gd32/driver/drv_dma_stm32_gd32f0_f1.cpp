@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,15 +9,16 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F0)
+#if defined(STM32F1) || defined(STM32F0)
 
 #include <drv/peripheral.h>
 #include <targets/st_gigadevice/dma_stm32_gd32f1.h>
@@ -41,14 +42,14 @@ Dma::Dma(const Drv::Config drvConfig, const Config dmaConfig) : Drv(drvConfig)
 	mRemainSize = 0;
 }
 
-void Dma::init(void)
+void Dma::initialize(void)
 {
 }
 
 error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 {
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -56,7 +57,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = (uint32_t)buffer;
 		mAddr = (uint32_t)buffer;
@@ -69,7 +70,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = (uint32_t)buffer;
 		mRemainSize = 0;
@@ -82,7 +83,7 @@ error Dma::ready(DmaInfo &dmaInfo, void *buffer, int32_t  size)
 		mPeri[DMA_REG::CCR] = dmaInfo.controlRegister1;
 	}
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
@@ -90,7 +91,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	uint32_t addr = (uint32_t)src;
 
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -98,7 +99,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = addr;
 		mAddr = addr;
@@ -113,7 +114,7 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (uint32_t)dmaInfo.dataRegister;
+		mPeri->CPAR = (uint32_t)dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = addr;
 		mRemainSize = 0;
@@ -134,15 +135,15 @@ error Dma::send(DmaInfo &dmaInfo, void *src, int32_t  size)
 	mPeri[DMA_REG::CCR] &= ~DMA_CCR_EN_Msk;
 
 	if(mErrorFlag)
-		return Error::DMA;
+		return error::DMA;
 	else
-		return Error::NONE;
+		return error::ERROR_NONE;
 }
 
 error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 {
 	if(size == 0)
-		return Error::NO_DATA;
+		return error::NO_DATA;
 
 	mCompleteFlag = false;
 	mErrorFlag = false;
@@ -150,7 +151,7 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 
 	if (size > 0xF000)
 	{
-		mPeri[DMA_REG::CPAR] = (int32_t )dmaInfo.dataRegister;
+		mPeri->CPAR = (int32_t )dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = 0xF000;
 		mPeri[DMA_REG::CMAR] = (int32_t )des;
 		mAddr = (int32_t )des;
@@ -165,7 +166,7 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 	}
 	else
 	{
-		mPeri[DMA_REG::CPAR] = (int32_t )dmaInfo.dataRegister;
+		mPeri->CPAR = (int32_t )dmaInfo.dataRegister;
 		mPeri[DMA_REG::CNDTR] = size;
 		mPeri[DMA_REG::CMAR] = (int32_t )des;
 		mRemainSize = 0;
@@ -180,9 +181,9 @@ error Dma::receive(DmaInfo &dmaInfo, void *des, int32_t  size)
 	mPeri[DMA_REG::CCR] &= ~DMA_CCR_EN_Msk;
 
 	if (mErrorFlag)
-		return Error::DMA;
+		return error::DMA;
 	else
-		return Error::NONE;
+		return error::ERROR_NONE;
 }
 
 void Dma::stop(void)

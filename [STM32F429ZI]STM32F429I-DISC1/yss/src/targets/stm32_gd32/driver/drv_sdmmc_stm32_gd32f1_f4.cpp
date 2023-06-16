@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,23 +108,23 @@ error Sdmmc::sendCmd(uint8_t cmd, uint32_t arg, uint8_t responseType)
 	if(cmd != mLastResponseCmd)
 	{
 		mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
-		return Error::NO_RESPONSE_CMD;
+		return error::NO_RESPONSE_CMD;
 	}
 
 	mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
-	return Error::NONE;
+	return error::ERROR_NONE;
 
 error_handler:
 	mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
 
 	if(status & SDIO_STA_CTIMEOUT_Msk)
-		return Error::CMD_TIMEOUT;
+		return error::CMD_TIMEOUT;
 	else if(status & SDIO_STA_DTIMEOUT_Msk)
-		return Error::DATA_TIMEOUT;
+		return error::DATA_TIMEOUT;
 	else if(status & SDIO_STA_CCRCFAIL_Msk)
-		return Error::CMD_CRC_FAIL;
+		return error::CMD_CRC_FAIL;
 	else 
-		return Error::DATA_CRC_FAIL;
+		return error::DATA_CRC_FAIL;
 }
 
 
@@ -236,7 +237,7 @@ error Sdmmc::waitUntilReadComplete(void)
 		{
 			mRxDma->stop();
 			mRxDma->unlock();
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 		else if (status & (SDIO_STA_DCRCFAIL_Msk | SDIO_STA_DTIMEOUT_Msk | SDIO_STA_RXOVERR_Msk) || mRxDma->isError())
 			goto error_handle;
@@ -245,7 +246,7 @@ error Sdmmc::waitUntilReadComplete(void)
 			mRxDma->stop();
 			mRxDma->unlock();
 			mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
-			return Error::TIMEOUT;
+			return error::TIMEOUT;
 		}
 		thread::yield();
 	}
@@ -256,13 +257,13 @@ error_handle :
 	mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
 
 	if(status & SDIO_STA_DCRCFAIL_Msk)
-		return Error::DATA_CRC_FAIL;
+		return error::DATA_CRC_FAIL;
 	else if(status & SDIO_STA_DTIMEOUT_Msk)
-		return Error::DATA_TIMEOUT;
+		return error::DATA_TIMEOUT;
 	else if(status & SDIO_STA_RXOVERR_Msk)
-		return Error::RX_OVERRUN;
+		return error::RX_OVERRUN;
 	else 
-		return Error::DMA;
+		return error::DMA;
 }
 
 error Sdmmc::waitUntilWriteComplete(void)
@@ -282,7 +283,7 @@ error Sdmmc::waitUntilWriteComplete(void)
 		{
 			mTxDma->stop();
 			mTxDma->unlock();
-			return Error::NONE;
+			return error::ERROR_NONE;
 		}
 		else if (status & (SDIO_STA_DCRCFAIL_Msk | SDIO_STA_DTIMEOUT_Msk | SDIO_STA_TXUNDERR_Msk) || mTxDma->isError())
 			goto error_handle;
@@ -291,7 +292,7 @@ error Sdmmc::waitUntilWriteComplete(void)
 			mTxDma->stop();
 			mTxDma->unlock();
 			mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
-			return Error::TIMEOUT;
+			return error::TIMEOUT;
 		}
 
 		thread::yield();
@@ -303,13 +304,13 @@ error_handle :
 	mPeri[SDMMC_REG::CMD] = 0;	// 명령어 리셋
 
 	if(status & SDIO_STA_DCRCFAIL_Msk)
-		return Error::DATA_CRC_FAIL;
+		return error::DATA_CRC_FAIL;
 	else if(status & SDIO_STA_DTIMEOUT_Msk)
-		return Error::DATA_TIMEOUT;
+		return error::DATA_TIMEOUT;
 	else if(status & SDIO_STA_TXUNDERR_Msk)
-		return Error::TX_UNDERRUN;
+		return error::TX_UNDERRUN;
 	else 
-		return Error::DMA;
+		return error::DMA;
 }
 
 void Sdmmc::unlockRead(void)

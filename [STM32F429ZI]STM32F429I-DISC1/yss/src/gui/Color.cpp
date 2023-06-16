@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,6 +22,7 @@ Color::Color(void)
 {
 	setToBlack();
 	mReverseRgb = false;
+	mReverseEndian = false;
 	mAlpha = 0xFF;
 }
 
@@ -31,15 +33,17 @@ Color::Color(uint8_t red, uint8_t green, uint8_t blue)
 	mBlue = blue;
 	mAlpha = 0xFF;
 	mReverseRgb = false;
+	mReverseEndian = false;
 }
 
-Color::Color(uint8_t red, uint8_t green, uint8_t blue, bool reverseRgb)
+Color::Color(uint8_t red, uint8_t green, uint8_t blue, bool reverseRgb, bool reverseEndian)
 {
 	mRed = red;
 	mGreen = green;
 	mBlue = blue;
 	mAlpha = 0xFF;
 	mReverseRgb = reverseRgb;
+	mReverseEndian = reverseEndian;
 }
 
 void Color::setColor(uint8_t red, uint8_t green, uint8_t blue)
@@ -53,9 +57,9 @@ uint16_t Color::getRgb565Code(void)
 {
 	uint8_t code[2];
 
-	if(mReverseRgb)
+	if(mReverseRgb == true)
 	{
-		if(mReverseEndian)
+		if(mReverseEndian == true)
 		{
 			code [0] = (mGreen & 0xFC) << 3;
 			code [0] |= mBlue >> 3;
@@ -72,7 +76,7 @@ uint16_t Color::getRgb565Code(void)
 	}
 	else
 	{
-		if(mReverseEndian)
+		if(mReverseEndian == true)
 		{
 			code [0] = (mGreen & 0xFC) << 3;
 			code [0] |= mRed >> 3;
@@ -135,7 +139,7 @@ Color Color::calculateFontColorLevel(Color &bgColor, uint8_t level)
 	green = (mGreen - green) * level / 15 + green;
 	blue = (mBlue - blue) * level / 15 + blue;
 
-	return Color{(uint8_t)red, (uint8_t)green, (uint8_t)blue};
+	return Color{(uint8_t)red, (uint8_t)green, (uint8_t)blue, mReverseRgb, mReverseEndian};
 }		 
 
 void Color::setReverseRgbOrder(bool reverse)

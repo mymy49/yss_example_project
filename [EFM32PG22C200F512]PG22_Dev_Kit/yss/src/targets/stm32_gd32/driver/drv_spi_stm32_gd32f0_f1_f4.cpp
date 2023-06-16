@@ -18,7 +18,7 @@
 
 #include <drv/mcu.h>
 
-#if defined(GD32F1) || defined(GD32F4) || defined(STM32F1) || defined(STM32F4) || defined(STM32F0)
+#if defined(GD32F4) || defined(STM32F1) || defined(STM32F4) || defined(STM32F0)
 
 #include <stdint.h>
 #include <drv/peripheral.h>
@@ -100,7 +100,7 @@ error Spi::initialize(void)
 
 	mPeri[SPI_REG::CR1] |= SPI_CR1_SSI_Msk | SPI_CR1_SSM_Msk | SPI_CR1_MSTR_Msk;
 
-	return Error::NONE;
+	return error::ERROR_NONE;
 }
 
 void Spi::enable(bool en)
@@ -115,7 +115,7 @@ error Spi::send(void *src, int32_t  size)
 	if(size == 1)
 	{
 		send(*(int8_t*)src);
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	mTxDma->lock();
@@ -153,7 +153,7 @@ error Spi::exchange(void *des, int32_t  size)
 	if(size == 1)
 	{
 		*(int8_t*)des = exchange(*(int8_t*)des);
-		return Error::NONE;
+		return error::ERROR_NONE;
 	}
 
 	mPeri[SPI_REG::DR];

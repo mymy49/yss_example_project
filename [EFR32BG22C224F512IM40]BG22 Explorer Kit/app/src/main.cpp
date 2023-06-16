@@ -33,7 +33,7 @@ int32_t main(void)
 	uint32_t time;
 	
 	Cli::Led::setNumOfLed(1);
-	Cli::Led::setLedFunction(0, Led::setOn);
+	Cli::Led::setLedFunction(0, led::setOn);
 	Cli::Led::registerCli(cli);
 
 	Cli::Dump::registerCli(cli);

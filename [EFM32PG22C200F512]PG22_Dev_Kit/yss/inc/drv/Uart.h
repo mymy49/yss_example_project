@@ -19,9 +19,9 @@
 #ifndef YSS_DRV_UART__H_
 #define YSS_DRV_UART__H_
 
-#include "mcu.h"
+#include "peripheral.h"
 
-#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7) || defined(STM32F0)
+#if defined(GD32F1) || defined(STM32F1) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F0)
 
 typedef volatile uint32_t	YSS_USART_Peri;
 
@@ -29,11 +29,7 @@ typedef volatile uint32_t	YSS_USART_Peri;
 
 typedef NRF_UART_Type		YSS_USART_Peri;
 
-#elif defined(EFM32PG22)
-
-typedef USART_TypeDef		YSS_USART_Peri;
-
-#elif defined(STM32F4_N)
+#elif defined(EFM32PG22) || defined(EFR32BG22) || defined(STM32F4_N) || defined(STM32F0_N) || defined(STM32F7_N) || defined(STM32F1_N)
 
 typedef USART_TypeDef		YSS_USART_Peri;
 
@@ -99,17 +95,36 @@ class Uart : public Drv
 	//		16비트 자료형으로 수신된 바이트가 없을 경우 -1(0xFFFF)을 반환한다.
 	//		수신된 바이트가 있을 경우 0과 같거나 크고 0x0000 ~ 0x00FF의 크기를 갖는다.
 	//		바이트 부분만 활용하면 된다.
-	int16_t getReceivedByte(void);
+	int16_t getRxByte(void);
 
-	// 위에 나타낸 getReceivedByte()와 동일하다.
+	// 위에 나타낸 getRxByte()와 동일하다.
 	// 본 함수는 과거 작성된 프로젝트의 호환성을 위해 일시적으로 지원하므로 신규 코드 작성에 사용을 권하지 않는다.
 	int16_t get(void);
 	
+	// 수신되서 버퍼에 담겨진 데이터의 개수를 반환한다.
+	// 
+	// 반환
+	//		수신된 바이트의 개수를 반환한다.
+	uint32_t getRxCount(void);
+
+	// 수신된 버퍼중에 가장 먼저 수신된 버퍼의 데이터 포인터를 반환한다. 다음에 수신된 데이터는 다음 번지에 놓여 있다.
+	// 접근 가능한 다음 유효 번지는 geRxCount() 함수의 반환 값까지 접근 가능하다.
+	// 
+	// 반환
+	//		수신된 바이트의 버퍼 포인터를 반환한다.
+	void* getCurrentBuffer(void);
+	
+	// 수신된 데이터를 getCurrentBuffer() 함수를 사용해 접근할 경우 현재 수신한 데이터의 처리를 하고, 버퍼에서 다음 수신된 버퍼로 넘어가기 위한 함수이다.
+	// 
+	// uint32_t count
+	//		현재 링버퍼의 포인터를 count에 설정된 포인터만큼 다음 포인터로 이동시킨다.
+	void releaseBuffer(uint32_t count);
+
 	// 데이터 수신이 있을 때까지 대기한다. 대기하는 동안은 함수 내에서 thread::yield() 함수를 이용해 대기한다.
 	// 
 	// 반환
 	//		수신된 바이트를 반환한다.
-	int8_t getWaitUntilReceive(void);
+	uint8_t getWaitUntilReceive(void);
 
 	// 수신 버퍼를 비운다.
 	void flush(void);
@@ -118,7 +133,7 @@ class Uart : public Drv
 	//
 	// void (*func)(void)
 	//		Callback 함수를 설정한다.
-	void setCallbackForFrameError(void (*callback)(void));
+	void setIsrForFrameError(void (*isr)(void));
 	
 	// 복수의 데이터를 송신한다.
 	// 
@@ -154,14 +169,21 @@ class Uart : public Drv
 	void setOneWireMode(bool en);
 
 	// 아래 함수는 시스템 함수로 사용자 호출을 금한다.
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+#if defined(GD32F1) || defined(STM32F1_N) || defined(STM32F4) || defined(GD32F4)  || defined(STM32F7_N) || defined(STM32F4_N) || defined(STM32F0_N)
 	struct Config
 	{
 		YSS_USART_Peri *dev;
 		Dma &txDma;
 		Dma::DmaInfo txDmaInfo;
 	};
-#else
+#elif defined(EFM32PG22) || defined(EFR32BG22)
+	struct Config
+	{
+		YSS_USART_Peri *dev;
+		Dma **dmaChannelList;
+		const Dma::DmaInfo *txDmaInfo;
+	};
+#elif defined(NRF52840_XXAA)
 	struct Config
 	{
 		YSS_USART_Peri *dev;
@@ -182,11 +204,14 @@ private:
 	int32_t  mRcvBufSize;
 	int32_t  mTail, mHead;
 	bool mOneWireModeFlag;
-	void (*mCallbackForFrameError)(void);
+	void (*mIsrForFrameError)(void);
 
-#if !defined(YSS_DRV_DMA_UNSUPPORTED)
+#if defined(GD32F1) || defined(STM32F1_N) || defined(GD32F4)  || defined(STM32F7_N) || defined(STM32F0_N) || defined(STM32F4_N)
 	Dma *mTxDma;
 	Dma::DmaInfo mTxDmaInfo;
+#elif defined(EFM32PG22) || defined(EFR32BG22)
+	Dma **mDmaChannelList;
+	const Dma::DmaInfo *mTxDmaInfo;
 #endif
 };
 
@@ -203,8 +228,8 @@ private:
 //		- send() 함수를 이용하여 한 바이트 또는 여러 바이트를 전송한다.
 //		- unlock() 함수를 호출하여 현재 소유권을 해제하고 다른 쓰레드에게 접근을 개방한다.
 
-// 수신 방법 (getReceivedByte() 함수 사용)
-//		- getReceivedByte()를 호출하고 반환된 값이 0 이상일 경우 수신데이터로 취급하고 처리한다.
+// 수신 방법 (getRxByte() 함수 사용)
+//		- getRxByte()를 호출하고 반환된 값이 0 이상일 경우 수신데이터로 취급하고 처리한다.
 //		- 음수일 경우 리턴된 값을 무시한다.
 
 // 수신 방법 (getWaitUntilReceive() 함수 사용

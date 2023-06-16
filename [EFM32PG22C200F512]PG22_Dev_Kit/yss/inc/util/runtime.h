@@ -19,19 +19,16 @@
 #ifndef YSS_RUNTIME__H_
 #define YSS_RUNTIME__H_
 
-#include <config.h>
 #include <stdint.h>
 #include <drv/mcu.h>
 
 namespace runtime
 {
 uint32_t getSec(void);
-uint32_t getMsec(void);
 
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
+uint64_t getMsec(void);
+
 uint64_t getUsec(void);
-#endif
-
 }
 
 #endif

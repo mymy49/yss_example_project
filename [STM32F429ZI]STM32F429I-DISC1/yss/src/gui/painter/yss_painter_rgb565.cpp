@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,23 +9,24 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <config.h>
 
-#if USE_GUI
+#if USE_GUI && defined(DMA2D_ENABLE)
 
 #include <yss/instance.h>
 
 #if !defined(YSS_DRV_DMA2D_UNSUPPORTED)
 
 #include <gui/Rgb565.h>
-#include <yss/thread.h>
 #include <gui/Bmp565.h>
+#include <yss/thread.h>
 
 namespace Painter
 {
@@ -59,10 +60,11 @@ void fill(Rgb565 &obj, Color color)
 	using namespace define::dma2d;
 	Dma2d::FillConfig config = 
 	{
-		(void*)fb,			//void *address;
+		(void*)fb,					//void *address;
 		color.getRgb565Code(),		//uint32_t color;
-		colorMode::RGB565,	//uint8_t colorMode;
-		size				//Size size;
+		colorMode::RGB565,			//uint8_t colorMode;
+		0,							//int16_t destinationOffset;
+		size						//Size size;
 	};
 	
 	dma2d.lock();
@@ -140,10 +142,11 @@ void fillRectangle(Rgb565 &obj, Position pos, Size size, Color color)
 	using namespace define::dma2d;
 	Dma2d::FillConfig config = 
 	{
-		(void*)desAddr,			//void *address;
-		color.getRgb565Code(),	//uint32_t color;
-		colorMode::RGB565,		//uint8_t colorMode;
-		size					//Size size;
+		(void*)desAddr,				//void *address;
+		color.getRgb565Code(),		//uint32_t color;
+		colorMode::RGB565,			//uint8_t colorMode;
+		desSize.width - size.width,	//int16_t destinationOffset;
+		size						//Size size;
 	};
 	
 	dma2d.lock();
@@ -195,15 +198,16 @@ uint8_t drawChar(Rgb565 &des, Font *font, uint32_t utf8, Position pos, Color col
 	using namespace define::dma2d;
 	Dma2d::DrawCharConfig config = 
 	{
-		(void*)srcAddr,				//void *sourceAddress;
+		(void*)srcAddr,			//void *sourceAddress;
 		(uint16_t)srcOffset,	//uint16_t sourceOffset;
-		colorMode::A4,				//uint8_t sourceColorMode;
+		colorMode::A4,			//uint8_t sourceColorMode;
 
-		(void*)desAddr,				//void *destinationAddress;
+		(void*)desAddr,			//void *destinationAddress;
 		(uint16_t)desOffset,	//uint16_t destinationOffset;
-		colorMode::RGB565,			//uint8_t destinationColorMode;
+		colorMode::RGB565,		//uint8_t destinationColorMode;
 
-		Size{srcSize}				//Size size;
+		Size{srcSize},			//Size size;
+		color.getRgb888Code()	//uint32_t color;
 	};
 	
 	dma2d.lock();

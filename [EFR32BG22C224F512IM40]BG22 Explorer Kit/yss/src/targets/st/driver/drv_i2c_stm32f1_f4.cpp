@@ -150,6 +150,10 @@ error I2c::receive(uint8_t addr, void *des, uint32_t size, uint32_t timeout)
 	stop();
 
 	return error::TIMEOUT;
+error:
+	mDev->CR2 &= ~(I2C_CR2_ITBUFEN_Msk | I2C_CR2_ITEVTEN_Msk);
+	stop();
+	return false;
 }
 
 void I2c::stop(void)

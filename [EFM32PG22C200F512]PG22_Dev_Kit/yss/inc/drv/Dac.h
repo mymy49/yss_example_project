@@ -21,9 +21,9 @@
 
 #include "mcu.h"
 
-#if defined(STM32F1) || defined(STM32F4) || defined(STM32F7) || defined(STM32G4) || defined(GD32F1)
+#if defined (STM32F4_N)
 
-typedef volatile uint32_t		YSS_DAC_Peri;
+typedef DAC_TypeDef				YSS_DAC_Peri;
 
 #else
 
@@ -37,16 +37,26 @@ typedef volatile uint32_t		YSS_DAC_Peri;
 class Dac : public Drv
 {
 public:
-	void initCh1(void);
-	void initCh2(void);
-	void setCh1(uint16_t val);
-	void setCh2(uint16_t val);
+	void initialize(void);
+
+	void enableChannel1(bool en = true);
+
+	void enableChannel2(bool en = true);
+
+	void setOutputChannel1(uint16_t value);
+
+	void setOutputChannel2(uint16_t value);
 
 	// 아래 함수들은 시스템 함수로 사용자 호출을 금한다.
-	Dac(YSS_DAC_Peri *peri, void (*clockFunc)(bool en), void (*nvicFunc)(bool en), uint32_t (*getClockFreq)(void));
+	struct Setup
+	{
+		YSS_DAC_Peri *dev;
+	};
+
+	Dac(const Drv::Setup drvSetup, const Setup setup);
 
 private:
-	YSS_DAC_Peri *mPeri;
+	YSS_DAC_Peri *mDev;
 };
 
 #endif

@@ -8,8 +8,8 @@
   *          is using in the C source code, usually in main.c. This file contains:
   *           - Configuration section that allows to select:
   *              - The STM32F4xx device used in the target application
-  *              - To use or not the peripheral’s drivers in application code(i.e. 
-  *                code will be based on direct access to peripheral’s registers 
+  *              - To use or not the peripherals drivers in application code(i.e. 
+  *                code will be based on direct access to peripherals registers 
   *                rather than drivers API), this option is controlled by 
   *                "#define USE_HAL_DRIVER"
   *  
@@ -46,13 +46,6 @@
   * @{
   */
   
-/**
-  * @brief STM32 Family
-  */
-#if !defined  (STM32F4)
-#define STM32F4
-#endif /* STM32F4 */
-
 /* Uncomment the line below according to the target STM32 device used in your
    application 
   */
@@ -154,7 +147,7 @@
 #elif defined(STM32F411xE)
   #include "stm32f411xe.h"
 #elif defined(STM32F446xx)
-  #include "stm32f446xx.h"
+  #include <targets/st/stm32f446xx.h>
 #elif defined(STM32F469xx)
   #include "stm32f469xx.h"
 #elif defined(STM32F479xx)

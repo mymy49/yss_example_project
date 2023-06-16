@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,17 +9,19 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
-
 #include <yss/debug.h>
 #include <yss.h>
 #include <bsp.h>
 #include <mod/sdram/MT48LC4M32B2B5_6A.h>
 #include <mod/rgb_tft_lcd/RK043FN48H.h>
+
+void initTftLcd(void);
 
 FunctionQueue functionQueue(16);
 CommandLineInterface cli(uart1);
@@ -54,8 +56,14 @@ void initBoard(void)
 	// LED 초기화
 	led::init();
 
-	// TFT-LCD 초기화
+	// TFT LCD 초기화
+	initTftLcd();
+}
+
+void initTftLcd(void)
+{
 	using namespace define::gpio::altfunc;
+	
 	Gpio::AltFunc lcdPort[28] =
 	{
 		{GPIOJ, 6, PJ6_LCD_R7},
@@ -99,11 +107,11 @@ void initBoard(void)
 	gpioI.setOutput(12, true);
 
 	ltdc.enableClock();
-	ltdc.init(lcd.getSpecification());
+	ltdc.initialize(lcd.getSpecification());
 	ltdc.enableInterrupt();
 }
 
-void initSdram(void)
+void initializeSdram(void)
 {
 	using namespace define::gpio::altfunc;
 
@@ -151,6 +159,6 @@ void initSdram(void)
 	gpioA.setPackageAsAltFunc(sdramPort, 38, define::gpio::ospeed::FAST, define::gpio::otype::PUSH_PULL);
 
 	clock.enableSdram();
-	sdram.init(define::sdram::bank::BANK1, MT48LC4M32B2B5_6A);
+	sdram.initialize(define::sdram::bank::BANK1, MT48LC4M32B2B5_6A, 180000000);
 }
 

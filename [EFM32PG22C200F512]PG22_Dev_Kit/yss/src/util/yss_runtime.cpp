@@ -21,23 +21,12 @@
 
 #include <drv/peripheral.h>
 
-#ifndef  YSS_DRV_TIMER_UNSUPPORTED
-
-#if defined(STM32F7) || defined(STM32F4) || defined(STM32F1) || defined(STM32G4) || defined(STM32L0) || defined(STM32L4) || defined(STM32F0)
-
+#if defined(STM32F7) || defined(STM32F4) || defined(STM32F1_N) || defined(STM32G4) || defined(STM32L0) || defined(STM32L4) || defined(STM32F0)
 static uint64_t gYssTimeSum = (uint64_t)-60000;
 static uint32_t gOverFlowCnt = 60000;
-
 #else
-
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 static uint64_t gYssTimeSum;
-#else
-static uint32_t gYssTimeSum;
-#endif
-
 static uint32_t gOverFlowCnt;
-
 #endif
 
 static bool gPreUpdateFlag;
@@ -51,16 +40,16 @@ static void isr(void)
 		gPreUpdateFlag = false;
 }
 
-void initSystemTime(void)
+void initializeSystemTime(void)
 {
 #ifndef YSS_DRV_TIMER_NOT_SUPPORT
 	YSS_TIMER.enableClock();
 	YSS_TIMER.initializeAsSystemRuntime();
 	gOverFlowCnt = YSS_TIMER.getOverFlowCount();
 	YSS_TIMER.setUpdateIsr(isr);
+	YSS_TIMER.start();
 	YSS_TIMER.enableUpdateInterrupt();
 	YSS_TIMER.enableInterrupt();
-	YSS_TIMER.start();
 #endif
 }
 
@@ -72,11 +61,7 @@ uint32_t getSec(void)
 {
 #ifndef YSS_DRV_TIMER_NOT_SUPPORT
 	__disable_irq();
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 	uint64_t time = gYssTimeSum + YSS_TIMER.getCounterValue();
-#else
-	uint32_t time = gYssTimeSum + YSS_TIMER.getCounterValue();
-#endif
 
 	// 타이머 인터럽트 지연으로 인한 시간 오류 발생 보완용
 	if (time < gLastRequestTime)
@@ -87,26 +72,17 @@ uint32_t getSec(void)
 	}
 	gLastRequestTime = time;
 	__enable_irq();
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 	return time / 1000000;
 #else
-	return time / 1000;
-#endif
-#else
 	return 0;
 #endif
 }
 
-uint32_t getMsec(void)
+uint64_t getMsec(void)
 {
 #ifndef YSS_DRV_TIMER_NOT_SUPPORT
-
 	__disable_irq();
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 	uint64_t time = gYssTimeSum + YSS_TIMER.getCounterValue();
-#else
-	uint32_t time = gYssTimeSum + YSS_TIMER.getCounterValue();
-#endif
 
 	// 타이머 인터럽트 지연으로 인한 시간 오류 발생 보완용
 	if (time < gLastRequestTime)
@@ -117,17 +93,12 @@ uint32_t getMsec(void)
 	}
 	gLastRequestTime = time;
 	__enable_irq();
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 	return time / 1000;
-#else
-	return time;
-#endif
 #else
 	return 0;
 #endif
 }
 
-#if !(defined(__CORE_CM0PLUS_H_GENERIC) || defined(__CORE_CM0_H_GENERIC))
 uint64_t getUsec(void)
 {
 #ifndef YSS_DRV_TIMER_NOT_SUPPORT
@@ -148,8 +119,5 @@ uint64_t getUsec(void)
 	return 0;
 #endif
 }
-#endif
 }
-
-#endif
 

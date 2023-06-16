@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -26,6 +27,8 @@
 #include <targets/st_gigadevice/define_ltdc_stm32_gd32f4_f7.h>
 typedef volatile uint32_t	YSS_LTDC_Peri;
 
+#elif defined(LTDC) && defined(STM32F7_N) || defined(STM32F4_N) 
+
 #else
 
 #define YSS_DRV_LTDC_UNSUPPORTED
@@ -34,11 +37,12 @@ typedef volatile uint32_t	YSS_LTDC_Peri;
 #endif
 
 #include <yss/gui.h>
+#include <yss/error.h>
 #include "Drv.h"
 
 class Ltdc : public Drv
 {
-  public:
+public:
 	struct Specification
 	{
 		uint16_t width;
@@ -54,13 +58,13 @@ class Ltdc : public Drv
 
 	Ltdc(const Drv::Config drvConfig);
 
-	bool init(const Ltdc::Specification *spec);
+	error initialize(const Ltdc::Specification *spec);
 	void setFrameBuffer(void *frame);
 	void setFrameBuffer(FrameBuffer &obj);
 	void setFrameBuffer(FrameBuffer *obj);
 	Size getLcdSize(void);
 
-  private:
+private:
 	const Specification *mSpec;
 };
 

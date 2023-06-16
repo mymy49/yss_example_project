@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,9 +9,10 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -20,7 +21,15 @@
 
 #include <yss/reg.h>
 
-#if defined(STM32F103x6) || defined(STM32F103xB) || defined(STM32F103xE) || defined(STM32F103xG) || \
+#if defined(STM32F103xB)
+
+#ifndef STM32F1_N
+#define STM32F1_N
+#define DEFAULT_CLOCK_SPEED 8000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+#endif
+
+#elif defined(STM32F103x6) || defined(STM32F103xE) || defined(STM32F103xG) || \
 	defined(STM32F10X_MD)
 #ifndef STM32F1
 #define STM32F1
@@ -28,7 +37,7 @@
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #endif
 
-#elif defined(STM32F411xE) || defined(STM32F429xx)
+#elif defined(STM32F411xE)
 
 #ifndef STM32F4
 #define STM32F4
@@ -36,10 +45,20 @@
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #endif
 
-#elif defined(STM32F746xx)
+#elif defined(STM32F446xx) || defined(STM32F429xx)
 
-#ifndef STM32F7
-#define STM32F7
+#ifndef STM32F4_N
+#define STM32F4_N
+#define DEFAULT_CLOCK_SPEED 16000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+#endif
+
+#elif defined(STM32F767xx) || defined(STM32F746xx)
+
+#ifndef STM32F7_N
+#define DEFAULT_CLOCK_SPEED 16000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+#define STM32F7_N
 #endif
 
 #elif defined(STM32G431xx) || defined(STM32G441xx) || \
@@ -51,7 +70,7 @@
 #define YSS__CORE_CM3_CM4_CM7_H_GENERIC
 #endif
 
-#elif defined(GD32F10X_HD) || defined(GD32F10X_XD)
+#elif defined(GD32F10X_HD) || defined(GD32F10X_XD) || defined(GD32F10X_MD)
 
 #define GD32F1
 #define DEFAULT_CLOCK_SPEED 8000000
@@ -65,6 +84,9 @@
 
 #elif defined(NRF52840_XXAA)
 
+#define DEFAULT_CLOCK_SPEED 64000000
+#define YSS__CORE_CM3_CM4_CM7_H_GENERIC
+
 #elif defined (STM32L100xB) || defined (STM32L100xBA) || defined (STM32L100xC) || \
     defined (STM32L151xB) || defined (STM32L151xBA) || defined (STM32L151xC) || defined (STM32L151xCA) || defined (STM32L151xD) || defined (STM32L151xDX) || defined (STM32L151xE) || \
     defined (STM32L152xB) || defined (STM32L152xBA) || defined (STM32L152xC) || defined (STM32L152xCA) || defined (STM32L152xD) || defined (STM32L152xDX) || defined (STM32L152xE) || \
@@ -76,10 +98,21 @@
 
 #elif defined(STM32F030xC)
 
-#define STM32F0
+#define STM32F0_N
 #define DEFAULT_CLOCK_SPEED 8000000
 #define YSS__CORE_CM0_H_GENERIC
-//#define YSS__MCU_SMALL_SRAM_NO_SCHEDULE
+
+#elif defined(EFM32PG22C200F512IM40)
+
+#define EFM32PG22
+#define DEFAULT_CLOCK_SPEED 20000000
+#define YSS__CORE_CM33_H_GENERIC
+
+#elif defined(EFR32BG22C224F512IM40)
+
+#define EFR32BG22
+#define DEFAULT_CLOCK_SPEED 20000000
+#define YSS__CORE_CM33_H_GENERIC
 
 #else
 

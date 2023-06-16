@@ -39,7 +39,7 @@ void thread_dummy(void)
 
 int32_t main(void)
 {
-	initYss();
+	initializeYss();
 	initBoard();
 
 	uint32_t time;

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //
-// 저작권 표기 License_ver_3.1
+// 저작권 표기 License_ver_3.2
 // 본 소스 코드의 소유권은 홍윤기에게 있습니다.
 // 어떠한 형태든 기여는 기증으로 받아들입니다.
 // 본 소스 코드는 아래 사항에 동의할 경우에 사용 가능합니다.
@@ -9,19 +9,21 @@
 // 본 소스 코드의 상업적 또는 비 상업적 이용이 가능합니다.
 // 본 소스 코드의 내용을 임의로 수정하여 재배포하는 행위를 금합니다.
 // 본 소스 코드의 사용으로 인해 발생하는 모든 사고에 대해서 어떠한 법적 책임을 지지 않습니다.
+// 본 소스 코드의 어떤 형태의 기여든 기증으로 받아들입니다.
 //
 // Home Page : http://cafe.naver.com/yssoperatingsystem
-// Copyright 2022. 홍윤기 all right reserved.
+// Copyright 2023. 홍윤기 all right reserved.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <yss/Mutex.h>
 #include <drv/peripheral.h>
 #include <yss/thread.h>
+#include <cmsis/cmsis_compiler.h>
 
 bool Mutex::mInit = false;
 
-void Mutex::initMutex(void)
+void Mutex::initializeMutex(void)
 {
 	mInit = true;
 }
@@ -55,6 +57,30 @@ uint32_t Mutex::lock(void)
 #endif
 }
 
+bool Mutex::check(void)
+{
+#if !defined(__MCU_SMALL_SRAM_NO_SCHEDULE)
+	thread::protect();
+	__disable_irq();
+	uint32_t num = mWaitNum;
+
+	if(num != mCurrentNum)
+	{
+		__enable_irq();
+		return false;
+	}
+
+	mWaitNum++;
+	if(mIrqNum >= 0)
+		NVIC_DisableIRQ(mIrqNum);
+	__enable_irq();
+
+	return true;
+#else
+	return true;
+#endif
+}
+
 void Mutex::unlock(void)
 {
 #if !defined(__MCU_SMALL_SRAM_NO_SCHEDULE)
@@ -67,21 +93,6 @@ void Mutex::unlock(void)
 	if (mInit && mWaitNum != mCurrentNum)
 		thread::yield();
 #endif
-}
-
-void Mutex::wait(uint32_t key)
-{
-#if !defined(__MCU_SMALL_SRAM_NO_SCHEDULE)
-	while (key >= mCurrentNum)
-	{
-		thread::yield();
-	}
-#endif
-}
-
-uint32_t Mutex::getCurrentNum(void)
-{
-	return mCurrentNum;
 }
 
 void Mutex::setIrq(IRQn_Type irq)
