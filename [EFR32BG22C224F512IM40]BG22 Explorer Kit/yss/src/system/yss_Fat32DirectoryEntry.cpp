@@ -750,7 +750,7 @@ error Fat32DirectoryEntry::makeDirectory(const char *name)
 #if defined(SD_DEBUG)
 		debug_printf("error %d\n", error::NEW_FAILED);
 #endif
-		return error::NEW_FAILED;
+		return error::MALLOC_FAILED;
 	}
 #if defined(SD_DEBUG)
 	debug_printf("call %d\n", __LINE__);
