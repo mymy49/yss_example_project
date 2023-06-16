@@ -112,9 +112,8 @@
  <Files>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="47" useTextEdit="1" path="app/src/main.cpp" left="0" top="43" codecName="UTF-8"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="6" y="89" useTextEdit="1" path="yss/src/targets/common/drv_uart.cpp" left="0" top="86" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="97" useTextEdit="1" path="yss/src/targets/siliconlabs/driver/drv_uart_efm32pg22.cpp" left="0" top="97" codecName="UTF-8"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="69" useTextEdit="1" path="yss/src/scheduler/yss_Mutex.cpp" left="0" top="67" codecName="UTF-8"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="9" y="50" useTextEdit="1" path="yss/inc/yss/instance.h" left="0" selected="1" top="18" codecName="UTF-8"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="33" y="67" useTextEdit="1" path="yss/inc/yss/instance.h" left="0" selected="1" top="47" codecName="UTF-8"/>
  </Files>
  <ARMCrossStudioWindow activeProject="pg22_dev_kit" fileDialogDefaultFilter="*.c" autoConnectTarget="SEGGER J-Link" buildConfiguration="THUMB Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>
